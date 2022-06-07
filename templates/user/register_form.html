@@ -7,49 +7,101 @@
 </head>
 <body>
 <div class="card w-50 m-auto mt-5" >
-<form action="regSuccess" method="post">
+
+<form action="register" method="post">
 
     {% csrf_token %}
+
+        <h2 id="error">Welcome to SignUp</h2>
+
   <div class="form-group">
     <label for="exampleInputEmail1">Name</label>
-    <input type="text"  name ="Name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Name">
+    <input type="text"  name ="Name" id="name" class="form-control"  aria-describedby="emailHelp" placeholder="Name">
 
   </div>
 
 
   <div class="form-group">
     <label for="exampleInputPassword1">Age</label>
-    <input type="number" name="Age" class="form-control" id="exampleInputPassword1" placeholder="Age">
+    <input type="number" name="Age" id="age" class="form-control"  placeholder="Age">
   </div>
 
     <div class="form-group">
     <label for="exampleInputEmail1">Gender</label>
-    <input type="text" name="Gender" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Gender">
+    <input type="text" name="Gender" id="gender" class="form-control"  aria-describedby="emailHelp" placeholder="Gender">
     </div>
 
     <div class="form-group">
     <label for="exampleInputEmail1">Address</label>
-    <input type="text" name="Address" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Address">
+    <input type="text" name="Address" id="address" class="form-control" aria-describedby="emailHelp" placeholder="Address">
     </div>
 
     <div class="form-group">
     <label for="exampleInputEmail1">Email</label>
-    <input type="Email" name="Email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Email">
+    <input type="Email" name="Email" id="email" class="form-control"  aria-describedby="emailHelp" placeholder="Email">
     </div>
 
     <div class="form-group">
     <label for="exampleInputEmail1">Department</label>
-    <input type="text" name="Department" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="department">
+    <input type="text" name="Department" id="dept" class="form-control"  aria-describedby="emailHelp" placeholder="department">
     </div>
 
 
 
 
-
-
-
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="button" id="butn" class="btn btn-primary">Submit</button>
 </form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+<script>
+
+    $(document).ready(function()
+    {
+
+        $('#butn').click(() => {
+            var name = $('#name').val()
+            var age =  $('#age').val()
+            var gender =  $('#gender').val()
+            var address =  $('#address').val()
+            var email =$('#email').val()
+            var department=$('#dept').val()
+
+            var data ={
+                'csrfmiddlewaretoken':'{{csrf_token}}',
+                'Name':name,
+                'Age':age,
+                'Gender':gender,
+                'Address':address,
+                'Email':email,
+                'Department':department
+
+            }
+
+
+            $.ajax({
+                url:'register',
+                type: 'POST',
+                data:data,
+                dataType: 'json',
+                success:function(data){
+
+                    if(data.success=="pass"){
+                        console.log("success")
+                        window.location.replace('regSuccess')
+                    }else{
+                        console.log("error")
+                       $("#error").html("Email already exists!!");
+                    }
+                }
+            })
+
+
+
+})
+})
+
+</script>
 </div>
 
 </body>
