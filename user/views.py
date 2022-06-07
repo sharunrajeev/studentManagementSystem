@@ -24,6 +24,15 @@ def register(request):
             )
 
         else:
+            userObj = Applicants()
+            userObj.Name = Name
+            userObj.Age = Age
+            userObj.Gender = Gender
+            userObj.Address = Address
+            userObj.Email = Email
+            userObj.Department = Department
+
+            userObj.save()
 
             return JsonResponse(
 
