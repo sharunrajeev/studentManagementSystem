@@ -9,7 +9,18 @@ class Applicants(models.Model):
     Address = models.CharField(max_length=100, default=None)
     Email = models.EmailField(max_length=100, default=None)
     Department= models.CharField(max_length=100, default=None)
-    Eligibility= models.BooleanField(default=False)
+    Eligibility= models.BooleanField(blank=True,null=True,default=None)
+
+class Candidates(models.Model):
+    ApplicationId = models.ForeignKey(Applicants, on_delete=models.CASCADE, default=False)
+    UserId = models.CharField(max_length=100)
+    Photo = models.ImageField(upload_to='pics')
+    Achievements = models.TextField()
+    PaymentStatus = models.BooleanField(default=False)
+    Marks = models.IntegerField(blank=True,null=True,default=None)
+    Attendance = models.IntegerField(blank=True,null=True,default=None)
+
+
 
 
 

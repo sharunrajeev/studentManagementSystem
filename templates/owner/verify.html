@@ -9,6 +9,7 @@
 
 <div class="m-5">
     {% for user in users %}
+
 <div class="card mt-5" style="width: 18rem;">
   <div class="card-body">
     <h5 class="card-title"></h5>
@@ -18,10 +19,17 @@
     <p class="card-text">Age:{{ user.Age }}</p>
      <p class="card-text">Phone:{{ user.Phone }}</p>
      <p class="card-text">Email: {{ user.Email }}</p>
-    <a href="select/{{ user.id }}" class="card-link">Select</a>
-    <a href="reject/{{ user.id }}" class="card-link">Reject</a>
+      {% if user.Eligibility == True %}
+    <a href="# class="card-link">Selected </a>
+          {% elif user.Eligibility == False %}
+    <a href="# class="card-link">Rejected </a>
+          {% else %}
+           <a href="select/{{ user.id }}" class="card-link">Select</a>
+          <a href="reject/{{ user.id }}" class="card-link">Reject</a>
+      {% endif %}
   </div>
 </div>
+
     {% endfor %}
 </div>
 
