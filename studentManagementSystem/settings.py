@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'owner.apps.OwnerConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -75,7 +76,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'sms',
         'USER': 'postgres',
-        'PASSWORD': '123',
+        'PASSWORD': '2000',
         'HOST': 'localhost',
         'PORT': '5432',
     }
