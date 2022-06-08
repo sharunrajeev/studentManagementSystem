@@ -1,0 +1,11 @@
+{% extends 'user/base.html' %}
+{% block title %}
+    Dashboard
+{% endblock title %}
+{% block body %}
+    <div class='container d-flex flex-column justify-content-center align-items-center'
+         style="min-height: 100vh">
+        <h1>{{ user.username }}</h1>
+        <h2>Login successful</h2>
+    </div>
+{% endblock %}

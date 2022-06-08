@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from pyexpat.errors import messages
+from django.shortcuts import redirect, render
 from owner.models import Applicants
 from django.contrib.auth.models import User, auth
 from django.http import JsonResponse
@@ -44,6 +45,26 @@ def register(request):
 def reg_success(request):
     return render(request, 'user/reg_complete.html')
 
+
 # Sharun
 def login(request):
-    return render(request, 'user/auth/login.html')
+    if request.method == 'POST':
+        username = request.POST['Username']
+        password = request.POST['Password']
+        print(username, password)
+
+        user = auth.authenticate(username=username, password=password)
+
+        if user is not None:
+            auth.login(request, user)
+            return redirect('/user/dashboard')
+        else:
+            messages.info(request, 'Invalid credentials')
+            return redirect('/user/login')
+
+    else:
+        return render(request, 'user/auth/login.html')
+
+
+def dashboard(request):
+    return render(request, 'user/dashboard.html')
