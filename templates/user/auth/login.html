@@ -1,0 +1,28 @@
+{% extends 'user/base.html' %}
+{% block title %}
+    Login
+{% endblock title %}
+{% block body %}
+    <main class="container d-flex flex-column justify-content-center col-lg-4" style="min-height: 100vh">
+        <form>
+            <div class="mb-3 text-center">
+                <h1>Login</h1>
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Email address</label>
+                <input type="email"
+                       class="form-control"
+                       id="exampleInputEmail1"
+                       autocomplete="email" >
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword1" autocomplete="off" >
+            </div>
+            <div class="mb-3">
+                <p class="text-start">Forgot Password?</p>
+            </div>
+            <button type="submit" class="btn btn-dark w-100">Sign In</button>
+        </form>
+    </main>
+{% endblock body %}
