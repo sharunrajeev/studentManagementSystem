@@ -21,9 +21,9 @@
      <p class="card-text">Phone:{{ user.Phone }}</p>
      <p class="card-text">Email: {{ user.Email }}</p>
       {% if user.Eligibility == True %}
-    <a href="# class="card-link">Selected </a>
+    <a href="#" class="card-link">Selected </a>
           {% elif user.Eligibility == False %}
-    <a href="# class="card-link">Rejected </a>
+    <a href="#" class="card-link">Rejected </a>
           {% else %}
            <a href="select/{{ user.id }}" class="card-link">Select</a>
           <a href="reject/{{ user.id }}" class="card-link">Reject</a>
