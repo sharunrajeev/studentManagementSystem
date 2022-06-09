@@ -7,8 +7,16 @@ class Applicants(models.Model):
     Age = models.IntegerField(default=None)
     Gender = models.CharField(max_length=12, default=None)
     Address = models.CharField(max_length=100, default=None)
+    Mob = models.CharField(max_length=13, default=None)
     Email = models.EmailField(max_length=100, default=None)
     Department = models.CharField(max_length=100, default=None)
+    University = models.CharField(max_length=100, default=None)
+    Dob = models.DateField(default=None)
+    Phd_Reg = models.IntegerField(default=None)
+    Phd_Joining_Date = models.DateField(default=None)
+    Research_Topic = models.CharField(max_length=100, default=None)
+    Research_Guide = models.CharField(max_length=100, default=None)
+    Guide_Mail = models.EmailField(max_length=100, default=None)
     Eligibility = models.BooleanField(blank=True, null=True, default=None)
 
 
