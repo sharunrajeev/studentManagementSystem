@@ -44,11 +44,14 @@ def select(request,userid):
     user.Eligibility = True
     user.save()
 
+    email = user.Email
+
     user_candidates = Candidates()
     user_candidates.ApplicationId = user
+    user_candidates.UserId=email
     user_candidates.save()
+
     password = User.objects.make_random_password()
-    email = user.Email
     username = user.Email
     name = user.Name
     candidate = User.objects.create_user(first_name=name, username=username, password=password, email=email)

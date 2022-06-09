@@ -36,6 +36,11 @@
     <input type="text" name="Address" id="address" class="form-control" aria-describedby="emailHelp" placeholder="Address">
     </div>
 
+      <div class="form-group">
+    <label for="exampleInputEmail1">Mobile Number</label>
+    <input type="tel" name="Mob" id="mob" class="form-control"  aria-describedby="emailHelp" placeholder="Mobile Number">
+    </div>
+
     <div class="form-group">
     <label for="exampleInputEmail1">Email</label>
     <input type="Email" name="Email" id="email" class="form-control"  aria-describedby="emailHelp" placeholder="Email">
@@ -46,8 +51,40 @@
     <input type="text" name="Department" id="dept" class="form-control"  aria-describedby="emailHelp" placeholder="department">
     </div>
 
+  <div class="form-group">
+    <label for="exampleInputEmail1">University</label>
+    <input type="text" name="University" id="university" class="form-control"  aria-describedby="emailHelp" placeholder="University">
+    </div>
 
+    <div class="form-group">
+    <label for="exampleInputEmail1">DOB</label>
+    <input type="date" name="Dob" id="dob" class="form-control"  aria-describedby="emailHelp" placeholder="DOB">
+    </div>
 
+   <div class="form-group">
+    <label for="exampleInputEmail1">PHD Register Number</label>
+    <input type="num" name="Phd_Reg" id="phd_reg" class="form-control"  aria-describedby="emailHelp" placeholder="PHD Register Number">
+    </div>
+
+ <div class="form-group">
+    <label for="exampleInputEmail1">PHD Joining Date</label>
+    <input type="date" name="Phd_Joining_Date" id="phd_joining_date" class="form-control"  aria-describedby="emailHelp" placeholder="PHD Joining Date">
+    </div>
+
+  <div class="form-group">
+    <label for="exampleInputEmail1">Research Topic</label>
+    <input type="text" name="Research_Topic" id="research_topic" class="form-control"  aria-describedby="emailHelp" placeholder="Research Topic">
+    </div>
+
+  <div class="form-group">
+    <label for="exampleInputEmail1">Research Guide</label>
+    <input type="text" name="Research_Guide" id="research_guide" class="form-control"  aria-describedby="emailHelp" placeholder="Research Guide">
+    </div>
+
+    <div class="form-group">
+    <label for="exampleInputEmail1">Contact of Guide (Gmail)</label>
+    <input type="Email" name="Guide_Mail" id="guide_mail" class="form-control"  aria-describedby="emailHelp" placeholder="Email">
+    </div>
 
     <button type="button" id="butn" class="btn btn-primary">Submit</button>
 </form>
@@ -64,8 +101,18 @@
             var age =  $('#age').val()
             var gender =  $('#gender').val()
             var address =  $('#address').val()
-            var email =$('#email').val()
-            var department=$('#dept').val()
+            var mob = $ ('#mob').val()
+            var email =$ ('#email').val()
+            var department= $('#dept').val()
+            var university = $('#university').val()
+            var dob = $('#dob').val()
+            var phd_reg = $('#phd_reg').val()
+            var phd_joining_date = $('#phd_joining_date').val()
+            var research_topic = $('#research_topic').val()
+            var research_guide = $('#research_guide').val()
+            var guide_mail = $('#guide_mail').val()
+
+
 
             var data ={
                 'csrfmiddlewaretoken':'{{csrf_token}}',
@@ -73,9 +120,16 @@
                 'Age':age,
                 'Gender':gender,
                 'Address':address,
+                'Mob':mob,
                 'Email':email,
-                'Department':department
-
+                'Department':department,
+                'University':university,
+                'Dob':dob,
+                'Phd_Reg':phd_reg,
+                'Phd_Joining_Date':phd_joining_date,
+                'Research_Topic':research_topic,
+                'Research_Guide':research_guide,
+                'Guide_Mail':guide_mail,
             }
 
 

@@ -20,8 +20,19 @@
 
         <p class="card-text">Name:{{ user.Name }}</p>
         <p class="card-text">Age:{{ user.Age }}</p>
-        <p class="card-text">Phone:{{ user.Phone }}</p>
+        <p class="card-text">Gender:{{ user.Gender }}</p>
+        <p class="card-text">Address:{{ user.Address }}</p>
+        <p class="card-text">Phone:{{ user.Mob }}</p>
         <p class="card-text">Email: {{ user.Email }}</p>
+        <p class="card-text">Department:{{ user.Department }}</p>
+        <p class="card-text">University:{{ user.University }}</p>
+        <p class="card-text">Dob:{{ user.Dob }}</p>
+        <p class="card-text">Phd_Reg:{{ user.Phd_Reg }}</p>
+        <p class="card-text">DPhd_Joining_Date:{{ user.Phd_Joining_Date }}</p>
+        <p class="card-text">Research_Topic:{{ user.Research_Topic }}</p>
+        <p class="card-text">Research_Guide:{{ user.Research_Guide }}</p>
+        <p class="card-text">Guide_Mail:{{ user.Guide_Mail }}</p>
+
         {% if user.Eligibility == True %}
         <a href="# class=" card-link">Selected </a>
         {% elif user.Eligibility == False %}
