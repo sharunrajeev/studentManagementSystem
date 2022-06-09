@@ -1,95 +1,153 @@
+
 <!DOCTYPE html>
 <html>
 <head>
+    {% load static %}
 <title>Page Title</title>
 <!-- CSS only -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="{% static 'css/register_form.css' %}" rel="stylesheet"/>
 </head>
 <body>
-<div class="card w-50 m-auto mt-5" >
+<!--<div class="card w-50 m-auto mt-5" >-->
 
-<form action="register" method="post">
+<div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">
+        <div class="wrapper wrapper--w680">
+            <div class="card card-4">
+                <div class="card-body">
+                    <h2 class="title">Registration Form</h2>
+                    <form action="register" method="post">
 
-    {% csrf_token %}
+                        {% csrf_token %}
 
-        <h2 id="error">Welcome to SignUp</h2>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Name</label>
+                                    <input id="name" class="input--style-4" type="text" name="Name" required>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Age</label>
+                                    <input id="age" class="input--style-4" type="number" min="1" max="50" name="Age" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Email</label>
+                                    <input id="email" class="input--style-4" type="email" name="Email" required>
+                                </div>
+                            </div>
 
-  <div class="form-group">
-    <label for="exampleInputEmail1">Name</label>
-    <input type="text"  name ="Name" id="name" class="form-control"  aria-describedby="emailHelp" placeholder="Name">
 
-  </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Gender</label>
+                                    <input id="gender" class="input--style-4" type="text" name="Gender" required>
+                                </div>
+<!--                                <div class="input-group">-->
+<!--                                    <label class="label">Gender</label>-->
+<!--                                    <div class="p-t-10">-->
+<!--                                        <label class="radio-container m-r-45">Male-->
+<!--                                            <input type="radio" value="Male" name="Gender1">-->
+<!--                                            <span class="checkmark"></span>-->
+<!--                                        </label>-->
+<!--                                        <label class="radio-container">Female-->
+<!--                                            <input type="radio" value="Female" name="Gender2">-->
+<!--                                            <span class="checkmark"></span>-->
+<!--                                        </label>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                            </div>
+                        </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">DOB</label>
+                                    <input id="dob" class="input--style-4" type="date" name="Dob" required>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Mobile Number</label>
+                                    <input id="mob" class="input--style-4" type="tel" name="Mob" required>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Department</label>
+                                    <input id="dept" class="input--style-4" type="text" name="email" required>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">University</label>
+                                    <input id="university" class="input--style-4" type="text" name="University" required>
+                                </div>
+                            </div>
+                        </div>
 
-  <div class="form-group">
-    <label for="exampleInputPassword1">Age</label>
-    <input type="number" name="Age" id="age" class="form-control"  placeholder="Age">
-  </div>
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">PHD Register Number</label>
+                                    <input id="phd_reg" class="input--style-4" type="number" name="Phd_Reg" required>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">PHD joining Date</label>
+                                    <input id="phd_joining_date" class="input--style-4" type="date" name="Phd_Joining_Date" required>
+                                </div>
+                            </div>
+                        </div>
 
-    <div class="form-group">
-    <label for="exampleInputEmail1">Gender</label>
-    <input type="text" name="Gender" id="gender" class="form-control"  aria-describedby="emailHelp" placeholder="Gender">
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Research Topic</label>
+                                    <input id="research_topic" class="input--style-4" type="text" name="Research_Topic" required>
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Research Guide</label>
+                                    <input id="research_guide" class="input--style-4" type="text" name="Research_Guide" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row row-space">
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Contact of Guide (MAIL-ID)</label>
+                                    <input id="guide_mail" class="input--style-4" type="email" name="Guide_Mail" required>
+                                </div>
+                            </div>
+
+                            <div class="col-2">
+                                <div class="input-group">
+                                    <label class="label">Address</label>
+                                    <input id="address" class="input--style-4" type="text" name="Address" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-t-15">
+                            <button id="butn" class="btn btn--radius-2 btn--blue" type="Submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="form-group">
-    <label for="exampleInputEmail1">Address</label>
-    <input type="text" name="Address" id="address" class="form-control" aria-describedby="emailHelp" placeholder="Address">
-    </div>
-
-      <div class="form-group">
-    <label for="exampleInputEmail1">Mobile Number</label>
-    <input type="tel" name="Mob" id="mob" class="form-control"  aria-describedby="emailHelp" placeholder="Mobile Number">
-    </div>
-
-    <div class="form-group">
-    <label for="exampleInputEmail1">Email</label>
-    <input type="Email" name="Email" id="email" class="form-control"  aria-describedby="emailHelp" placeholder="Email">
-    </div>
-
-    <div class="form-group">
-    <label for="exampleInputEmail1">Department</label>
-    <input type="text" name="Department" id="dept" class="form-control"  aria-describedby="emailHelp" placeholder="department">
-    </div>
-
-  <div class="form-group">
-    <label for="exampleInputEmail1">University</label>
-    <input type="text" name="University" id="university" class="form-control"  aria-describedby="emailHelp" placeholder="University">
-    </div>
-
-    <div class="form-group">
-    <label for="exampleInputEmail1">DOB</label>
-    <input type="date" name="Dob" id="dob" class="form-control"  aria-describedby="emailHelp" placeholder="DOB">
-    </div>
-
-   <div class="form-group">
-    <label for="exampleInputEmail1">PHD Register Number</label>
-    <input type="num" name="Phd_Reg" id="phd_reg" class="form-control"  aria-describedby="emailHelp" placeholder="PHD Register Number">
-    </div>
-
- <div class="form-group">
-    <label for="exampleInputEmail1">PHD Joining Date</label>
-    <input type="date" name="Phd_Joining_Date" id="phd_joining_date" class="form-control"  aria-describedby="emailHelp" placeholder="PHD Joining Date">
-    </div>
-
-  <div class="form-group">
-    <label for="exampleInputEmail1">Research Topic</label>
-    <input type="text" name="Research_Topic" id="research_topic" class="form-control"  aria-describedby="emailHelp" placeholder="Research Topic">
-    </div>
-
-  <div class="form-group">
-    <label for="exampleInputEmail1">Research Guide</label>
-    <input type="text" name="Research_Guide" id="research_guide" class="form-control"  aria-describedby="emailHelp" placeholder="Research Guide">
-    </div>
-
-    <div class="form-group">
-    <label for="exampleInputEmail1">Contact of Guide (Gmail)</label>
-    <input type="Email" name="Guide_Mail" id="guide_mail" class="form-control"  aria-describedby="emailHelp" placeholder="Email">
-    </div>
-
-    <button type="button" id="butn" class="btn btn-primary">Submit</button>
-</form>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
 
 <script>
 
@@ -99,10 +157,11 @@
         $('#butn').click(() => {
             var name = $('#name').val()
             var age =  $('#age').val()
-            var gender =  $('#gender').val()
+            var gender = $('#gender').val()
+            //    $('input[name="Gender"]:checked').val()
             var address =  $('#address').val()
-            var mob = $ ('#mob').val()
-            var email =$ ('#email').val()
+            var mob = $('#mob').val()
+            var email =$('#email').val()
             var department= $('#dept').val()
             var university = $('#university').val()
             var dob = $('#dob').val()
@@ -156,7 +215,7 @@
 })
 
 </script>
-</div>
+<!--</div>-->
 
 </body>
 </html>
