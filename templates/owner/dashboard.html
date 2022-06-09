@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}
+    Admin Dashboard
+{% endblock title %}
+{% block body %}
+    <div class="container nav-padding">
+        <div class="row">
+            <div class="col-md-12 py-3">
+                <h1>Admin Dashboard</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{% url 'approve' %}" class="btn btn-primary">Approve</a>
+                <a href="{% url 'user_manage' %}" class="btn btn-primary">User Management</a>
+            </div>
+        </div>
+    </div>
+{% endblock body %}
