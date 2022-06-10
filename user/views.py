@@ -111,3 +111,17 @@ def payment_form(request):
     else:
         return redirect('/user/login')
 
+
+    return render(request, 'user/dashboard.html')
+
+
+#coded By Rohith (For validating email within the browser itself)
+def validate_username(request):
+    email_received = request.GET.get('username', None)
+    data = {
+        'is_taken': Applicants.objects.filter(Email=email_received).exists()
+    }
+    if data['is_taken']:
+        data['error_message'] = 'A user with this email already exists.'
+    return JsonResponse(data)
+
