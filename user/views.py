@@ -74,6 +74,7 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
+            request.session['username'] = username
             return redirect('/user/dashboard')
         else:
             messages.info(request, 'Invalid credentials')
@@ -82,6 +83,13 @@ def login(request):
     else:
         return render(request, 'user/auth/login.html')
 
+def logout(request):
+    if 'username' in request.session:
+        request.session.flush()
+    return redirect('/user/login')
 
 def dashboard(request):
-    return render(request, 'user/dashboard.html')
+    if 'username' in request.session:
+        return render(request, 'user/dashboard.html')
+    else:
+        return redirect('/user/login')
