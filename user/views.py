@@ -1,6 +1,6 @@
 from pyexpat.errors import messages
 from django.shortcuts import redirect, render
-from owner.models import Applicants
+from owner.models import Applicants,Candidates
 from django.contrib.auth.models import User, auth
 from django.http import JsonResponse
 
@@ -74,6 +74,7 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
+            request.session['username'] = username
             return redirect('/user/dashboard')
         else:
             messages.info(request, 'Invalid credentials')
@@ -82,6 +83,31 @@ def login(request):
     else:
         return render(request, 'user/auth/login.html')
 
+def logout(request):
+    if 'username' in request.session:
+        request.session.flush()
+    return redirect('/user/login')
 
 def dashboard(request):
-    return render(request, 'user/dashboard.html')
+    if 'username' in request.session:
+        User = Candidates.objects.get(UserId=request.session['username'])
+        Username = User.ApplicationId.Name
+        return render(request, 'user/dashboard.html',{'Username':Username})
+    else:
+        return redirect('/user/login')
+
+def payment_form(request):
+    user = Candidates.objects.get(UserId=request.session['username'])
+    if 'username' in request.session:
+        if request.method == 'POST' :
+            if len(request.FILES['File']) != 0:
+                PaymentDetails = request.FILES['File']
+                user.PaymentDetails=PaymentDetails
+                user.save()
+            return redirect('/user/payment_form')
+        else:
+            Uploaded_file  = user.PaymentDetails
+            return render(request, 'user/payment_form.html',{'Uploaded_file':Uploaded_file})
+    else:
+        return redirect('/user/login')
+

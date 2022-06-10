@@ -1,0 +1,10 @@
+/* Give a padding to overcome the top margin */
+.nav-padding {
+    padding-top: 56px;
+}
+
+/* Change color of the form focus */
+.form-control:focus {
+    border-color: #343a40;
+    box-shadow: 0 0 0 0.2rem #2a3035;
+} 

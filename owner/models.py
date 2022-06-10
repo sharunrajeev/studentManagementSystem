@@ -26,5 +26,6 @@ class Candidates(models.Model):
     Photo = models.ImageField(upload_to='pics')
     Achievements = models.TextField()
     PaymentStatus = models.BooleanField(default=False)
+    PaymentDetails = models.FileField(upload_to='files',default=None)
     Marks = models.IntegerField(blank=True, null=True, default=None)
     Attendance = models.IntegerField(blank=True, null=True, default=None)
