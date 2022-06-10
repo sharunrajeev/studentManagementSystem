@@ -86,11 +86,3 @@ def login(request):
 def dashboard(request):
     return render(request, 'user/dashboard.html')
 
-def payment(request):
-    return render(request, 'user/payment.html')
-
-def marks(request):
-    return render(request, 'user/marks.html')
-
-def attendance(request):
-    return render(request, 'user/attendance.html')
