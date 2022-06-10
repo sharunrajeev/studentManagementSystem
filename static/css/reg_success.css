@@ -1,0 +1,12 @@
+.reg-complt_div {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.reg-complt_div img {
+    width: 100px;
+    height: 100px;
+}

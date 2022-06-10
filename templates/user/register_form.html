@@ -18,7 +18,7 @@
     </div>
 
     <div class="card-body">
-                    <form action="register" method="post">
+                    <form action="register" method="post" enctype="multipart/form-data">
 
                         {% csrf_token %}
                         <div class="main active">
@@ -46,22 +46,22 @@
 
 
                             <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Gender</label>
-                                    <input id="gender" class="input--style-4" type="text" name="Gender" required require>
-                                </div>
 <!--                                <div class="input-group">-->
 <!--                                    <label class="label">Gender</label>-->
-<!--                                    <div class="p-t-10">-->
-<!--                                        <label class="radio-container m-r-45">Male-->
-<!--                                            <input type="radio" value="Male" name="Gender1">-->
-<!--                                            <span class="checkmark"></span>-->
-<!--                                        </label>-->
-<!--                                        <label class="radio-container">Female-->
-<!--                                            <input type="radio" value="Female" name="Gender2">-->
-<!--                                            <span class="checkmark"></span>-->
-<!--                                        </label>-->
-<!--                                    </div>-->
+<!--                                    <input id="gender" class="input&#45;&#45;style-4" type="text" name="Gender" required require>-->
+<!--                                </div>-->
+<!--                                <div class="input-group">-->
+                                    <label class="label">Gender</label>
+                                    <div class="p-t-10">
+                                        <label class="radio-container m-r-45">Male
+                                            <input type="radio" value="Male" name="Gender">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="radio-container">Female
+                                            <input type="radio" value="Female" name="Gender">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
 <!--                                </div>-->
                             </div>
                         </div>
@@ -180,8 +180,7 @@
         $('#butn').click(() => {
             var name = $('#name').val()
             var age =  $('#age').val()
-            var gender = $('#gender').val()
-            //    $('input[name="Gender"]:checked').val()
+            var gender = $('input[name="Gender"]:checked').val()
             var address =  $('#address').val()
             var mob = $('#mob').val()
             var email =$('#email').val()
@@ -236,6 +235,27 @@
 
 })
 })
+
+    $(document).ready(function(){
+    $("#email").change(function () {
+      var username = $(this).val();
+
+      $.ajax({
+        url: '/validate_username/',
+        data: {
+          'username': username
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_taken) {
+            alert("A user with this username already exists.");
+          }
+        }
+      });
+
+    });
+});
+
 
 </script>
 <!--</div>-->

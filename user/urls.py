@@ -19,7 +19,13 @@ from . import views
 
 urlpatterns = [
     path('login', views.login, name='login'),
+    path('logout', views.logout, name='logout'),
     path('register', views.register, name='register'),
     path('regSuccess', views.reg_success, name='regSuccess'),
     path('dashboard', views.dashboard, name='dashboard'),
+
+    path('payment_form', views.payment_form, name='payment_form'),
+
+
+
 ]

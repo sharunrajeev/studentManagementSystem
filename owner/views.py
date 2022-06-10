@@ -77,10 +77,27 @@ def select(request, userid):
     email.fail_silently = False
     email.send()
 
+
     return redirect('approve')
 
-# User management Views
-# Sharun
+  
+
+
+def payment(request):
+
+
+    if request.method == 'POST':
+        Name = request.POST['name']
+        users = Candidates.objects.filter(ApplicationId__Name__icontains=Name)
+    else:
+        users = Candidates.objects.all()
+
+    users = reversed(users)
+    return render(request, 'owner/paymentstatus.html',{'users':users})
+
+
+# User management by Sharun
+
 def user_manage(request):
     users=Applicants.objects.all()
     return render(request, 'owner/user_manage.html', {'users': users})
