@@ -803,4 +803,5 @@ input[type=number] {
 
 .label {
   color: #555555;
+  display: block;
 }
