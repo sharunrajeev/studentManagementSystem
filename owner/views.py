@@ -75,7 +75,25 @@ def select(request, userid):
     email.fail_silently = False
     email.send()
 
+
     return redirect('approve')
+
+  
+
+
+def payment(request):
+
+
+    if request.method == 'POST':
+        Name = request.POST['name']
+        users = Candidates.objects.filter(ApplicationId__Name__icontains=Name)
+    else:
+        users = Candidates.objects.all()
+
+    users = reversed(users)
+    return render(request, 'owner/paymentstatus.html',{'users':users})
+
+
 
 
 def user_manage(request):
