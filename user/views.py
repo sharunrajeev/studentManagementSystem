@@ -89,6 +89,7 @@ def logout(request):
     return redirect('/user/login')
 
 def dashboard(request):
+
     if 'username' in request.session:
         User = Candidates.objects.get(UserId=request.session['username'])
         Username = User.ApplicationId.Name
@@ -124,4 +125,8 @@ def validate_username(request):
     if data['is_taken']:
         data['error_message'] = 'A user with this email already exists.'
     return JsonResponse(data)
+
+
+    return render(request, 'user/dashboard.html')
+
 
