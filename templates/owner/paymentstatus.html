@@ -28,10 +28,11 @@
                     <form action="payment" method="post">
 
                       {% csrf_token %}
+
                         <div class="input-group">
-                            <input name="q" type="text" placeholder="Search" class="form-control form-control-lg" />
+                            <input name="name" type="text" placeholder="Search" class="form-control form-control-lg" />
                             <div class="input-group-append">
-                                <button class="btn btn-dark btn-lg">Search</button>
+                                <button type="submit" class="btn btn-dark btn-lg">Search</button>
                             </div>
                         </div>
                     </form>
