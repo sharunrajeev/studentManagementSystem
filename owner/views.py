@@ -74,6 +74,13 @@ def select(request,userid):
     return redirect ('approve')
 
 
+def payment(request):
+    users = Candidates.objects.all()
+
+    #users = reversed(users)
+    return render(request, 'owner/paymentstatus.html',{'users':users})
+
+
 
 
 
