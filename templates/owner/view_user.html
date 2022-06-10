@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ user.Name }} | Profile
+{% endblock title %}
+{% block body %}
+    <div class="container nav-padding">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ user.Name }}</h1>
+                <p>{{ user.Email }}</p>
+            </div>
+        </div>
+        <div class="row gap-1">
+            <div class="col-md-12">
+                <a href="update_user/{{ user.Email }}" class="btn btn-dark">Update Profile</a>
+                <!-- Button trigger modal -->
+                <button type="button"
+                        class="btn btn-dark"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteConfirmation">
+                    Delete User
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade"
+         id="deleteConfirmation"
+         tabindex="-1"
+         aria-labelledby="deleteConfirmationLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteConfirmationLabel">Are you sure to delete user {{ user.Name }}?</h5>
+                    <button type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Please confirm by clicking on Confirm.</p>
+                    <p>Note: This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="/owner/delete_user/{{ user.id }}">
+                        <button type="button" class="btn btn-dark">Confirm</button>
+                    </a>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock body %}

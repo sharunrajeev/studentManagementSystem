@@ -1,10 +1,12 @@
 
+from email import message
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from .models import Applicants, Candidates
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
+import django.contrib.messages as messages
 
 # Create your views here.
 
@@ -77,7 +79,8 @@ def select(request, userid):
 
     return redirect('approve')
 
-
+# User management Views
+# Sharun
 def user_manage(request):
     users=Applicants.objects.all()
     return render(request, 'owner/user_manage.html', {'users': users})
@@ -88,7 +91,27 @@ def search_user(request):
         searched_user = request.GET['search_data']
         requested_user = Applicants.objects.filter(Email=searched_user)
         if requested_user:
-            return render(request, 'owner/user_manage.html', {'users': requested_user})
+            return render(request, 'owner/user_manage.html', {'users': requested_user, 'message': 'User found'})
         else:
             users=Applicants.objects.all()
-            return render(request, 'owner/user_manage.html', {'users': users})
+            return render(request, 'owner/user_manage.html', {'users': users, 'message': 'User not found'})
+
+
+def view_user(request, email):
+    user = Applicants.objects.filter(Email=email)[:1].get()
+    return render(request, 'owner/view_user.html', {'user': user})
+
+
+def update_user(request, email):
+    # TODO: Update user details
+    pass
+
+
+def delete_user(request, userid):
+    try:
+        Candidates.objects.get(ApplicationId=userid).delete()
+        Applicants.objects.filter(id=userid).delete()
+        messages.success(request, 'User deleted successfully')
+    except:
+        messages.error(request, 'Error occured while deleting user')
+    return redirect('user_manage')
