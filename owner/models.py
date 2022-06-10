@@ -17,6 +17,7 @@ class Applicants(models.Model):
     Research_Topic = models.CharField(max_length=100, default=None)
     Research_Guide = models.CharField(max_length=100, default=None)
     Guide_Mail = models.EmailField(max_length=100, default=None)
+    Guide_Phone = models.CharField(max_length=13, default=None)
     Eligibility = models.BooleanField(blank=True, null=True, default=None)
 
 
