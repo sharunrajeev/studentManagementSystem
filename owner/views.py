@@ -8,6 +8,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 import django.contrib.messages as messages
 
+
 # Create your views here.
 
 
@@ -16,7 +17,6 @@ def dashboard(request):
 
 
 def approve(request):
-
     users = Applicants.objects.all()
 
     users = reversed(users)
@@ -46,7 +46,6 @@ def reject(request, userid):
 
 
 def select(request, userid):
-
     user = Applicants.objects.get(id=userid)
     user.Eligibility = True
     user.save()
@@ -77,15 +76,10 @@ def select(request, userid):
     email.fail_silently = False
     email.send()
 
-
     return redirect('approve')
-
-  
 
 
 def payment(request):
-
-
     if request.method == 'POST':
         Name = request.POST['name']
         users = Candidates.objects.filter(ApplicationId__Name__icontains=Name)
@@ -93,13 +87,13 @@ def payment(request):
         users = Candidates.objects.all()
 
     users = reversed(users)
-    return render(request, 'owner/paymentstatus.html',{'users':users})
+    return render(request, 'owner/paymentstatus.html', {'users': users})
 
 
 # User management by Sharun
 
 def user_manage(request):
-    users=Applicants.objects.all()
+    users = Applicants.objects.all()
     return render(request, 'owner/user_manage.html', {'users': users})
 
 
@@ -110,7 +104,7 @@ def search_user(request):
         if requested_user:
             return render(request, 'owner/user_manage.html', {'users': requested_user, 'message': 'User found'})
         else:
-            users=Applicants.objects.all()
+            users = Applicants.objects.all()
             return render(request, 'owner/user_manage.html', {'users': users, 'message': 'User not found'})
 
 

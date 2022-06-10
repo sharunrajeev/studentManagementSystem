@@ -24,7 +24,7 @@ urlpatterns = [
     path('user/', include('user.urls')),
     path('owner/', include('owner.urls')),
     path('', include('django.contrib.auth.urls')),
-    re_path(r'^validate_username/$', views.validate_username, name='validate_username'), # Change made by Rohith for email validation
+    re_path(r'^validate_email/$', views.validate_email, name='validate_email'), # Change made by Rohith for email validation
 ]
 
 urlpatterns = urlpatterns + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

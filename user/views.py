@@ -117,8 +117,8 @@ def payment_form(request):
 
 
 #coded By Rohith (For validating email within the browser itself)
-def validate_username(request):
-    email_received = request.GET.get('username', None)
+def validate_email(request):
+    email_received = request.GET.get('email', None)
     data = {
         'is_taken': Applicants.objects.filter(Email=email_received).exists()
     }
