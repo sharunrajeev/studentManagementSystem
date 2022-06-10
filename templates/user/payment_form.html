@@ -1,0 +1,67 @@
+{% extends 'base.html'%}
+{% block body %}
+
+  <div class="container mt-5">
+
+      <br>
+            <div class="row ">
+
+          <!--Grid column-->
+          <div class="col-md-6 mb-4">
+
+            <!--Title-->
+            <h2 class="">
+              Payment File
+            </h2>
+
+            <!--Description-->
+            <p>Default styling for Bootstrap File Input component</p>
+
+            <!-- Description -->
+            <p>The file input is the most gnarly of the bunch and requires additional JavaScript if you’d like to hook them up
+              with functional Choose file… and selected file name text.
+            </p>
+
+
+
+          </div>
+          <!--Grid column-->
+
+          <!--Grid column-->
+          <div class="col-md-6 mb-md-0 mb-4">
+
+            <!--Title-->
+            <h2 class="">
+              Give your Payment Details
+
+            </h2>
+
+            <!--Description-->
+            <p>Material Design styling for Bootstrap File Input component</p>
+
+            <!--Section: Live preview-->
+            <section class="section-preview">
+
+              <form class="md-form my-3" method="post" action="payment_form" enctype="multipart/form-data">
+                  {% csrf_token %}
+                <div class="file-field">
+                  <div class="btn btn-dark btn-sm float-left waves-effect waves-light">
+                    <span>Choose file</span>
+                    <input type="file" name="File">
+                  </div>
+                    <button type="submit" class="btn btn-dark w-10" id="files">Submit</button>
+                    <label for="files" class="btn btn-dark">{{ Uploaded_file }}</label>
+                </div>
+              </form>
+c
+            </section>
+            <!--Section: Live preview-->
+
+          </div>
+          <!--Grid column-->
+
+        </div>
+
+  </div>
+
+{% endblock %}
