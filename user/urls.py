@@ -22,4 +22,8 @@ urlpatterns = [
     path('register', views.register, name='register'),
     path('regSuccess', views.reg_success, name='regSuccess'),
     path('dashboard', views.dashboard, name='dashboard'),
+    path('payment', views.payment, name='payment'),
+    path('marks', views.marks, name='marks'),
+    path('attendance', views.attendance, name='attendance'),
+
 ]
