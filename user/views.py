@@ -98,8 +98,8 @@ def dashboard(request):
         return redirect('/user/login')
 
 def payment_form(request):
-    user = Candidates.objects.get(UserId=request.session['username'])
     if 'username' in request.session:
+        user = Candidates.objects.get(UserId=request.session['username'])
         if request.method == 'POST' :
             if len(request.FILES['File']) != 0:
                 PaymentDetails = request.FILES['File']
