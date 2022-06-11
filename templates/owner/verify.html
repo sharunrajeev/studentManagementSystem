@@ -19,6 +19,7 @@
 <div class="verify_div">
   <div class="verify_header">
 
+#<<<<<<< master
   </div>
   <div class="verify_lists-parent">
     {% for user in users %}
@@ -35,6 +36,37 @@
           <a href="select/{{ individual.id }}"><div>Approve</div></a>
           <a href="reject/{{ individual.id }}"><div>Reject</div></a>
         </div>
+#=======
+    <div class="card mt-5" style="width: 18rem;">
+      <div class="card-body">
+        <h5 class="card-title"></h5>
+        <h6 class="card-subtitle mb-2 text-muted"></h6>
+
+        <p class="card-text">Name:{{ user.Name }}</p>
+        <p class="card-text">Age:{{ user.Age }}</p>
+        <p class="card-text">Gender:{{ user.Gender }}</p>
+        <p class="card-text">Address:{{ user.Address }}</p>
+        <p class="card-text">Phone:{{ user.Mob }}</p>
+        <p class="card-text">Email: {{ user.Email }}</p>
+        <p class="card-text">Department:{{ user.Department }}</p>
+        <p class="card-text">University:{{ user.University }}</p>
+        <p class="card-text">Dob:{{ user.Dob }}</p>
+        <p class="card-text">Phd_Reg:{{ user.Phd_Reg }}</p>
+        <p class="card-text">DPhd_Joining_Date:{{ user.Phd_Joining_Date }}</p>
+        <p class="card-text">Research_Topic:{{ user.Research_Topic }}</p>
+        <p class="card-text">Research_Guide:{{ user.Research_Guide }}</p>
+        <p class="card-text">Guide_Mail:{{ user.Guide_Mail }}</p>
+        #<p class="card-text">Guide_Phone:{{ user.Guide_Phone }}</p>
+
+        {% if user.Eligibility == True %}
+        <a href="# class=" card-link">Selected </a>
+        {% elif user.Eligibility == False %}
+        <a href="# class=" card-link">Rejected </a>
+        {% else %}
+        <a href="select/{{ user.id }}" class="card-link">Select</a>
+        <a href="reject/{{ user.id }}" class="card-link">Reject</a>
+        {% endif %}
+#>>>>>>> master
       </div>
 
     </div>
