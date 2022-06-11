@@ -136,3 +136,8 @@ def validate_email(request):
     return render(request, 'user/dashboard.html')
 
 
+def marks(request):
+    return render(request, 'user/marks.html')
+
+def attendance(request):
+    return render(request, 'user/attendance.html')
