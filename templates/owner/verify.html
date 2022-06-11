@@ -27,8 +27,16 @@
       <p class="name">{{ user.Name }}</p>
       <p class="num">{{ user.Mob }}</p>
       <p class="num">{{ user.Phd_Reg }}</p>
-      <a href="">View</a>
+      <a href="approve/{{ user.id }}"><button type="button" class="btn btn-outline-secondary btn-sm">View</button></a>
       <input type="checkbox"/>
+      <div class="verify_menu" tabindex="-1">
+        <div class="three_dots"></div>
+        <div class="dropdown">
+          <a href="select/{{ individual.id }}"><div>Approve</div></a>
+          <a href="reject/{{ individual.id }}"><div>Reject</div></a>
+        </div>
+      </div>
+
     </div>
     {% endfor %}
   </div>
