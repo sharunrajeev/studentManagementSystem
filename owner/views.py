@@ -1,4 +1,3 @@
-
 from email import message
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
@@ -23,6 +22,11 @@ def approve(request):
 
     return render(request, 'owner/verify.html', {'users': users})
 
+
+def individual_view(request, userid):
+    print(userid)
+    selected_user = Applicants.objects.get(id=userid)
+    return render(request, 'owner/individual.html', {'individual': selected_user})
 
 def reject(request, userid):
     print(userid)

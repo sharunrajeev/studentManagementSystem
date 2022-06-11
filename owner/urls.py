@@ -8,6 +8,7 @@ urlpatterns = [
     # Home page
     path('', views.dashboard, name='dashboard'),
     path('approve', views.approve, name='approve'),
+    path('approve/<userid>', views.individual_view, name='individual_view'),
     path('payment',views.payment,name='payment'),
     path('reject/<userid>', views.reject, name='reject'),
     path('select/<userid>', views.select, name='select'),
