@@ -112,16 +112,8 @@
 
 /*----------------  FORM  --------------------*/
 .card-body {
-  padding: 0 max(5rem, 12%);
+  padding:  2rem max(5rem, 12%);
 }
-
-
-
-
-
-
-
-
 
 /* ==========================================================================
    #FONT
@@ -756,8 +748,12 @@ input {
 }
 
 .card-4 .card-body {
-  padding: 57px 65px;
+  /*padding: 57px 65px;*/
   padding-bottom: 65px;
+}
+
+.card-body {
+  position: relative;
 }
 
 @media (max-width: 767px) {
@@ -804,4 +800,13 @@ input[type=number] {
 .label {
   color: #555555;
   display: block;
+}
+
+
+/* ==========================================================================
+   #MEDIA QUERY
+   ========================================================================== */
+
+@media screen and (max-width: 1000px) {
+
 }

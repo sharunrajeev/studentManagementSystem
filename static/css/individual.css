@@ -1,0 +1,25 @@
+.individual-main {
+    display: flex;
+}
+
+.ind-personal {
+    display: flex;
+}
+
+.ind-personal_fig {
+    width: 180px;
+    height: 200px;
+}
+
+.ind-personal_fig img {
+    width: 100%;
+    height: 100%;
+}
+
+.ind-academic {
+
+}
+
+.ind-verify {
+
+}
