@@ -1,8 +1,13 @@
+from email import message
+from lib2to3.pgen2 import token
 from pyexpat.errors import messages
 from django.shortcuts import redirect, render
 from owner.models import Applicants,Candidates
 from django.contrib.auth.models import User, auth
 from django.http import JsonResponse
+from django.contrib.auth import views as auth_views
+
+
 
 
 # Create your views here.
@@ -82,6 +87,7 @@ def login(request):
 
     else:
         return render(request, 'user/auth/login.html')
+
 
 def logout(request):
     if 'username' in request.session:
