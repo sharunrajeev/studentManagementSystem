@@ -103,8 +103,28 @@
           </table>
       </div>
       <div class="ind-verify">
-        <a href="select/{{ individual.id }}" ><button type="button" class="btn btn-outline-info">Select</button></a>
-        <a href="reject/{{ individual.id }}" ><button type="button" class="btn btn-outline-info">Reject</button></a>
+
+
+        {% if individual.Eligibility == True %}
+        <a href="#" class=" btn btn-outline-info">Selected </a>
+        {% elif user.Eligibility == False %}
+        <a href="#" class="btn btn-outline-info">Rejected </a>
+        {% else %}
+  <a href="/owner/select/{{ individual.id }}" ><button type="button" class="btn btn-outline-info">Select</button></a>
+        <a href="/owner/reject/{{ individual.id }}" ><button type="button" class="btn btn-outline-info">Reject</button></a>
+
+        {% endif %}
+
+
+
+
+
+
+
+
+
+
+
 
       </div>
     </div>
