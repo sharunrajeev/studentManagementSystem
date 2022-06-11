@@ -113,7 +113,7 @@ def search_user(request):
 
 
 def view_user(request, email):
-    user = Applicants.objects.filter(Email=email)[:1].get()
+    user = Candidates.objects.filter(Email=email)[:1].get()
     return render(request, 'owner/view_user.html', {'user': user})
 
 

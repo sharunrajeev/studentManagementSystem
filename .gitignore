@@ -1,5 +1,6 @@
 # Python cache
 __pycache__
+*.pyc
 
 # IDE files
 .idea
@@ -8,12 +9,9 @@ __pycache__
 # environment variables
 .env
 
-# virtual environment
-.venv
-
-# migration files
+# Migration files
 migrations
 
-
-*.pyc
-
+# virtual environment
+.venv
+venv
