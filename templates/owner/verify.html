@@ -18,7 +18,6 @@
 </div>
 <div class="verify_div">
   <div class="verify_header">
-
   </div>
   <div class="verify_lists-parent">
     {% for user in users %}
@@ -32,13 +31,14 @@
       <div class="verify_menu" tabindex="-1">
         <div class="three_dots"></div>
         <div class="dropdown">
-          <a href="select/{{ individual.id }}"><div>Approve</div></a>
-          <a href="reject/{{ individual.id }}"><div>Reject</div></a>
+          <a href="select/{{ user.id }}" ><div>Approve</div></a>
+          <a href="reject/{{ user.id }}" ><div>Reject</div></a>
         </div>
       </div>
 
     </div>
     {% endfor %}
+
   </div>
 </div>
   </div>
