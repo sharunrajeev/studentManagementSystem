@@ -15,7 +15,7 @@ $(document).ready(function()
             var research_topic = $('#research_topic').val()
             var research_guide = $('#research_guide').val()
             var guide_mail = $('#guide_mail').val()
-
+            var guide_phone = $('guide_phone').val()
 
 
             var data ={
@@ -34,6 +34,7 @@ $(document).ready(function()
                 'Research_Topic':research_topic,
                 'Research_Guide':research_guide,
                 'Guide_Mail':guide_mail,
+                'Guide_Phone': guide_phone
             }
 
 
