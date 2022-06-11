@@ -11,7 +11,7 @@
     <link href="{% static 'css/warning_box.css' %}" rel="stylesheet"/>
 {% endblock %}
 
-<!--<div class="card w-50 m-auto mt-5" >-->
+<!-- Body -->
 {% block body %}
     <div class="register_main">
     <div class="progress_bar">
@@ -19,151 +19,151 @@
     </div>
 
     <div class="card-body">
-                    <form action="register" method="post" enctype="multipart/form-data">
+        <form action="register" method="post" enctype="multipart/form-data">
 
-                        {% csrf_token %}
-                        <div class="main active">
-                            <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Name</label>
-                                    <input id="name" class="input--style-4 input_default" type="text" name="Name" required require>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Age</label>
-                                    <input id="age" class="input--style-4 input_default" type="number" min="1" max="50" name="Age" required require>
-                                </div>
-                            </div>
-                        </div>
-                            <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Email</label>
-                                    <input id="email" class="input--style-4 input_default" type="email" name="Email" required require>
-                                </div>
-                            </div>
+            {% csrf_token %}
+            <div class="main active">
+                <div class="row row-space">
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">Name</label>
+                        <input id="name" class="input--style-4 input_default" type="text" name="Name" required require>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">Age</label>
+                        <input id="age" class="input--style-4 input_default" type="number" min="1" max="50" name="Age" required require>
+                    </div>
+                </div>
+            </div>
+                <div class="row row-space">
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">Email</label>
+                        <input id="email" class="input--style-4 input_default" type="email" name="Email" required require>
+                    </div>
+                </div>
 
 
-                            <div class="col-2">
+                <div class="col-2">
 <!--                                <div class="input-group">-->
 <!--                                    <label class="label">Gender</label>-->
 <!--                                    <input id="gender" class="input&#45;&#45;style-4" type="text" name="Gender" required require>-->
 <!--                                </div>-->
 <!--                                <div class="input-group">-->
-                                    <label class="label">Gender</label>
-                                    <div class="p-t-10">
-                                        <label class="radio-container m-r-45">Male
-                                            <input type="radio" value="Male" checked name="Gender">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                        <label class="radio-container">Female
-                                            <input type="radio" value="Female" name="Gender">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
+                        <label class="label">Gender</label>
+                        <div class="p-t-10">
+                            <label class="radio-container m-r-45">Male
+                                <input type="radio" value="Male" checked name="Gender">
+                                <span class="checkmark"></span>
+                            </label>
+                            <label class="radio-container">Female
+                                <input type="radio" value="Female" name="Gender">
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
 <!--                                </div>-->
-                            </div>
+                </div>
+            </div>
+                <div class="row row-space">
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">DOB</label>
+                        <input id="dob" class="input--style-4 input_default" type="date" name="Dob" required require>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">Mobile Number</label>
+                        <input id="mob" class="input--style-4 input_default" type="tel" name="Mob" required require>
+                    </div>
+                </div>
+            </div>
+                <div class="row row-space">
+                    <div class="input-group">
+                        <label class="label">Address</label>
+                        <input id="address" class="input--style-4 input_default" type="text" name="Address" required require>
+                    </div>
+            </div>
+                <div class="p-t-15">
+                    <button id="next" class="btn btn--radius-2 btn--blue next_button" type="button">Next</button>
+                </div>
+            </div>
+
+            <div class="main">
+                <div class="row row-space">
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">Department</label>
+                        <input id="dept" class="input--style-4 input_default" type="text" name="Department" required require>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">University</label>
+                        <input id="university" class="input--style-4 input_default" type="text" name="University" required require>
+                    </div>
+                </div>
+            </div>
+                <div class="row row-space">
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">PHD Register Number</label>
+                        <input id="phd_reg" class="input--style-4 input_default" type="number" name="Phd_Reg" required require>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">PHD joining Date</label>
+                        <input id="phd_joining_date" class="input--style-4 input_default" type="date" name="Phd_Joining_Date" required require>
+                    </div>
+                </div>
+            </div>
+                <div class="row row-space">
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">Research Topic</label>
+                        <input id="research_topic" class="input--style-4 input_default" type="text" name="Research_Topic" required require>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">Research Guide</label>
+                        <input id="research_guide" class="input--style-4 input_default" type="text" name="Research_Guide" required require>
+                    </div>
+                </div>
+            </div>
+                <div class="row row-space">
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">Contact of Guide (MAIL-ID)</label>
+                        <input id="guide_mail" class="input--style-4 input_default" type="email" name="Guide_Mail" required require>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="input-group">
+                       <label class="label">Contact of Guide (Mobile Number)</label>
+                       <input  id="guide_phone" class="input--style-4 input_default" type="tel" name="Guide_Phone" required require>
+                    </div>
+                </div>
+
+                </div>
+                <div class="buttons_parent">
+                        <div class="p-t-15">
+                            <button class="btn btn--radius-2 btn--blue back_button" type="button">Back</button>
                         </div>
-                            <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">DOB</label>
-                                    <input id="dob" class="input--style-4 input_default" type="date" name="Dob" required require>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Mobile Number</label>
-                                    <input id="mob" class="input--style-4 input_default" type="tel" name="Mob" required require>
-                                </div>
-                            </div>
-                        </div>
-                            <div class="row row-space">
-                                <div class="input-group">
-                                    <label class="label">Address</label>
-                                    <input id="address" class="input--style-4 input_default" type="text" name="Address" required require>
-                                </div>
-                        </div>
-                            <div class="p-t-15">
-                                <button id="next" class="btn btn--radius-2 btn--blue next_button" type="button">Next</button>
-                            </div>
+                        <div class="p-t-15">
+                            <button id="butn" class="btn btn--radius-2 btn--blue" type="Submit">Submit</button>
                         </div>
 
-                        <div class="main">
-                            <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Department</label>
-                                    <input id="dept" class="input--style-4 input_default" type="text" name="Department" required require>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">University</label>
-                                    <input id="university" class="input--style-4 input_default" type="text" name="University" required require>
-                                </div>
-                            </div>
-                        </div>
-                            <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">PHD Register Number</label>
-                                    <input id="phd_reg" class="input--style-4 input_default" type="number" name="Phd_Reg" required require>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">PHD joining Date</label>
-                                    <input id="phd_joining_date" class="input--style-4 input_default" type="date" name="Phd_Joining_Date" required require>
-                                </div>
-                            </div>
-                        </div>
-                            <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Research Topic</label>
-                                    <input id="research_topic" class="input--style-4 input_default" type="text" name="Research_Topic" required require>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Research Guide</label>
-                                    <input id="research_guide" class="input--style-4 input_default" type="text" name="Research_Guide" required require>
-                                </div>
-                            </div>
-                        </div>
-                            <div class="row row-space">
-                            <div class="col-2">
-                                <div class="input-group">
-                                    <label class="label">Contact of Guide (MAIL-ID)</label>
-                                    <input id="guide_mail" class="input--style-4 input_default" type="email" name="Guide_Mail" required require>
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <div class="input-group">
-                                   <label class="label">Contact of Guide (Mobile Number)</label>
-                                   <input  id="guide_phone" class="input--style-4 input_default" type="tel" name="Guide_Phone" required require>
-                                </div>
-                            </div>
+                </div>
 
-                            </div>
-                            <div class="buttons_parent">
-                                    <div class="p-t-15">
-                                        <button class="btn btn--radius-2 btn--blue back_button" type="button">Back</button>
-                                    </div>
-                                    <div class="p-t-15">
-                                        <button id="butn" class="btn btn--radius-2 btn--blue" type="Submit">Submit</button>
-                                    </div>
-
-                            </div>
-
-                        </div>
+            </div>
 
 
 
-                    </form>
+        </form>
         {% include 'reusable/warning_box.html' %}
                 </div>
 
@@ -184,66 +184,5 @@
 
 <script src="{% static 'js/register_form.js' %}"></script>
 <script src="{% static 'js/progress_indicator.js' %}"></script>
-<script>
-    $(document).ready(function()
-    {
-        $('#butn').click(() => {
-            var name = $('#name').val()
-            var age =  $('#age').val()
-            var gender = $('input[name="Gender"]:checked').val()
-            var address =  $('#address').val()
-            var mob = $('#mob').val()
-            var email =$('#email').val()
-            var department = $('#dept').val()
-            var university = $('#university').val()
-            var dob = $('#dob').val()
-            var phd_reg = $('#phd_reg').val()
-            var phd_joining_date = $('#phd_joining_date').val()
-            var research_topic = $('#research_topic').val()
-            var research_guide = $('#research_guide').val()
-            var guide_mail = $('#guide_mail').val()
 
-
-
-            var data ={
-                'csrfmiddlewaretoken':'{{csrf_token}}',
-                'Name':name,
-                'Age':age,
-                'Gender':gender,
-                'Address':address,
-                'Mob':mob,
-                'Email':email,
-                'Department':department,
-                'University':university,
-                'Dob':dob,
-                'Phd_Reg':phd_reg,
-                'Phd_Joining_Date':phd_joining_date,
-                'Research_Topic':research_topic,
-                'Research_Guide':research_guide,
-                'Guide_Mail':guide_mail,
-            }
-
-
-            $.ajax({
-                url:'register',
-                type: 'POST',
-                data:data,
-                dataType: 'json',
-                success:function(data){
-
-                    if(data.success=="pass"){
-                        console.log("success")
-                        window.location.replace('regSuccess')
-                    }else{
-                        console.log("error")
-                       $("#error").html("Email already exists!!");
-                    }
-                }
-            })
-
-
-
-})
-})
-</script>
 {% endblock %}
