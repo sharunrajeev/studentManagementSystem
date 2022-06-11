@@ -61,11 +61,11 @@ def register(request):
             )
 
     else:
-        return render(request, 'user/register_form.html')
+        return render(request, 'user/register_section/register_form.html')
 
 
 def reg_success(request):
-    return render(request, 'user/reg_complete.html')
+    return render(request, 'user/register_section/reg_complete.html')
 
 
 # Sharun
