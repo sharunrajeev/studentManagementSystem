@@ -28,6 +28,7 @@ def register(request):
         Research_Topic = request.POST['Research_Topic']
         Research_Guide= request.POST['Research_Guide']
         Guide_Mail = request.POST['Guide_Mail']
+        Guide_Phone = request.POST['Guide_Phone']
 
 
         if Applicants.objects.filter(Email=Email).exists():
@@ -51,6 +52,7 @@ def register(request):
             user_obj.Research_Topic = Research_Topic
             user_obj.Research_Guide = Research_Guide
             user_obj.Guide_Mail = Guide_Mail
+            user_obj.Guide_Phone = Guide_Phone
 
             user_obj.save()
 
