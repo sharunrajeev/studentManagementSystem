@@ -5,13 +5,19 @@ from user.views import dashboard
 from . import views
 
 urlpatterns = [
-
+    # Home page
     path('', views.dashboard, name='dashboard'),
     path('approve', views.approve, name='approve'),
+    path('approve/<userid>', views.individual_view, name='individual_view'),
     path('payment',views.payment,name='payment'),
     path('reject/<userid>', views.reject, name='reject'),
     path('select/<userid>', views.select, name='select'),
+    
+    # User management path
     path('user_manage', views.user_manage, name='user_manage'),
     path('search_user', views.search_user, name='search_user'),
+    path('view_user/<email>', views.view_user, name='view_user'),
+    path('update_user/<email>', views.update_user, name='update_user'),
+    path('delete_user/<userid>', views.delete_user, name='delete_user'),
 ]
 
