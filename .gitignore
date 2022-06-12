@@ -8,3 +8,10 @@ __pycache__
 
 # environment variables
 .env
+
+# Migration files
+migrations
+
+# virtual environment
+.venv
+venv

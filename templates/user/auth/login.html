@@ -22,7 +22,7 @@
                 <input type="password" class="form-control" id="password" name="Password" autocomplete="off" >
             </div>
             <div class="mb-3">
-                <p class="text-start">Forgot Password?</p>
+                <a href={% url 'password_reset' %}><p class="text-start">Forgot Password?</p></a>
             </div>
             <button type="submit" class="btn btn-dark w-100">Sign In</button>
         </form>

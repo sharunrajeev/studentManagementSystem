@@ -1,10 +1,12 @@
-
+from email import message
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from .models import Applicants, Candidates
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
+import django.contrib.messages as messages
+
 
 # Create your views here.
 
@@ -14,13 +16,17 @@ def dashboard(request):
 
 
 def approve(request):
-
     users = Applicants.objects.all()
 
     users = reversed(users)
 
     return render(request, 'owner/verify.html', {'users': users})
 
+
+def individual_view(request, userid):
+    print(userid)
+    selected_user = Applicants.objects.get(id=userid)
+    return render(request, 'owner/individual.html', {'individual': selected_user})
 
 def reject(request, userid):
     print(userid)
@@ -44,7 +50,6 @@ def reject(request, userid):
 
 
 def select(request, userid):
-
     user = Applicants.objects.get(id=userid)
     user.Eligibility = True
     user.save()
@@ -75,15 +80,10 @@ def select(request, userid):
     email.fail_silently = False
     email.send()
 
-
     return redirect('approve')
-
-  
 
 
 def payment(request):
-
-
     if request.method == 'POST':
         Name = request.POST['name']
         users = Candidates.objects.filter(ApplicationId__Name__icontains=Name)
@@ -91,13 +91,13 @@ def payment(request):
         users = Candidates.objects.all()
 
     users = reversed(users)
-    return render(request, 'owner/paymentstatus.html',{'users':users})
+    return render(request, 'owner/paymentstatus.html', {'users': users})
 
 
-
+# User management by Sharun
 
 def user_manage(request):
-    users=Applicants.objects.all()
+    users = Applicants.objects.all()
     return render(request, 'owner/user_manage.html', {'users': users})
 
 
@@ -106,7 +106,27 @@ def search_user(request):
         searched_user = request.GET['search_data']
         requested_user = Applicants.objects.filter(Email=searched_user)
         if requested_user:
-            return render(request, 'owner/user_manage.html', {'users': requested_user})
+            return render(request, 'owner/user_manage.html', {'users': requested_user, 'message': 'User found'})
         else:
-            users=Applicants.objects.all()
-            return render(request, 'owner/user_manage.html', {'users': users})
+            users = Applicants.objects.all()
+            return render(request, 'owner/user_manage.html', {'users': users, 'message': 'User not found'})
+
+
+def view_user(request, email):
+    user = Candidates.objects.filter(Email=email)[:1].get()
+    return render(request, 'owner/view_user.html', {'user': user})
+
+
+def update_user(request, email):
+    # TODO: Update user details
+    pass
+
+
+def delete_user(request, userid):
+    try:
+        Candidates.objects.get(ApplicationId=userid).delete()
+        Applicants.objects.filter(id=userid).delete()
+        messages.success(request, 'User deleted successfully')
+    except:
+        messages.error(request, 'Error occured while deleting user')
+    return redirect('user_manage')
