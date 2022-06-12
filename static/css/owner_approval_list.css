@@ -8,14 +8,18 @@
     display: flex;
 }
 
-.sidebar-temp {
-    width: 300px;
-    height: 100vh;
-    border-right: 2px solid #333;
-}
-
 .verify_div {
     width: 100%;
+}
+
+.verify_list-head {
+    width: 95%;
+    height: 50px;
+    margin: 1rem auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .verify_list {
@@ -31,16 +35,19 @@
     align-items: center;
 }
 
-.verify_list p{
+.verify_list p,
+.verify_list-head p{
     /*flex-grow: 2;*/
     margin-bottom: 0 !important;
 }
 
-.verify_list .name {
+.verify_list .name,
+.verify_list-head .name{
     min-width: 250px;
 }
 
-.verify_list .num {
+.verify_list .num,
+.verify_list-head .num{
     min-width: 180px;
 }
 

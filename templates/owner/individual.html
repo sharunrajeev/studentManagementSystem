@@ -14,6 +14,7 @@
   <link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
   <link href="{% static 'css/style-dark.css' %}" rel="stylesheet">
   <link href="{% static 'css/waves.css' %}" rel="stylesheet">
+  <link href="{% static 'css/navbar.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
@@ -21,18 +22,25 @@
   {% include 'reusable/sidebar.html'%}
 {% include 'reusable/navbar.html' %}
 
-        {% if individual.Eligibility == True %}
-        <a href="#" class=" btn btn-outline-info">Selected </a>
-        {% elif user.Eligibility == False %}
-        <a href="#" class="btn btn-outline-info">Rejected </a>
-        {% else %}
-  <a href="/owner/select/{{ individual.id }}" ><button type="button" class="btn btn-outline-info">Select</button></a>
-        <a href="/owner/reject/{{ individual.id }}" ><button type="button" class="btn btn-outline-info">Reject</button></a>
-
-        {% endif %}
-
 <div id="wrapper">
 	<div class="main-content">
+		<div class="ind-header">
+			<figure class="ind-header_pic">
+				<img src="{% static 'assets/person_image.png' %}">
+			</figure>
+			<div class="ind-header_approve">
+				<h4>Status</h4>
+				{% if individual.Eligibility == True %}
+					<a href="#" class=" btn btn-outline-info color-green">Selected</a>
+        		{% elif user.Eligibility == False %}
+        			<a href="#" class="btn btn-outline-info color-blue">Rejected</a>
+        		{% else %}
+  					<a href="/owner/select/{{ individual.id }}" ><button type="button" class="btn btn-outline-info">Select</button></a>
+        			<a href="/owner/reject/{{ individual.id }}" ><button type="button" class="btn btn-outline-info">Reject</button></a>
+        		{% endif %}
+
+			</div>
+		</div>
 		<div class="row small-spacing">
 			<div class="col-md-9 col-xs-12">
 				<div class="row">
