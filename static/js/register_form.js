@@ -15,11 +15,13 @@ $(document).ready(function()
             var research_topic = $('#research_topic').val()
             var research_guide = $('#research_guide').val()
             var guide_mail = $('#guide_mail').val()
-            var guide_phone = $('guide_phone').val()
+            var guide_phone = $('#guide_phone').val()
+
+            const csrftoken = document.querySelector('[name=csrfmiddlewaretoken]').value;
 
 
             var data ={
-                'csrfmiddlewaretoken':'{{csrf_token}}',
+                'csrfmiddlewaretoken':csrftoken,
                 'Name':name,
                 'Age':age,
                 'Gender':gender,
