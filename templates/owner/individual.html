@@ -1,17 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  Admin Dashboard
+{% endblock %}
 
-<head>
-  {% load static %}
-  <title>Page Title</title>
-  <!-- CSS only -->
+{% block styles %}
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   <link href="{% static 'css/individual.css' %}" rel="stylesheet">
   <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
-</head>
+  <link href="{% static 'css/jquery.mCustomScrollbar.min.css' %}" rel="stylesheet">
+  <link href="{% static 'css/materialdesignicons.css' %}" rel="stylesheet">
+  <link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
+  <link href="{% static 'css/style-dark.css' %}" rel="stylesheet">
+  <link href="{% static 'css/waves.css' %}" rel="stylesheet">
+{% endblock %}
 
-<body>
+{% block body %}
+
+  {% include 'reusable/sidebar.html'%}
+{% include 'reusable/navbar.html' %}
+
   <div class="individual-main">
     <div class="sidebar-temp">
       <p>Sidebar</p>
@@ -104,7 +113,6 @@
       </div>
       <div class="ind-verify">
 
-
         {% if individual.Eligibility == True %}
         <a href="#" class=" btn btn-outline-info">Selected </a>
         {% elif user.Eligibility == False %}
@@ -115,25 +123,19 @@
 
         {% endif %}
 
-
-
-
-
-
-
-
-
-
-
-
       </div>
     </div>
 
   </div>
+  {% endblock %}
+
+  {% block scripts %}
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-</body>
-</html>
-
-
+ <script src="{% static 'js/plugins/jquery.mCustomScrollbar.concat.min.js' %}"></script>
+  <script src="{% static 'js/plugins/jquery.min.js' %}"></script>
+  <script src="{% static 'js/plugins/main.js' %}"></script>
+  <script src="{% static 'js/plugins/nprogress.js' %}"></script>
+    <script src="{% static 'js/plugins/waves.js' %}"></script>
+  {% endblock %}

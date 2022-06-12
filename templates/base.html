@@ -27,33 +27,40 @@
   </head>
 
   <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="dashboard">eStudents</a>
-      </div>
-    </nav>
-    <!-- Actual content -->
-    <div class="container" style="min-height: 100vh">
-      {% block body %}
 
-      {% endblock %}
-    </div>
 
-    <!-- Footer -->
-    <footer class="footer mt-auto py-3 bg-bg-dark fixed-bottom">
-      <div class="container">
-        <span class="text-muted">&copy; 2022</span>
-      </div>
-    </footer>
-  </body>
+<!--    &lt;!&ndash; Navbar &ndash;&gt;-->
+<!--    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">-->
+<!--      <div class="container">-->
+<!--        <a class="navbar-brand" href="dashboard">eStudents</a>-->
+<!--      </div>-->
+<!--    </nav>-->
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!--    &lt;!&ndash; Actual content &ndash;&gt;-->
+<!--    <div class="container" style="min-height: 100vh">-->
+   {% block body %}-->
+
+  {% endblock %}-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; Footer &ndash;&gt;-->
+<!--    <footer class="footer mt-auto py-3 bg-bg-dark fixed-bottom">-->
+<!--      <div class="container">-->
+<!--        <span class="text-muted">&copy; 2022</span>-->
+<!--      </div>-->
+<!--    </footer>-->
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"
   ></script>
-  {% block script %} {% endblock %}
+  {% block scripts %} {% endblock %}
+
+  </body>
+
+
 </html>
