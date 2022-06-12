@@ -23,3 +23,18 @@
 .ind-verify {
 
 }
+
+.col-md-6 .row > *{
+    width: max-content;
+}
+
+.col-xs-5 {
+    width: 41.666% !important;
+}
+body {
+    height: 100vh !important;
+}
+
+/*.main-menu .content {*/
+/*    height: 100vh !important;*/
+/*}*/
