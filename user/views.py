@@ -1,8 +1,13 @@
+from email import message
+from lib2to3.pgen2 import token
 from pyexpat.errors import messages
 from django.shortcuts import redirect, render
 from owner.models import Applicants,Candidates
 from django.contrib.auth.models import User, auth
 from django.http import JsonResponse
+from django.contrib.auth import views as auth_views
+
+
 
 
 # Create your views here.
@@ -23,6 +28,7 @@ def register(request):
         Research_Topic = request.POST['Research_Topic']
         Research_Guide= request.POST['Research_Guide']
         Guide_Mail = request.POST['Guide_Mail']
+        Guide_Phone = request.POST['Guide_Phone']
 
 
         if Applicants.objects.filter(Email=Email).exists():
@@ -46,6 +52,7 @@ def register(request):
             user_obj.Research_Topic = Research_Topic
             user_obj.Research_Guide = Research_Guide
             user_obj.Guide_Mail = Guide_Mail
+            user_obj.Guide_Phone = Guide_Phone
 
             user_obj.save()
 
@@ -56,11 +63,11 @@ def register(request):
             )
 
     else:
-        return render(request, 'user/register_form.html')
+        return render(request, 'user/register_section/register_form.html')
 
 
 def reg_success(request):
-    return render(request, 'user/reg_complete.html')
+    return render(request, 'user/register_section/reg_complete.html')
 
 
 # Sharun
@@ -83,6 +90,7 @@ def login(request):
     else:
         return render(request, 'user/auth/login.html')
 
+
 def logout(request):
     if 'username' in request.session:
         request.session.flush()
@@ -98,8 +106,8 @@ def dashboard(request):
         return redirect('/user/login')
 
 def payment_form(request):
-    user = Candidates.objects.get(UserId=request.session['username'])
     if 'username' in request.session:
+        user = Candidates.objects.get(UserId=request.session['username'])
         if request.method == 'POST' :
             if len(request.FILES['File']) != 0:
                 PaymentDetails = request.FILES['File']
@@ -130,3 +138,8 @@ def validate_email(request):
     return render(request, 'user/dashboard.html')
 
 
+def marks(request):
+    return render(request, 'user/marks.html')
+
+def attendance(request):
+    return render(request, 'user/attendance.html')
