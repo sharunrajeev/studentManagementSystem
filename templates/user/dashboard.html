@@ -15,11 +15,12 @@
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
     <title>User Dashboard</title>
     <link href="{% static 'css/user_dashboard.css' %}" rel="stylesheet">
+    <link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
 </head>
 <body>
 <!-- Dashboard Sidebar -->
 <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark fixed-top"
-     style="width: 240px; height: 100vh">
+     style="width: 15%; height: 100vh">
     <a href="/"
        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <span class="fs-4">eStudents</span>
@@ -57,7 +58,7 @@
     </div>
 </div>
 <!-- Dashboard Content -->
-<div class="d-flex flex-column flex-grow-1 p-4" style="height: 200vh; margin-left: 240px;">
+<div class="d-flex flex-column flex-grow-1 p-4" style="height: 100vh; margin-left: 15%;">
     <h1>Welcome {{ User.ApplicationId.Name }} </h1>
     <hr>
 

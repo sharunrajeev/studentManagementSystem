@@ -17,7 +17,7 @@
     <body>
         <!-- Dashboard Sidebar -->
         <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark fixed-top"
-             style="width: 240px; height: 100vh">
+             style="width: 15%; height: 100vh">
             <a href="/"
                class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <span class="fs-4">eStudents</span>
@@ -28,16 +28,16 @@
                     <a href="dashboard" class="nav-link text-white" >Profile</a>
                 </li>
                 <li>
-                    <a href="payment" class="nav-link text-white" >Payment</a>
+                    <a href="payment_form" class="nav-link text-white" >Payment</a>
                 </li>
                 <li>
                     <a href="marks" class="nav-link text-white">Marks</a>
                 </li>
                 <li>
-                    <a href="attendance" class="nav-link active" aria-current="page">Attendance</a>
+                    <a href="#" class="nav-link active" aria-current="page">Attendance</a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link text-white">Logout</a>
+                    <a href="logout" class="nav-link text-white">Logout</a>
                 </li>
             </ul>
             <hr>
@@ -50,12 +50,12 @@
                          width="32"
                          height="32"
                          class="rounded-circle me-2">
-                    <strong>User</strong>
+                    <strong>{{ User.ApplicationId.Name }}</strong>
                 </a>
             </div>
         </div>
         <!-- Dashboard Content -->
-        <div class="d-flex flex-column flex-grow-1 p-4" style="height: 200vh; margin-left: 240px;">
+        <div class="d-flex flex-column flex-grow-1 p-4" style="height: 100vh; margin-left: 15%;">
             <h1>Attendance</h1>
             <hr>
             <p>

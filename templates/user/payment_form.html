@@ -1,67 +1,109 @@
 {% extends 'base.html'%}
 {% block body %}
+<!-- Dashboard Sidebar -->
+<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark fixed-top"
+     style="width: 15%; height: 100vh">
+    <a href="/"
+       class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+        <span class="fs-4">eStudents</span>
+    </a>
+    <hr>
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <a href="dashboard" class="nav-link text-white">Profile</a>
+        </li>
+        <li>
+            <a href="#" class="nav-link active" aria-current="page">Payment</a>
+        </li>
+        <li>
+            <a href="marks" class="nav-link text-white">Marks</a>
+        </li>
+        <li>
+            <a href="attendance" class="nav-link text-white" >Attendance</a>
+        </li>
+        <li>
+            <a href="logout" class="nav-link text-white">Logout</a>
+        </li>
+    </ul>
+    <hr>
+    <div>
+        <a href="#"
+           class="d-flex align-items-center text-white text-decoration-none"
+           id="userdisplay">
+            <img src="https://github.com/mdo.png"
+                 alt=""
+                 width="32"
+                 height="32"
+                 class="rounded-circle me-2">
+            <strong>{{ User.ApplicationId.Name }}</strong>
+        </a>
+    </div>
+</div>
+<!-- Dashboard Content -->
+<div class="d-flex flex-column flex-grow-1 p-4" style="height: 100vh; margin-left: 15%;">
+    <div class="container mt-5">
 
-  <div class="container mt-5">
+        <br>
+        <div class="row ">
 
-      <br>
-            <div class="row ">
+            <!--Grid column-->
+            <div class="col-md-6 mb-4">
 
-          <!--Grid column-->
-          <div class="col-md-6 mb-4">
+                <!--Title-->
+                <h2 class="">
+                    Payment File
+                </h2>
 
-            <!--Title-->
-            <h2 class="">
-              Payment File
-            </h2>
+                <!--Description-->
+                <p>Default styling for Bootstrap File Input component</p>
 
-            <!--Description-->
-            <p>Default styling for Bootstrap File Input component</p>
-
-            <!-- Description -->
-            <p>The file input is the most gnarly of the bunch and requires additional JavaScript if you’d like to hook them up
-              with functional Choose file… and selected file name text.
-            </p>
-
+                <!-- Description -->
+                <p>The file input is the most gnarly of the bunch and requires additional JavaScript if you’d like to
+                    hook them up
+                    with functional Choose file… and selected file name text.
+                </p>
 
 
-          </div>
-          <!--Grid column-->
+            </div>
+            <!--Grid column-->
 
-          <!--Grid column-->
-          <div class="col-md-6 mb-md-0 mb-4">
+            <!--Grid column-->
+            <div class="col-md-6 mb-md-0 mb-4">
 
-            <!--Title-->
-            <h2 class="">
-              Give your Payment Details
+                <!--Title-->
+                <h2 class="">
+                    Give your Payment Details
 
-            </h2>
+                </h2>
 
-            <!--Description-->
-            <p>Material Design styling for Bootstrap File Input component</p>
+                <!--Description-->
+                <p>Material Design styling for Bootstrap File Input component</p>
 
-            <!--Section: Live preview-->
-            <section class="section-preview">
+                <!--Section: Live preview-->
+                <section class="section-preview">
 
-              <form class="md-form my-3" method="post" action="payment_form" enctype="multipart/form-data">
-                  {% csrf_token %}
-                <div class="file-field">
-                  <div class="btn btn-dark btn-sm float-left waves-effect waves-light">
-                    <span>Choose file</span>
-                    <input type="file" name="File">
-                  </div>
-                    <button type="submit" class="btn btn-dark w-10" id="files">Submit</button>
-                    <label for="files" class="btn btn-dark">{{ Uploaded_file }}</label>
-                </div>
-              </form>
-c
-            </section>
-            <!--Section: Live preview-->
+                    <form class="md-form my-3" method="post" action="payment_form" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="file-field">
+                            <div class="btn btn-dark btn-sm float-left waves-effect waves-light">
+                                <span>Choose file</span>
+                                <input type="file" name="File">
+                            </div>
+                            <button type="submit" class="btn btn-dark w-10" id="files">Submit</button>
+                            <label for="files" class="btn btn-dark">{{ Uploaded_file }}</label>
+                        </div>
+                    </form>
 
-          </div>
-          <!--Grid column-->
+                </section>
+                <!--Section: Live preview-->
+
+            </div>
+            <!--Grid column-->
 
         </div>
 
-  </div>
+    </div>
+</div>
+
 
 {% endblock %}
