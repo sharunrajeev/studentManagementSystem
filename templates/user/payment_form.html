@@ -1,5 +1,28 @@
-{% extends 'base.html'%}
-{% block body %}
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!-- Bootstrap Link -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor"
+          crossorigin="anonymous"/>
+    <!-- Bootstrap Icon -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <title>Payment</title>
+    <link href="{% static 'css/payment_form.css' %}" rel="stylesheet">
+
+
+</head>
+
+
+
+<body>
 <!-- Dashboard Sidebar -->
 <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark fixed-top"
      style="width: 15%; height: 100vh">
@@ -19,7 +42,7 @@
             <a href="marks" class="nav-link text-white">Marks</a>
         </li>
         <li>
-            <a href="attendance" class="nav-link text-white" >Attendance</a>
+            <a href="attendance" class="nav-link text-white">Attendance</a>
         </li>
         <li>
             <a href="logout" class="nav-link text-white">Logout</a>
@@ -40,70 +63,51 @@
     </div>
 </div>
 <!-- Dashboard Content -->
+
+
 <div class="d-flex flex-column flex-grow-1 p-4" style="height: 100vh; margin-left: 15%;">
     <div class="container mt-5">
-
-        <br>
-        <div class="row ">
-
-            <!--Grid column-->
-            <div class="col-md-6 mb-4">
-
-                <!--Title-->
-                <h2 class="">
-                    Payment File
-                </h2>
-
-                <!--Description-->
-                <p>Default styling for Bootstrap File Input component</p>
-
-                <!-- Description -->
-                <p>The file input is the most gnarly of the bunch and requires additional JavaScript if you’d like to
-                    hook them up
-                    with functional Choose file… and selected file name text.
-                </p>
-
-
-            </div>
-            <!--Grid column-->
-
-            <!--Grid column-->
-            <div class="col-md-6 mb-md-0 mb-4">
-
-                <!--Title-->
-                <h2 class="">
-                    Give your Payment Details
-
-                </h2>
-
-                <!--Description-->
-                <p>Material Design styling for Bootstrap File Input component</p>
-
-                <!--Section: Live preview-->
-                <section class="section-preview">
-
-                    <form class="md-form my-3" method="post" action="payment_form" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        <div class="file-field">
-                            <div class="btn btn-dark btn-sm float-left waves-effect waves-light">
-                                <span>Choose file</span>
-                                <input type="file" name="File">
-                            </div>
-                            <button type="submit" class="btn btn-dark w-10" id="files">Submit</button>
-                            <label for="files" class="btn btn-dark">{{ Uploaded_file }}</label>
+        <div class="wrapper">
+            <h1>Payment Details</h1>
+            <p>Submit the receipt of your payment details here.</p>
+            <div class="container">
+                <h1>Upload file</h1>
+                <div class="upload-container">
+                    <div class="border-container">
+                        <div class="icons fa-4x">
+                            <i class="fas fa-file-image" data-fa-transform="shrink-3 down-2 left-6 rotate--45"></i>
+                            <i class="fas fa-file-alt" data-fa-transform="shrink-2 up-4"></i>
+                            <i class="fas fa-file-pdf" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>
                         </div>
-                    </form>
+                        <!--<input type="file" id="file-upload">-->
+                        <section class="section-preview">
 
-                </section>
-                <!--Section: Live preview-->
+                            <form class="md-form my-3" method="post" action="payment_form"
+                                  enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <div class="file-field">
+                                    <div class="btn btn-dark btn-sm float-left waves-effect waves-light">
 
+                                        <input type="file" name="File">
+                                    </div>
+                                    <button type="submit" class="btn btn-dark w-10" id="files">Submit</button>
+                                    <label for="files" class="btn btn-dark">{{ Uploaded_file }}</label>
+                                </div>
+                            </form>
+
+                        </section>
+                    </div>
+                </div>
             </div>
-            <!--Grid column-->
-
         </div>
+
 
     </div>
 </div>
+</body>
 
 
-{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</html>
