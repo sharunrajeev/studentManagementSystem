@@ -1,8 +1,11 @@
+{% load static %}
 <div class="fixed-navbar">
 	<div class="pull-left">
-		<div id="nav--btn" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></div>
+		<div id="nav--btn" class="menu-mobile-button navbar-menu js__menu_mobile">
+			<img src="{% static 'assets/menu.svg' %}" alt=""/>
+		</div>
 		<h1 class="page-title">Admin Panel</h1>
 		<!-- /.page-title -->
 	</div>
-	<!-- /.pull-left -->
+
 </div>

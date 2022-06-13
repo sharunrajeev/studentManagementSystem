@@ -1,3 +1,14 @@
+
+/*
+
+*/
+
+.dash-icons {
+  margin-left: -34px;
+  padding-right: 10px;
+}
+
+
 /* Include variables for LESS */
 /* Import file styles */
 @import 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700';

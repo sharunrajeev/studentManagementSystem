@@ -1,6 +1,7 @@
+{% load static %}
 <div class="main-menu">
 	<header class="header">
-		<a href="" class="logo">Admin</a>
+		<a href="" class="logo">eStudents</a>
 		<button type="button" class="button-close fa fa-times js__menu_close"></button>
 	</header>
 	<!-- /.header -->
@@ -9,7 +10,7 @@
 		<div class="navigation">
 			<ul class="menu js__accordion">
 				<li>
-					<a class="waves-effect" href=""><i class="menu-icon mdi mdi-view-dashboard"></i><span>Dashboard</span></a>
+					<a class="waves-effect" href=""><img class="dash-icons" src="{% static 'assets/home.svg' %}" alt=""/><span>Dashboard</span></a>
 				</li>
 				<li>
 					<a class="waves-effect" href=""><i class="menu-icon mdi mdi-view-dashboard"></i><span>Student Verification</span></a>
