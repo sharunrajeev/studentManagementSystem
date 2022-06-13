@@ -100,8 +100,8 @@ def dashboard(request):
 
     if 'username' in request.session:
         User = Candidates.objects.get(UserId=request.session['username'])
-        Username = User.ApplicationId.Name
-        return render(request, 'user/dashboard.html',{'Username':Username})
+        #Username = User.ApplicationId.Name
+        return render(request, 'user/dashboard.html',{'User':User})
     else:
         return redirect('/user/login')
 
