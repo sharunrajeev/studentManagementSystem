@@ -145,26 +145,29 @@ def delete_user(request, userid):
 #coded by devaprasad
 def mark_upload(request):
     users = Candidates.objects.all()
+    subjects = Subjects.objects.all()
+    marks = Marks.objects.all()
     if request.method == 'POST':
         pass
     else:
-        return render(request, 'owner/mark_upload.html', {'users': users})
+        return render(request, 'owner/mark_upload.html', {'users': users,'marks':marks,'subjects':subjects})
 
 def individual_mark_upload(request,userid):
     user = Candidates.objects.get(id=userid)
     if request.method == 'POST':
         Subject  = request.POST['subject']
-        AttendanceMark = request.POST['attendance']
-        Assignment1Mark =request.POST['assignment1']
-        Assignment2Mark = request.POST['assignment2']
-        GdMark = request.POST['gd']
-        CpMark = request.POST['cp']
+        AttendanceMark = int(request.POST['attendance'])
+        Assignment1Mark =int(request.POST['assignment1'])
+        Assignment2Mark = int(request.POST['assignment2'])
+        GdMark = int(request.POST['gd'])
+        CpMark = int(request.POST['cp'])
 
         sub = Subjects.objects.get(SubjectName=Subject)
+        total_attendance = int(sub.TotalHour)
+        print(total_attendance)
 
-        total_attendance = sub.TotalHour
-        attendance_percentage = (AttendanceMark/total_attendance)/100
-
+        attendance_percentage = (AttendanceMark/total_attendance)*100
+        print(attendance_percentage)
         if attendance_percentage >= 95:
             a_mark = 5
         elif attendance_percentage >=90:
@@ -177,9 +180,10 @@ def individual_mark_upload(request,userid):
             a_mark = 1
         else:
             a_mark = 0
-
-       # user_mark = Marks.objects.create(StudentId=user.id, SubjectId=sub, AttendanceMark=AttendanceMark, Assignment1Mark=Assignment1Mark, Assignment2Mark=Assignment2Mark, GdMark=GdMark, )
-
+        print(a_mark)
+        total = a_mark+Assignment1Mark+Assignment2Mark+GdMark+CpMark
+        user_mark = Marks.objects.create(StudentId=user, SubjectId=sub, AttendanceMark=a_mark, Assignment1Mark=Assignment1Mark, Assignment2Mark=Assignment2Mark, GdMark=GdMark,CpMark=CpMark,Total=total )
+        user_mark.save()
         return redirect('mark_upload')
 
     else:

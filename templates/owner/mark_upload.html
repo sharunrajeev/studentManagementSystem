@@ -43,20 +43,16 @@
       <div class="verify_div">
   <div class="verify_header">
      <div class="verify_list-head">
-      <span>Sl</span>
-                <input type="checkbox" style="visibility: hidden; "/>
+
+      <p>Sl</p>
       <p class="name">Name</p>
-      <p class="num">Mobile No</p>
       <p class="num">PhD Register No</p>
+
+         <p class="num">Marks</p>
+
          <a href="">Status</a>
 
-      <div class="verify_menu" style="visibility: hidden" tabindex="-1">
-        <div class="three_dots"></div>
-        <div class="dropdown" style="visibility: hidden">
-          <a href="select/{{ user.id }}" ><div>Approve</div></a>
-          <a href="reject/{{ user.id }}" ><div>Reject</div></a>
-        </div>
-      </div>
+
 
     </div>
   </div>
@@ -66,8 +62,13 @@
       <span>{{ forloop.counter }}</span>
 <!--        <input type="checkbox"/>-->
       <p class="name">{{ user.ApplicationId.Name }}</p>
-      <p class="num">{{ user.ApplicationId.Mob }}</p>
       <p class="num">{{ user.ApplicationId.Phd_Reg }}</p>
+        {% for mark in marks %}
+        {% if mark.StudentId == user %}
+        <p class="num">{{ mark.SubjectId.SubjectName }}:{{mark.Total}}</p>
+
+        {% endif %}
+        {% endfor %}
       <a href="mark_upload/{{ user.id }}" class="btn btn-outline-success btn-sm">Upload</a>
       <div class="verify_menu" tabindex="-1">
 <!--        <div class="three_dots"></div>-->
