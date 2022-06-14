@@ -153,12 +153,34 @@ def mark_upload(request):
 def individual_mark_upload(request,userid):
     user = Candidates.objects.get(id=userid)
     if request.method == 'POST':
+        Subject  = request.POST['subject']
         AttendanceMark = request.POST['attendance']
         Assignment1Mark =request.POST['assignment1']
         Assignment2Mark = request.POST['assignment2']
         GdMark = request.POST['gd']
         CpMark = request.POST['cp']
 
+        sub = Subjects.objects.get(SubjectName=Subject)
+
+        total_attendance = sub.TotalHour
+        attendance_percentage = (AttendanceMark/total_attendance)/100
+
+        if attendance_percentage >= 95:
+            a_mark = 5
+        elif attendance_percentage >=90:
+            a_mark = 4
+        elif attendance_percentage >=85:
+            a_mark = 3
+        elif attendance_percentage >=80:
+            a_mark = 2
+        elif attendance_percentage >=75:
+            a_mark = 1
+        else:
+            a_mark = 0
+
+       # user_mark = Marks.objects.create(StudentId=user.id, SubjectId=sub, AttendanceMark=AttendanceMark, Assignment1Mark=Assignment1Mark, Assignment2Mark=Assignment2Mark, GdMark=GdMark, )
+
+        return redirect('mark_upload')
 
     else:
         subjects = Subjects.objects.all()
