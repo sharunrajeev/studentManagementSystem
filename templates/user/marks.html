@@ -63,12 +63,16 @@
     <thead>
 
     <tr>
+
+
         <th>Subject Name</th>
+        <th>No: of Attendance</th>
+        <th>% of Attendance</th>
         <th>Mark for Attendance</th>
 
         <th>Assignment1</th>
         <th>Assignment2</th>
-
+        <th>Total mark for Assignment</th>
         <th>Group Discussions</th>
         <th>Class participations</th>
         <th>Total</th>
@@ -82,9 +86,12 @@
 
           {% if mark.StudentId == User %}
           <td>{{ mark.SubjectId.SubjectName }}</td>
+          <td>{{ mark.Attendance }}</td>
+          <td>{{ mark.AttendancePercentage }}</td>
           <td>{{ mark.AttendanceMark }}</td>
           <td>{{ mark.Assignment1Mark }}</td>
           <td> {{ mark.Assignment2Mark }}</td>
+          <td> {{ mark.TotalAssignmentMark }}</td>
           <td> {{ mark.GdMark }}</td>
           <td> {{ mark.CpMark }}</td>
           <td> {{ mark.Total }}</td>
