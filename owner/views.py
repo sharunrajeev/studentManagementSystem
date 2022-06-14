@@ -153,7 +153,13 @@ def mark_upload(request):
 def individual_mark_upload(request,userid):
     user = Candidates.objects.get(id=userid)
     if request.method == 'POST':
-        pass
+        AttendanceMark = request.POST['attendance']
+        Assignment1Mark =request.POST['assignment1']
+        Assignment2Mark = request.POST['assignment2']
+        GdMark = request.POST['gd']
+        CpMark = request.POST['cp']
+
+
     else:
         subjects = Subjects.objects.all()
         return render(request, 'owner/mark_upload_form.html', {'user': user, 'subjects': subjects})
