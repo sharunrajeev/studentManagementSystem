@@ -31,21 +31,11 @@
                     <div class="d-flex justify-content-center align-items-center">
                       <div class="col-md-8">
 
-                          <form action="approve" method="post">
-
-                      {% csrf_token %}
-
-                        <div class="input-group">
-                            <input name="name" type="text" placeholder="Search for Applicants" class="form-control" />
-                                <div class="input-group-append">
-                                <button type="submit" class="btn btn-primary">Search</button>
-
-                            </div>
+                        <div class="search">
+                          <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
+                          <input type="text" class="form-control" placeholder="Have a question? Ask Now">
+                          <button class="btn btn-primary">Search</button>
                         </div>
-                    </form>
-
-
-
 
                       </div>
         </div>
@@ -57,7 +47,7 @@
       <p class="name">Name</p>
       <p class="num">Mobile No</p>
       <p class="num">PhD Register No</p>
-         <a href="">View</a>
+         <a href="">Status</a>
 
       <div class="verify_menu" style="visibility: hidden" tabindex="-1">
         <div class="three_dots"></div>
@@ -73,17 +63,17 @@
     {% for user in users %}
     <div class="verify_list">
       <span>{{ forloop.counter }}</span>
-        <input type="checkbox"/>
-      <p class="name">{{ user.Name }}</p>
-      <p class="num">{{ user.Mob }}</p>
-      <p class="num">{{ user.Phd_Reg }}</p>
-      <a href="approve/{{ user.id }}">View</a>
+<!--        <input type="checkbox"/>-->
+      <p class="name">{{ user.ApplicationId.Name }}</p>
+      <p class="num">{{ user.ApplicationId.Mob }}</p>
+      <p class="num">{{ user.ApplicationId.Phd_Reg }}</p>
+      <a href="mark_upload/{{ user.id }}" class="btn btn-outline-success btn-sm">Upload</a>
       <div class="verify_menu" tabindex="-1">
-        <div class="three_dots"></div>
-        <div class="dropdown">
-          <a href="select/{{ user.id }}" ><div>Approve</div></a>
-          <a href="reject/{{ user.id }}" ><div>Reject</div></a>
-        </div>
+<!--        <div class="three_dots"></div>-->
+<!--        <div class="dropdown">-->
+<!--          <a href="select/{{ user.id }}" ><div>Approve</div></a>-->
+<!--          <a href="reject/{{ user.id }}" ><div>Reject</div></a>-->
+<!--        </div>-->
       </div>
 
     </div>
