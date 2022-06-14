@@ -30,3 +30,4 @@ class Candidates(models.Model):
     PaymentDetails = models.FileField(upload_to='files',default=None)
     Marks = models.IntegerField(blank=True, null=True, default=None)
     Attendance = models.IntegerField(blank=True, null=True, default=None)
+

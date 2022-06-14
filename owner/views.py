@@ -130,3 +130,15 @@ def delete_user(request, userid):
     except:
         messages.error(request, 'Error occured while deleting user')
     return redirect('user_manage')
+
+#coded by devaprasad
+def mark_upload(request):
+    users = Candidates.objects.all()
+    if request.method == 'POST':
+        pass
+    else:
+        return render(request, 'owner/mark_upload.html', {'users': users})
+
+def individual_mark_upload(request,userid):
+    user = Candidates.objects.get(id=userid)
+    return render(request, 'owner/mark_upload_form.html', {'user': user})
