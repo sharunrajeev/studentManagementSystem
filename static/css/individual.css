@@ -2,24 +2,37 @@
     display: flex;
 }
 
-.ind-personal {
+.ind-header {
     display: flex;
 }
 
-.ind-personal_fig {
+.ind-header_pic {
     width: 180px;
     height: 200px;
 }
 
-.ind-personal_fig img {
+.ind-header_pic img {
     width: 100%;
     height: 100%;
 }
 
-.ind-academic {
 
+.col-md-6 .row > *{
+    width: max-content;
 }
 
-.ind-verify {
-
+.col-xs-5 {
+    width: 41.666% !important;
 }
+body {
+    height: 100vh !important;
+}
+
+.color-green {
+    color: green;
+}
+
+.color-red {
+    color: red;
+}
+

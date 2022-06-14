@@ -8,14 +8,18 @@
     display: flex;
 }
 
-.sidebar-temp {
-    width: 300px;
-    height: 100vh;
-    border-right: 2px solid #333;
-}
-
 .verify_div {
     width: 100%;
+}
+
+.verify_list-head {
+    width: 95%;
+    height: 50px;
+    margin: 1rem auto;
+    padding: 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .verify_list {
@@ -31,16 +35,19 @@
     align-items: center;
 }
 
-.verify_list p{
+.verify_list p,
+.verify_list-head p{
     /*flex-grow: 2;*/
     margin-bottom: 0 !important;
 }
 
-.verify_list .name {
+.verify_list .name,
+.verify_list-head .name{
     min-width: 250px;
 }
 
-.verify_list .num {
+.verify_list .num,
+.verify_list-head .num{
     min-width: 180px;
 }
 
@@ -92,3 +99,60 @@
 /*.verify_list :not(p) {*/
 /*    margin: 0 20px 0 10px;*/
 /*}*/
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:weight@100;200;300;400;500;600;700;800&display=swap");
+
+
+       body{
+        background-color:#eee;
+        font-family: "Poppins", sans-serif;
+        font-weight: 300;
+       }
+
+       .height{
+        height: 100vh;
+       }
+
+
+       .search{
+       position: relative;
+       box-shadow: 0 0 40px rgba(51, 51, 51, .1);
+
+       }
+
+       .search input{
+
+        height: 60px;
+        text-indent: 25px;
+        border: 2px solid #d6d4d4;
+
+
+       }
+
+
+       .search input:focus{
+
+        box-shadow: none;
+        border: 2px solid blue;
+
+
+       }
+
+       .search .fa-search{
+
+        position: absolute;
+        top: 19px;
+        left: 12px;
+
+       }
+
+       .search button{
+
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        height: 50px;
+        width: 110px;
+        background: blue;
+
+       }

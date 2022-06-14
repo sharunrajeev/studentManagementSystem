@@ -13,6 +13,7 @@
   <link href="{% static 'css/individual.css' %}" rel="stylesheet">
   <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
   <link href="{% static 'css/jquery.mCustomScrollbar.min.css' %}" rel="stylesheet">
+<!--  <link href="{% static 'css/materialdesignicons.css' %}" rel="stylesheet">-->
   <link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
   <link href="{% static 'css/style-dark.css' %}" rel="stylesheet">
   <link href="{% static 'css/waves.css' %}" rel="stylesheet">
@@ -25,46 +26,33 @@
 {% include 'reusable/navbar.html' %}
 
 <div id="wrapper">
+
 	<div class="main-content">
 
                     <div class="d-flex justify-content-center align-items-center">
                       <div class="col-md-8">
 
-                          <form action="approve" method="post">
-
-                      {% csrf_token %}
-
-                        <div class="input-group">
-                            <input name="name" type="text" placeholder="Search for Applicants" class="form-control" />
-                                <div class="input-group-append">
-                                <button type="submit" class="btn btn-primary">Search</button>
-
-                            </div>
+                        <div class="search">
+                          <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
+                          <input type="text" class="form-control" placeholder="Have a question? Ask Now">
+                          <button class="btn btn-primary">Search</button>
                         </div>
-                    </form>
-
-
-
 
                       </div>
         </div>
       <div class="verify_div">
   <div class="verify_header">
      <div class="verify_list-head">
-      <span>Sl</span>
-                <input type="checkbox" style="visibility: hidden; "/>
-      <p class="name">Name</p>
-      <p class="num">Mobile No</p>
-      <p class="num">PhD Register No</p>
-         <a href="">View</a>
 
-      <div class="verify_menu" style="visibility: hidden" tabindex="-1">
-        <div class="three_dots"></div>
-        <div class="dropdown" style="visibility: hidden">
-          <a href="select/{{ user.id }}" ><div>Approve</div></a>
-          <a href="reject/{{ user.id }}" ><div>Reject</div></a>
-        </div>
-      </div>
+      <p>Sl</p>
+      <p class="name">Name</p>
+      <p class="num">PhD Register No</p>
+
+         <p class="num">Marks</p>
+
+         <a href="">Status</a>
+
+
 
     </div>
   </div>
@@ -72,17 +60,22 @@
     {% for user in users %}
     <div class="verify_list">
       <span>{{ forloop.counter }}</span>
-        <input type="checkbox"/>
-      <p class="name">{{ user.Name }}</p>
-      <p class="num">{{ user.Mob }}</p>
-      <p class="num">{{ user.Phd_Reg }}</p>
-      <a href="approve/{{ user.id }}">View</a>
+<!--        <input type="checkbox"/>-->
+      <p class="name">{{ user.ApplicationId.Name }}</p>
+      <p class="num">{{ user.ApplicationId.Phd_Reg }}</p>
+        {% for mark in marks %}
+        {% if mark.StudentId == user %}
+        <p class="num">{{ mark.SubjectId.SubjectName }}:{{mark.Total}}</p>
+
+        {% endif %}
+        {% endfor %}
+      <a href="mark_upload/{{ user.id }}" class="btn btn-outline-success btn-sm">Upload</a>
       <div class="verify_menu" tabindex="-1">
-        <div class="three_dots"></div>
-        <div class="dropdown">
-          <a href="select/{{ user.id }}" ><div>Approve</div></a>
-          <a href="reject/{{ user.id }}" ><div>Reject</div></a>
-        </div>
+<!--        <div class="three_dots"></div>-->
+<!--        <div class="dropdown">-->
+<!--          <a href="select/{{ user.id }}" ><div>Approve</div></a>-->
+<!--          <a href="reject/{{ user.id }}" ><div>Reject</div></a>-->
+<!--        </div>-->
       </div>
 
     </div>
@@ -92,6 +85,7 @@
 </div>
   </div>
     </div>
+</div>
 {% endblock %}
 
 {% block scripts %}

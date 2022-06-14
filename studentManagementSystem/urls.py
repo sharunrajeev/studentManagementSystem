@@ -19,12 +19,16 @@ from user import views
 from django.conf import settings
 from django.conf.urls.static import static
 
+handler404 = views.handler404
+handler505 = views.handler500
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('user/', include('user.urls')),
     path('owner/', include('owner.urls')),
     path('', include('django.contrib.auth.urls')),
     re_path(r'^validate_email/$', views.validate_email, name='validate_email'), # Change made by Rohith for email validation
+
 ]
 
 urlpatterns = urlpatterns + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

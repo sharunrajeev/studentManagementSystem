@@ -1,12 +1,12 @@
 from email import message
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from .models import Applicants, Candidates
+from .models import Applicants, Candidates, Marks, Subjects
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
 import django.contrib.messages as messages
-
+from django.contrib.postgres.search import SearchVector
 
 # Create your views here.
 
@@ -15,12 +15,24 @@ def dashboard(request):
     return render(request, 'owner/dashboard.html')
 
 
+
 def approve(request):
-    users = Applicants.objects.all()
+# coded by Hana
+    if request.method == 'POST':
 
-    users = reversed(users)
+        search_vector = SearchVector('Name', 'Phd_Reg')
+        Searchfield=request.POST['name']
 
-    return render(request, 'owner/verify.html', {'users': users})
+
+
+        users = Applicants.objects.annotate(search=search_vector).filter(search=Searchfield)
+        return render(request, 'owner/verify.html', {'users': users, 'message': 'User not found'})
+    else:
+        users = Applicants.objects.all()
+
+        users = reversed(users)
+
+        return render(request, 'owner/verify.html', {'users': users ,'message': 'User not found'})
 
 
 def individual_view(request, userid):
@@ -91,7 +103,7 @@ def payment(request):
         users = Candidates.objects.all()
 
     users = reversed(users)
-    return render(request, 'owner/paymentstatus.html', {'users': users})
+    return render(request, 'owner/paymentstatus.html', {'users': users,'message': 'User not found'})
 
 # payment verification done by akhila
 def user_verify_view(request,userid):
@@ -176,3 +188,52 @@ def delete_user(request, userid):
     except:
         messages.error(request, 'Error occured while deleting user')
     return redirect('user_manage')
+
+#coded by devaprasad
+def mark_upload(request):
+    users = Candidates.objects.all()
+    subjects = Subjects.objects.all()
+    marks = Marks.objects.all()
+    if request.method == 'POST':
+        pass
+    else:
+        return render(request, 'owner/mark_upload.html', {'users': users,'marks':marks,'subjects':subjects})
+
+def individual_mark_upload(request,userid):
+    user = Candidates.objects.get(id=userid)
+    if request.method == 'POST':
+        Subject  = request.POST['subject']
+        Attendance = int(request.POST['attendance'])
+        Assignment1Mark =int(request.POST['assignment1'])
+        Assignment2Mark = int(request.POST['assignment2'])
+        GdMark = int(request.POST['gd'])
+        CpMark = int(request.POST['cp'])
+
+        sub = Subjects.objects.get(SubjectName=Subject)
+        total_attendance = int(sub.TotalHour)
+        print(total_attendance)
+
+        attendance_percentage = (Attendance/total_attendance)*100
+        print(attendance_percentage)
+        if attendance_percentage >= 95:
+            a_mark = 5
+        elif attendance_percentage >=90:
+            a_mark = 4
+        elif attendance_percentage >=85:
+            a_mark = 3
+        elif attendance_percentage >=80:
+            a_mark = 2
+        elif attendance_percentage >=75:
+            a_mark = 1
+        else:
+            a_mark = 0
+
+        total_assignment = Assignment1Mark+Assignment2Mark
+        total = a_mark+Assignment1Mark+Assignment2Mark+GdMark+CpMark
+        user_mark = Marks.objects.create(StudentId=user, SubjectId=sub,Attendance=Attendance,AttendancePercentage=attendance_percentage, AttendanceMark=a_mark, Assignment1Mark=Assignment1Mark, Assignment2Mark=Assignment2Mark,TotalAssignmentMark=total_assignment, GdMark=GdMark,CpMark=CpMark,Total=total )
+        user_mark.save()
+        return redirect('mark_upload')
+
+    else:
+        subjects = Subjects.objects.all()
+        return render(request, 'owner/mark_upload_form.html', {'user': user, 'subjects': subjects})
