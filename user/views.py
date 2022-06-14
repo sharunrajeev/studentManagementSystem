@@ -135,12 +135,12 @@ def validate_email(request):
 
 
 
-
+#coded by Hana
 def marks(request):
     if 'username' in request.session:
-        # User = Candidates.objects.get(UserId=request.session['username'])
+        User = Candidates.objects.get(UserId=request.session['username'])
         marks = Marks.objects.all()
-        return render(request, 'user/marks.html',{ 'marks':marks})
+        return render(request, 'user/marks.html',{ 'User':User,'marks':marks})
     else:
         return redirect('/user/login')
 
