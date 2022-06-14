@@ -30,9 +30,23 @@
 	<div class="main-content">
 
         <h2>{{user.ApplicationId.Name}}'s Marksheet</h2>
+
       	<form>
+
+
         <label for="subject">Subject:</label><br>
   <input type="text" id="subject" name="subject" ><br>
+            <select name="subject" class="custom-select" id="inputGroupSelect01">
+
+      <option selected>Choose...</option>
+      {% for subject in subjects %}
+      <option value="{{subject.SubjectName}}">{{subject.SubjectName}}</option>
+      {% endfor %}
+    </select>
+
+
+
+
   <label for="attendance">Attendance:</label><br>
   <input type="text" id="attendance" name="attendance" ><br>
       <label for="assignment1">Assignment 1:</label><br>
