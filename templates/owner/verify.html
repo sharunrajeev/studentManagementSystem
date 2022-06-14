@@ -31,11 +31,21 @@
                     <div class="d-flex justify-content-center align-items-center">
                       <div class="col-md-8">
 
-                        <div class="search">
-                          <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
-                          <input type="text" class="form-control" placeholder="Have a question? Ask Now">
-                          <button class="btn btn-primary">Search</button>
+                          <form action="approve" method="post">
+
+                      {% csrf_token %}
+
+                        <div class="input-group">
+                            <input name="name" type="text" placeholder="Search for Applicants" class="form-control" />
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary">Search</button>
+
+                            </div>
                         </div>
+                    </form>
+
+
+
 
                       </div>
         </div>

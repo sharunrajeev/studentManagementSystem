@@ -6,7 +6,7 @@ from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
 import django.contrib.messages as messages
-
+from django.contrib.postgres.search import SearchVector
 
 # Create your views here.
 
@@ -16,11 +16,22 @@ def dashboard(request):
 
 
 def approve(request):
-    users = Applicants.objects.all()
+    #coded by hana
+    if request.method == 'POST':
 
-    users = reversed(users)
+        search_vector = SearchVector('Name', 'Phd_Reg')
+        Searchfield=request.POST['name']
 
-    return render(request, 'owner/verify.html', {'users': users})
+
+
+        users = Applicants.objects.annotate(search=search_vector).filter(search=Searchfield)
+        return render(request, 'owner/verify.html', {'users': users, 'message': 'User not found'})
+    else:
+        users = Applicants.objects.all()
+
+        users = reversed(users)
+
+        return render(request, 'owner/verify.html', {'users': users ,'message': 'User not found'})
 
 
 def individual_view(request, userid):
@@ -91,7 +102,7 @@ def payment(request):
         users = Candidates.objects.all()
 
     users = reversed(users)
-    return render(request, 'owner/paymentstatus.html', {'users': users})
+    return render(request, 'owner/paymentstatus.html', {'users': users,'message': 'User not found'})
 
 
 # User management by Sharun
