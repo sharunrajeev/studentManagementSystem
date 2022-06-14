@@ -1,7 +1,7 @@
 from email import message
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
-from .models import Applicants, Candidates
+from .models import Applicants, Candidates, Marks, Subjects
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -152,4 +152,8 @@ def mark_upload(request):
 
 def individual_mark_upload(request,userid):
     user = Candidates.objects.get(id=userid)
-    return render(request, 'owner/mark_upload_form.html', {'user': user})
+    if request.method == 'POST':
+        pass
+    else:
+        subjects = Subjects.ojects.all()
+        return render(request, 'owner/mark_upload_form.html', {'user': user,'subjects':subject})
