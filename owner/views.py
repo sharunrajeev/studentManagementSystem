@@ -156,4 +156,4 @@ def individual_mark_upload(request,userid):
         pass
     else:
         subjects = Subjects.ojects.all()
-        return render(request, 'owner/mark_upload_form.html', {'user': user,'subjects':subject})
+        return render(request, 'owner/mark_upload_form.html', {'user': user, 'subjects': subjects})
