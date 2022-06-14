@@ -15,8 +15,9 @@ def dashboard(request):
     return render(request, 'owner/dashboard.html')
 
 
+
 def approve(request):
-    #coded by hana
+# coded by Hana
     if request.method == 'POST':
 
         search_vector = SearchVector('Name', 'Phd_Reg')

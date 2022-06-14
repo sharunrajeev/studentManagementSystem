@@ -63,18 +63,36 @@
     <thead>
 
     <tr>
-        <th>Name</th>
-        <th>Phd_Reg</th>
-        <th>Phone Number</th>
-        <th>Email</th>
-        <th>Status</th>
+        <th>Subject Name</th>
+        <th>Mark for Attendance</th>
 
+        <th>Assignment1</th>
+        <th>Assignment2</th>
 
+        <th>Total Mark for Assignments</th>
+        <th>Group Discussions</th>
+        <th>Class participations</th>
+        <th>Total</th>
     </tr>
     </thead>
-    <tbody>
+        <tbody>
+
+        {% for subject in subjects %}
+
+      <tr class="active">
 
 
+          <td>{{ subject.SubjectId.SubjectName }}</td>
+          <td>{{ subject.StudentId.AttendanceMark }}</td>
+          <td>{{ subject.StudentId.Assignment1Mark }}</td>
+          <td> {{ subject.StudentId.Assignment2Mark }}</td>
+          <td> {{ subject.StudentId.GdMark }}</td>
+          <td> {{ subject.StudentId.CpMark }}</td>
+          <td> {{ subject.StudentId.Total }}</td>
+
+      </tr>
+
+      {% endfor %}
     </tbody>
 
   </table>
