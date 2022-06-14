@@ -10,14 +10,8 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
-  <link href="{% static 'css/individual.css' %}" rel="stylesheet">
-  <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
-  <link href="{% static 'css/jquery.mCustomScrollbar.min.css' %}" rel="stylesheet">
-<!--  <link href="{% static 'css/materialdesignicons.css' %}" rel="stylesheet">-->
-  <link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
-  <link href="{% static 'css/style-dark.css' %}" rel="stylesheet">
-  <link href="{% static 'css/waves.css' %}" rel="stylesheet">
-  <link href="{% static 'css/navbar.css' %}" rel="stylesheet">
+  <link href="{% static 'css/register_form.css' %}" rel="stylesheet">
+  <link href="{% static 'css/mark_upload.css' %}" rel="stylesheet">
 
 {% endblock %}
 
@@ -26,42 +20,71 @@
 {% include 'reusable/navbar.html' %}
 
 <div id="wrapper">
-
 	<div class="main-content">
 
-        <h2>{{user.ApplicationId.Name}}'s Marksheet</h2>
+        <div class="card-body">
+    <h2>{{user.ApplicationId.Name}}'s Marksheet</h2>
 
-      	<form method="post" action="{{ user.id }}">
-
-            {% csrf_token %}
+    <form method="post" action="{{ user.id }}">
+        {% csrf_token %}
 
         <label for="subject">Subject:</label><br>
             <select name="subject" class="custom-select" id="inputGroupSelect01">
-
-      <option selected>Choose...</option>
-
-
-      {% for subject in subjects %}
-      <option value="{{subject.SubjectName}}">{{subject.SubjectName}} ( {{subject.TotalHour}} )</option>
-
-
+              <option selected>Choose...</option>
+                {% for subject in subjects %}
+                    <option value="{{subject.SubjectName}}">{{subject.SubjectName}}</option>
                 {% endfor %}
+            </select>
 
-    </select>
-            <br>
-  <label for="attendance">Attendance:  </label><br>
-  <input type="text" id="attendance" name="attendance"><br>
-      <label for="assignment1">Assignment 1:</label><br>
-  <input type="text" id="assignment1" name="assignment1" ><br>
-    <label for="assignment2">Assignment 2:</label><br>
-  <input type="text" id="assignment2" name="assignment2" ><br>
-      <label for="gd">GD:</label><br>
-  <input type="text" id="gd" name="gd" ><br>
-<label for="cp">CP:</label><br>
-  <input type="text" id="cp" name="cp" ><br>
+        <div class="main">
+                <div class="row row-space">
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">Attendance</label>
+                        <input type="text" class="input--style-4 input_default" id="attendance" name="attendance" required require>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">Assignment 1</label>
+                        <input type="text" class="input--style-4 input_default" id="assignment1" name="assignment1" required require>
+                    </div>
+                </div>
+            </div>
+                <div class="row row-space">
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">Assignment 2</label>
+                        <input type="text" class="input--style-4 input_default" id="assignment2" name="assignment2" required require>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">GD</label>
+                        <input type="text" class="input--style-4 input_default" id="gd" name="gd" required require>
+                    </div>
+                </div>
+            </div>
+                <div class="row row-space">
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">CP</label>
+                        <input type="text" class="input--style-4 input_default" id="cp" name="cp" required require>
+                    </div>
+                </div>
+            </div>
+
+                <div class="buttons_parent">
+                        <div class="p-t-15">
+                            <button id="butn" class="btn btn--radius-2 btn--blue" type="button">Submit</button>
+                        </div>
+
+                </div>
+
+            </div>
 
 
-  <input type="submit" value="Submit">
+
     </form>
 
     </div>
@@ -70,11 +93,19 @@
 
     </div>
 </div>
+
+
+
+
+
 {% endblock %}
 
 {% block scripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 {% endblock %}
 
 
