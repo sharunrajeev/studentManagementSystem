@@ -65,10 +65,12 @@
           <td>{{ user.ApplicationId.Mob }}</td>
           <td> {{ user.ApplicationId.Email }}</td>
 
-          {% if user.PaymentStatus == False %}
-            <td><a class="btn btn-warning w-100" href="#" role="button">Verify</a></td>
-          {% else %}
-           <td><a class="btn btn-success w-100" href="#" role="button">Verified</a></td>
+          {% if user.PaymentStatus == null %}
+            <td><a class="btn btn-warning w-100" href="payment/{{ user.id }}" role="button">Verify</a></td>
+            {% elif user.PaymentStatus == True %}
+            <td><a class="btn btn-success w-100" href="payment/{{ user.id }}" role="button">Accepted</a></td>
+            {% else %}
+            <td><a class="btn btn-danger w-100" href="payment/{{ user.id }}" role="button">Rejected</a></td>
           {% endif %}
 
       </tr>

@@ -93,6 +93,52 @@ def payment(request):
     users = reversed(users)
     return render(request, 'owner/paymentstatus.html', {'users': users})
 
+# payment verification done by akhila
+def user_verify_view(request,userid):
+    print(userid)
+    user_det = Candidates.objects.get(id=userid)
+    return render(request, 'owner/user_detail.html', {'person_details': user_det})
+
+def denial(request, userid):
+    print(userid)
+    user = Candidates.objects.get(id=userid)
+    user.PaymentStatus = False
+    user.save()
+    email = user.ApplicationId.Email
+    message = f" Your profile stands incomplete. As payment proof being not verified"
+
+    email = EmailMessage(
+        'profile incomplete',
+        message,
+        'settings.EMAIL_HOST_USER',
+        [email],
+    )
+
+    email.fail_silently = False
+    email.send()
+
+    return redirect('payment')
+
+def verified(request, userid):
+    user = Candidates.objects.get(id=userid)
+    user.PaymentStatus = True
+    user.save()
+
+    email = user.ApplicationId.Email
+
+    message = f" Your payment verification has completed"
+
+    email = EmailMessage(
+        'your profile verified',
+        message,
+        'settings.EMAIL_HOST_USER',
+        [email],
+    )
+
+    email.fail_silently = False
+    email.send()
+
+    return redirect('payment')
 
 # User management by Sharun
 
