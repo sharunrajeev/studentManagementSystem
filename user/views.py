@@ -2,12 +2,10 @@ from email import message
 from lib2to3.pgen2 import token
 from pyexpat.errors import messages
 from django.shortcuts import redirect, render
-from owner.models import Applicants,Candidates
+from owner.models import Applicants, Candidates
 from django.contrib.auth.models import User, auth
 from django.http import JsonResponse
 from django.contrib.auth import views as auth_views
-
-
 
 
 # Create your views here.
@@ -26,10 +24,9 @@ def register(request):
         Phd_Reg = request.POST['Phd_Reg']
         Phd_Joining_Date = request.POST['Phd_Joining_Date']
         Research_Topic = request.POST['Research_Topic']
-        Research_Guide= request.POST['Research_Guide']
+        Research_Guide = request.POST['Research_Guide']
         Guide_Mail = request.POST['Guide_Mail']
         Guide_Phone = request.POST['Guide_Phone']
-
 
         if Applicants.objects.filter(Email=Email).exists():
             return JsonResponse(
@@ -96,35 +93,35 @@ def logout(request):
         request.session.flush()
     return redirect('/user/login')
 
-def dashboard(request):
 
+def dashboard(request):
     if 'username' in request.session:
         User = Candidates.objects.get(UserId=request.session['username'])
-        #Username = User.ApplicationId.Name
-        return render(request, 'user/dashboard.html',{'User':User})
+        # Username = User.ApplicationId.Name
+        return render(request, 'user/dashboard.html', {'User': User})
     else:
         return redirect('/user/login')
+
 
 def payment_form(request):
     if 'username' in request.session:
         user = Candidates.objects.get(UserId=request.session['username'])
-        if request.method == 'POST' :
+        if request.method == 'POST':
             if len(request.FILES['File']) != 0:
                 PaymentDetails = request.FILES['File']
-                user.PaymentDetails=PaymentDetails
+                user.PaymentDetails = PaymentDetails
                 user.save()
             return redirect('/user/payment_form')
         else:
-            Uploaded_file  = user.PaymentDetails
-            return render(request, 'user/payment_form.html',{'Uploaded_file':Uploaded_file})
+            Uploaded_file = user.PaymentDetails
+            return render(request, 'user/payment_form.html', {'Uploaded_file': Uploaded_file})
     else:
         return redirect('/user/login')
-
 
     return render(request, 'user/dashboard.html')
 
 
-#coded By Rohith (For validating email within the browser itself)
+# coded By Rohith (For validating email within the browser itself)
 def validate_email(request):
     email_received = request.GET.get('email', None)
     data = {
@@ -134,12 +131,16 @@ def validate_email(request):
         data['error_message'] = 'A user with this email already exists.'
     return JsonResponse(data)
 
-
     return render(request, 'user/dashboard.html')
 
 
 def marks(request):
     return render(request, 'user/marks.html')
 
+
 def attendance(request):
     return render(request, 'user/attendance.html')
+
+
+def handler404(request):
+    return render(request, 'reusable/page_404.html')

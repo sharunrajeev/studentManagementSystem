@@ -31,3 +31,16 @@ class Candidates(models.Model):
     Marks = models.IntegerField(blank=True, null=True, default=None)
     Attendance = models.IntegerField(blank=True, null=True, default=None)
 
+class Subjects(models.Model):
+    SubjectName = models.CharField(max_length=100, default=None)
+    TotalHour = models.IntegerField(default=None)
+
+class Marks(models.Model):
+    StudentId = models.ForeignKey(Candidates, on_delete=models.CASCADE, default=False)
+    SubjectId = models.ForeignKey(Subjects, on_delete=models.CASCADE, default=False)
+    AttendanceMark = models.IntegerField(default=None)
+    Assignment1Mark = models.IntegerField(default=None)
+    Assignment2Mark = models.IntegerField(default=None)
+    GdMark = models.IntegerField(default=None)
+    CpMark = models.IntegerField(default=None)
+    Total = models.IntegerField(default=None, blank=True, null=True)
