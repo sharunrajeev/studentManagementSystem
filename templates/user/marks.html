@@ -58,41 +58,6 @@
         <div class="d-flex flex-column flex-grow-1 p-4" style="height: 100vh; margin-left: 15%;">
             <h1>Marks</h1>
             <hr>
-            <table class="table table-bordered">
-            <thead>
-
-            <tr>
-        <th>Name</th>
-        <th>Phd_Reg</th>
-        <th>Phone Number</th>
-        <th>Email</th>
-        <th>Status</th>
-           </tr>
-    </thead>
-    <tbody>
-
-        {% for user in users %}
-
-      <tr class="active">
-
-
-          <td>{{ user.ApplicationId.Name }}</td>
-          <td>{{ user.ApplicationId.Phd_Reg }}</td>
-          <td>{{ user.ApplicationId.Mob }}</td>
-          <td> {{ user.ApplicationId.Email }}</td>
-
-          {% if user.PaymentStatus == False %}
-            <td><a class="btn btn-warning w-100" href="#" role="button">Verify</a></td>
-          {% else %}
-           <td><a class="btn btn-success w-100" href="#" role="button">Verified</a></td>
-          {% endif %}
-
-      </tr>
-
-      {% endfor %}
-    </tbody>
-
-  </table>
 
 
         </div>

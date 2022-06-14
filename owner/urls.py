@@ -19,5 +19,9 @@ urlpatterns = [
     path('view_user/<email>', views.view_user, name='view_user'),
     path('update_user/<email>', views.update_user, name='update_user'),
     path('delete_user/<userid>', views.delete_user, name='delete_user'),
+
+    # Mark Uploading Coded By Devaprasa
+    path('mark_upload', views.mark_upload, name='mark_upload'),
+    path('mark_upload/<userid>', views.individual_mark_upload, name='individual_mark_upload')
 ]
 
