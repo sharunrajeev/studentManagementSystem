@@ -38,9 +38,12 @@ class Subjects(models.Model):
 class Marks(models.Model):
     StudentId = models.ForeignKey(Candidates, on_delete=models.CASCADE, default=False)
     SubjectId = models.ForeignKey(Subjects, on_delete=models.CASCADE, default=False)
-    AttendanceMark = models.IntegerField(default=None)
+    Attendance = models.IntegerField(default=None)
+    AttendancePercentage = models.IntegerField(default=None, blank=True, null=True)
+    AttendanceMark = models.IntegerField(default=None, blank=True, null=True)
     Assignment1Mark = models.IntegerField(default=None)
     Assignment2Mark = models.IntegerField(default=None)
+    TotalAssignmentMark = models.IntegerField(default=None, blank=True, null=True)
     GdMark = models.IntegerField(default=None)
     CpMark = models.IntegerField(default=None)
     Total = models.IntegerField(default=None, blank=True, null=True)

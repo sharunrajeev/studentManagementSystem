@@ -157,7 +157,7 @@ def individual_mark_upload(request,userid):
     user = Candidates.objects.get(id=userid)
     if request.method == 'POST':
         Subject  = request.POST['subject']
-        AttendanceMark = int(request.POST['attendance'])
+        Attendance = int(request.POST['attendance'])
         Assignment1Mark =int(request.POST['assignment1'])
         Assignment2Mark = int(request.POST['assignment2'])
         GdMark = int(request.POST['gd'])
@@ -167,7 +167,7 @@ def individual_mark_upload(request,userid):
         total_attendance = int(sub.TotalHour)
         print(total_attendance)
 
-        attendance_percentage = (AttendanceMark/total_attendance)*100
+        attendance_percentage = (Attendance/total_attendance)*100
         print(attendance_percentage)
         if attendance_percentage >= 95:
             a_mark = 5
@@ -181,9 +181,10 @@ def individual_mark_upload(request,userid):
             a_mark = 1
         else:
             a_mark = 0
-        print(a_mark)
+
+        total_assignment = Assignment1Mark+Assignment2Mark
         total = a_mark+Assignment1Mark+Assignment2Mark+GdMark+CpMark
-        user_mark = Marks.objects.create(StudentId=user, SubjectId=sub, AttendanceMark=a_mark, Assignment1Mark=Assignment1Mark, Assignment2Mark=Assignment2Mark, GdMark=GdMark,CpMark=CpMark,Total=total )
+        user_mark = Marks.objects.create(StudentId=user, SubjectId=sub,Attendance=Attendance,AttendancePercentage=attendance_percentage, AttendanceMark=a_mark, Assignment1Mark=Assignment1Mark, Assignment2Mark=Assignment2Mark,TotalAssignmentMark=total_assignment, GdMark=GdMark,CpMark=CpMark,Total=total )
         user_mark.save()
         return redirect('mark_upload')
 
