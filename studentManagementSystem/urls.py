@@ -19,7 +19,8 @@ from user import views
 from django.conf import settings
 from django.conf.urls.static import static
 
-# handler404 = views.handler404
+handler404 = views.handler404
+handler505 = views.handler500
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +28,6 @@ urlpatterns = [
     path('owner/', include('owner.urls')),
     path('', include('django.contrib.auth.urls')),
     re_path(r'^validate_email/$', views.validate_email, name='validate_email'), # Change made by Rohith for email validation
-    path('error/', views.handler404, name='handler404'),
 
 ]
 

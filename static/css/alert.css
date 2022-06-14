@@ -1,0 +1,43 @@
+/*---------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------
+    Alert
+*/
+.sweet-alert .sa-button-container button {
+  background: #e4e7ea;
+  outline: none;
+  font-size: 16px;
+  line-height: 26px;
+  padding: 8px 25px;
+  border: none;
+  font-weight: 500;
+  font-family: "Roboto";
+  box-shadow: none!important;
+  -moz-box-shadow: none!important;
+  -webkit-box-shadow: none!important;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+}
+.sweet-alert .sa-button-container button.cancel {
+  background: #e4e7ea;
+  color: #434343;
+}
+.sweet-alert .sa-button-container button.cancel:hover {
+  background: #e4e7ea;
+}
+.sweet-alert .sa-button-container button.confirm {
+  background: #ea4335;
+}
+.sweet-alert.visible .sa-icon.sa-success .sa-line {
+  background: #00bf4f;
+}
+.sweet-alert.visible .sa-icon.sa-warning {
+  border-color: #fbbc05;
+}
+.sweet-alert.visible .sa-icon.sa-error {
+  border-color: #ea4335;
+}
+.sweet-alert.visible .sa-icon.sa-error .sa-line {
+  background: #ea4335;
+}
+/*---------------------------------------------------------------------*/
