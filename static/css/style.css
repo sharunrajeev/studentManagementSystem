@@ -1,3 +1,5 @@
+@import 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,600,700';
+
 /*Global Styling */
 * {
     margin: 0;
@@ -14,4 +16,123 @@
 .form-control:focus {
     border-color: #343a40;
     box-shadow: 0 0 0 0.2rem #2a3035;
-} 
+}
+
+
+
+
+
+html,
+body {
+  font-family: 'Roboto', sans-serif;
+  position: relative;
+  height: 100%;
+  background: #f5f7fa;
+  color: #505458;
+}
+#wrapper {
+  position: relative;
+  top: 0px;
+  z-index: 10;
+  width: 100%;
+  min-height: 100%;
+  transform: translate(0, 0);
+  -webkit-transform: translate(0, 0);
+  -moz-transform: translate(0, 0);
+  -o-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  background: #f5f7fa;
+  overflow: hidden;
+  transition: transform 0.4s ease;
+  -webkit-transition: -webkit-transform 0.4s ease;
+  -moz-transition: -moz-transform 0.4s ease;
+  -o-transition: -o-transform 0.4s ease;
+  -ms-transition: -ms-transform 0.4s ease;
+}
+@media (min-width: 1025px) {
+  #wrapper {
+    top: 0px !important;
+  }
+}
+img {
+  max-width: 100%;
+  height: auto;
+  -webkit-backface-visibility: hidden;
+}
+input,
+button,
+a {
+  transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  -webkit-transition: all 0.4s ease;
+}
+a {
+  text-decoration: none !important;
+  outline: none;
+  color: #304ffe;
+}
+a:hover,
+a:active,
+a:focus {
+  text-decoration: none !important;
+  outline: none;
+  color: #1e3ded;
+}
+input,
+button {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  outline: none;
+}
+label {
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+/* Animation */
+@-moz-keyframes pulse {
+  0% {
+    -moz-transform: scale(0);
+    opacity: 0.0;
+  }
+  25% {
+    -moz-transform: scale(0);
+    opacity: 0.1;
+  }
+  50% {
+    -moz-transform: scale(0.1);
+    opacity: 0.3;
+  }
+  75% {
+    -moz-transform: scale(0.5);
+    opacity: 0.5;
+  }
+  100% {
+    -moz-transform: scale(1);
+    opacity: 0.0;
+  }
+}
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale(0);
+    opacity: 0.0;
+  }
+  25% {
+    -webkit-transform: scale(0);
+    opacity: 0.1;
+  }
+  50% {
+    -webkit-transform: scale(0.1);
+    opacity: 0.3;
+  }
+  75% {
+    -webkit-transform: scale(0.5);
+    opacity: 0.5;
+  }
+  100% {
+    -webkit-transform: scale(1);
+    opacity: 0.0;
+  }
+}
