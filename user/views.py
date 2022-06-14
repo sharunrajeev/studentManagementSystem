@@ -2,7 +2,7 @@ from email import message
 from lib2to3.pgen2 import token
 from pyexpat.errors import messages
 from django.shortcuts import redirect, render
-from owner.models import Applicants, Candidates
+from owner.models import Applicants, Candidates, Marks, Subjects
 from django.contrib.auth.models import User, auth
 from django.http import JsonResponse
 from django.contrib.auth import views as auth_views
@@ -134,8 +134,16 @@ def validate_email(request):
     return render(request, 'user/dashboard.html')
 
 
+
+
 def marks(request):
-    return render(request, 'user/marks.html')
+    if 'username' in request.session:
+        User = Candidates.objects.get(UserId=request.session['username'])
+        marks = Marks.objects.all()
+        return render(request, 'user/marks.html',{'user':User, 'marks':marks})
+    else:
+        return redirect('/user/login')
+
 
 
 def attendance(request):
@@ -150,3 +158,5 @@ def handler404(request, exception):
 
 def handler500(request, exception):
     return render(request, 'reusable/page_404.html', status=500)
+
+
