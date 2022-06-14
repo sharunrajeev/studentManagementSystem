@@ -9,6 +9,7 @@
     <link href="{% static 'css/register_form.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/progress_indicator.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/warning_box.css' %}" rel="stylesheet"/>
+    <link href="{% static 'css/alert.css' %}" rel="stylesheet"/>
 {% endblock %}
 
 <!-- Body -->
@@ -45,13 +46,7 @@
                     </div>
                 </div>
 
-
                 <div class="col-2">
-<!--                                <div class="input-group">-->
-<!--                                    <label class="label">Gender</label>-->
-<!--                                    <input id="gender" class="input&#45;&#45;style-4" type="text" name="Gender" required require>-->
-<!--                                </div>-->
-<!--                                <div class="input-group">-->
                         <label class="label">Gender</label>
                         <div class="p-t-10">
                             <label class="radio-container m-r-45">Male
@@ -63,7 +58,6 @@
                                 <span class="checkmark"></span>
                             </label>
                         </div>
-<!--                                </div>-->
                 </div>
             </div>
                 <div class="row row-space">
@@ -164,24 +158,18 @@
 
 
         </form>
+
         {% include 'reusable/warning_box.html' %}
                 </div>
 
-
-<!--    <div class="page-wrapper bg-gra-02 p-t-130 p-b-100 font-poppins">-->
-<!--        <div class="wrapper wrapper&#45;&#45;w680">-->
-<!--            <div class="card card-4">-->
-
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-
 </div>
+
+
+
 {% endblock %}
 
 {% block script %}
-
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="{% static 'js/register_form.js' %}"></script>
 <script src="{% static 'js/progress_indicator.js' %}"></script>
 

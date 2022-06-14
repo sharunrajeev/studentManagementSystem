@@ -146,20 +146,46 @@ def delete_user(request, userid):
 #coded by devaprasad
 def mark_upload(request):
     users = Candidates.objects.all()
+    subjects = Subjects.objects.all()
+    marks = Marks.objects.all()
     if request.method == 'POST':
         pass
     else:
-        return render(request, 'owner/mark_upload.html', {'users': users})
+        return render(request, 'owner/mark_upload.html', {'users': users,'marks':marks,'subjects':subjects})
 
 def individual_mark_upload(request,userid):
     user = Candidates.objects.get(id=userid)
     if request.method == 'POST':
-        AttendanceMark = request.POST['attendance']
-        Assignment1Mark =request.POST['assignment1']
-        Assignment2Mark = request.POST['assignment2']
-        GdMark = request.POST['gd']
-        CpMark = request.POST['cp']
+        Subject  = request.POST['subject']
+        AttendanceMark = int(request.POST['attendance'])
+        Assignment1Mark =int(request.POST['assignment1'])
+        Assignment2Mark = int(request.POST['assignment2'])
+        GdMark = int(request.POST['gd'])
+        CpMark = int(request.POST['cp'])
 
+        sub = Subjects.objects.get(SubjectName=Subject)
+        total_attendance = int(sub.TotalHour)
+        print(total_attendance)
+
+        attendance_percentage = (AttendanceMark/total_attendance)*100
+        print(attendance_percentage)
+        if attendance_percentage >= 95:
+            a_mark = 5
+        elif attendance_percentage >=90:
+            a_mark = 4
+        elif attendance_percentage >=85:
+            a_mark = 3
+        elif attendance_percentage >=80:
+            a_mark = 2
+        elif attendance_percentage >=75:
+            a_mark = 1
+        else:
+            a_mark = 0
+        print(a_mark)
+        total = a_mark+Assignment1Mark+Assignment2Mark+GdMark+CpMark
+        user_mark = Marks.objects.create(StudentId=user, SubjectId=sub, AttendanceMark=a_mark, Assignment1Mark=Assignment1Mark, Assignment2Mark=Assignment2Mark, GdMark=GdMark,CpMark=CpMark,Total=total )
+        user_mark.save()
+        return redirect('mark_upload')
 
     else:
         subjects = Subjects.objects.all()
