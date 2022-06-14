@@ -142,5 +142,11 @@ def attendance(request):
     return render(request, 'user/attendance.html')
 
 
-def handler404(request):
-    return render(request, 'reusable/page_404.html')
+# Coded By Rohith
+# For custom 404 and 500 error page
+def handler404(request, exception):
+    return render(request, 'reusable/page_404.html', status=404)
+
+
+def handler500(request, exception):
+    return render(request, 'reusable/page_404.html', status=500)
