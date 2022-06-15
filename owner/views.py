@@ -109,7 +109,11 @@ def payment(request):
 def user_verify_view(request,userid):
     print(userid)
     user_det = Candidates.objects.get(id=userid)
-    return render(request, 'owner/user_detail.html', {'person_details': user_det})
+    if user_det.PaymentDetails :
+        pay_val=1
+    else:
+        pay_val=0
+    return render(request, 'owner/user_detail.html', {'person_details': user_det ,'pay_val':pay_val})
 
 def denial(request, userid):
     print(userid)
