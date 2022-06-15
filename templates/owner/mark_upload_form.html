@@ -32,7 +32,7 @@
             <select name="subject" class="custom-select" id="inputGroupSelect01">
               <option selected>Choose...</option>
                 {% for subject in subjects %}
-                    <option value="{{subject.SubjectName}}">{{subject.SubjectName}}</option>
+                    <option value="{{subject.SubjectName}}">{{subject.SubjectName}}({{subject.TotalHour}})</option>
                 {% endfor %}
             </select>
 
@@ -76,7 +76,7 @@
 
                 <div class="buttons_parent">
                         <div class="p-t-15">
-                            <button id="butn" class="btn btn--radius-2 btn--blue" type="button">Submit</button>
+                            <button id="butn" class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
                         </div>
 
                 </div>
