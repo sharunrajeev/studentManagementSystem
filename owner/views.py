@@ -237,3 +237,33 @@ def individual_mark_upload(request,userid):
     else:
         subjects = Subjects.objects.all()
         return render(request, 'owner/mark_upload_form.html', {'user': user, 'subjects': subjects})
+
+
+#coded by Hana
+def subjects_edit(request):
+
+    if request.method == 'POST':
+        Subjectname=request.POST['subjectname']
+        Totalhour=request.POST['totalhours']
+
+        subject=Subjects()
+        subject.SubjectName=Subjectname
+        subject.TotalHour=Totalhour
+
+        subject.save()
+
+        return redirect('subjects_edit')
+
+    else:
+        subjects = Subjects.objects.all()
+        return render(request, 'owner/subjects.html',{'subjects': subjects})
+
+def subject_delete(request,subjectid):
+
+
+    Subjects.objects.get(id=subjectid).delete()
+
+    return redirect('subjects_edit')
+
+
+

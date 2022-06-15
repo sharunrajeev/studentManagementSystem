@@ -1,0 +1,81 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Title Here</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+</head>
+<body>
+
+<form method="post" action="subjects_edit">
+
+    {% csrf_token %}
+        <div class="main">
+          <div class="row row-space">
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">Subject Name:</label>
+                        <input type="text" class="input--style-4 input_default" id="subjectname" name="subjectname" ></div>
+                </div>
+
+                <div class="col-2">
+                    <div class="input-group">
+                        <label class="label">Total Hours</label>
+                        <input type="number" class="input--style-4 input_default" id="totalhours" name="totalhours" >
+                    </div>
+                </div>
+
+
+              <button id="butn" class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
+          </div>
+
+
+
+
+            </div>
+
+
+
+    </form>
+
+
+<table class="table table-bordered">
+    <thead>
+
+    <tr>
+        <th>Subject Name</th>
+        <th>Total Hours</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    {% for subject in subjects %}
+
+      <tr class="active">
+
+
+          <td>{{ subject.SubjectName }}</td>
+          <td>{{ subject.TotalHour }}</td>
+         <td><a class="btn btn-success " href="subjects_edit" role="button">Edit</a></td>
+          <td><a class="btn btn-danger " href="subject_delete/{{ subject.id }}" role="button">Delete</a></td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+
+  </table>
+
+</body>
+</html>
+
+
+
+
+
+
+
+

@@ -25,7 +25,7 @@
         <div class="card-body">
     <h2>{{user.ApplicationId.Name}}'s Marksheet</h2>
 
-    <form method="post" action="{{ user.id }}">
+      <form method="post" action="{{ user.id }}">
         {% csrf_token %}
 
         <label for="subject">Subject:</label><br>
