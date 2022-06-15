@@ -255,7 +255,7 @@ def subjects_edit(request):
         return redirect('subjects_edit')
 
     else:
-        subjects = Subjects.objects.all()
+        subjects = Subjects.objects.all().order_by('id')
         return render(request, 'owner/subjects.html',{'subjects': subjects})
 
 def subject_delete(request,subjectid):
@@ -276,6 +276,8 @@ def subject_update(request,subjectid):
         subject.SubjectName=subjectname
         subject.TotalHour=totalhour
         subject.save()
+
+
 
         return redirect('subjects_edit')
 
