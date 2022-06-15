@@ -239,6 +239,8 @@ def individual_mark_upload(request,userid):
         return render(request, 'owner/mark_upload_form.html', {'user': user, 'subjects': subjects})
 
 
+
+
 def mark_edit(request, userid):
     if request.method == 'POST':
         Attendance = int(request.POST['attendance'])
@@ -295,3 +297,50 @@ def mark_calculation(Subject,Attendance,Assignment1Mark,Assignment2Mark,GdMark,C
     total = a_mark + Assignment1Mark + Assignment2Mark + GdMark + CpMark
 
     return attendance_percentage,a_mark,total_assignment,total
+
+
+
+
+#coded by Hana
+def subjects_edit(request):
+
+    if request.method == 'POST':
+        Subjectname=request.POST['subjectname']
+        Totalhour=request.POST['totalhours']
+
+        subject=Subjects()
+        subject.SubjectName=Subjectname
+        subject.TotalHour=Totalhour
+
+        subject.save()
+
+        return redirect('subjects_edit')
+
+    else:
+        subjects = Subjects.objects.all()
+        return render(request, 'owner/subjects.html',{'subjects': subjects})
+
+def subject_delete(request,subjectid):
+
+
+    Subjects.objects.get(id=subjectid).delete()
+
+    return redirect('subjects_edit')
+
+def subject_update(request,subjectid):
+
+    if request.method == 'POST':
+        subjectname=request.POST['subjectname']
+        totalhour=request.POST['totalhours']
+
+        subject=Subjects.objects.get(id=subjectid)
+
+        subject.SubjectName=subjectname
+        subject.TotalHour=totalhour
+        subject.save()
+
+        return redirect('subjects_edit')
+
+
+
+

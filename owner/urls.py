@@ -5,7 +5,7 @@ from user.views import dashboard
 from . import views
 
 urlpatterns = [
-    # Home page
+# Home page
     path('', views.dashboard, name='dashboard'),
     path('approve', views.approve, name='approve'),
     path('approve/<userid>', views.individual_view, name='individual_view'),
@@ -27,7 +27,11 @@ urlpatterns = [
     # Mark Uploading Coded By Devaprasad
     path('mark_upload', views.mark_upload, name='mark_upload'),
     path('mark_upload/<userid>', views.individual_mark_upload, name='individual_mark_upload'),
-    path('mark_edit/<userid>', views.mark_edit, name='mark_edit'),
 
+    #Subject Adding Coded By Hana
+
+    path('subjects_edit',views.subjects_edit,name='subjects_edit'),
+    path('subject_delete/<subjectid>',views.subject_delete,name='subject_delete'),
+    path('subject_update/<subjectid>',views.subject_update,name='subject_update')
 ]
 
