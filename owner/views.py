@@ -106,6 +106,7 @@ def payment(request):
     return render(request, 'owner/paymentstatus.html', {'users': users,'message': 'User not found'})
 
 # payment verification done by akhila
+#responsive page
 def user_verify_view(request,userid):
     print(userid)
     user_det = Candidates.objects.get(id=userid)
