@@ -26,6 +26,9 @@
             <h1>Marks</h1>
             <hr>
 
+
+
+
             <table class="table table-bordered">
     <thead>
 
@@ -42,6 +45,7 @@
         <th>Total mark for Assignment</th>
         <th>Group Discussions</th>
         <th>Class participations</th>
+        <th>Total</th>
         <th>Update</th>
         <th>Delete</th>
     </tr>
@@ -49,32 +53,39 @@
         <tbody>
 
         {% for mark in marks %}
-<from>
-    {% csrf_token %}
+
+
       <tr class="active">
 
           {% if mark.StudentId == User %}
 
-          <td> <input type="text" class="form-control" value="{{ mark.SubjectId.SubjectName }}"> </td>
-          <td> <input type="number" class="form-control" value="{{ mark.Attendance }}"></td>
-          <td> <input type="number" class="form-control" value="{{ mark.AttendancePercentage }}"></td>
-          <td> <input type="number" class="form-control" value="{{ mark.AttendanceMark }}"></td>
-          <td> <input type="number" class="form-control" value="{{ mark.Assignment1Mark }}"></td>
-          <td> <input type="number"  class="form-control" value="{{ mark.Assignment2Mark }}"></td>
-          <td> <input type="number" class="form-control" value="{{ mark.TotalAssignmentMark }}"></td>
-          <td> <input type="number" class="form-control" value="{{ mark.GdMark }}"></td>
-          <td><input type="number" class="form-control" value="{{ mark.CpMark }}"></td>
-          <td> <button type="button" class="btn btn-success btn-sm">Update</button></td>
-          <td> <button type="button" class="btn btn-danger btn-sm">Delete</button></td>
-
+                        <form method="post" action="{{ mark.id }}">
+        {% csrf_token %}
+          <td> <input type="text"  class="form-control" value="{{ mark.SubjectId.SubjectName }}" readonly> </td>
+          <td> <input type="number" class="form-control" name="attendance" value="{{ mark.Attendance }}"></td>
+          <td> <input type="number" class="form-control" value="{{ mark.AttendancePercentage }}" readonly></td>
+          <td> <input type="number" class="form-control" value="{{ mark.AttendanceMark }}" readonly></td>
+          <td> <input type="number" class="form-control" name="assignment1" value="{{ mark.Assignment1Mark }}"></td>
+          <td> <input type="number"  class="form-control" name="assignment2" value="{{ mark.Assignment2Mark }}"></td>
+          <td> <input type="number" class="form-control" value="{{ mark.TotalAssignmentMark }}" readonly></td>
+          <td> <input type="number" class="form-control" name="gd" value="{{ mark.GdMark }}"></td>
+          <td><input type="number" class="form-control" name="cp" value="{{ mark.CpMark }}"></td>
+                            <td><input type="number" class="form-control"  value="{{ mark.Total }}" readonly></td>
+          <td> <button  type="submit" class="btn btn-success btn-sm">Update</button></td>
+                            <td> <a href="" type="button" class="btn btn-danger btn-sm">Delete</a></td>
+          </from>
           {% endif %}
       </tr>
-</from>
+
       {% endfor %}
+
+
+
+
+
     </tbody>
 
   </table>
-
 
 
 

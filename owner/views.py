@@ -239,10 +239,59 @@ def individual_mark_upload(request,userid):
         return render(request, 'owner/mark_upload_form.html', {'user': user, 'subjects': subjects})
 
 
-def mark_edit(request,userid):
-    user = Candidates.objects.get(id=userid)
-    marks = Marks.objects.all()
+def mark_edit(request, userid):
     if request.method == 'POST':
-        pass
+        Attendance = int(request.POST['attendance'])
+        Assignment1Mark = int(request.POST['assignment1'])
+        Assignment2Mark = int(request.POST['assignment2'])
+        GdMark = int(request.POST['gd'])
+        CpMark = int(request.POST['cp'])
+
+        mark = Marks.objects.get(id=userid)
+        Subject = mark.SubjectId.SubjectName
+
+        attendance_percentage,a_mark,total_assignment,total = mark_calculation(Subject, Attendance, Assignment1Mark, Assignment2Mark,GdMark,CpMark)
+        mark.AttendancePercentage = attendance_percentage
+        mark.AttendanceMark = a_mark
+        mark.TotalAssignmentMark = total_assignment
+        mark.Total = total
+        mark.Attendance = Attendance
+        mark.Assignment1Mark = Assignment1Mark
+        mark.Assignment2Mark = Assignment2Mark
+        mark.GdMark = GdMark
+        mark.CpMark = CpMark
+
+        mark.save()
+
+        return redirect("mark_upload")
+
     else:
+        user = Candidates.objects.get(id=userid)
+        marks = Marks.objects.all()
         return render(request, 'owner/mark_edit.html',{'User':user,'marks':marks})
+
+
+
+def mark_calculation(Subject,Attendance,Assignment1Mark,Assignment2Mark,GdMark,CpMark):
+    sub = Subjects.objects.get(SubjectName=Subject)
+    total_attendance = int(sub.TotalHour)
+
+    attendance_percentage = (Attendance / total_attendance) * 100
+    print(attendance_percentage)
+    if attendance_percentage >= 95:
+        a_mark = 5
+    elif attendance_percentage >= 90:
+        a_mark = 4
+    elif attendance_percentage >= 85:
+        a_mark = 3
+    elif attendance_percentage >= 80:
+        a_mark = 2
+    elif attendance_percentage >= 75:
+        a_mark = 1
+    else:
+        a_mark = 0
+
+    total_assignment = Assignment1Mark + Assignment2Mark
+    total = a_mark + Assignment1Mark + Assignment2Mark + GdMark + CpMark
+
+    return attendance_percentage,a_mark,total_assignment,total
