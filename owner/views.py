@@ -265,5 +265,18 @@ def subject_delete(request,subjectid):
 
     return redirect('subjects_edit')
 
+def subject_update(request,subjectid):
+
+    if request.method == 'POST':
+        subjectname=request.POST['subjectname']
+        totalhour=request.POST['totalhours']
+
+        subject=Subjects.objects.get(id=subjectid)
+
+        subject.SubjectName=subjectname
+        subject.TotalHour=totalhour
+        subject.save()
+
+        return redirect('subjects_edit')
 
 

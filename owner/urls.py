@@ -31,6 +31,7 @@ urlpatterns = [
     #Subject Adding Coded By Hana
 
     path('subjects_edit',views.subjects_edit,name='subjects_edit'),
-    path('subject_delete/<subjectid>',views.subject_delete,name='subject_delete')
+    path('subject_delete/<subjectid>',views.subject_delete,name='subject_delete'),
+    path('subject_update/<subjectid>',views.subject_update,name='subject_update')
 ]
 

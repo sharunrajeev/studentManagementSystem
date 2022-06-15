@@ -56,15 +56,20 @@
     {% for subject in subjects %}
 
       <tr class="active">
+          <form method="post" action="subject_update/{{ subject.id }}">
 
-
-          <td>{{ subject.SubjectName }}</td>
-          <td>{{ subject.TotalHour }}</td>
-         <td><a class="btn btn-success " href="subjects_edit" role="button">Edit</a></td>
+              {% csrf_token %}
+          <td> <input value="{{ subject.SubjectName }}" type="text" name="subjectname"></td>
+          <td><input value="{{ subject.TotalHour }}" type="number" name="totalhours"></td>
+         <td><button class="btn btn-success" role="button">Edit</button></td>
           <td><a class="btn btn-danger " href="subject_delete/{{ subject.id }}" role="button">Delete</a></td>
+          </form>
       </tr>
 
+
       {% endfor %}
+
+
     </tbody>
 
   </table>
