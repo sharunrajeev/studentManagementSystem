@@ -8,6 +8,7 @@ from django.template.loader import render_to_string
 import django.contrib.messages as messages
 from django.contrib.postgres.search import SearchVector
 
+
 # Create your views here.
 
 
@@ -15,15 +16,12 @@ def dashboard(request):
     return render(request, 'owner/dashboard.html')
 
 
-
 def approve(request):
-# coded by Hana
+    # coded by Hana
     if request.method == 'POST':
 
         search_vector = SearchVector('Name', 'Phd_Reg')
-        Searchfield=request.POST['name']
-
-
+        Searchfield = request.POST['name']
 
         users = Applicants.objects.annotate(search=search_vector).filter(search=Searchfield)
         return render(request, 'owner/verify.html', {'users': users, 'message': 'User not found'})
@@ -32,13 +30,14 @@ def approve(request):
 
         users = reversed(users)
 
-        return render(request, 'owner/verify.html', {'users': users ,'message': 'User not found'})
+        return render(request, 'owner/verify.html', {'users': users, 'message': 'User not found'})
 
 
 def individual_view(request, userid):
     print(userid)
     selected_user = Applicants.objects.get(id=userid)
     return render(request, 'owner/individual.html', {'individual': selected_user})
+
 
 def reject(request, userid):
     print(userid)
@@ -103,18 +102,20 @@ def payment(request):
         users = Candidates.objects.all()
 
     users = reversed(users)
-    return render(request, 'owner/paymentstatus.html', {'users': users,'message': 'User not found'})
+    return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
+
 
 # payment verification done by akhila
-#responsive page
-def user_verify_view(request,userid):
+# responsive page
+def user_verify_view(request, userid):
     print(userid)
     user_det = Candidates.objects.get(id=userid)
-    if user_det.PaymentDetails :
-        pay_val=1
+    if user_det.PaymentDetails:
+        pay_val = 1
     else:
-        pay_val=0
-    return render(request, 'owner/user_detail.html', {'person_details': user_det ,'pay_val':pay_val})
+        pay_val = 0
+    return render(request, 'owner/user_detail.html', {'person_details': user_det, 'pay_val': pay_val})
+
 
 def denial(request, userid):
     print(userid)
@@ -136,6 +137,7 @@ def denial(request, userid):
 
     return redirect('payment')
 
+
 def verified(request, userid):
     user = Candidates.objects.get(id=userid)
     user.PaymentStatus = True
@@ -156,6 +158,7 @@ def verified(request, userid):
     email.send()
 
     return redirect('payment')
+
 
 # User management by Sharun
 
@@ -194,7 +197,8 @@ def delete_user(request, userid):
         messages.error(request, 'Error occured while deleting user')
     return redirect('user_manage')
 
-#coded by devaprasad
+
+# coded by devaprasad
 def mark_upload(request):
     users = Candidates.objects.all()
     subjects = Subjects.objects.all()
@@ -202,22 +206,28 @@ def mark_upload(request):
     if request.method == 'POST':
         pass
     else:
-        return render(request, 'owner/mark_upload.html', {'users': users,'marks':marks,'subjects':subjects})
+        return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subjects': subjects})
 
-def individual_mark_upload(request,userid):
+
+def individual_mark_upload(request, userid):
     user = Candidates.objects.get(id=userid)
     if request.method == 'POST':
-        Subject  = request.POST['subject']
+        Subject = request.POST['subject']
         Attendance = int(request.POST['attendance'])
-        Assignment1Mark =int(request.POST['assignment1'])
+        Assignment1Mark = int(request.POST['assignment1'])
         Assignment2Mark = int(request.POST['assignment2'])
         GdMark = int(request.POST['gd'])
         CpMark = int(request.POST['cp'])
 
-        attendance_percentage, a_mark, total_assignment, total,sub = mark_calculation(Subject, Attendance, Assignment1Mark,
-                                                                                  Assignment2Mark, GdMark, CpMark)
+        attendance_percentage, a_mark, total_assignment, total, sub = mark_calculation(Subject, Attendance,
+                                                                                       Assignment1Mark,
+                                                                                       Assignment2Mark, GdMark, CpMark)
 
-        user_mark = Marks.objects.create(StudentId=user, SubjectId=sub,Attendance=Attendance,AttendancePercentage=attendance_percentage, AttendanceMark=a_mark, Assignment1Mark=Assignment1Mark, Assignment2Mark=Assignment2Mark,TotalAssignmentMark=total_assignment, GdMark=GdMark,CpMark=CpMark,Total=total )
+        user_mark = Marks.objects.create(StudentId=user, SubjectId=sub, Attendance=Attendance,
+                                         AttendancePercentage=attendance_percentage, AttendanceMark=a_mark,
+                                         Assignment1Mark=Assignment1Mark, Assignment2Mark=Assignment2Mark,
+                                         TotalAssignmentMark=total_assignment, GdMark=GdMark, CpMark=CpMark,
+                                         Total=total)
         user_mark.save()
         return redirect('mark_upload')
 
@@ -226,19 +236,17 @@ def individual_mark_upload(request,userid):
         return render(request, 'owner/mark_upload_form.html', {'user': user, 'subjects': subjects})
 
 
-
-
 def mark_edit(request, userid):
     if request.method == 'POST':
         pass
     else:
         user = Candidates.objects.get(id=userid)
-        marks = Marks.objects.filter(StudentId = user).order_by('id')
-        return render(request, 'owner/mark_edit.html',{'User':user,'marks':marks})
+        marks = Marks.objects.filter(StudentId=user).order_by('id')
+        return render(request, 'owner/mark_edit.html', {'User': user, 'marks': marks})
 
-def mark_update(request,markid):
+
+def mark_update(request, markid):
     if request.method == 'POST':
-
         Attendance = int(request.POST['attendance'])
         Assignment1Mark = int(request.POST['assignment1'])
         Assignment2Mark = int(request.POST['assignment2'])
@@ -249,8 +257,9 @@ def mark_update(request,markid):
         userid = mark.StudentId.id
 
         Subject = mark.SubjectId.SubjectName
-        attendance_percentage, a_mark, total_assignment, total,sub = mark_calculation(Subject, Attendance, Assignment1Mark,
-                                                                                  Assignment2Mark, GdMark, CpMark)
+        attendance_percentage, a_mark, total_assignment, total, sub = mark_calculation(Subject, Attendance,
+                                                                                       Assignment1Mark,
+                                                                                       Assignment2Mark, GdMark, CpMark)
         mark.AttendancePercentage = attendance_percentage
         mark.AttendanceMark = a_mark
         mark.TotalAssignmentMark = total_assignment
@@ -265,14 +274,15 @@ def mark_update(request,markid):
 
         return redirect(f"/owner/mark_edit/{userid}")
 
-def mark_delete(request,markid):
+
+def mark_delete(request, markid):
     mark = Marks.objects.get(id=markid)
     userid = mark.StudentId.id
     mark.delete()
     return redirect(f"/owner/mark_edit/{userid}")
 
 
-def mark_calculation(Subject,Attendance,Assignment1Mark,Assignment2Mark,GdMark,CpMark):
+def mark_calculation(Subject, Attendance, Assignment1Mark, Assignment2Mark, GdMark, CpMark):
     sub = Subjects.objects.get(SubjectName=Subject)
     total_attendance = int(sub.TotalHour)
 
@@ -294,21 +304,18 @@ def mark_calculation(Subject,Attendance,Assignment1Mark,Assignment2Mark,GdMark,C
     total_assignment = Assignment1Mark + Assignment2Mark
     total = a_mark + Assignment1Mark + Assignment2Mark + GdMark + CpMark
 
-    return attendance_percentage,a_mark,total_assignment,total,sub
+    return attendance_percentage, a_mark, total_assignment, total, sub
 
 
-
-
-#coded by Hana
+# coded by Hana
 def subjects_edit(request):
-
     if request.method == 'POST':
-        Subjectname=request.POST['subjectname']
-        Totalhour=request.POST['totalhours']
+        Subjectname = request.POST['subjectname']
+        Totalhour = request.POST['totalhours']
 
-        subject=Subjects()
-        subject.SubjectName=Subjectname
-        subject.TotalHour=Totalhour
+        subject = Subjects()
+        subject.SubjectName = Subjectname
+        subject.TotalHour = Totalhour
 
         subject.save()
 
@@ -316,31 +323,24 @@ def subjects_edit(request):
 
     else:
         subjects = Subjects.objects.all().order_by('id')
-        return render(request, 'owner/subjects.html',{'subjects': subjects})
-
-def subject_delete(request,subjectid):
+        return render(request, 'owner/subjects.html', {'subjects': subjects})
 
 
+def subject_delete(request, subjectid):
     Subjects.objects.get(id=subjectid).delete()
 
     return redirect('subjects_edit')
 
-def subject_update(request,subjectid):
 
+def subject_update(request, subjectid):
     if request.method == 'POST':
-        subjectname=request.POST['subjectname']
-        totalhour=request.POST['totalhours']
+        subjectname = request.POST['subjectname']
+        totalhour = request.POST['totalhours']
 
-        subject=Subjects.objects.get(id=subjectid)
+        subject = Subjects.objects.get(id=subjectid)
 
-        subject.SubjectName=subjectname
-        subject.TotalHour=totalhour
+        subject.SubjectName = subjectname
+        subject.TotalHour = totalhour
         subject.save()
 
-
-
         return redirect('subjects_edit')
-
-
-
-

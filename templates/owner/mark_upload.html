@@ -18,6 +18,7 @@
   <link href="{% static 'css/style-dark.css' %}" rel="stylesheet">
   <link href="{% static 'css/waves.css' %}" rel="stylesheet">
   <link href="{% static 'css/navbar.css' %}" rel="stylesheet">
+  <link href="{% static 'css/mark_upload-table.css' %}" rel="stylesheet">
 
 {% endblock %}
 
@@ -28,68 +29,55 @@
 
 
 <div id="wrapper">
-
 	<div class="main-content">
-    <a href="subjects_edit" class="btn btn-outline-success btn-sm">Add Subject</a>
-                    <div class="d-flex justify-content-center align-items-center">
-                      <div class="col-md-8">
-
-                        <div class="search">
-                          <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
-                          <input type="text" class="form-control" placeholder="Have a question? Ask Now">
-                          <button class="btn btn-primary">Search</button>
-                        </div>
-
-                      </div>
+        <a href="subjects_edit" class="btn btn-outline-success btn-sm">Add Subject</a>
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="col-md-8">
+                <div class="search">
+                    <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
+                    <input type="text" class="form-control" placeholder="Have a question? Ask Now">
+                    <button class="btn btn-primary">Search</button>
+                </div>
+            </div>
         </div>
-      <div class="verify_div">
+        <div class="table-parent">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sl No</th>
+                        <th>Name</th>
+                        <th>PhD Reg No</th>
+                        <th>Marks</th>
+                        <th>Upload</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
 
+                {% for user in users %}
+                    <tr>
+                        <td><a href="#">{{ forloop.counter }}</a></td>
+                        <td>{{ user.ApplicationId.Name }}</td>
+                        <td>{{ user.ApplicationId.Phd_Reg }}</td>
+                        <td>
+                            {% for mark in marks %}
+                                {% if mark.StudentId == user %}
+                                    <p class="num">{{ mark.SubjectId.SubjectName }}:{{mark.Total}}</p>
 
-
-  <div class="verify_header">
-     <div class="verify_list-head">
-
-      <p>Sl</p>
-      <p class="name">Name</p>
-      <p class="num">PhD Register No</p>
-
-         <p class="num">Marks</p>
-
-         <a href="">Status</a>
-
-
-
-    </div>
-  </div>
-  <div class="verify_lists-parent">
-    {% for user in users %}
-    <div class="verify_list">
-      <span>{{ forloop.counter }}</span>
-<!--        <input type="checkbox"/>-->
-      <p class="name">{{ user.ApplicationId.Name }}</p>
-      <p class="num">{{ user.ApplicationId.Phd_Reg }}</p>
-        {% for mark in marks %}
-        {% if mark.StudentId == user %}
-        <p class="num">{{ mark.SubjectId.SubjectName }}:{{mark.Total}}</p>
-
-        {% endif %}
-        {% endfor %}
-      <a href="mark_upload/{{ user.id }}" class="btn btn-outline-success btn-sm">Upload</a>
-        <a href="mark_edit/{{ user.id }}" class="btn btn-outline-success btn-sm">Edit</a>
-      <div class="verify_menu" tabindex="-1">
-<!--        <div class="three_dots"></div>-->
-<!--        <div class="dropdown">-->
-<!--          <a href="select/{{ user.id }}" ><div>Approve</div></a>-->
-<!--          <a href="reject/{{ user.id }}" ><div>Reject</div></a>-->
-<!--        </div>-->
-      </div>
-
-    </div>
-    {% endfor %}
-
-  </div>
-</div>
-  </div>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <a href="mark_upload/{{ user.id }}" class="btn btn-outline-success btn-sm">Upload</a>
+                        </td>
+                        <td>
+                            <a href="mark_edit/{{ user.id }}" class="btn btn-outline-success btn-sm">Edit</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+</table>
+        </div>
     </div>
 </div>
 {% endblock %}
