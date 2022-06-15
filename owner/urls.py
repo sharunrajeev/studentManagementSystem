@@ -5,12 +5,12 @@ from user.views import dashboard
 from . import views
 
 urlpatterns = [
-# Home page
+    # Home page
     path('', views.dashboard, name='dashboard'),
     path('approve', views.approve, name='approve'),
     path('approve/<userid>', views.individual_view, name='individual_view'),
     path('payment',views.payment,name='payment'),
-#Done By Akhila
+    #Done By Akhila
     path('payment/<userid>', views.user_verify_view, name='user_verify_view' ),
     path('denial/<userid>', views.denial, name='denial'),
     path('verified/<userid>', views.verified, name='verified'),
