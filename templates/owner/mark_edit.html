@@ -59,7 +59,7 @@
 
           {% if mark.StudentId == User %}
 
-                        <form method="post" action="{{ mark.id }}">
+                        <form method="post" action="mark_update/{{ mark.id }}">
         {% csrf_token %}
           <td> <input type="text"  class="form-control" value="{{ mark.SubjectId.SubjectName }}" readonly> </td>
           <td> <input type="number" class="form-control" name="attendance" value="{{ mark.Attendance }}"></td>

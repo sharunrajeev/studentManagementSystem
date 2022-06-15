@@ -243,16 +243,27 @@ def individual_mark_upload(request,userid):
 
 def mark_edit(request, userid):
     if request.method == 'POST':
+        pass
+    else:
+        user = Candidates.objects.get(id=userid)
+        marks = Marks.objects.all()
+        return render(request, 'owner/mark_edit.html',{'User':user,'marks':marks})
+
+def mark_update(request,markid):
+    if request.method == 'POST':
         Attendance = int(request.POST['attendance'])
         Assignment1Mark = int(request.POST['assignment1'])
         Assignment2Mark = int(request.POST['assignment2'])
         GdMark = int(request.POST['gd'])
         CpMark = int(request.POST['cp'])
 
-        mark = Marks.objects.get(id=userid)
-        Subject = mark.SubjectId.SubjectName
+        mark = Marks.objects.get(id=markid)
+        userid = mark.StudentId.id
 
-        attendance_percentage,a_mark,total_assignment,total = mark_calculation(Subject, Attendance, Assignment1Mark, Assignment2Mark,GdMark,CpMark)
+        Subject = mark.SubjectId.SubjectName
+        print(Subject)
+        attendance_percentage, a_mark, total_assignment, total = mark_calculation(Subject, Attendance, Assignment1Mark,
+                                                                                  Assignment2Mark, GdMark, CpMark)
         mark.AttendancePercentage = attendance_percentage
         mark.AttendanceMark = a_mark
         mark.TotalAssignmentMark = total_assignment
@@ -265,13 +276,7 @@ def mark_edit(request, userid):
 
         mark.save()
 
-        return redirect("mark_upload")
-
-    else:
-        user = Candidates.objects.get(id=userid)
-        marks = Marks.objects.all()
-        return render(request, 'owner/mark_edit.html',{'User':user,'marks':marks})
-
+        return redirect(f"/owner/mark_edit/{userid}")
 
 
 def mark_calculation(Subject,Attendance,Assignment1Mark,Assignment2Mark,GdMark,CpMark):
