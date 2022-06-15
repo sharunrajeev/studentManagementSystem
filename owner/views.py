@@ -237,3 +237,12 @@ def individual_mark_upload(request,userid):
     else:
         subjects = Subjects.objects.all()
         return render(request, 'owner/mark_upload_form.html', {'user': user, 'subjects': subjects})
+
+
+def mark_edit(request,userid):
+    user = Candidates.objects.get(id=userid)
+    marks = Marks.objects.all()
+    if request.method == 'POST':
+        pass
+    else:
+        return render(request, 'owner/mark_edit.html',{'User':user,'marks':marks})
