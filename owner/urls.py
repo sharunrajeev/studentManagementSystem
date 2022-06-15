@@ -29,7 +29,7 @@ urlpatterns = [
     path('mark_upload/<userid>', views.individual_mark_upload, name='individual_mark_upload'),
     path('mark_edit/<userid>', views.mark_edit, name='mark_edit'),
     path('mark_edit/mark_update/<markid>', views.mark_update, name='mark_update'),
-
+    path('mark_edit/mark_delete/<markid>', views.mark_delete, name='mark_update'),
     #Subject Adding Coded By Hana
 
     path('subjects_edit',views.subjects_edit,name='subjects_edit'),

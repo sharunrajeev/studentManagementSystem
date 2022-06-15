@@ -54,14 +54,11 @@
 
         {% for mark in marks %}
 
-
       <tr class="active">
 
-          {% if mark.StudentId == User %}
-
-                        <form method="post" action="mark_update/{{ mark.id }}">
+              <form method="post" action="mark_update/{{ mark.id }}">
         {% csrf_token %}
-          <td> <input type="text"  class="form-control" value="{{ mark.SubjectId.SubjectName }}" readonly> </td>
+          <td> <input type="text"  class="form-control" value="{{ mark.SubjectId.SubjectName }} {{mark.id}}" readonly> </td>
           <td> <input type="number" class="form-control" name="attendance" value="{{ mark.Attendance }}"></td>
           <td> <input type="number" class="form-control" value="{{ mark.AttendancePercentage }}" readonly></td>
           <td> <input type="number" class="form-control" value="{{ mark.AttendanceMark }}" readonly></td>
@@ -72,9 +69,9 @@
           <td><input type="number" class="form-control" name="cp" value="{{ mark.CpMark }}"></td>
                             <td><input type="number" class="form-control"  value="{{ mark.Total }}" readonly></td>
           <td> <button  type="submit" class="btn btn-success btn-sm">Update</button></td>
-                            <td> <a href="" type="button" class="btn btn-danger btn-sm">Delete</a></td>
-          </from>
-          {% endif %}
+                            <td> <a href="mark_delete/{{ mark.id }}" type="button" class="btn btn-danger btn-sm">Delete</a></td>
+          </form>
+
       </tr>
 
       {% endfor %}

@@ -209,27 +209,9 @@ def individual_mark_upload(request,userid):
         GdMark = int(request.POST['gd'])
         CpMark = int(request.POST['cp'])
 
-        sub = Subjects.objects.get(SubjectName=Subject)
-        total_attendance = int(sub.TotalHour)
-        print(total_attendance)
+        attendance_percentage, a_mark, total_assignment, total,sub = mark_calculation(Subject, Attendance, Assignment1Mark,
+                                                                                  Assignment2Mark, GdMark, CpMark)
 
-        attendance_percentage = (Attendance/total_attendance)*100
-        print(attendance_percentage)
-        if attendance_percentage >= 95:
-            a_mark = 5
-        elif attendance_percentage >=90:
-            a_mark = 4
-        elif attendance_percentage >=85:
-            a_mark = 3
-        elif attendance_percentage >=80:
-            a_mark = 2
-        elif attendance_percentage >=75:
-            a_mark = 1
-        else:
-            a_mark = 0
-
-        total_assignment = Assignment1Mark+Assignment2Mark
-        total = a_mark+Assignment1Mark+Assignment2Mark+GdMark+CpMark
         user_mark = Marks.objects.create(StudentId=user, SubjectId=sub,Attendance=Attendance,AttendancePercentage=attendance_percentage, AttendanceMark=a_mark, Assignment1Mark=Assignment1Mark, Assignment2Mark=Assignment2Mark,TotalAssignmentMark=total_assignment, GdMark=GdMark,CpMark=CpMark,Total=total )
         user_mark.save()
         return redirect('mark_upload')
@@ -246,11 +228,12 @@ def mark_edit(request, userid):
         pass
     else:
         user = Candidates.objects.get(id=userid)
-        marks = Marks.objects.all()
+        marks = Marks.objects.filter(StudentId = user).order_by('id')
         return render(request, 'owner/mark_edit.html',{'User':user,'marks':marks})
 
 def mark_update(request,markid):
     if request.method == 'POST':
+
         Attendance = int(request.POST['attendance'])
         Assignment1Mark = int(request.POST['assignment1'])
         Assignment2Mark = int(request.POST['assignment2'])
@@ -261,8 +244,7 @@ def mark_update(request,markid):
         userid = mark.StudentId.id
 
         Subject = mark.SubjectId.SubjectName
-        print(Subject)
-        attendance_percentage, a_mark, total_assignment, total = mark_calculation(Subject, Attendance, Assignment1Mark,
+        attendance_percentage, a_mark, total_assignment, total,sub = mark_calculation(Subject, Attendance, Assignment1Mark,
                                                                                   Assignment2Mark, GdMark, CpMark)
         mark.AttendancePercentage = attendance_percentage
         mark.AttendanceMark = a_mark
@@ -277,6 +259,12 @@ def mark_update(request,markid):
         mark.save()
 
         return redirect(f"/owner/mark_edit/{userid}")
+
+def mark_delete(request,markid):
+    mark = Marks.objects.get(id=markid)
+    userid = mark.StudentId.id
+    mark.delete()
+    return redirect(f"/owner/mark_edit/{userid}")
 
 
 def mark_calculation(Subject,Attendance,Assignment1Mark,Assignment2Mark,GdMark,CpMark):
@@ -301,7 +289,7 @@ def mark_calculation(Subject,Attendance,Assignment1Mark,Assignment2Mark,GdMark,C
     total_assignment = Assignment1Mark + Assignment2Mark
     total = a_mark + Assignment1Mark + Assignment2Mark + GdMark + CpMark
 
-    return attendance_percentage,a_mark,total_assignment,total
+    return attendance_percentage,a_mark,total_assignment,total,sub
 
 
 
