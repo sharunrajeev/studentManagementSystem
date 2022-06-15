@@ -1,0 +1,145 @@
+<!--Coded By Akhila (user details verification)-->
+<!--(user details verification)-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  {% load static %}
+  <title>Student Payment Verification</title>
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+</head>
+
+
+<style>
+.content {
+  max-width: 500px;
+  margin: auto;
+}
+</style>
+
+
+<body>
+  <div class="content">
+
+    <div class="individual_div-parent">
+      <h2>Personal Information</h2>
+      <div class="ind-personal">
+        <div class="ind-personal_text">
+          <table>
+            <tr>
+              <td>Name</td>
+              <td>:</td>
+              <td>{{ person_details.ApplicationId.Name }}</td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td>:</td>
+              <td>{{ person_details.ApplicationId.Email }}</td>
+            </tr>
+            <tr>
+              <td>Age</td>
+              <td>:</td>
+              <td>{{ person_details.ApplicationId.Age }}</td>
+            </tr>
+            <tr>
+              <td>DOB</td>
+              <td>:</td>
+              <td>{{ person_details.ApplicationId.Dob }}</td>
+            </tr>
+            <tr>
+              <td>Gender</td>
+              <td>:</td>
+              <td>{{ person_details.ApplicationId.Gender }}</td>
+            </tr>
+            <tr>
+              <td>Mobile No</td>
+              <td>:</td>
+              <td>{{ person_details.ApplicationId.Mob }}</td>
+            </tr>
+            <tr>
+              <td>Address</td>
+              <td>:</td>
+              <td>{{ person_details.ApplicationId.Address }}</td>
+            </tr>
+          </table>
+
+      <h2>Academic Information</h2>
+      <div class="ind-academic">
+          <table>
+            <tr>
+              <td>Department</td>
+              <td>:</td>
+              <td>{{ person_details.ApplicationId.Department }}</td>
+            </tr>
+            <tr>
+              <td>University</td>
+              <td>:</td>
+              <td>{{ person_details.ApplicationId.University }}</td>
+            </tr>
+            <tr>
+              <td>Phd Register Number</td>
+              <td>:</td>
+              <td>{{ person_details.ApplicationId.Phd_Reg }}</td>
+            </tr>
+            <tr>
+              <td>Phd Joining Date</td>
+              <td>:</td>
+              <td>{{ person_details.ApplicationId.Phd_Joining_Date }}</td>
+            </tr>
+            <tr>
+              <td>Research Topic</td>
+              <td>:</td>
+              <td>{{ person_details.ApplicationId.Research_Topic }}</td>
+            </tr>
+            <tr>
+              <td>Research Guide</td>
+              <td>:</td>
+              <td>{{ person_details.ApplicationId.Research_Guide }}</td>
+            </tr>
+            <tr>
+              <td>Contact Of Guide(Email)</td>
+              <td>:</td>
+              <td>{{ person_details.ApplicationId.Guide_Mail }}</td>
+            </tr>
+            <tr>
+              <td>Contact Of Guide(Phone Number)</td>
+              <td>:</td>
+              <td>{{ person_details.ApplicationId.Guide_Phone }}</td>
+            </tr>
+          </table>
+      </div>
+      <div class="ind-verify">
+
+
+       <a href="{{ person_details.PaymentDetails.url}}" ><button type="button" class="btn btn-outline-info">view reciept</button></a>
+
+        {% if person_details.PaymentStatus == True %}
+        <a href="#" class=" btn btn-success">Verified & Accepted</a>
+        {% elif person_details.PaymentStatus == False %}
+        <a href="#" class=" btn btn-danger"> Not Verified(Incomplete)</a>
+        {% else %}
+        <a href="/owner/verified/{{person_details.id}}" ><button type="button" class="btn btn-outline-info">Verify</button></a>
+        <a href="/owner/denial/{{person_details.id}}" ><button type="button" class="btn btn-outline-info">Denial</button></a>
+
+        {% endif %}
+
+
+
+
+
+
+
+      </div>
+    </div>
+
+  </div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
+
+
