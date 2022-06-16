@@ -7,6 +7,9 @@ from django.conf import settings
 from django.template.loader import render_to_string
 import django.contrib.messages as messages
 from django.contrib.postgres.search import SearchVector
+from django.http import HttpResponse
+from django.template.loader import get_template
+from xhtml2pdf import pisa
 
 
 # Create your views here.
@@ -356,4 +359,25 @@ def show_report(request):
 def report(request,subjectid):
      subject = Subjects.objects.get(id=subjectid)
      marks = Marks.objects.filter(SubjectId = subject).order_by('id')
-     return render(request, 'owner/report.html' , {'marks':marks})
+     return render(request, 'owner/report.html' , {'marks':marks,'subject':subject})
+
+def report_download(request,subjectid):
+    subject = Subjects.objects.get(id=subjectid)
+    marks = Marks.objects.filter(SubjectId=subject).order_by('id')
+
+    template_path = 'owner/pdf_report.html'
+    context = {'marks':marks,'subject':subject}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="subject_report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
