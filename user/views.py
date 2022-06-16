@@ -145,9 +145,13 @@ def marks(request):
         return redirect('/user/login')
 
 
-
+#coded by Akhila
 def attendance(request):
-    return render(request, 'user/attendance.html')
+    if 'username' in request.session:
+        User = Candidates.objects.get(UserId=request.session['username'])
+        attendance= Marks.objects.all()
+
+    return render(request, 'user/attendance.html',{ 'User':User,'attendance':attendance})
 
 
 # Coded By Rohith
