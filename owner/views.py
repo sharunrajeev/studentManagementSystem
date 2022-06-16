@@ -344,3 +344,16 @@ def subject_update(request, subjectid):
         subject.save()
 
         return redirect('subjects_edit')
+
+
+
+
+# report generation coded bt devaprasad
+
+def show_report(request):
+    subjects = Subjects.objects.all().order_by('id')
+    return render(request,'owner/show_report.html',{'subjects':subjects})
+def report(request,subjectid):
+     subject = Subjects.objects.get(id=subjectid)
+     marks = Marks.objects.filter(SubjectId = subject).order_by('id')
+     return render(request, 'owner/report.html' , {'marks':marks})

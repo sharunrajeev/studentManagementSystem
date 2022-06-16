@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Approval {% endblock %}
+
+{% block styles %}
+
+</style>
+  <!-- CSS only -->
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+  <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
+  <link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
+  <link href="{% static 'css/style-dark.css' %}" rel="stylesheet">
+  <link href="{% static 'css/waves.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+{% block body %}
+{% include 'reusable/sidebar.html' %}
+{% include 'reusable/navbar.html' %}
+
+<div id="wrapper">
+	<div class="main-content">
+
+                    <div class="d-flex justify-content-center align-items-center">
+                      <div class="col-md-8">
+
+                          <form action="approve" method="post">
+
+                      {% csrf_token %}
+
+                        <div class="input-group">
+                            <input name="name" type="text" placeholder="Search for Applicants" class="form-control" />
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary btn-format">Search</button>
+
+                            </div>
+                        </div>
+                    </form>
+
+
+
+
+                      </div>
+        </div>
+      <div class="verify_div">
+  <div class="verify_header">
+     <div class="verify_list-head">
+      <span>Sl</span>
+
+      <p class="name">Subject Name</p>
+         <a href="">View</a>
+
+
+
+    </div>
+  </div>
+  <div class="verify_lists-parent">
+    {% for subject in subjects %}
+    <div class="verify_list">
+      <span>{{ forloop.counter }}</span>
+
+      <p class="name">{{ subject.SubjectName }}</p>
+      <a href="report/{{ subject.id }}">View Report</a>
+
+
+    </div>
+    {% endfor %}
+
+  </div>
+</div>
+  </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script>
+        let
+    </script>
+{% endblock %}

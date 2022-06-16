@@ -30,6 +30,8 @@ urlpatterns = [
     path('mark_edit/<userid>', views.mark_edit, name='mark_edit'),
     path('mark_edit/mark_update/<markid>', views.mark_update, name='mark_update'),
     path('mark_edit/mark_delete/<markid>', views.mark_delete, name='mark_update'),
+    path('show_report', views.show_report, name='show_report'),
+    path('report/<subjectid>', views.report, name='report'),
     #Subject Adding Coded By Hana
 
     path('subjects_edit',views.subjects_edit,name='subjects_edit'),
