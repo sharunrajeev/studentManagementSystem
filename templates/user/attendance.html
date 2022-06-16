@@ -1,3 +1,5 @@
+<!--Coded BY Akhila-->
+<!--attendance table-->
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
@@ -61,12 +63,47 @@
 <!--            </div>-->
 <!--        </div>-->
 <!-- Dashboard Content -->
-<div class="d-flex flex-column flex-grow-1 p-4 " style="height: 100vh; margin-left: 15rem;">
-    <h1>Attendance</h1>
+<div class="d-flex flex-column flex-grow-1 p-4 " style="height: 100vh; margin-left: 15%;">
+    <h1 style="font-size:30px;">Attendance Record</h1>
     <hr>
-    <p>
-        Show Attendance
-    </p>
+
+            <table class="table table-bordered">
+    <thead>
+
+    <tr>
+
+
+        <th>Subject Name</th>
+        <th>No: of Attendance</th>
+        <th>Total(Max)</th>
+        <th>Attendance (%)</th>
+    </tr>
+    </thead>
+        <tbody>
+
+        {% for attend in attendance %}
+
+      <tr class="active">
+
+          {% if attend.StudentId == User %}
+          <td>{{ attend.SubjectId.SubjectName }}</td>
+          <td>{{ attend.Attendance }}</td>
+          <td>/ 20</td>
+          <td>{{ attend.AttendancePercentage }}</td>
+          {% endif %}
+      </tr>
+
+      {% endfor %}
+    </tbody>
+
+  </table>
+
+
+
+
+<!--    <p>-->
+<!--        Show Attendance-->
+<!--    </p>-->
 </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
