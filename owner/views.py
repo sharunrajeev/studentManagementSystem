@@ -381,3 +381,6 @@ def report_download(request,subjectid):
     if pisa_status.err:
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+def report_mark(request):
+    marks = Marks.objects.all().
