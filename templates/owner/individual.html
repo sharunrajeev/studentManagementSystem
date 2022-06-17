@@ -28,188 +28,146 @@
 			<figure class="ind-header_pic">
 				<img src="{% static 'assets/person_image.png' %}">
 			</figure>
-			<div class="ind-header_approve">
-				<h4>Status</h4>
+			<div>
+				<div class="ind-header_approve">
+				<h4>Status: </h4>
 				{% if individual.Eligibility == True %}
-					<a href="#" class=" btn btn-outline-info color-green">Selected</a>
+					<span style="color: green;">Selected</span>
         		{% elif user.Eligibility == False %}
-        			<a href="#" class="btn btn-outline-info color-blue">Rejected</a>
+        			<span style="color: red;">Rejected</span>
         		{% else %}
-  					<a href="/owner/select/{{ individual.id }}" ><button type="button" class="btn btn-outline-info">Select</button></a>
-        			<a href="/owner/reject/{{ individual.id }}" ><button type="button" class="btn btn-outline-info">Reject</button></a>
-        		{% endif %}
+					<span style="color: yellow;">Not Verified</span>
+				{% endif %}
+
 
 			</div>
+				{% if individual.Eligibility == None %}
+				<div class="ind-header-btns">
+					<a href="/owner/select/{{ individual.id }}" ><button type="button" class="btn btn-outline-info">Select</button></a>
+        			<a href="/owner/reject/{{ individual.id }}" ><button type="button" class="btn btn-outline-info">Reject</button></a>
+				</div>
+				{% endif %}
+
+			</div>
+
 		</div>
-		<div class="row small-spacing">
+		<div class="row small-spacing"  style="width:100%;">
 			<div class="col-md-9 col-xs-12">
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="box-content card">
 							<h4 class="box-title"><i class="fa fa-user ico"></i>Personal Information</h4>
 							<div class="card-content">
-								<div class="row">
-									<div class="col-md-6">
-										<div class="row">
-											<div class="col-xs-5"><label>Name:</label></div>
-											<!-- /.col-xs-5 -->
-											<div class="col-xs-7">{{ individual.Name }}</div>
-											<!-- /.col-xs-7 -->
-										</div>
-										<!-- /.row -->
+								<div class="ind_main-row">
+									<div class="ind_main-col">
+										<span>Name: </span>
+										<span>{{ individual.Name }}</span>
 									</div>
-									<!-- /.col-md-6 -->
-									<div class="col-md-6">
-										<div class="row">
-											<div class="col-xs-5"><label>Email:</label></div>
-											<!-- /.col-xs-5 -->
-											<div class="col-xs-7">{{ individual.Email }}</div>
-											<!-- /.col-xs-7 -->
-										</div>
-										<!-- /.row -->
+
+									<div class="ind_main-col">
+										<span>Age: </span>
+										<span>{{ individual.Age }}</span>
 									</div>
-									<!-- /.col-md-6 -->
-									<div class="col-md-6">
-										<div class="row">
-											<div class="col-xs-5"><label>Age</label></div>
-											<!-- /.col-xs-5 -->
-											<div class="col-xs-7">{{ individual.Age }}</div>
-											<!-- /.col-xs-7 -->
-										</div>
-										<!-- /.row -->
-									</div>
-									<!-- /.col-md-6 -->
-									<div class="col-md-6">
-										<div class="row">
-											<div class="col-xs-5"><label>DOB:</label></div>
-											<!-- /.col-xs-5 -->
-											<div class="col-xs-7">{{ individual.Dob }}</div>
-											<!-- /.col-xs-7 -->
-										</div>
-										<!-- /.row -->
-									</div>
-									<!-- /.col-md-6 -->
-									<div class="col-md-6">
-										<div class="row">
-											<div class="col-xs-5"><label>Gender:</label></div>
-											<!-- /.col-xs-5 -->
-											<div class="col-xs-7">{{ individual.Gender }}</div>
-											<!-- /.col-xs-7 -->
-										</div>
-										<!-- /.row -->
-									</div>
-									<!-- /.col-md-6 -->
-									<div class="col-md-6">
-										<div class="row">
-											<div class="col-xs-5"><label>Mobile:</label></div>
-											<!-- /.col-xs-5 -->
-											<div class="col-xs-7">{{ individual.Mob }}</div>
-											<!-- /.col-xs-7 -->
-										</div>
-										<!-- /.row -->
-									</div>
-									<!-- /.col-md-6 -->
-									<div class="col-md-6">
-										<div class="row">
-											<div class="col-xs-5"><label>Address:</label></div>
-											<!-- /.col-xs-5 -->
-											<div class="col-xs-7">{{ individual.Address }}</div>
-											<!-- /.col-xs-7 -->
-										</div>
-										<!-- /.row -->
-									</div>
+
 								</div>
-								<!-- /.row -->
+
+								<div class="ind_main-row">
+									<div class="ind_main-col">
+										<span>Dob: </span>
+										<span>{{ individual.Dob }}</span>
+									</div>
+
+									<div class="ind_main-col">
+										<span>Gender: </span>
+										<span>{{ individual.Gender }}</span>
+									</div>
+
+								</div>
+
+								<div class="ind_main-row">
+									<div class="ind_main-col">
+										<span>Email: </span>
+										<span>{{ individual.Email }}</span>
+									</div>
+
+									<div class="ind_main-col">
+										<span>Mob: </span>
+										<span>{{ individual.Mob }}</span>
+									</div>
+
+								</div>
+
+								<div class="ind_main-row">
+									<div class="ind_main-col">
+										<span>Address: </span>
+										<span>{{ individual.Address }}</span>
+									</div>
+
+								</div>
+
 							</div>
 							<!-- /.card-content -->
 						</div>
 						<!-- /.box-content card -->
 					</div>
+
 					<div class="col-xs-12">
 						<div class="box-content card">
-							<h4 class="box-title"><i class="fa fa-user ico"></i>Educational Information</h4>
+							<h4 class="box-title"><i class="fa fa-trophy ico"></i>Educational Information</h4>
 							<div class="card-content">
-								<div class="row">
-									<div class="col-md-6">
-										<div class="row">
-											<div class="col-xs-5"><label>Department:</label></div>
-											<!-- /.col-xs-5 -->
-											<div class="col-xs-7">{{individual.Department}}</div>
-											<!-- /.col-xs-7 -->
-										</div>
-										<!-- /.row -->
+
+								<div class="ind_main-row">
+									<div class="ind_main-col">
+										<span>Department: </span>
+										<span>{{ individual.Department }}</span>
 									</div>
-									<!-- /.col-md-6 -->
-									<div class="col-md-6">
-										<div class="row">
-											<div class="col-xs-5"><label>University:</label></div>
-											<!-- /.col-xs-5 -->
-											<div class="col-xs-7">{{individual.University}}</div>
-											<!-- /.col-xs-7 -->
-										</div>
-										<!-- /.row -->
+
+									<div class="ind_main-col">
+										<span>University: </span>
+										<span>{{ individual.University }}</span>
 									</div>
-									<!-- /.col-md-6 -->
-									<div class="col-md-6">
-										<div class="row">
-											<div class="col-xs-5"><label>Phd Register Number:</label></div>
-											<!-- /.col-xs-5 -->
-											<div class="col-xs-7">{{individual.Phd_Reg}}</div>
-											<!-- /.col-xs-7 -->
-										</div>
-										<!-- /.row -->
-									</div>
-									<!-- /.col-md-6 -->
-									<div class="col-md-6">
-										<div class="row">
-											<div class="col-xs-5"><label>Phd Joining Date:</label></div>
-											<!-- /.col-xs-5 -->
-											<div class="col-xs-7">{{individual.Department}}</div>
-											<!-- /.col-xs-7 -->
-										</div>
-										<!-- /.row -->
-									</div>
-									<!-- /.col-md-6 -->
-									<div class="col-md-6">
-										<div class="row">
-											<div class="col-xs-5"><label>Research Topic:</label></div>
-											<!-- /.col-xs-5 -->
-											<div class="col-xs-7">{{individual.Research_Topic}}</div>
-											<!-- /.col-xs-7 -->
-										</div>
-										<!-- /.row -->
-									</div>
-									<!-- /.col-md-6 -->
-									<div class="col-md-6">
-										<div class="row">
-											<div class="col-xs-5"><label>Research Guide:</label></div>
-											<!-- /.col-xs-5 -->
-											<div class="col-xs-7">{{individual.Research_Guide}}</div>
-											<!-- /.col-xs-7 -->
-										</div>
-										<!-- /.row -->
-									</div>
-									<!-- /.col-md-6 -->
-									<div class="col-md-6">
-										<div class="row">
-											<div class="col-xs-5"><label>Contact of Guide (Email):</label></div>
-											<!-- /.col-xs-5 -->
-											<div class="col-xs-7">{{individual.Guide_Mail}}</div>
-											<!-- /.col-xs-7 -->
-										</div>
-										<!-- /.row -->
-									</div>
-									<!-- /.col-md-6 -->
-									<div class="col-md-6">
-										<div class="row">
-											<div class="col-xs-5"><label>Contact of Guide (Phone):</label></div>
-											<!-- /.col-xs-5 -->
-											<div class="col-xs-7">{{individual.Guide_Phone}}</div>
-											<!-- /.col-xs-7 -->
-										</div>
-										<!-- /.row -->
-									</div>
+
 								</div>
+
+								<div class="ind_main-row">
+									<div class="ind_main-col">
+										<span>PhD Register No: </span>
+										<span>{{ individual.Phd_Reg }}</span>
+									</div>
+
+									<div class="ind_main-col">
+										<span>PhD Joining Date: </span>
+										<span>{{ individual.Phd_Join }}</span>
+									</div>
+
+								</div>
+
+								<div class="ind_main-row">
+									<div class="ind_main-col">
+										<span>Research Guide: </span>
+										<span>{{ individual.Research_Guide }}</span>
+									</div>
+
+									<div class="ind_main-col">
+										<span>Research Topic: </span>
+										<span>{{ individual.Research_Topic }}</span>
+									</div>
+
+								</div>
+
+								<div class="ind_main-row">
+									<div class="ind_main-col">
+										<span>Contact of Guide (Email): </span>
+										<span>{{ individual.Guide_Mail }}</span>
+									</div>
+
+									<div class="ind_main-col">
+										<span>Contact of Guide (Phone): </span>
+										<span>{{ individual.Guide_Phone }}</span>
+									</div>
+
+								</div>
+
 								<!-- /.row -->
 							</div>
 							<!-- /.card-content -->
@@ -217,6 +175,8 @@
 						<!-- /.box-content card -->
 					</div>
 				</div>
+	</div>
+		</div>
 	</div>
 	<!-- /.main-content -->
 </div><!--/#wrapper -->

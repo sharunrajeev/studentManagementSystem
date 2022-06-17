@@ -5,8 +5,9 @@
 
 {% block styles %}
 
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<!--    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">-->
     <link href="{% static 'css/mark_upload-table.css' %}" rel="stylesheet">
+  <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
 
 {% endblock %}
 
@@ -18,16 +19,15 @@
 
 <div id="wrapper">
 	<div class="main-content">
-        <div class="d-flex justify-content-center align-items-center">
-            <div class="col-md-8">
-                <form action="payment" method="post">
-                    {% csrf_token %}
 
-                    <div class="input-group">
-                        <input name="name" type="text" placeholder="Search" class="form-control form-control-lg" />
-                        <div class="input-group-append">
-                            <button type="submit" class="btn btn-dark btn-lg">Search</button>
-                        </div>
+        <div class="d-flex justify-content-center align-items-center" style="margin-top: 3rem;">
+            <div class="col-md-6">
+                <form action="payment" method="post">
+                {% csrf_token %}
+                    <div class="search">
+                        <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
+                        <input name="name" type="text" class="form-control" placeholder="Search for Applicants">
+                        <button class="btn btn-primary" type="submit">Search</button>
                     </div>
                 </form>
             </div>
@@ -55,11 +55,11 @@
 <!--                        <td>{{ user.ApplicationId.Mob }}</td>-->
                         <td>{{ user.ApplicationId.Email }}</td>
                         {% if user.PaymentStatus == null %}
-                            <td><span class="btn btn-warning btn-sm" href="payment/{{ user.id }}">Not Verified</span></td>
+                            <td><span class="btn btn-warning btn-sm" style="cursor: default;">Not Verified</span></td>
                         {% elif user.PaymentStatus == True %}
-                            <td><span class="btn btn-success btn-sm" href="payment/{{ user.id }}" role="button">Accepted</span></td>
+                            <td><span class="btn btn-success btn-sm" style="cursor: default;">Accepted</span></td>
                         {% else %}
-                            <td><a class="btn btn-danger btn-sm" href="payment/{{ user.id }}" role="button">Rejected</a></td>
+                            <td><span class="btn btn-danger btn-sm" style="cursor: default;">Rejected</span></td>
                         {% endif %}
                         <td><a class="btn btn-outline-success btn-sm" href="payment/{{ user.id }}" role="button">Verify</a></td>
                     </tr>
