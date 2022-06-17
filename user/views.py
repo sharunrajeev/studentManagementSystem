@@ -10,6 +10,7 @@ from django.contrib.auth import views as auth_views
 
 # Create your views here.
 
+#Coded by Hana
 def register(request):
     if request.method == 'POST':
         Name = request.POST['Name']
@@ -69,20 +70,47 @@ def reg_success(request):
 
 # Sharun
 def login(request):
+    # if request.method == 'POST':
+    #     username = request.POST['Username']
+    #     password = request.POST['Password']
+    #     print(username, password)
+    #
+    #     user = auth.authenticate(username=username, password=password)
+    #
+    #     if user is not None:
+    #         auth.login(request, user)
+    #         request.session['username'] = username
+    #         return redirect('/user/dashboard')
+    #     else:
+    #         messages.info(request, 'Invalid credentials')
+    #         return redirect('/user/login')
+    #
+    # else:
+    #     return render(request, 'user/auth/login.html')
+
+
     if request.method == 'POST':
-        username = request.POST['Username']
-        password = request.POST['Password']
-        print(username, password)
+
+        username = request.POST['username']
+        password = request.POST['password']
 
         user = auth.authenticate(username=username, password=password)
 
         if user is not None:
             auth.login(request, user)
             request.session['username'] = username
-            return redirect('/user/dashboard')
+            return JsonResponse(
+                {'success': True},
+                safe=False
+            )
+
         else:
-            messages.info(request, 'Invalid credentials')
-            return redirect('/user/login')
+
+            print("Invalid Credentials")
+            return JsonResponse(
+                {'success': False},
+                safe=False
+            )
 
     else:
         return render(request, 'user/auth/login.html')

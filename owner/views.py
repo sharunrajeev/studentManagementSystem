@@ -15,6 +15,7 @@ from xhtml2pdf import pisa
 
 # Create your views here.
 
+#Coded by Hana
 def adminlogin(request):
 
     # if request.method == 'POST':
@@ -401,7 +402,7 @@ def subject_update(request, subjectid):
 
 
 
-# report generation coded bt devaprasad
+# report generation coded by devaprasad
 
 def show_report(request):
     subjects = Subjects.objects.all().order_by('id')

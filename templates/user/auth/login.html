@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 {% block title %}
-    AdminLogin
+    Login
 {% endblock title %}
 {% block body %}
     <main class="container d-flex flex-column justify-content-center col-lg-4" style="min-height: 100vh">
         <div class="mb-3 text-center">
-            <h1>Login</h1>
+            <h1 id="error">Login</h1>
         </div>
         <form action="login" method="POST">
             {% csrf_token %}
@@ -14,18 +14,62 @@
                 <input type="email"
                        class="form-control"
                        id="username"
-                       name="Username"
+                       name="username"
                        autocomplete="email" >
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="Password" autocomplete="off" >
+                <input type="password" class="form-control" id="password" name="password" autocomplete="off" >
             </div>
             <div class="mb-3">
-                <a href="#"><p class="text-start">Forgot Password?</p></a>
+                <a href={% url 'password_reset' %}><p class="text-start">Forgot Password?</p></a>
             </div>
-            <button type="submit" class="btn btn-dark w-100">Sign In</button>
+            <button id="btn" type="button" class="btn btn-dark w-100">Sign In</button>
         </form>
     </main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+
+    $(document).ready(function(){
+
+        $('#btn').click(() => {
+            var username = $('#username').val()
+            var password = $('#password').val()
+
+            var data ={
+                'csrfmiddlewaretoken':'{{csrf_token}}',
+                'username':username,
+                'password':password,
+
+            }
+
+            $.ajax({
+                url:'login',
+                method: 'POST',
+                data:data,
+                dataType: 'json',
+                success:function(data)
+                {
+                    if(data.success){
+                        console.log("success")
+                        window.location.replace("dashboard")
+                    }else{
+                        console.log("error")
+                       $("#error").text("Invalid Credentials!!");
+                    }
+                }
+            })
+
+
+
+})
+})
+
+
+
+
+</script>
 {% endblock body %}
 
