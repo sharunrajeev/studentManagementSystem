@@ -25,12 +25,12 @@
                     <div class="d-flex justify-content-center align-items-center">
                       <div class="col-md-8">
 
-                          <form action="approve" method="post">
+                          <form action="show_report" method="POST">
 
                       {% csrf_token %}
 
                         <div class="input-group">
-                            <input name="name" type="text" placeholder="Search for Applicants" class="form-control" />
+                            <input name="name" type="text" placeholder="Search " class="form-control" />
                                 <div class="input-group-append">
                                 <button type="submit" class="btn btn-primary btn-format">Search</button>
 

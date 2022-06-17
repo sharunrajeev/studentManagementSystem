@@ -11,7 +11,7 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-
+from django.db.models import Sum
 
 # Create your views here.
 
@@ -148,19 +148,25 @@ def select(request, userid):
     return redirect('approve')
 
 
+# Coded By Hana, Akhila
 def payment(request):
     if request.method == 'POST':
-        Name = request.POST['name']
-        users = Candidates.objects.filter(ApplicationId__Name__icontains=Name)
+
+        Searchfield = request.POST['name']
+        users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield)|Candidates.objects.filter(ApplicationId__Name__icontains=Searchfield)
+
+        return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
     else:
         users = Candidates.objects.all()
 
-    users = reversed(users)
-    return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
+        users = reversed(users)
+
+        return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
 
 
 # payment verification done by akhila
 # responsive page
+
 def user_verify_view(request, userid):
     print(userid)
     user_det = Candidates.objects.get(id=userid)
@@ -253,12 +259,27 @@ def delete_user(request, userid):
 
 
 # coded by devaprasad
+# def mark_upload(request):
+#     users = Candidates.objects.all()
+#     subjects = Subjects.objects.all()
+#     marks = Marks.objects.all()
+#     if request.method == 'POST':
+#         pass
+#     else:
+#         return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subjects': subjects})
+# Edited by Akhila
 def mark_upload(request):
     users = Candidates.objects.all()
     subjects = Subjects.objects.all()
     marks = Marks.objects.all()
     if request.method == 'POST':
         pass
+        Searchfield = request.POST['name']
+        users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield) | Candidates.objects.filter(
+            ApplicationId__Name__icontains=Searchfield)
+
+        return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subjects': subjects})
+
     else:
         return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subjects': subjects})
 
@@ -283,6 +304,13 @@ def individual_mark_upload(request, userid):
                                          TotalAssignmentMark=total_assignment, GdMark=GdMark, CpMark=CpMark,
                                          Total=total)
         user_mark.save()
+        candidate = Candidates.objects.get(id=userid)
+        total_table = Marks.objects.filter(StudentId = candidate).aggregate(Sum('Total'))
+        total_marks = total_table.get('Total__sum')
+        print(total_marks)
+        candidate.Marks = int(total_marks)
+
+        candidate.save()
         return redirect('mark_upload')
 
     else:
@@ -404,9 +432,24 @@ def subject_update(request, subjectid):
 
 # report generation coded by devaprasad
 
+# def show_report(request):
+#     subjects = Subjects.objects.all().order_by('id')
+#
+#     return render(request,'owner/show_report.html',{'subjects':subjects})
+
 def show_report(request):
     subjects = Subjects.objects.all().order_by('id')
-    return render(request,'owner/show_report.html',{'subjects':subjects})
+    if request.method == 'POST':
+        Searchfield = request.POST['name']
+        subjects = Subjects.objects.filter(SubjectName=Searchfield)
+        return render(request, 'owner/show_report.html', {'subjects': subjects})
+
+    else:
+
+        subjects = Subjects.objects.all().order_by('id')
+        return render(request, 'owner/show_report.html', {'subjects': subjects})
+
+
 def report(request,subjectid):
      subject = Subjects.objects.get(id=subjectid)
      marks = Marks.objects.filter(SubjectId = subject).order_by('id')
@@ -432,3 +475,15 @@ def report_download(request,subjectid):
     if pisa_status.err:
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
+
+def report_mark(request):
+    marks = Marks.objects.all()
+    users = Candidates.objects.all()
+    subjects = Subjects.objects.all()
+    return render(request,'owner/report_mark.html',{'marks':marks,'users':users,'subjects':subjects})
+
+def report_attendance(request):
+    marks = Marks.objects.all()
+    users = Candidates.objects.all()
+    subjects = Subjects.objects.all()
+    return render(request,'owner/report_attendance.html',{'marks':marks,'users':users,'subjects':subjects})

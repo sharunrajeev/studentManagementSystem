@@ -11,6 +11,7 @@
   <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
   <link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
   <link href="{% static 'css/style-dark.css' %}" rel="stylesheet">
+  <link href="{% static 'css/mark_upload.css' %}" rel="stylesheet">
   <link href="{% static 'css/mark_upload-table.css' %}" rel="stylesheet">
 
 {% endblock %}
@@ -43,6 +44,7 @@
                     <th>Name</th>
                     <th>Mobile No</th>
                     <th>PhD Register No</th>
+                    <th>Status</th>
                     <th>View</th>
                 </tr>
             </thead>
@@ -54,6 +56,14 @@
                     <td>{{ user.Name }}</td>
                     <td>{{ user.Mob }}</td>
                     <td>{{ user.Phd_Reg }}</td>
+                        {% if user.Eligibility == null %}
+                            <td><span class="btn btn-warning btn-sm" style="cursor: default;">Not Verified</span></td>
+                        {% elif user.Eligibility == True %}
+                            <td><span class="btn btn-success btn-sm" style="cursor: default;">Selected</span></td>
+                        {% else %}
+                            <td><span class="btn btn-danger btn-sm" style="cursor: default;">Rejected</span></td>
+                        {% endif %}
+
                     <td><a class="btn btn-outline-success btn-sm" href="approve/{{ user.id }}">View</a></td>
                 </tr>
                 {% endfor %}

@@ -14,6 +14,7 @@ urlpatterns = [
     path('approve/<userid>', views.individual_view, name='individual_view'),
     path('payment',views.payment,name='payment'),
     #Done By Akhila
+
     path('payment/<userid>', views.user_verify_view, name='user_verify_view' ),
     path('denial/<userid>', views.denial, name='denial'),
     path('verified/<userid>', views.verified, name='verified'),
@@ -35,7 +36,9 @@ urlpatterns = [
     path('mark_edit/mark_delete/<markid>', views.mark_delete, name='mark_update'),
     path('show_report', views.show_report, name='show_report'),
     path('report/<subjectid>', views.report, name='report'),
-    path('report/report_download/<subjectid>', views.report_download, name='report'),
+    path('report/report_download/<subjectid>', views.report_download, name='report_download'),
+    path('report_mark', views.report_mark, name='report_mark'),
+    path('report_attendance', views.report_attendance, name='report_attendance'),
     #Subject Adding Coded By Hana
 
     path('subjects_edit',views.subjects_edit,name='subjects_edit'),
