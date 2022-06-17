@@ -1,5 +1,5 @@
 from email import message
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User,auth
 from django.shortcuts import render, redirect
 from .models import Applicants, Candidates, Marks, Subjects
 from django.core.mail import EmailMessage
@@ -7,6 +7,7 @@ from django.conf import settings
 from django.template.loader import render_to_string
 import django.contrib.messages as messages
 from django.contrib.postgres.search import SearchVector
+from django.http import JsonResponse
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
@@ -14,6 +15,55 @@ from xhtml2pdf import pisa
 
 # Create your views here.
 
+def adminlogin(request):
+
+    # if request.method == 'POST':
+    #     username = request.POST['Username']
+    #     password = request.POST['Password']
+    #
+    #     user = auth.authenticate(username=username, password=password,is_staff =True)
+    #
+    #     if user is not None:
+    #         auth.login(request, user)
+    #         request.session['username'] = username
+    #         return redirect('/owner/approve')
+    #     else:
+    #         messages.info(request, 'Invalid credentials')
+    #         return redirect('/owner/adminlogin')
+    #
+    # else:
+    #     return render(request, 'owner/adminlogin.html')
+
+    if request.method == 'POST':
+
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = auth.authenticate(username=username, password=password, is_staff=True)
+
+        if user is not None:
+            auth.login(request, user)
+            request.session['username'] = username
+            return JsonResponse(
+                {'success': True},
+                safe=False
+            )
+
+        else:
+
+            print("Invalid Credentials")
+            return JsonResponse(
+                {'success': False},
+                safe=False
+            )
+
+    else:
+        return render(request, 'owner/adminlogin.html')
+
+def logout(request):
+    if 'username' in request.session:
+        request.session.flush()
+    return redirect('/owner/adminlogin')
 
 def dashboard(request):
     return render(request, 'owner/dashboard.html')

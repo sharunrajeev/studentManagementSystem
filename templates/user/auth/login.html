@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block title %}
-    Login
+    AdminLogin
 {% endblock title %}
 {% block body %}
     <main class="container d-flex flex-column justify-content-center col-lg-4" style="min-height: 100vh">
@@ -22,9 +22,10 @@
                 <input type="password" class="form-control" id="password" name="Password" autocomplete="off" >
             </div>
             <div class="mb-3">
-                <a href={% url 'password_reset' %}><p class="text-start">Forgot Password?</p></a>
+                <a href="#"><p class="text-start">Forgot Password?</p></a>
             </div>
             <button type="submit" class="btn btn-dark w-100">Sign In</button>
         </form>
     </main>
 {% endblock body %}
+

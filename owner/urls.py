@@ -5,6 +5,9 @@ from user.views import dashboard
 from . import views
 
 urlpatterns = [
+
+    path('adminlogin',views.adminlogin,name='adminlogin'),
+    path('logout',views.logout,name='logout'),
     # Home page
     path('', views.dashboard, name='dashboard'),
     path('approve', views.approve, name='approve'),
