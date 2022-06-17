@@ -13,7 +13,6 @@
   <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
   <link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
   <link href="{% static 'css/style-dark.css' %}" rel="stylesheet">
-  <link href="{% static 'css/waves.css' %}" rel="stylesheet">
   <link href="{% static 'css/navbar.css' %}" rel="stylesheet">
   <link href="{% static 'css/style.css' %}" rel="stylesheet">
   <link href="{% static 'css/mark_upload.css' %}" rel="stylesheet">
@@ -34,9 +33,12 @@
         <div class="d-flex justify-content-center align-items-center" style="margin-top: 3rem;">
             <div class="col-md-6">
                 <div class="search">
+                   <form action="mark_upload" method="POST">
+                     {% csrf_token %}
                     <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
-                    <input type="text" class="form-control" placeholder="Search students">
-                    <button class="btn btn-primary">Search</button>
+                    <input name="name" type="text" class="form-control" placeholder="Have a question? Ask Now" />
+                    <button class="btn btn-secondary">Search</button>
+                   </form>
                 </div>
             </div>
         </div>

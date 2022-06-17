@@ -147,19 +147,25 @@ def select(request, userid):
     return redirect('approve')
 
 
+# Coded By Hana, Akhila
 def payment(request):
     if request.method == 'POST':
-        Name = request.POST['name']
-        users = Candidates.objects.filter(ApplicationId__Name__icontains=Name)
+
+        Searchfield = request.POST['name']
+        users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield)|Candidates.objects.filter(ApplicationId__Name__icontains=Searchfield)
+
+        return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
     else:
         users = Candidates.objects.all()
 
-    users = reversed(users)
-    return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
+        users = reversed(users)
+
+        return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
 
 
 # payment verification done by akhila
 # responsive page
+
 def user_verify_view(request, userid):
     print(userid)
     user_det = Candidates.objects.get(id=userid)
@@ -252,12 +258,27 @@ def delete_user(request, userid):
 
 
 # coded by devaprasad
+# def mark_upload(request):
+#     users = Candidates.objects.all()
+#     subjects = Subjects.objects.all()
+#     marks = Marks.objects.all()
+#     if request.method == 'POST':
+#         pass
+#     else:
+#         return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subjects': subjects})
+# Edited by Akhila
 def mark_upload(request):
     users = Candidates.objects.all()
     subjects = Subjects.objects.all()
     marks = Marks.objects.all()
     if request.method == 'POST':
         pass
+        Searchfield = request.POST['name']
+        users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield) | Candidates.objects.filter(
+            ApplicationId__Name__icontains=Searchfield)
+
+        return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subjects': subjects})
+
     else:
         return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subjects': subjects})
 
@@ -410,9 +431,24 @@ def subject_update(request, subjectid):
 
 # report generation coded bt devaprasad
 
+# def show_report(request):
+#     subjects = Subjects.objects.all().order_by('id')
+#
+#     return render(request,'owner/show_report.html',{'subjects':subjects})
+
 def show_report(request):
     subjects = Subjects.objects.all().order_by('id')
-    return render(request,'owner/show_report.html',{'subjects':subjects})
+    if request.method == 'POST':
+        Searchfield = request.POST['name']
+        subjects = Subjects.objects.filter(SubjectName=Searchfield)
+        return render(request, 'owner/show_report.html', {'subjects': subjects})
+
+    else:
+
+        subjects = Subjects.objects.all().order_by('id')
+        return render(request, 'owner/show_report.html', {'subjects': subjects})
+
+
 def report(request,subjectid):
      subject = Subjects.objects.get(id=subjectid)
      marks = Marks.objects.filter(SubjectId = subject).order_by('id')
