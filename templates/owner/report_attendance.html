@@ -26,7 +26,7 @@
         {% for subject in subjects %}
         <th>{{ subject.SubjectName }}</th>
         {% endfor %}
-        <th>Total</th>
+
     </tr>
     </thead>
         <tbody>
@@ -42,14 +42,14 @@
           {% for mark in marks %}
           {% if user == mark.StudentId  %}
           {% if subject == mark.SubjectId  %}
-        <td>{{ mark.Total }}</td>
+        <td>{{ mark.Attendance }}</td>
 
           {% endif %}
           {% endif %}
         {% endfor %}
 
           {% endfor %}
-        <td>{{ user.Marks }}</td>
+
 
 
       </tr>

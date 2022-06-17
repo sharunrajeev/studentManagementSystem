@@ -11,7 +11,7 @@ from django.http import JsonResponse
 from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
-
+from django.db.models import Sum
 
 # Create your views here.
 
@@ -282,6 +282,13 @@ def individual_mark_upload(request, userid):
                                          TotalAssignmentMark=total_assignment, GdMark=GdMark, CpMark=CpMark,
                                          Total=total)
         user_mark.save()
+        candidate = Candidates.objects.get(id=userid)
+        total_table = Marks.objects.filter(StudentId = candidate).aggregate(Sum('Total'))
+        total_marks = total_table.get('Total__sum')
+        print(total_marks)
+        candidate.Marks = int(total_marks)
+
+        candidate.save()
         return redirect('mark_upload')
 
     else:
@@ -437,3 +444,9 @@ def report_mark(request):
     users = Candidates.objects.all()
     subjects = Subjects.objects.all()
     return render(request,'owner/report_mark.html',{'marks':marks,'users':users,'subjects':subjects})
+
+def report_attendance(request):
+    marks = Marks.objects.all()
+    users = Candidates.objects.all()
+    subjects = Subjects.objects.all()
+    return render(request,'owner/report_attendance.html',{'marks':marks,'users':users,'subjects':subjects})
