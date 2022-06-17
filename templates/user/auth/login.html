@@ -1,32 +1,128 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block title %}
     Login
 {% endblock title %}
+
+{% block styles %}
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+
+{% endblock %}
 {% block body %}
-    <main class="container d-flex flex-column justify-content-center col-lg-4" style="min-height: 100vh">
-        <div class="mb-3 text-center">
-            <h1 id="error">Login</h1>
-        </div>
+<!--    <main class="container d-flex flex-column justify-content-center col-lg-4" style="min-height: 100vh">-->
+<!--        <div class="mb-3 text-center">-->
+<!--            <h1 id="error">Login</h1>-->
+<!--        </div>-->
+<!--        <form action="login" method="POST">-->
+<!--            {% csrf_token %}-->
+<!--            <div class="mb-3">-->
+<!--                <label for="username" class="form-label">Email address</label>-->
+<!--                <input type="email"-->
+<!--                       class="form-control"-->
+<!--                       id="username"-->
+<!--                       name="username"-->
+<!--                       autocomplete="email" >-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <label for="password" class="form-label">Password</label>-->
+<!--                <input type="password" class="form-control" id="password" name="password" autocomplete="off" >-->
+<!--            </div>-->
+<!--            <div class="mb-3">-->
+<!--                <a href={% url 'password_reset' %}><p class="text-start">Forgot Password?</p></a>-->
+<!--            </div>-->
+<!--            <button id="btn" type="button" class="btn btn-dark w-100">Sign In</button>-->
+<!--        </form>-->
+<!--    </main>-->
+
+<div class="col-md-4 pt-5 login-div">
+    <div style="color:#696F79" class="row d-flex align-items-center ">
+
+        <figure style="color: #000000" class="text-center">
+            <h1 class="fw-bold" style="color: #243e56;">Student Login</h1>
+        </figure>
+
         <form action="login" method="POST">
             {% csrf_token %}
-            <div class="mb-3">
-                <label for="username" class="form-label">Email address</label>
-                <input type="email"
-                       class="form-control"
-                       id="username"
-                       name="username"
-                       autocomplete="email" >
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" autocomplete="off" >
-            </div>
-            <div class="mb-3">
-                <a href={% url 'password_reset' %}><p class="text-start">Forgot Password?</p></a>
-            </div>
-            <button id="btn" type="button" class="btn btn-dark w-100">Sign In</button>
-        </form>
-    </main>
+
+            <div class="input-fields ">
+                <div class=" mb-4 d-flex flex-column  align-items-center ">
+                    <div class="mb-4 d-flex flex-column " style="width:350px;margin-right: auto;margin-left: auto ">
+                        <label class="form-label input-label " for="register_no">Username* </label>
+                        <input name="register_no" type="text" id="register_no" placeholder="Enter Username" class="form-control  form-control-lg text-input mb-4" style=" height:70px" required/>
+                            <label class="form-label input-label " for="password">Password*</label>
+                            <div class="password-container">
+                                <input type="password" name="password" id="password" placeholder="Enter password"
+                                       class="form-control form-control-lg text-input password-input"
+                                       style=" height:70px "
+                                       required/>
+                                <span onclick="show_password('password','password-visibility')" class="visibility"
+                                      id="password-visibility"><i title="show" class="fa fa-eye-slash"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <button type="submit" class="btn btn-lg btn-block submit-btn">Sign in</button>
+                    </div>
+                    <div class=" text-center pb-4">
+
+                            <p>
+                                <a class="signin-link"
+                                   href="/auth/department_login">Department login </a>
+                            </p>
+
+                        <p class="new-to"><a class="signin-link"
+                                             href="/auth/register?">Register Account </a>
+                        </p>
+                        <p>
+                            <a class="signin-link"
+                               href="/auth/reset_pass">Forgot Password ? </a>
+                        </p>
+
+
+                    </div>
+            </form>
+        </div>
+
+    </div>
+
+
+<!--&lt;!&ndash; Template Main JS File &ndash;&gt;-->
+<!--<script src="/static/Homepage/assets/js/main.js"></script>-->
+
+
+<!--    <script src="/static/login/js/main.js"></script>-->
+    <script>
+        show_password = (id, span_id) => {
+            const text = document.getElementById(id)
+            let pass = document.getElementById(id)
+            if (pass.type === 'password') {
+                pass.type = 'text';
+                document.getElementById(span_id).innerHTML = '<i class="fa fa-eye"></i>';
+            } else {
+                pass.type = 'password'
+                document.getElementById(span_id).innerHTML = '<i class="fa fa-eye-slash"></i>';
+            }
+        }
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -71,5 +167,21 @@
 
 
 </script>
+<script src="/static/vendor/jquery/jquery-3.2.1.min.js"></script>
 {% endblock body %}
+
+
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+
+
+<!--    <link href="/static/Homepage/assets/css/style.css" rel="stylesheet">-->
+
+
+
+<!--    <link rel="stylesheet" type="text/css" href="/static/login/css/util.css">-->
+<!--    <link rel="stylesheet" type="text/css" href="/static/login/css/main.css">-->
+<!--    <link rel="stylesheet" type="text/css" href="/static/login/css/login.css">-->
+
 
