@@ -40,7 +40,7 @@
                         <th>Sl No</th>
                         <th>Name</th>
                         <th>PhD Reg No</th>
-                        <th>Phone No</th>
+<!--                        <th>Phone No</th>-->
                         <th>Email</th>
                         <th>Status</th>
                     </tr>
@@ -52,15 +52,16 @@
                         <td><a href="#">{{ forloop.counter }}</a></td>
                         <td>{{ user.ApplicationId.Name }}</td>
                         <td>{{ user.ApplicationId.Phd_Reg }}</td>
-                        <td>{{ user.ApplicationId.Mob }}</td>
+<!--                        <td>{{ user.ApplicationId.Mob }}</td>-->
                         <td>{{ user.ApplicationId.Email }}</td>
                         {% if user.PaymentStatus == null %}
-                            <td><a class="btn btn-warning btn-sm" href="payment/{{ user.id }}" role="button">Verify</a></td>
+                            <td><span class="btn btn-warning btn-sm" href="payment/{{ user.id }}">Not Verified</span></td>
                         {% elif user.PaymentStatus == True %}
-                            <td><a class="btn btn-success btn-sm" href="payment/{{ user.id }}" role="button">Accepted</a></td>
+                            <td><span class="btn btn-success btn-sm" href="payment/{{ user.id }}" role="button">Accepted</span></td>
                         {% else %}
                             <td><a class="btn btn-danger btn-sm" href="payment/{{ user.id }}" role="button">Rejected</a></td>
                         {% endif %}
+                        <td><a class="btn btn-outline-success btn-sm" href="payment/{{ user.id }}" role="button">Verify</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>

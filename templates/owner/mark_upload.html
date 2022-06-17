@@ -9,15 +9,14 @@
   <!-- CSS only -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
   <link href="{% static 'css/individual.css' %}" rel="stylesheet">
   <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
-  <link href="{% static 'css/jquery.mCustomScrollbar.min.css' %}" rel="stylesheet">
-<!--  <link href="{% static 'css/materialdesignicons.css' %}" rel="stylesheet">-->
   <link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
   <link href="{% static 'css/style-dark.css' %}" rel="stylesheet">
   <link href="{% static 'css/waves.css' %}" rel="stylesheet">
   <link href="{% static 'css/navbar.css' %}" rel="stylesheet">
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <link href="{% static 'css/mark_upload.css' %}" rel="stylesheet">
   <link href="{% static 'css/mark_upload-table.css' %}" rel="stylesheet">
 
 {% endblock %}
@@ -30,12 +29,13 @@
 
 <div id="wrapper">
 	<div class="main-content">
-        <a href="subjects_edit" class="btn btn-outline-success btn-sm">Add Subject</a>
-        <div class="d-flex justify-content-center align-items-center">
-            <div class="col-md-8">
+
+        <span class="add_subject-btn"><a href="subjects_edit" class="btn btn-outline-success btn-sm">Add Subject</a></span>
+        <div class="d-flex justify-content-center align-items-center" style="margin-top: 3rem;">
+            <div class="col-md-6">
                 <div class="search">
                     <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
-                    <input type="text" class="form-control" placeholder="Have a question? Ask Now">
+                    <input type="text" class="form-control" placeholder="Search students">
                     <button class="btn btn-primary">Search</button>
                 </div>
             </div>

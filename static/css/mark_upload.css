@@ -8,15 +8,16 @@
   background-color: #ccc;
 }
 
+.add_subject-btn {
+  position: absolute;
+  right: 0%;
+}
+
 .main-content .custom-select option {
   padding: 30px 10px;
   border-radius: 0;
   outline: none;
 }
-
-
-
-
 
 .select-box {
   position: relative;

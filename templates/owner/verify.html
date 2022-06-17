@@ -7,11 +7,11 @@
 
 </style>
   <!-- CSS only -->
-  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+<!--  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">-->
   <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
   <link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
   <link href="{% static 'css/style-dark.css' %}" rel="stylesheet">
-  <link href="{% static 'css/waves.css' %}" rel="stylesheet">
+  <link href="{% static 'css/mark_upload-table.css' %}" rel="stylesheet">
 
 {% endblock %}
 
@@ -21,78 +21,53 @@
 
 <div id="wrapper">
 	<div class="main-content">
-
-                    <div class="d-flex justify-content-center align-items-center">
-                      <div class="col-md-8">
-
-                          <form action="approve" method="post">
-
-                      {% csrf_token %}
-
-                        <div class="input-group">
-                            <input name="name" type="text" placeholder="Search for Applicants" class="form-control" />
-                                <div class="input-group-append">
-                                <button type="submit" class="btn btn-primary btn-format">Search</button>
-
-                            </div>
-                        </div>
-                    </form>
-
-
-
-
-                      </div>
+        <div class="d-flex justify-content-center align-items-center" style="margin-top: 3rem;">
+            <div class="col-md-6">
+                <form action="approve" method="post">
+                {% csrf_token %}
+                    <div class="search">
+                        <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
+                        <input name="name" type="text" class="form-control" placeholder="Search for Applicants">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
         </div>
-      <div class="verify_div">
-  <div class="verify_header">
-     <div class="verify_list-head">
-      <span>Sl</span>
-                <input type="checkbox" style="visibility: hidden; "/>
-      <p class="name">Name</p>
-      <p class="num">Mobile No</p>
-      <p class="num">PhD Register No</p>
-         <a href="">View</a>
 
-      <div class="verify_menu" style="visibility: hidden" tabindex="-1">
-        <div class="three_dots"></div>
-        <div class="dropdown" style="visibility: hidden">
-          <a href="select/{{ user.id }}" ><div>Approve</div></a>
-          <a href="reject/{{ user.id }}" ><div>Reject</div></a>
+        <div class="table-parent">
+            <table>
+            <thead>
+                <tr>
+                    <th>Sl No</th>
+                    <th>Select</th>
+                    <th>Name</th>
+                    <th>Mobile No</th>
+                    <th>PhD Register No</th>
+                    <th>View</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td><input type="checkbox"/></td>
+                    <td>{{ user.Name }}</td>
+                    <td>{{ user.Mob }}</td>
+                    <td>{{ user.Phd_Reg }}</td>
+                    <td><a class="btn btn-outline-success btn-sm" href="approve/{{ user.id }}">View</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
         </div>
-      </div>
 
     </div>
-  </div>
-  <div class="verify_lists-parent">
-    {% for user in users %}
-    <div class="verify_list">
-      <span>{{ forloop.counter }}</span>
-        <input type="checkbox"/>
-      <p class="name">{{ user.Name }}</p>
-      <p class="num">{{ user.Mob }}</p>
-      <p class="num">{{ user.Phd_Reg }}</p>
-      <a href="approve/{{ user.id }}">View</a>
-      <div class="verify_menu" tabindex="-1">
-        <div class="three_dots"></div>
-        <div class="dropdown">
-          <a href="select/{{ user.id }}" ><div>Approve</div></a>
-          <a href="reject/{{ user.id }}" ><div>Reject</div></a>
-        </div>
-      </div>
-
-    </div>
-    {% endfor %}
-
-  </div>
 </div>
-  </div>
-    </div>
 {% endblock %}
 
 {% block scripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script>
-        let
     </script>
 {% endblock %}
