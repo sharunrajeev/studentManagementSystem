@@ -383,4 +383,7 @@ def report_download(request,subjectid):
     return response
 
 def report_mark(request):
-    marks = Marks.objects.all().
+    marks = Marks.objects.all()
+    users = Candidates.objects.all()
+    subjects = Subjects.objects.all()
+    return render(request,'owner/report_mark.html',{'marks':marks,'users':users,'subjects':subjects})
