@@ -282,7 +282,7 @@ def delete_user(request, userid):
 #         return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subjects': subjects})
 # Edited by Akhila
 def mark_upload(request):
-    users = Candidates.objects.all()
+    users = Candidates.objects.all().order_by('id')
     subjects = Subjects.objects.all()
     marks = Marks.objects.all()
     if request.method == 'POST':
