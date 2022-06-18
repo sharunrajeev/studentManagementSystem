@@ -43,31 +43,43 @@
 
                       </div>
         </div>
-      <div class="verify_div">
-  <div class="verify_header">
-     <div class="verify_list-head">
-      <span>Sl</span>
+      <div class="verify_div" style="margin-top: 5rem;">
+          <div class="container">
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-borderless">
+        <thead>
+          <tr>
+            <th scope="col">Sl</th>
+            <th scope="col">Subject Name</th>
 
-      <p class="name">Subject Name</p>
-         <a href="">View</a>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for subject in subjects %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ subject.SubjectName }}</td>
 
+            <td class="text-end">
+              <a href="report/{{ subject.id }}" class="btn btn-primary"><i class="fa fa-eye"></i> View Report</a>
 
-
+            </td>
+          </tr>
+         {% endfor %}
+        </tbody>
+      </table>
     </div>
   </div>
-  <div class="verify_lists-parent">
-    {% for subject in subjects %}
-    <div class="verify_list">
-      <span>{{ forloop.counter }}</span>
+</div>
 
-      <p class="name">{{ subject.SubjectName }}</p>
-      <a href="report/{{ subject.id }}">View Report</a>
+          <div class=" d-grid   d-md-flex  justify-content-evenly" style="margin-top: 5rem;">
+ <a href="report_mark"><button type="button" class="btn btn-outline-secondary btn-rounded " >  <i class="fa fa-eye"></i> View Mark Report</button>  </a>
+ <a href="report_attendance"><button type="button" class="btn btn-outline-secondary btn-rounded ">  <i class="fa fa-eye"></i> View Attendance Report</button>  </a>
 
+</div>
 
-    </div>
-    {% endfor %}
-
-  </div>
 </div>
   </div>
     </div>
