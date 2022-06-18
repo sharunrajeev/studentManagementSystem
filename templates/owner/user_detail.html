@@ -205,7 +205,7 @@
             {% elif pay_val == 1 %}
             <td><a class="btn btn-outline-info w-100" href="{{ person_details.PaymentDetails.url}}" role="button">View Reciept</a></td>
 
-          {% endif %}
+
 
         {% if person_details.PaymentStatus == True %}
         <a href="#" class=" btn btn-success">Verified & Accepted</a>
@@ -219,7 +219,7 @@
         <a href="/owner/denial/{{person_details.id}}" ><button type="button" class="btn btn-outline-info">Denial</button></a>
  </div>
         {% endif %}
-
+{% endif %}
 
 
 
