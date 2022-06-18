@@ -85,6 +85,7 @@ DATABASES = {
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -128,3 +129,6 @@ EMAIL_PORT=587
 EMAIL_HOST_USER=os.environ.get('Email')
 EMAIL_HOST_PASSWORD=os.environ.get('Password')
 EMAIL_USE_TLS=True
+
+
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 30

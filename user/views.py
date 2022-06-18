@@ -91,26 +91,35 @@ def login(request):
 
     if request.method == 'POST':
 
-        username = request.POST['username']
-        password = request.POST['password']
+        remember=request.POST['is_remember_check']
+        print(remember)
+        print (type(remember))
+        if  remember == 'true':
 
-        user = auth.authenticate(username=username, password=password)
+            username = request.POST['username']
+            password = request.POST['password']
 
-        if user is not None:
-            auth.login(request, user)
-            request.session['username'] = username
-            return JsonResponse(
+            user = auth.authenticate(username=username, password=password)
+
+            if user is not None :
+
+
+                auth.login(request, user)
+
+                return JsonResponse(
                 {'success': True},
                 safe=False
-            )
+                )
 
-        else:
+            else:
 
-            print("Invalid Credentials")
-            return JsonResponse(
+                print("Invalid Credentials")
+                return JsonResponse(
                 {'success': False},
                 safe=False
-            )
+                )
+
+        return redirect ('dashboard')
 
     else:
         return render(request, 'user/auth/login.html')

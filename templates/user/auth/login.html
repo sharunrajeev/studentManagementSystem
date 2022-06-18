@@ -49,6 +49,7 @@
                         <p>Remember me</p>
                     </span>
 
+
                     <p><a class="color-user" href="{% url 'password_reset' %}">Forgot Password?</a></p>
                 </div>
 
@@ -99,13 +100,16 @@
     $(document).ready(function(){
 
         $('#btn').click(() => {
+
             let username = $('#username').val()
             let password = $('#password').val()
-
+            remember_checkbox_value = document.getElementsByName('remember')[0].checked;
+            console.log(remember_checkbox_value )
             let data ={
                 'csrfmiddlewaretoken':'{{csrf_token}}',
                 'username':username,
                 'password':password,
+                 is_remember_check:remember_checkbox_value,
 
             }
 
