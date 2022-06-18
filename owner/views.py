@@ -354,6 +354,15 @@ def mark_update(request, markid):
 
         mark.save()
 
+        candidate = Candidates.objects.get(id=userid)
+        total_table = Marks.objects.filter(StudentId = candidate).aggregate(Sum('Total'))
+        total_marks = total_table.get('Total__sum')
+        print(total_marks)
+        candidate.Marks = int(total_marks)
+
+        candidate.save()
+        return redirect('mark_upload')
+
         return redirect(f"/owner/mark_edit/{userid}")
 
 

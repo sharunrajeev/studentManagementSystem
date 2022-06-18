@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>HTML 5 Boilerplate</title>
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+  </head>
+  <body>
+
+   <div class="d-flex flex-column flex-grow-1 p-4" >
+            <h1>Marks</h1>
+            <hr>
+
+            <table class="table table-bordered">
+    <thead>
+
+    <tr>
+
+
+        <th>Name of Students</th>
+        <th>Regester</th>
+        {% for subject in subjects %}
+        <th>{{ subject.SubjectName }}</th>
+        {% endfor %}
+
+    </tr>
+    </thead>
+        <tbody>
+
+        {% for user in users %}
+
+      <tr class="active">
+
+
+          <td>{{ user.ApplicationId.Name }}</td>
+          <td>{{ user.ApplicationId.Phd_Reg }}</td>
+          {% for subject in subjects %}
+          {% for mark in marks %}
+          {% if user == mark.StudentId  %}
+          {% if subject == mark.SubjectId  %}
+        <td>{{ mark.Attendance }}</td>
+
+          {% endif %}
+          {% endif %}
+        {% endfor %}
+
+          {% endfor %}
+
+
+
+      </tr>
+
+      {% endfor %}
+    </tbody>
+
+  </table>
+
+
+ <a href="report_download/{{subject.id}}" class="btn btn-outline-success btn-sm ">Download Report</a>
+
+        </div>
+
+  </body>
+</html>
