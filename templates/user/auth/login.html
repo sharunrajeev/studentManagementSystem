@@ -1,33 +1,96 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block title %}
     Login
 {% endblock title %}
+
+{% block styles %}
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+          rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+
+
+{% endblock %}
 {% block body %}
-    <main class="container d-flex flex-column justify-content-center col-lg-4" style="min-height: 100vh">
-        <div class="mb-3 text-center">
-            <h1 id="error">Login</h1>
-        </div>
+
+<div class="col-md-4 pt-5 login-div">
+    <div style="color:#696F79" class="row d-flex align-items-center ">
+
+        <figure style="color: #000000" class="text-center">
+            <h1 class="fw-bold" style="color: #243e56;">Student Login</h1>
+        </figure>
+
         <form action="login" method="POST">
             {% csrf_token %}
-            <div class="mb-3">
-                <label for="username" class="form-label">Email address</label>
-                <input type="email"
-                       class="form-control"
-                       id="username"
-                       name="username"
-                       autocomplete="email" >
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name="password" autocomplete="off" >
-            </div>
-            <div class="mb-3">
-                <a href={% url 'password_reset' %}><p class="text-start">Forgot Password?</p></a>
-            </div>
-            <button id="btn" type="button" class="btn btn-dark w-100">Sign In</button>
-        </form>
-    </main>
 
+            <div class="input-fields ">
+                <div class=" mb-2 d-flex flex-column  align-items-center ">
+                    <div class="mb-1 d-flex flex-column " style="width:350px;margin-right: auto;margin-left: auto ">
+                        <label class="form-label input-label " for="username">Username* </label>
+                        <input name="username" type="text" id="username" placeholder="Enter Username" class="form-control  form-control-lg text-input mb-4" style=" height:70px" required/>
+
+                        <label class="form-label input-label " for="password">Password*</label>
+                        <div class="password-container">
+                            <input type="password" name="password" id="password" placeholder="Enter password"
+                                   class="form-control form-control-lg text-input password-input"
+                                   style=" height:70px "
+                                   required/>
+                            <span onclick="show_password('password','password-visibility')" class="visibility"
+                                      id="password-visibility"><i title="show" class="fa fa-eye-slash"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4 remember-me">
+                    <span >
+                        <input type="checkbox" name="remember"/>
+                        <p>Remember me</p>
+                    </span>
+
+                    <p><a class="color-user" href="{% url 'password_reset' %}">Forgot Password?</a></p>
+                </div>
+
+                <div class="d-flex justify-content-center">
+                    <button id="btn" class="btn btn-lg btn-block submit-btn sbt-user">Sign in</button>
+                </div>
+                    <div class="mt-4 text-center pb-2">
+                            <p>
+                                <a class="signin-link color-user"
+                                   href="/owner/adminlogin">Admin login </a>
+                            </p>
+
+<!--                        <p class="new-to"><a class="signin-link"-->
+<!--                                             href="/owner/register">Register Account </a>-->
+<!--                        </p>-->
+
+                    </div>
+            </form>
+        </div>
+
+    </div>
+
+
+<!--&lt;!&ndash; Template Main JS File &ndash;&gt;-->
+<!--<script src="/static/Homepage/assets/js/main.js"></script>-->
+
+
+<!--    <script src="/static/login/js/main.js"></script>-->
+    <script>
+        show_password = (id, span_id) => {
+            const text = document.getElementById(id)
+            let pass = document.getElementById(id)
+            if (pass.type === 'password') {
+                pass.type = 'text';
+                document.getElementById(span_id).innerHTML = '<i class="fa fa-eye"></i>';
+            } else {
+                pass.type = 'password'
+                document.getElementById(span_id).innerHTML = '<i class="fa fa-eye-slash"></i>';
+            }
+        }
+    </script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
@@ -35,10 +98,10 @@
     $(document).ready(function(){
 
         $('#btn').click(() => {
-            var username = $('#username').val()
-            var password = $('#password').val()
+            let username = $('#username').val()
+            let password = $('#password').val()
 
-            var data ={
+            let data ={
                 'csrfmiddlewaretoken':'{{csrf_token}}',
                 'username':username,
                 'password':password,
@@ -56,14 +119,13 @@
                         console.log("success")
                         window.location.replace("dashboard")
                     }else{
-                        console.log("error")
-                       $("#error").text("Invalid Credentials!!");
+                        // console.log("error")
+                        // swal("INVALID CREDENTIALS!!", "Username or Password you entered doesnot exist.", "warning");
+                        $('#email').val("");
+                        $('#password').val("");
                     }
                 }
             })
-
-
-
 })
 })
 
@@ -71,5 +133,5 @@
 
 
 </script>
+<script src="/static/vendor/jquery/jquery-3.2.1.min.js"></script>
 {% endblock body %}
-
