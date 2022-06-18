@@ -11,18 +11,80 @@
   </head>
   <body>
 
-   <div class="d-flex flex-column flex-grow-1 p-4" >
+<!--   <div class="d-flex flex-column flex-grow-1 p-4" >-->
+<!--            <h1>Marks</h1>-->
+<!--            <hr>-->
+
+<!--            <table class="table table-bordered">-->
+<!--    <thead>-->
+
+<!--    <tr>-->
+
+
+<!--        <th>Name of Students</th>-->
+<!--        <th>Regester</th>-->
+<!--        {% for subject in subjects %}-->
+<!--        <th>{{ subject.SubjectName }}</th>-->
+<!--        {% endfor %}-->
+<!--        <th>Total</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--        <tbody>-->
+
+<!--        {% for user in users %}-->
+
+<!--      <tr class="active">-->
+
+
+<!--          <td>{{ user.ApplicationId.Name }}</td>-->
+<!--          <td>{{ user.ApplicationId.Phd_Reg }}</td>-->
+<!--          {% for subject in subjects %}-->
+<!--          {% for mark in marks %}-->
+<!--          {% if user == mark.StudentId  %}-->
+<!--          {% if subject == mark.SubjectId  %}-->
+<!--        <td>{{ mark.Total }}</td>-->
+
+<!--          {% endif %}-->
+<!--          {% endif %}-->
+<!--        {% endfor %}-->
+
+<!--          {% endfor %}-->
+<!--        <td>{{ user.Marks }}</td>-->
+
+
+<!--      </tr>-->
+
+<!--      {% endfor %}-->
+<!--    </tbody>-->
+
+<!--  </table>-->
+
+
+<!-- <a href="report_download/{{subject.id}}" class="btn btn-outline-success btn-sm ">Download Report</a>-->
+
+<!--        </div>-->
+
+
+  <div id="wrapper">
+       <div class="main-content" >
             <h1>Marks</h1>
             <hr>
 
             <table class="table table-bordered">
     <thead>
+    <tr>
+                    <h3 class="text-center">PROF N. R. MADHAVA MENON INTERDISCIPLINARY CENTRE FOR
+                        RESEARCH ETHICS AND PROTOCOLS, CUSAT, KOCHI- 022</h3>
+                </tr>
+                <tr>
+                    <h5 class="text-center">Research and Publication Ethics Course Work Program, 2020
+                        Batch- INTERNAL ASSESSMENT</h5>
 
     <tr>
 
 
         <th>Name of Students</th>
-        <th>Regester</th>
+        <th>Register</th>
         {% for subject in subjects %}
         <th>{{ subject.SubjectName }}</th>
         {% endfor %}
@@ -60,9 +122,10 @@
   </table>
 
 
- <a href="report_download/{{subject.id}}" class="btn btn-outline-success btn-sm ">Download Report</a>
+
 
         </div>
+   </div>
 
   </body>
 </html>
