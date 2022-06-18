@@ -367,6 +367,15 @@ def mark_update(request, markid):
 
         mark.save()
 
+        candidate = Candidates.objects.get(id=userid)
+        total_table = Marks.objects.filter(StudentId = candidate).aggregate(Sum('Total'))
+        total_marks = total_table.get('Total__sum')
+        print(total_marks)
+        candidate.Marks = int(total_marks)
+
+        candidate.save()
+        return redirect('mark_upload')
+
         return redirect(f"/owner/mark_edit/{userid}")
 
 
@@ -495,8 +504,57 @@ def report_mark(request):
     subjects = Subjects.objects.all()
     return render(request,'owner/report_mark.html',{'marks':marks,'users':users,'subjects':subjects})
 
+def report_mark_download(request):
+    marks = Marks.objects.all()
+    users = Candidates.objects.all()
+    subjects = Subjects.objects.all()
+
+
+
+    template_path = 'owner/pdf_report_mark.html'
+    context = {'marks':marks,'subjects':subjects,'users':users}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="subject_report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+
 def report_attendance(request):
     marks = Marks.objects.all()
     users = Candidates.objects.all()
     subjects = Subjects.objects.all()
     return render(request,'owner/report_attendance.html',{'marks':marks,'users':users,'subjects':subjects})
+
+def report_attendance_download(request):
+    marks = Marks.objects.all()
+    users = Candidates.objects.all()
+    subjects = Subjects.objects.all()
+
+
+
+    template_path = 'owner/pdf_report_attendance.html'
+    context = {'marks':marks,'subjects':subjects,'users':users}
+    # Create a Django response object, and specify content_type as pdf
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'filename="subject_report.pdf"'
+    # find the template and render it.
+    template = get_template(template_path)
+    html = template.render(context)
+
+    # create a pdf
+    pisa_status = pisa.CreatePDF(
+       html, dest=response)
+    # if error then show some funny view
+    if pisa_status.err:
+       return HttpResponse('We had some errors <pre>' + html + '</pre>')
+    return response
+

@@ -26,7 +26,7 @@
         {% for subject in subjects %}
         <th>{{ subject.SubjectName }}</th>
         {% endfor %}
-
+        <th>Total</th>
     </tr>
     </thead>
         <tbody>
@@ -42,14 +42,14 @@
           {% for mark in marks %}
           {% if user == mark.StudentId  %}
           {% if subject == mark.SubjectId  %}
-        <td>{{ mark.Attendance }}</td>
+        <td>{{ mark.Total }}</td>
 
           {% endif %}
           {% endif %}
         {% endfor %}
 
           {% endfor %}
-
+        <td>{{ user.Marks }}</td>
 
 
       </tr>
@@ -60,7 +60,7 @@
   </table>
 
 
- <a href="report_attendance_download" class="btn btn-outline-success btn-sm ">Download Report</a>
+ <a href="report_download/{{subject.id}}" class="btn btn-outline-success btn-sm ">Download Report</a>
 
         </div>
 
