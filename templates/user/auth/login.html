@@ -19,6 +19,7 @@
 
         <figure style="color: #000000" class="text-center">
             <h1 class="fw-bold" style="color: #243e56;">Student Login</h1>
+            <p id="error" class="fw-bold" style="color: #F87474;"></p>
         </figure>
 
         <form action="login" method="POST">
@@ -120,9 +121,11 @@
                         window.location.replace("dashboard")
                     }else{
                         // console.log("error")
-                        // swal("INVALID CREDENTIALS!!", "Username or Password you entered doesnot exist.", "warning");
+                        // // swal("INVALID CREDENTIALS!!", "Username or Password you entered doesnot exist.", "warning");
                         $('#email').val("");
                         $('#password').val("");
+                        console.log("error")
+                       $("#error").text("Invalid Credentials!!");
                     }
                 }
             })
