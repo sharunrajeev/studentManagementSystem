@@ -4,65 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>HTML 5 Boilerplate</title>
+    <title>Subject Report Pdf</title>
     <!-- CSS only -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   </head>
   <body>
 
-   <div class="d-flex flex-column flex-grow-1 p-4" >
+  <div id="wrapper">
+    <div class="main-content">
+        <div class="table-responsive">
             <h1>{{subject.SubjectName}}</h1>
             <hr>
 
             <table class="table table-bordered">
-    <thead>
 
-    <tr>
+                <thead>
+                <tr>
+                    <th colspan="11"><h3 class="text-center">PROF N. R. MADHAVA MENON INTERDISCIPLINARY CENTRE FOR
+                        RESEARCH ETHICS AND PROTOCOLS, CUSAT, KOCHI- 022</h3></th>
+                </tr>
+                <tr>
+                    <th colspan="11"><h5 class="text-center">Research and Publication Ethics Course Work Program, 2020
+                        Batch- INTERNAL ASSESSMENT</h5></th>
+                </tr>
+                <tr>
+                <th colspan="2" class="text-end">Total number of hours</th>
+                    <th class="table-secondary">{{subject.TotalHour}}</th>
+                    <th colspan="3" class="text-end">Subject</th>
+                    <th colspan="5" class="table-secondary">{{subject.SubjectName}}</th>
+                </tr>
+
+                <tr>
+
+                    <th rowspan="2">SNo.</th>
+                    <th rowspan="2">Name of Students</th>
+                    <th rowspan="2">No: of Attendance</th>
+                    <th rowspan="2">% of Attendance</th>
+                    <th rowspan="2">Mark for Attendance(5)</th>
+
+                    <th colspan="2">Assignment</th>
+
+                    <th rowspan="2">Total mark for Assignment(20)</th>
+                    <th rowspan="2">Group Discussions(20)</th>
+                    <th rowspan="2">Class participations(5)</th>
+                    <th rowspan="2">Total Internal Marks out of 50</th>
+                </tr>
+                <tr>
+                    <th>1</th>
+                    <th>2</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for mark in marks %}
+
+                <tr class="active">
+
+                    <td>{{forloop.counter}}</td>
+                    <td>{{ mark.StudentId.ApplicationId.Name }}</td>
+                    <td>{{ mark.Attendance }}</td>
+                    <td>{{ mark.AttendancePercentage }}</td>
+                    <td>{{ mark.AttendanceMark }}</td>
+                    <td>{{ mark.Assignment1Mark }}</td>
+                    <td> {{ mark.Assignment2Mark }}</td>
+                    <td> {{ mark.TotalAssignmentMark }}</td>
+                    <td> {{ mark.GdMark }}</td>
+                    <td> {{ mark.CpMark }}</td>
+                    <td> {{ mark.Total }}</td>
 
 
-        <th>Name of Students</th>
-        <th>No: of Attendance</th>
-        <th>% of Attendance</th>
-        <th>Mark for Attendance</th>
+                </tr>
 
-        <th>Assignment1</th>
-        <th>Assignment2</th>
-        <th>Total mark for Assignment</th>
-        <th>Group Discussions</th>
-        <th>Class participations</th>
-        <th>Total</th>
-    </tr>
-    </thead>
-        <tbody>
+                {% endfor %}
+                </tbody>
 
-        {% for mark in marks %}
-
-      <tr class="active">
-
-
-          <td>{{ mark.StudentId.ApplicationId.Name }}</td>
-          <td>{{ mark.Attendance }}</td>
-          <td>{{ mark.AttendancePercentage }}</td>
-          <td>{{ mark.AttendanceMark }}</td>
-          <td>{{ mark.Assignment1Mark }}</td>
-          <td> {{ mark.Assignment2Mark }}</td>
-          <td> {{ mark.TotalAssignmentMark }}</td>
-          <td> {{ mark.GdMark }}</td>
-          <td> {{ mark.CpMark }}</td>
-          <td> {{ mark.Total }}</td>
-
-
-      </tr>
-
-      {% endfor %}
-    </tbody>
-
-  </table>
-
-
+            </table>
 
 
         </div>
+
+    </div>
+</div>
 
   </body>
 </html>
