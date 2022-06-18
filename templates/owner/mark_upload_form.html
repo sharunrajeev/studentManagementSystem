@@ -33,6 +33,7 @@
               <option selected>Choose...</option>
                 {% for subject in subjects %}
                     <option value="{{subject.SubjectName}}">{{subject.SubjectName}} ({{subject.TotalHour}})</option>
+
                 {% endfor %}
             </select>
 
@@ -41,7 +42,7 @@
                 <div class="col-2">
                     <div class="input-group">
                         <label class="label">Attendance</label>
-                        <input type="text" class="input--style-4 input_default" id="attendance" name="attendance" required require>
+                        <input type="text"  class="input--style-4 input_default" id="attendance" name="attendance" required require>
                     </div>
                 </div>
                 <div class="col-2">
@@ -85,7 +86,7 @@
 
 
 
-    </form>
+                 </form>
 
     </div>
 
