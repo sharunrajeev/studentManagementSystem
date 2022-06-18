@@ -98,8 +98,14 @@ def reject(request, userid):
     user = Applicants.objects.get(id=userid)
     user.Eligibility = False
     user.save()
+    name = user.Name
     email = user.Email
-    message = f"We regret to inform you that you have not been selected."
+    message = f"Dear {name}," \
+              f"\nAfter carefully reviewing your application, we regret to inform you that we are not offering you admission currently to the applied course " \
+              f"We’d like to congratulate you on your impressive academic accomplishments and are confident you will continue to pursue excellence in your studies. " \
+              f"Thank you for your time and effort in applying and we wish you the best of luck in your academic future!\n\n" \
+              f"\nRegards\n" \
+              f"CUSAT "
 
     email = EmailMessage(
         'Regarding the selection process',
@@ -133,10 +139,17 @@ def select(request, userid):
         first_name=name, username=username, password=password, email=email)
     candidate.save()
 
-    message = f"Your username:{email}\n Your password: {password}"
+    message = f"Dear {name}, \n" \
+              f"\nWe are glad to inform you that, your application for 'Research and Publication Ethics Course Work Program'" \
+              f" by 'PROF. N.R. MADAVA MENON INTERDISCIPLINARY CENTRE FOR RESEARCH ETHICS AND PROTOCOLS,CUSAT' have been selected." \
+              f"Your Username and Password for Further processes have been provided with this E-mail." \
+              f"Please complete the registration process and confirm your allotment before the last date.\n"\
+              f" \nYour username : {email}\n Your password: {password}\n\n" \
+              f"\nRegards\n" \
+              f"CUSAT."
 
     email = EmailMessage(
-        'You have been selected',
+        'Greetings! You have selected',
         message,
         'settings.EMAIL_HOST_USER',
         [email],
