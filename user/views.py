@@ -36,6 +36,7 @@ def register(request):
             )
         else:
             user_obj = Applicants()
+
             user_obj.Name = Name
             user_obj.Age = Age
             user_obj.Gender = Gender
@@ -52,6 +53,8 @@ def register(request):
             user_obj.Guide_Mail = Guide_Mail
             user_obj.Guide_Phone = Guide_Phone
 
+
+
             user_obj.save()
 
             return JsonResponse(
@@ -61,7 +64,9 @@ def register(request):
             )
 
     else:
-        return render(request, 'user/register_section/register_form.html')
+
+        subjects=Subjects.objects.all()
+        return render(request, 'user/register_section/register_form.html',{'subjects':subjects})
 
 
 def reg_success(request):
