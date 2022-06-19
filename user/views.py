@@ -38,7 +38,7 @@ def register(request):
         #         safe=False
         #     )
         # else:
-        subject = Subjects.objects.get(SubjectName=SubjectName)
+
         user_obj = Applicants()
         user_obj.Name = Name
         user_obj.Age = Age
@@ -46,7 +46,7 @@ def register(request):
         user_obj.Address = Address
         user_obj.Mob = Mob
         user_obj.Email = Email
-        user_obj.SubjectId = subject
+        user_obj.Subject = SubjectName
         user_obj.Department = Department
         user_obj.University = University
         user_obj.Dob = Dob
