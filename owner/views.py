@@ -300,10 +300,24 @@ def delete_user(request, userid):
 #         pass
 #     else:
 #         return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subjects': subjects})
+# coded by dp
+def show_subjects(request):
+    subjects = Subjects.objects.all().order_by('id')
+    if request.method == 'POST':
+        Searchfield = request.POST['name']
+        subjects = Subjects.objects.filter(SubjectName=Searchfield)
+        return render(request, 'owner/show_subjects.html', {'subjects': subjects})
+
+    else:
+
+        subjects = Subjects.objects.all().order_by('id')
+        return render(request, 'owner/show_subjects.html', {'subjects': subjects})
+
+
 
 # Edited by Akhila
-def mark_upload(request):
-    users = Candidates.objects.all().order_by('id')
+def mark_upload(request,subjectid):
+    users = Candidates.objects.all().order_by('RegNumber')
     subjects = Subjects.objects.all()
     marks = Marks.objects.all()
     if request.method == 'POST':

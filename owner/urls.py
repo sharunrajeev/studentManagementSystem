@@ -29,7 +29,7 @@ urlpatterns = [
     path('delete_user/<userid>', views.delete_user, name='delete_user'),
 
     # Mark Uploading Coded By Devaprasad
-    path('mark_upload', views.mark_upload, name='mark_upload'),
+    path('show_students/<subjectid>', views.mark_upload, name='mark_upload'),
     path('mark_upload/<userid>', views.individual_mark_upload, name='individual_mark_upload'),
     path('mark_edit/<userid>', views.mark_edit, name='mark_edit'),
     path('mark_edit/mark_update/<markid>', views.mark_update, name='mark_update'),
@@ -45,6 +45,9 @@ urlpatterns = [
 
     path('subjects_edit',views.subjects_edit,name='subjects_edit'),
     path('subject_delete/<subjectid>',views.subject_delete,name='subject_delete'),
-    path('subject_update/<subjectid>',views.subject_update,name='subject_update')
+    path('subject_update/<subjectid>',views.subject_update,name='subject_update'),
+
+    #coded by dp
+    path('show_subjects',views.show_subjects,name='show_subjects'),
 ]
 
