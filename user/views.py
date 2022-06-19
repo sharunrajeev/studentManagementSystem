@@ -13,6 +13,8 @@ from django.contrib.auth import views as auth_views
 #Coded by Hana
 def register(request):
     if request.method == 'POST':
+
+
         Name = request.POST['Name']
         Age = request.POST['Age']
         Gender = request.POST['Gender']
@@ -21,6 +23,7 @@ def register(request):
         Email = request.POST['Email']
         Department = request.POST['Department']
         University = request.POST['University']
+        SubjectName = request.POST['subject']
         Dob = request.POST['Dob']
         Phd_Reg = request.POST['Phd_Reg']
         Phd_Joining_Date = request.POST['Phd_Joining_Date']
@@ -29,39 +32,41 @@ def register(request):
         Guide_Mail = request.POST['Guide_Mail']
         Guide_Phone = request.POST['Guide_Phone']
 
-        if Applicants.objects.filter(Email=Email).exists():
-            return JsonResponse(
-                {'success': 'error'},
-                safe=False
-            )
-        else:
-            user_obj = Applicants()
+        # if Applicants.objects.filter(Email=Email).exists():
+        #     return JsonResponse(
+        #         {'success': 'error'},
+        #         safe=False
+        #     )
+        # else:
+        subject = Subjects.objects.get(SubjectName=SubjectName)
+        user_obj = Applicants()
+        user_obj.Name = Name
+        user_obj.Age = Age
+        user_obj.Gender = Gender
+        user_obj.Address = Address
+        user_obj.Mob = Mob
+        user_obj.Email = Email
+        user_obj.SubjectId = subject
+        user_obj.Department = Department
+        user_obj.University = University
+        user_obj.Dob = Dob
+        user_obj.Phd_Reg = Phd_Reg
+        user_obj.Phd_Joining_Date = Phd_Joining_Date
+        user_obj.Research_Topic = Research_Topic
+        user_obj.Research_Guide = Research_Guide
+        user_obj.Guide_Mail = Guide_Mail
+        user_obj.Guide_Phone = Guide_Phone
 
-            user_obj.Name = Name
-            user_obj.Age = Age
-            user_obj.Gender = Gender
-            user_obj.Address = Address
-            user_obj.Mob = Mob
-            user_obj.Email = Email
-            user_obj.Department = Department
-            user_obj.University = University
-            user_obj.Dob = Dob
-            user_obj.Phd_Reg = Phd_Reg
-            user_obj.Phd_Joining_Date = Phd_Joining_Date
-            user_obj.Research_Topic = Research_Topic
-            user_obj.Research_Guide = Research_Guide
-            user_obj.Guide_Mail = Guide_Mail
-            user_obj.Guide_Phone = Guide_Phone
 
+        user_obj.save()
 
+        return redirect('/user/regSuccess')
 
-            user_obj.save()
-
-            return JsonResponse(
-
-                {'success': 'pass'},
-                safe=False
-            )
+            # return JsonResponse(
+            #
+            #     {'success': 'pass'},
+            #     safe=False
+            # )
 
     else:
 
