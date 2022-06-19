@@ -316,7 +316,7 @@ def show_subjects(request):
 
 
 # Edited by Akhila
-def mark_upload(request):
+def mark_upload(request,subjectid):
     users = Candidates.objects.all().order_by('RegNumber')
     subjects = Subjects.objects.all()
     marks = Marks.objects.all()
