@@ -1,102 +1,94 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load static %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>HTML 5 Boilerplate</title>
-    <!-- CSS only -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
-    <link href="{% static 'css/style-dark.css' %}" rel="stylesheet">
-    <link href="{% static 'css/navbar.css' %}" rel="stylesheet">
-    <link href="{% static 'css/style.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-</head>
-<body>
-{% include 'reusable/sidebar.html'%}
+{% block title %} Approval {% endblock %}
+
+{% block styles %}
+
+</style>
+  <!-- CSS only -->
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+  <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
+  <link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
+  <link href="{% static 'css/style-dark.css' %}" rel="stylesheet">
+  <link href="{% static 'css/waves.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+{% block body %}
+{% include 'reusable/sidebar.html' %}
 {% include 'reusable/navbar.html' %}
 
 <div id="wrapper">
-    <div class="main-content">
-        <div class="table-responsive">
-            <h1>{{subject.SubjectName}}</h1>
-            <hr>
+	<div class="main-content">
+<h3>Choose Course</h3>
+                    <div class="d-flex justify-content-center align-items-center">
+                      <div class="col-md-8">
 
-            <table class="table table-bordered">
+                          <form action="show_report" method="POST">
 
-                <thead>
-                <tr>
-                    <th colspan="11"><h3 class="text-center">PROF N. R. MADHAVA MENON INTERDISCIPLINARY CENTRE FOR
-                        RESEARCH ETHICS AND PROTOCOLS, CUSAT, KOCHI- 022</h3></th>
-                </tr>
-                <tr>
-                    <th colspan="11"><h5 class="text-center">Research and Publication Ethics Course Work Program, 2020
-                        Batch- INTERNAL ASSESSMENT</h5></th>
-                </tr>
-                <tr>
-                <th colspan="2" class="text-end">Total number of hours</th>
-                    <th class="table-secondary">{{subject.TotalHour}}</th>
-                    <th colspan="3" class="text-end">Subject</th>
-                    <th colspan="5" class="table-secondary">{{subject.SubjectName}}</th>
-                </tr>
+                      {% csrf_token %}
 
-                <tr>
+                        <div class="input-group">
+                            <input name="name" type="text" placeholder="Search " class="form-control" />
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary btn-format">Search</button>
 
-                    <th rowspan="2">SNo.</th>
-                    <th rowspan="2">Name of Students</th>
-                    <th rowspan="2">No: of Attendance</th>
-                    <th rowspan="2">% of Attendance</th>
-                    <th rowspan="2">Mark for Attendance(5)</th>
-
-                    <th colspan="2">Assignment</th>
-
-                    <th rowspan="2">Total mark for Assignment(20)</th>
-                    <th rowspan="2">Group Discussions(20)</th>
-                    <th rowspan="2">Class participations(5)</th>
-                    <th rowspan="2">Total Internal Marks out of 50</th>
-                </tr>
-                <tr>
-                    <th>1</th>
-                    <th>2</th>
-                </tr>
-                </thead>
-                <tbody>
-
-                {% for mark in marks %}
-
-                <tr class="active">
-
-                    <td>{{forloop.counter}}</td>
-                    <td>{{ mark.StudentId.ApplicationId.Name }}</td>
-                    <td>{{ mark.Attendance }}</td>
-                    <td>{{ mark.AttendancePercentage }}</td>
-                    <td>{{ mark.AttendanceMark }}</td>
-                    <td>{{ mark.Assignment1Mark }}</td>
-                    <td> {{ mark.Assignment2Mark }}</td>
-                    <td> {{ mark.TotalAssignmentMark }}</td>
-                    <td> {{ mark.GdMark }}</td>
-                    <td> {{ mark.CpMark }}</td>
-                    <td> {{ mark.Total }}</td>
+                            </div>
+                        </div>
+                    </form>
 
 
-                </tr>
-
-                {% endfor %}
-                </tbody>
-
-            </table>
 
 
-            <a href="report_download/{{subject.id}}" class="btn btn-outline-success btn-sm ">Download Report</a>
-
+                      </div>
         </div>
+      <div class="verify_div" style="margin-top: 5rem; ">
+          <div class="container">
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-borderless table-responsive">
+        <thead>
+          <tr>
+            <th >Sl</th>
+            <th >Subject Name</th>
 
+            <th ></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for subject in subjects %}
+          <tr>
+            <th scope="row">{{ forloop.counter }}</th>
+            <td>{{ subject.SubjectName }}</td>
+
+            <td class="text-center">
+              <a href="show_students/{{ subject.id }}" class="btn btn-primary"><i class="fa fa-eye"></i> View Report</a>
+
+            </td>
+          </tr>
+         {% endfor %}
+        </tbody>
+      </table>
     </div>
+  </div>
 </div>
 
-</body>
-</html>
+          <div class=" d-grid   d-md-flex  justify-content-evenly" style="margin-top: 5rem;">
+ <a href="report_mark"><button type="button" class="btn btn-outline-secondary btn-rounded " >  <i class="fa fa-eye"></i> View Mark Report</button>  </a>
+ <a href="report_attendance"><button type="button" class="btn btn-outline-secondary btn-rounded ">  <i class="fa fa-eye"></i> View Attendance Report</button>  </a>
+
+</div>
+
+</div>
+  </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script>
+        let
+    </script>
+{% endblock %}
