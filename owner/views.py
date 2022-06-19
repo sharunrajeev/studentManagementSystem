@@ -301,6 +301,12 @@ def delete_user(request, userid):
 #     else:
 #         return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subjects': subjects})
 
+def show_subjects(request):
+    subject = Subjects.objects.get(id=subjectid)
+    return render(request, 'owner/report.html', { 'subject': subject})
+
+
+
 # Edited by Akhila
 def mark_upload(request):
     users = Candidates.objects.all().order_by('RegNumber')

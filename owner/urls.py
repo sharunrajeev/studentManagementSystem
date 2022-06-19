@@ -45,6 +45,9 @@ urlpatterns = [
 
     path('subjects_edit',views.subjects_edit,name='subjects_edit'),
     path('subject_delete/<subjectid>',views.subject_delete,name='subject_delete'),
-    path('subject_update/<subjectid>',views.subject_update,name='subject_update')
+    path('subject_update/<subjectid>',views.subject_update,name='subject_update'),
+
+    #coded by dp
+    path('show_subjects',views.show_subjects,name='show_subjects'),
 ]
 
