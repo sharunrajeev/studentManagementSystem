@@ -333,7 +333,7 @@ def mark_upload(request,subjectid):
 
 
 def individual_mark_upload(request, userid):
-    user = Candidates.objects.get(id=userid)
+    user = Candidates.objects.get(Register_Number=userid)
     if request.method == 'POST':
         Subject = request.POST['subject']
         Attendance = int(request.POST['attendance'])

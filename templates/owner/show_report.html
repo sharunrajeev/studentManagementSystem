@@ -63,8 +63,13 @@
             <td>{{ subject.SubjectName }}</td>
 
             <td class="text-center">
-              <a href="report/{{ subject.id }}" class="btn btn-primary"><i class="fa fa-eye"></i> View Report</a>
-
+              <a href="report/{{ subject.id }}" class="btn btn-outline-primary"><i class="fa fa-eye"></i> View Report</a>
+            </td>
+            <td class="text-center"  >
+              <a href="report_mark" class="btn btn-outline-secondary"><i class="fa fa-eye"></i> View Mark Report</a>
+            </td>
+            <td class="text-center"  >
+              <a href="report_attendance" class="btn btn-outline-dark"><i class="fa fa-eye"></i> View Attendance</a>
             </td>
           </tr>
          {% endfor %}
@@ -74,11 +79,11 @@
   </div>
 </div>
 
-          <div class=" d-grid   d-md-flex  justify-content-evenly" style="margin-top: 5rem;">
- <a href="report_mark"><button type="button" class="btn btn-outline-secondary btn-rounded " >  <i class="fa fa-eye"></i> View Mark Report</button>  </a>
- <a href="report_attendance"><button type="button" class="btn btn-outline-secondary btn-rounded ">  <i class="fa fa-eye"></i> View Attendance Report</button>  </a>
+<!--          <div class=" d-grid   d-md-flex  justify-content-evenly" style="margin-top: 5rem;">-->
+<!-- <a href="report_mark"><button type="button" class="btn btn-outline-secondary btn-rounded " >  <i class="fa fa-eye"></i> View Mark Report</button>  </a>-->
+<!-- <a href="report_attendance"><button type="button" class="btn btn-outline-secondary btn-rounded ">  <i class="fa fa-eye"></i> View Attendance Report</button>  </a>-->
 
-</div>
+<!--</div>-->
 
 </div>
   </div>
