@@ -6,3 +6,5 @@ admin.site.register(Applicants)
 admin.site.register(Candidates)
 admin.site.register(Marks)
 admin.site.register(Subjects)
+
+

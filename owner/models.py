@@ -2,7 +2,12 @@ from django.db import models
 
 
 # Create your models here.
+class Subjects(models.Model):
+    SubjectName = models.CharField(max_length=100, default=None)
+    TotalHour = models.IntegerField(default=None)
+
 class Applicants(models.Model):
+    SubjectId = models.ForeignKey(Subjects, on_delete=models.CASCADE, default=False)
     Name = models.CharField(max_length=100, default=None)
     Age = models.IntegerField(default=None)
     Gender = models.CharField(max_length=12, default=None)
@@ -23,6 +28,7 @@ class Applicants(models.Model):
 
 class Candidates(models.Model):
     ApplicationId = models.ForeignKey(Applicants, on_delete=models.CASCADE, default=False)
+    Register_Number = models.AutoField(default=None,primary_key=True)
     UserId = models.CharField(max_length=100)
     Photo = models.ImageField(upload_to='pics')
     Achievements = models.TextField()
@@ -31,13 +37,10 @@ class Candidates(models.Model):
     Marks = models.IntegerField(blank=True, null=True, default=None)
     Attendance = models.IntegerField(blank=True, null=True, default=None)
 
-class Subjects(models.Model):
-    SubjectName = models.CharField(max_length=100, default=None)
-    TotalHour = models.IntegerField(default=None)
+
 
 class Marks(models.Model):
     StudentId = models.ForeignKey(Candidates, on_delete=models.CASCADE, default=False)
-    SubjectId = models.ForeignKey(Subjects, on_delete=models.CASCADE, default=False)
     Attendance = models.IntegerField(default=None)
     AttendancePercentage = models.IntegerField(default=None, blank=True, null=True)
     AttendanceMark = models.IntegerField(default=None, blank=True, null=True)
