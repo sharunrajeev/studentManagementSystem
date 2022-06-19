@@ -303,7 +303,7 @@ def delete_user(request, userid):
 
 # Edited by Akhila
 def mark_upload(request):
-    users = Candidates.objects.all().order_by('id')
+    users = Candidates.objects.all().order_by('RegNumber')
     subjects = Subjects.objects.all()
     marks = Marks.objects.all()
     if request.method == 'POST':
