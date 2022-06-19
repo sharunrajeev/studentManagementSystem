@@ -72,6 +72,7 @@ def dashboard(request):
 
 def approve(request):
     # coded by Hana
+
     if request.method == 'POST':
 
         search_vector = SearchVector('Name', 'Phd_Reg')
@@ -119,7 +120,7 @@ def reject(request, userid):
 
     return redirect('approve')
 
-
+    # 2nd phase : coded by devaprasad
 def select(request, userid):
     user = Applicants.objects.get(id=userid)
     user.Eligibility = True
