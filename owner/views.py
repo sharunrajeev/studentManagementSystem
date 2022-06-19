@@ -444,6 +444,7 @@ def subject_update(request, subjectid):
     if request.method == 'POST':
         subjectname = request.POST['subjectname']
         totalhour = request.POST['totalhours']
+        year = request.POST['year']
 
         subject = Subjects.objects.get(id=subjectid)
 

@@ -53,6 +53,7 @@
                     <tr>
                         <th>Sl No</th>
                         <th>Subject Name</th>
+                         <th>Year of Admission</th>
                         <th>Total Hours</th>
                         <th>Edit</th>
                         <th>Delete</th>
@@ -66,12 +67,13 @@
                             {% csrf_token %}
                         <td><a href="#">{{ forloop.counter }}</a></td>
                         <td> <input value="{{ subject.SubjectName }}" type="text" name="subjectname"></td>
+                            <td> <input value="{{ subject.Year }}" type="text" name="year"></td>
                         <td><input value="{{ subject.TotalHour }}" type="number" name="totalhours"></td>
                         <td>
-                            <button class="btn btn-success" role="button">Edit</button>
+                            <button class="btn btn-success btn-sm" role="button">Update</button>
                         </td>
                         <td>
-                            <a class="btn btn-danger " href="subject_delete/{{ subject.id }}" role="button">Delete</a>
+                            <a class="btn btn-danger btn-sm" href="subject_delete/{{ subject.id }}" role="button">Delete</a>
                         </td>
                         </form>
                     </tr>
