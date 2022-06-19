@@ -8,7 +8,7 @@ class Subjects(models.Model):
     Year = models.IntegerField(default=None)
 
 class Applicants(models.Model):
-    SubjectId = models.ForeignKey(Subjects, on_delete=models.CASCADE, default=False)
+    Subject = models.CharField(max_length=100, default=None)
     Name = models.CharField(max_length=100, default=None)
     Age = models.IntegerField(default=None)
     Gender = models.CharField(max_length=12, default=None)
@@ -29,6 +29,7 @@ class Applicants(models.Model):
 
 class Candidates(models.Model):
     ApplicationId = models.ForeignKey(Applicants, on_delete=models.CASCADE, default=False)
+    SubjectId = models.ForeignKey(Subjects, on_delete=models.CASCADE, default=False)
     Register_Number = models.AutoField(default=None,primary_key=True)
     UserId = models.CharField(max_length=100)
     Photo = models.ImageField(upload_to='pics')
