@@ -124,17 +124,36 @@ def reject(request, userid):
 def select(request, userid):
     user = Applicants.objects.get(id=userid)
     user.Eligibility = True
+
     user.save()
 
     email = user.Email
+    SubjectName = user.Subject
+
+    subject = Subjects.objects.get(SubjectName = SubjectName)
+
+
 
     user_candidates = Candidates()
     user_candidates.ApplicationId = user
-    user_candidates.UserId = email
+    user_candidates.SubjectId = subject
+    user_candidates.UserId = userid
     user_candidates.save()
 
+    # register number creating
+    year = subject.Year
+    reg_model = year * 1000
+    candidate = Candidates.objects.get(UserId = userid)
+    register_number = candidate.Register_Number
+    reg_num = register_number + reg_model
+    user_candidates.RegNumber = reg_num
+
+    user_candidates.save()
+
+
+
     password = User.objects.make_random_password()
-    username = user.Email
+    username = reg_model
     name = user.Name
     candidate = User.objects.create_user(
         first_name=name, username=username, password=password, email=email)
@@ -145,7 +164,7 @@ def select(request, userid):
               f" by 'PROF. N.R. MADAVA MENON INTERDISCIPLINARY CENTRE FOR RESEARCH ETHICS AND PROTOCOLS,CUSAT' have been selected." \
               f"Your Username and Password for Further processes have been provided with this E-mail." \
               f"Please complete the registration process and confirm your allotment before the last date.\n"\
-              f" \nYour username : {email}\n Your password: {password}\n\n" \
+              f" \nYour username : {reg_num}\n Your password: {password}\n\n" \
               f"\nRegards\n" \
               f"CUSAT."
 
