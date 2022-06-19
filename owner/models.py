@@ -31,6 +31,7 @@ class Candidates(models.Model):
     ApplicationId = models.ForeignKey(Applicants, on_delete=models.CASCADE, default=False)
     SubjectId = models.ForeignKey(Subjects, on_delete=models.CASCADE, default=False)
     Register_Number = models.AutoField(default=None,primary_key=True)
+    RegNumber = models.IntegerField(blank=True, null=True, default=None)
     UserId = models.CharField(max_length=100)
     Photo = models.ImageField(upload_to='pics')
     Achievements = models.TextField()
