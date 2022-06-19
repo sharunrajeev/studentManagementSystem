@@ -137,13 +137,13 @@ def select(request, userid):
     user_candidates = Candidates()
     user_candidates.ApplicationId = user
     user_candidates.SubjectId = subject
-    user_candidates.UserId = email
+    user_candidates.UserId = userid
     user_candidates.save()
 
     # register number creating
     year = subject.Year
     reg_model = year * 1000
-    candidate = Candidates.objects.get(UserId)
+    candidate = Candidates.objects.get(UserId = userid)
     register_number = candidate.Register_Number
     reg_num = register_number + reg_model
     user_candidates.RegNumber = reg_num

@@ -32,7 +32,7 @@ class Candidates(models.Model):
     SubjectId = models.ForeignKey(Subjects, on_delete=models.CASCADE, default=False)
     Register_Number = models.AutoField(default=None,primary_key=True)
     RegNumber = models.IntegerField(blank=True, null=True, default=None)
-    UserId = models.CharField(max_length=100)
+    UserId = models.IntegerField(default=None, blank=True, null=True)
     Photo = models.ImageField(upload_to='pics')
     Achievements = models.TextField()
     PaymentStatus = models.BooleanField(blank=True, null=True, default=None)
