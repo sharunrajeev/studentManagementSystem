@@ -125,10 +125,10 @@
                         window.location.replace("dashboard")
                     }else{
                         // console.log("error")
-                        // // swal("INVALID CREDENTIALS!!", "Username or Password you entered doesnot exist.", "warning");
                         $('#email').val("");
                         $('#password').val("");
                         console.log("error")
+                        swal("INVALID CREDENTIALS!!", "Username or Password you entered doesnot exist.", "warning");
                        $("#error").text("Invalid Credentials!!");
                     }
                 }
