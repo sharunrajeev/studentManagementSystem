@@ -82,10 +82,10 @@ def approve(request):
         return render(request, 'owner/verify.html', {'users': users, 'message': 'User not found'})
     else:
         users = Applicants.objects.all()
-
+        User = Candidates.objects.all()
         users = reversed(users)
 
-        return render(request, 'owner/verify.html', {'users': users, 'message': 'User not found'})
+        return render(request, 'owner/verify.html', {'users': users,'User':User})
 
 
 def individual_view(request, userid):
