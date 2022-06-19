@@ -414,14 +414,16 @@ def mark_calculation(Subject, Attendance, Assignment1Mark, Assignment2Mark, GdMa
 
 
 # coded by Hana
+# 2nd phase : coded by devaprasad
 def subjects_edit(request):
     if request.method == 'POST':
         Subjectname = request.POST['subjectname']
         Totalhour = request.POST['totalhours']
-
+        Year  = request.POST['year']
         subject = Subjects()
         subject.SubjectName = Subjectname
         subject.TotalHour = Totalhour
+        subject.Year = Year
 
         subject.save()
 
