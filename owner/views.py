@@ -72,6 +72,7 @@ def dashboard(request):
 
 def approve(request):
     # coded by Hana
+
     if request.method == 'POST':
 
         search_vector = SearchVector('Name', 'Phd_Reg')
@@ -119,7 +120,7 @@ def reject(request, userid):
 
     return redirect('approve')
 
-
+    # 2nd phase : coded by devaprasad
 def select(request, userid):
     user = Applicants.objects.get(id=userid)
     user.Eligibility = True
@@ -413,14 +414,16 @@ def mark_calculation(Subject, Attendance, Assignment1Mark, Assignment2Mark, GdMa
 
 
 # coded by Hana
+# 2nd phase : coded by devaprasad
 def subjects_edit(request):
     if request.method == 'POST':
         Subjectname = request.POST['subjectname']
         Totalhour = request.POST['totalhours']
-
+        Year  = request.POST['year']
         subject = Subjects()
         subject.SubjectName = Subjectname
         subject.TotalHour = Totalhour
+        subject.Year = Year
 
         subject.save()
 
@@ -441,6 +444,7 @@ def subject_update(request, subjectid):
     if request.method == 'POST':
         subjectname = request.POST['subjectname']
         totalhour = request.POST['totalhours']
+        year = request.POST['year']
 
         subject = Subjects.objects.get(id=subjectid)
 
