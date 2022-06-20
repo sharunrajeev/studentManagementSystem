@@ -40,7 +40,7 @@
                         <th>Sl No</th>
                         <th>Name</th>
                         <th>PhD Reg No</th>
-<!--                        <th>Phone No</th>-->
+                        <th>Register Num</th>
                         <th>Email</th>
                         <th>Status</th>
                     </tr>
@@ -52,7 +52,7 @@
                         <td><a href="#">{{ forloop.counter }}</a></td>
                         <td>{{ user.ApplicationId.Name }}</td>
                         <td>{{ user.ApplicationId.Phd_Reg }}</td>
-<!--                        <td>{{ user.ApplicationId.Mob }}</td>-->
+                        <td>{{ user.RegNumber }}</td>
                         <td>{{ user.ApplicationId.Email }}</td>
                         {% if user.PaymentStatus == null %}
                             <td><span class="btn btn-warning btn-sm" style="cursor: default;">Not Verified</span></td>
@@ -78,6 +78,7 @@
     <tr>
         <th>Name</th>
         <th>Phd_Reg</th>
+        <th>Register No</th>
         <th>Phone Number</th>
         <th>Email</th>
         <th>Status</th>
@@ -94,6 +95,7 @@
 
           <td>{{ user.ApplicationId.Name }}</td>
           <td>{{ user.ApplicationId.Phd_Reg }}</td>
+          <td>{{ user.RegNumber }}</td>
           <td>{{ user.ApplicationId.Mob }}</td>
           <td> {{ user.ApplicationId.Email }}</td>
 
