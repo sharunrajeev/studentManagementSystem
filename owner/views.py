@@ -316,9 +316,11 @@ def show_subjects(request):
 
 
 # Edited by Akhila
+#new editing devaprasad
 def mark_upload(request,subjectid):
-    users = Candidates.objects.all().order_by('RegNumber')
-    subjects = Subjects.objects.all()
+    subject = Subjects.objects.get(id=subjectid)
+    users = Candidates.objects.filter(SubjectId = subject).order_by('RegNumber')
+
     marks = Marks.objects.all()
     if request.method == 'POST':
         pass
@@ -326,51 +328,54 @@ def mark_upload(request,subjectid):
         users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield) | Candidates.objects.filter(
             ApplicationId__Name__icontains=Searchfield)
 
-        return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subjects': subjects})
+        return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks})
 
     else:
-        return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subjects': subjects})
+        return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subject': subject})
 
 
 def individual_mark_upload(request, userid):
     user = Candidates.objects.get(Register_Number=userid)
+    subject = Subjects.objects.get(id=user.SubjectId.id)
     if request.method == 'POST':
-        Subject = request.POST['subject']
+
         Attendance = int(request.POST['attendance'])
         Assignment1Mark = int(request.POST['assignment1'])
         Assignment2Mark = int(request.POST['assignment2'])
         GdMark = int(request.POST['gd'])
         CpMark = int(request.POST['cp'])
 
-        attendance_percentage, a_mark, total_assignment, total, sub = mark_calculation(Subject, Attendance,
+
+
+        attendance_percentage, a_mark, total_assignment, total = mark_calculation(subject, Attendance,
                                                                                        Assignment1Mark,
                                                                                        Assignment2Mark, GdMark, CpMark)
 
-        user_mark = Marks.objects.create(StudentId=user, SubjectId=sub, Attendance=Attendance,
+        user_mark = Marks.objects.create(StudentId=user, Attendance=Attendance,
                                          AttendancePercentage=attendance_percentage, AttendanceMark=a_mark,
                                          Assignment1Mark=Assignment1Mark, Assignment2Mark=Assignment2Mark,
                                          TotalAssignmentMark=total_assignment, GdMark=GdMark, CpMark=CpMark,
                                          Total=total)
         user_mark.save()
-        candidate = Candidates.objects.get(id=userid)
-        total_table = Marks.objects.filter(StudentId = candidate).aggregate(Sum('Total'))
+
+        total_table = Marks.objects.filter(StudentId = user).aggregate(Sum('Total'))
         total_marks = total_table.get('Total__sum')
         print(total_marks)
-        candidate.Marks = int(total_marks)
+        user.Marks = int(total_marks)
 
-        candidate.save()
-        return redirect('mark_upload')
+        user.save()
+        return redirect(f'/owner/show_students/{subject.id}')
 
     else:
-        subjects = Subjects.objects.all()
-        return render(request, 'owner/mark_upload_form.html', {'user': user, 'subjects': subjects})
+
+        return render(request, 'owner/mark_upload_form.html', {'user': user, 'subject': subject})
 
 
 def mark_edit(request, userid):
     if request.method == 'POST':
         pass
     else:
-        user = Candidates.objects.get(id=userid)
+        user = Candidates.objects.get(Register_Number=userid)
         marks = Marks.objects.filter(StudentId=user).order_by('id')
         return render(request, 'owner/mark_edit.html', {'User': user, 'marks': marks})
 
@@ -384,10 +389,10 @@ def mark_update(request, markid):
         CpMark = int(request.POST['cp'])
 
         mark = Marks.objects.get(id=markid)
-        userid = mark.StudentId.id
+        userid = mark.StudentId.Register_Number
 
-        Subject = mark.SubjectId.SubjectName
-        attendance_percentage, a_mark, total_assignment, total, sub = mark_calculation(Subject, Attendance,
+        Subject = mark.StudentId.SubjectId
+        attendance_percentage, a_mark, total_assignment, total = mark_calculation(Subject, Attendance,
                                                                                        Assignment1Mark,
                                                                                        Assignment2Mark, GdMark, CpMark)
         mark.AttendancePercentage = attendance_percentage
@@ -402,28 +407,26 @@ def mark_update(request, markid):
 
         mark.save()
 
-        candidate = Candidates.objects.get(id=userid)
+        candidate = Candidates.objects.get(Register_Number=userid)
         total_table = Marks.objects.filter(StudentId = candidate).aggregate(Sum('Total'))
         total_marks = total_table.get('Total__sum')
         print(total_marks)
         candidate.Marks = int(total_marks)
 
         candidate.save()
-        return redirect('mark_upload')
-
         return redirect(f"/owner/mark_edit/{userid}")
 
 
 def mark_delete(request, markid):
     mark = Marks.objects.get(id=markid)
-    userid = mark.StudentId.id
+    userid = mark.StudentId.Register_Number
     mark.delete()
     return redirect(f"/owner/mark_edit/{userid}")
 
 
 def mark_calculation(Subject, Attendance, Assignment1Mark, Assignment2Mark, GdMark, CpMark):
-    sub = Subjects.objects.get(SubjectName=Subject)
-    total_attendance = int(sub.TotalHour)
+
+    total_attendance = int(Subject.TotalHour)
 
     attendance_percentage = (Attendance / total_attendance) * 100
     print(attendance_percentage)
@@ -443,7 +446,7 @@ def mark_calculation(Subject, Attendance, Assignment1Mark, Assignment2Mark, GdMa
     total_assignment = Assignment1Mark + Assignment2Mark
     total = a_mark + Assignment1Mark + Assignment2Mark + GdMark + CpMark
 
-    return attendance_percentage, a_mark, total_assignment, total, sub
+    return attendance_percentage, a_mark, total_assignment, total
 
 
 # coded by Hana

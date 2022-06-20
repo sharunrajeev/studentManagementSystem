@@ -28,12 +28,20 @@
       <form method="post" action="{{ user.id }}">
         {% csrf_token %}
 
+<!--        <label for="subject">Subject:</label><br>-->
+<!--            <select name="subject" class="custom-select" id="inputGroupSelect01">-->
+<!--              <option selected>Choose...</option>-->
+<!--                {% for subject in subjects %}-->
+<!--                    <option value="{{subject.SubjectName}}">{{subject.SubjectName}} ({{subject.TotalHour}})</option>-->
+
+<!--                {% endfor %}-->
+<!--            </select>-->
 
         <div class="main">
                 <div class="row row-space">
                 <div class="col-2">
                     <div class="input-group">
-                        <label class="label">Attendance</label>
+                        <label class="label">Attendance ({{subject.TotalHour}})</label>
                         <input type="text"  class="input--style-4 input_default" id="attendance" name="attendance" required require>
                     </div>
                 </div>
