@@ -362,8 +362,8 @@ def individual_mark_upload(request, userid):
         return redirect('mark_upload')
 
     else:
-        subjects = Subjects.objects.all()
-        return render(request, 'owner/mark_upload_form.html', {'user': user, 'subjects': subjects})
+        subject = Subjects.objects.get(id = user.SubjectId.id)
+        return render(request, 'owner/mark_upload_form.html', {'user': user, 'subject': subject})
 
 
 def mark_edit(request, userid):
