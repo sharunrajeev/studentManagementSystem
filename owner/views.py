@@ -656,4 +656,5 @@ def edit_form(request,userid):
         return redirect('owner/user_edit')
 
     else:
-        return render(request, 'owner/edit_form.html', {'person_details': user_det})
+        subjects = Subjects.objects.all()
+        return render(request, 'owner/edit_form.html', {'person_details': user_det, 'subjects':subjects})
