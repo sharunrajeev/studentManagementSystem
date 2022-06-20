@@ -22,7 +22,7 @@
 
    <div id="wrapper">
        <div class="main-content" >
-            <h1>Marks</h1>
+            <h1>{{ subject.SubjectName }} Marks</h1>
             <hr>
 
             <table class="table table-bordered">
@@ -41,44 +41,34 @@
 
         <th>Name of Students</th>
         <th>Register</th>
-        {% for subject in subjects %}
-        <th>{{ subject.SubjectName }}</th>
-        {% endfor %}
         <th>Total</th>
     </tr>
     </thead>
         <tbody>
 
         {% for user in users %}
+                {% for mark in marks %}
+                {% if mark.StudentId == user %}
 
       <tr class="active">
 
 
           <td>{{ user.ApplicationId.Name }}</td>
           <td>{{ user.ApplicationId.Phd_Reg }}</td>
-          {% for subject in subjects %}
-          {% for mark in marks %}
-          {% if user == mark.StudentId  %}
-          {% if subject == mark.SubjectId  %}
         <td>{{ mark.Total }}</td>
-
-          {% endif %}
-          {% endif %}
-        {% endfor %}
-
-          {% endfor %}
-        <td>{{ user.Marks }}</td>
-
 
       </tr>
 
-      {% endfor %}
+         {% endif %}
+        {% endfor %}
+
+          {% endfor %}
     </tbody>
 
   </table>
 
 
- <a href="report_mark_download" class="btn btn-outline-success btn-sm ">Download Report</a>
+ <a href="/owner/report_mark_download/{{ subject.id }}" class="btn btn-outline-success btn-sm ">Download Report</a>
 
         </div>
    </div>

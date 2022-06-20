@@ -66,7 +66,9 @@
                 </thead>
                 <tbody>
 
+                {% for user in users %}
                 {% for mark in marks %}
+                {% if mark.StudentId == user %}
 
                 <tr class="active">
 
@@ -84,7 +86,8 @@
 
 
                 </tr>
-
+                {% endif %}
+                {% endfor %}
                 {% endfor %}
                 </tbody>
 
