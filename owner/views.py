@@ -515,8 +515,9 @@ def show_report(request):
 
 def report(request,subjectid):
      subject = Subjects.objects.get(id=subjectid)
-     marks = Marks.objects.filter(SubjectId = subject).order_by('id')
-     return render(request, 'owner/report.html' , {'marks':marks,'subject':subject})
+     candidates = Candidates.objects.filter(SubjectId =  subject)
+     marks = Marks.objects.all()
+     return render(request, 'owner/report.html' , {'marks':marks,'subject':subject,'users':candidates})
 
 def report_download(request,subjectid):
     subject = Subjects.objects.get(id=subjectid)
