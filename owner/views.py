@@ -600,3 +600,28 @@ def report_attendance_download(request,subjectid):
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
+
+
+# User edit Edited by Devaprasad
+
+def user_edit(request):
+    if request.method == 'POST':
+
+        Searchfield = request.POST['name']
+        users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield)|Candidates.objects.filter(ApplicationId__Name__icontains=Searchfield)
+
+        return render(request, 'owner/user_edit.html', {'users': users, 'message': 'User not found'})
+    else:
+        users = Candidates.objects.all().order_by('Register_Number')
+
+        return render(request, 'owner/user_edit.html', {'users': users, 'message': 'User not found'})
+
+
+def edit_form(request,userid):
+    user_det = Candidates.objects.get(Register_Number=userid)
+
+
+    if request.method == 'POST':
+        pass
+    else:
+        return render(request, 'owner/user_detail.html', {'person_details': user_det})

@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {% endblock %}
+
+{% block styles %}
+
+<!--    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">-->
+    <link href="{% static 'css/mark_upload-table.css' %}" rel="stylesheet">
+  <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
+
+{% endblock %}
+
+{% block body %}
+{% include 'reusable/sidebar.html' %}
+{% include 'reusable/navbar.html' %}
+
+
+
+<div id="wrapper">
+	<div class="main-content">
+
+        <div class="d-flex justify-content-center align-items-center" style="margin-top: 3rem;">
+            <div class="col-md-6">
+                <form action="payment" method="post">
+                {% csrf_token %}
+                    <div class="search">
+                        <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
+                        <input name="name" type="text" class="form-control" placeholder="Search for Applicants">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="table-parent">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sl No</th>
+                        <th>Name</th>
+                        <th>PhD Reg No</th>
+                        <th>Register Num</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                {% for user in users %}
+                    <tr>
+                        <td><a href="#">{{ forloop.counter }}</a></td>
+                        <td>{{ user.ApplicationId.Name }}</td>
+                        <td>{{ user.ApplicationId.Phd_Reg }}</td>
+                        <td>{{ user.RegNumber }}</td>
+                        <td><a href="edit_form/{{ user.Register_Number }}" class="btn btn-warning btn-sm" style="cursor: default;">Edit</a></td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+</table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
+  </div>
+</div>
+
+{% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
