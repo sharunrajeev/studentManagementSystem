@@ -192,6 +192,20 @@ def attendance(request):
 
     return render(request, 'user/attendance.html',{ 'User':User,'attendance':attendance})
 
+def settings(request):
+    if 'username' in request.session:
+        User = Candidates.objects.get(RegNumber=request.session['username'])
+
+        return render(request, 'user/settings.html',{'User':User})
+
+
+def change_password(request,userId):
+    u = User.objects.get(RegNumber=request.session['username'])
+    u.set_password('new password')
+    u.save()
+
+    return render(request,'user/settings.html')
+
 
 # Coded By Rohith
 # For custom 404 and 500 error page
