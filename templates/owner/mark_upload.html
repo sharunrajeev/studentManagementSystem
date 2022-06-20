@@ -48,7 +48,7 @@
                     <tr>
                         <th>Sl No</th>
                         <th>Name</th>
-                        <th>PhD Reg No</th>
+                        <th>Register No</th>
                         <th>Marks</th>
                         <th>Upload</th>
                         <th>Edit</th>
@@ -60,7 +60,7 @@
                     <tr>
                         <td><a href="#">{{ forloop.counter }}</a></td>
                         <td>{{ user.ApplicationId.Name }}</td>
-                        <td>{{ user.ApplicationId.Phd_Reg }}</td>
+                        <td>{{ user.RegNumber }}</td>
                         <td>
                             {% for mark in marks %}
                                 {% if mark.StudentId == user %}
