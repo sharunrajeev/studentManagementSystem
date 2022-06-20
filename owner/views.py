@@ -540,21 +540,21 @@ def report_download(request,subjectid):
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
-def report_mark(request):
+def report_mark(request,subjectid):
+    subject = Subjects.objects.get(id=subjectid)
+    users = Candidates.objects.filter(SubjectId=subject)
     marks = Marks.objects.all()
-    users = Candidates.objects.all()
-    subjects = Subjects.objects.all()
-    return render(request,'owner/report_mark.html',{'marks':marks,'users':users,'subjects':subjects})
+    return render(request,'owner/report_mark.html',{'marks':marks,'users':users,'subject':subject})
 
-def report_mark_download(request):
+def report_mark_download(request,subjectid):
+    subject = Subjects.objects.get(id=subjectid)
+    users = Candidates.objects.filter(SubjectId=subject)
     marks = Marks.objects.all()
-    users = Candidates.objects.all()
-    subjects = Subjects.objects.all()
 
 
 
     template_path = 'owner/pdf_report_mark.html'
-    context = {'marks':marks,'subjects':subjects,'users':users}
+    context = {'marks':marks,'subject':subject,'users':users}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'filename="subject_report.pdf"'
