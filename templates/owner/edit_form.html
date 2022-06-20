@@ -130,7 +130,7 @@
                      <div class="col-2">
 
             <select name="Subject" class="input--style-4 input_default" id="inputGroupSelect01">
-              <option selected>Choose...</option>
+              <option selected>{{ person_details.SubjectId.SubjectName }}</option>
                 {% for subject in subjects %}
                     <option value="{{subject.SubjectName}}">{{subject.SubjectName}}</option>
 
@@ -168,7 +168,7 @@
               </div>
               <div class="col-sm-6">
 
-                <input id="researchtopic" value="{{ person_details.Research_Topic }}" class="input--style-4 input_default" type="text" name="Research_Topic">
+                <input id="researchtopic" value="{{ person_details.ApplicationId.Research_Topic }}" class="input--style-4 input_default" type="text" name="Research_Topic">
 
 
               </div>
@@ -180,7 +180,7 @@
               </div>
               <div class="col-sm-6">
 
-                <input id="researchguide" value="{{ person_details.Research_Guide }}" class="input--style-4 input_default" type="text" name="Research_Guide">
+                <input id="researchguide" value="{{ person_details.ApplicationId.Research_Guide }}" class="input--style-4 input_default" type="text" name="Research_Guide">
               </div>
             </div>
             <hr>
@@ -190,7 +190,7 @@
               </div>
               <div class="col-sm-6">
 
-                <input id="guidemail" value="{{ person_details.Guide_Mail }}" class="input--style-4 input_default" type="email" name="Guide_mail">
+                <input id="guidemail" value="{{ person_details.ApplicationId.Guide_Mail }}" class="input--style-4 input_default" type="email" name="Guide_mail">
               </div>
             </div>
             <hr>
@@ -200,7 +200,7 @@
               </div>
               <div class="col-sm-6">
 
-                <input id="guidephone" value="{{ person_details.Guide_Phone }}" class="input--style-4 input_default" type="tel" name="Guide_Phone">
+                <input id="guidephone" value="{{ person_details.ApplicationId.Guide_Phone }}" class="input--style-4 input_default" type="tel" name="Guide_Phone">
               </div>
             </div>
           </div>
