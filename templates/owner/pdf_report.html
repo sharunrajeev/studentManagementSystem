@@ -38,6 +38,7 @@
 
                     <th rowspan="2">SNo.</th>
                     <th rowspan="2">Name of Students</th>
+                    <th rowspan="2">Reg_No</th>
                     <th rowspan="2">No: of Attendance</th>
                     <th rowspan="2">% of Attendance</th>
                     <th rowspan="2">Mark for Attendance(5)</th>
@@ -64,6 +65,7 @@
 
                     <td>{{forloop.counter}}</td>
                     <td>{{ mark.StudentId.ApplicationId.Name }}</td>
+                    <td>{{ mark.StudentId.RegNumber}}</td>
                     <td>{{ mark.Attendance }}</td>
                     <td>{{ mark.AttendancePercentage }}</td>
                     <td>{{ mark.AttendanceMark }}</td>
