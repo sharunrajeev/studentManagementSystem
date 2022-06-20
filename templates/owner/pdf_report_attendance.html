@@ -67,7 +67,7 @@
 
   <div id="wrapper">
     <div class="main-content">
-        <h1>Attendance</h1>
+        <h1>{{subject.SubjectName}}Attendance</h1>
         <hr>
 
 
@@ -75,58 +75,46 @@
 
 
         <table class="table table-bordered">
-            <thead>
-            <tr>
-                 <h3 class="text-center" >PROF N. R. MADHAVA MENON INTERDISCIPLINARY CENTRE FOR
-                    RESEARCH ETHICS AND PROTOCOLS, CUSAT, KOCHI- 022</h3>
-<!--                <th colspan="11"><h3 class="text-center">PROF N. R. MADHAVA MENON INTERDISCIPLINARY CENTRE FOR-->
-<!--                    RESEARCH ETHICS AND PROTOCOLS, CUSAT, KOCHI- 022</h3></th>-->
-            </tr>
-            <tr>
-                <h5 class="text-center">Research and Publication Ethics Course Work Program, 2020 Batch- INTERNAL ASSESSMENT</h5>
+    <thead>
+    <tr>
+                    <th colspan="3"><h3 class="text-center">PROF N. R. MADHAVA MENON INTERDISCIPLINARY CENTRE FOR
+                        RESEARCH ETHICS AND PROTOCOLS, CUSAT, KOCHI- 022</h3></th>
+                </tr>
+                <tr>
+                    <th colspan="3"><h5 class="text-center">Research and Publication Ethics Course Work Program, 2020
+                        Batch- INTERNAL ASSESSMENT</h5></th>
+                </tr>
 
-            </tr>
-
-            <tr>
-            <tr>
+    <tr>
 
 
-                <th>Name of Students</th>
-                <th>Register</th>
-                {% for subject in subjects %}
-                <th>{{ subject.SubjectName }}</th>
-                {% endfor %}
+        <th>Name of Students</th>
+        <th>Register</th>
+        <th>Total Attendance {{subject.SubjectName}}</th>
+    </tr>
+    </thead>
+        <tbody>
 
-            </tr>
-            </thead>
-            <tbody>
-
-            {% for user in users %}
-
-            <tr class="active">
-
-
-                <td>{{ user.ApplicationId.Name }}</td>
-                <td>{{ user.ApplicationId.Phd_Reg }}</td>
-                {% for subject in subjects %}
+        {% for user in users %}
                 {% for mark in marks %}
-                {% if user == mark.StudentId %}
-                {% if subject == mark.SubjectId %}
-                <td>{{ mark.Attendance }}</td>
+                {% if mark.StudentId == user %}
 
-                {% endif %}
-                {% endif %}
-                {% endfor %}
-
-                {% endfor %}
+      <tr class="active">
 
 
-            </tr>
+          <td>{{ user.ApplicationId.Name }}</td>
+          <td>{{ user.ApplicationId.Phd_Reg }}</td>
+        <td>{{ mark.Attendance }}</td>
 
-            {% endfor %}
-            </tbody>
+      </tr>
 
-        </table>
+         {% endif %}
+        {% endfor %}
+
+          {% endfor %}
+    </tbody>
+
+  </table>
 
 
 

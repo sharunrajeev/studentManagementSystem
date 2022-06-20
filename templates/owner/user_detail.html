@@ -34,11 +34,13 @@
     {% include 'reusable/navbar.html' %}
 
     <form action="" class="was-validated" method="post" enctype = "multipart/form-data">
-
+      {% csrf_token %}
 <!--      details-->
       <section style=" margin-left: 17rem; ">
   <div class="container " style="margin-top: 4rem;">
-
+<div class="p-t-15">
+                    <button onclick="history.back()">Go Back</button>
+             </div>
 
     <div class="row">
       <div class="col-lg-6">
@@ -141,6 +143,15 @@
               </div>
               <div class="col-sm-6">
                 <h6 class="text-muted mb-0">{{ person_details.ApplicationId.Phd_Reg }}</h6>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-sm-6">
+                <h6 class="mb-0">Register Number</h6>
+              </div>
+              <div class="col-sm-6">
+                <h6 class="text-muted mb-0">{{ person_details.RegNumber }}</h6>
               </div>
             </div>
             <hr>

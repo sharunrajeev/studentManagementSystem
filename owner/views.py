@@ -82,10 +82,10 @@ def approve(request):
         return render(request, 'owner/verify.html', {'users': users, 'message': 'User not found'})
     else:
         users = Applicants.objects.all()
-        User = Candidates.objects.all()
+
         users = reversed(users)
 
-        return render(request, 'owner/verify.html', {'users': users,'User':User})
+        return render(request, 'owner/verify.html', {'users': users})
 
 
 def individual_view(request, userid):
@@ -190,9 +190,9 @@ def payment(request):
 
         return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
     else:
-        users = Candidates.objects.all()
+        users = Candidates.objects.all().order_by('Register_Number')
 
-        users = reversed(users)
+
 
         return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
 
@@ -202,7 +202,7 @@ def payment(request):
 
 def user_verify_view(request, userid):
     print(userid)
-    user_det = Candidates.objects.get(id=userid)
+    user_det = Candidates.objects.get(Register_Number=userid)
     if user_det.PaymentDetails:
         pay_val = 1
     else:
@@ -515,15 +515,16 @@ def show_report(request):
 
 def report(request,subjectid):
      subject = Subjects.objects.get(id=subjectid)
-     marks = Marks.objects.filter(SubjectId = subject).order_by('id')
-     return render(request, 'owner/report.html' , {'marks':marks,'subject':subject})
+     candidates = Candidates.objects.filter(SubjectId =  subject)
+     marks = Marks.objects.all()
+     return render(request, 'owner/report.html' , {'marks':marks,'subject':subject,'users':candidates})
 
 def report_download(request,subjectid):
     subject = Subjects.objects.get(id=subjectid)
-    marks = Marks.objects.filter(SubjectId=subject).order_by('id')
-
+    candidates = Candidates.objects.filter(SubjectId=subject)
+    marks = Marks.objects.all()
     template_path = 'owner/pdf_report.html'
-    context = {'marks':marks,'subject':subject}
+    context = {'marks':marks,'subject':subject,'users':candidates}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'filename="subject_report.pdf"'
@@ -539,21 +540,21 @@ def report_download(request,subjectid):
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
-def report_mark(request):
+def report_mark(request,subjectid):
+    subject = Subjects.objects.get(id=subjectid)
+    users = Candidates.objects.filter(SubjectId=subject)
     marks = Marks.objects.all()
-    users = Candidates.objects.all()
-    subjects = Subjects.objects.all()
-    return render(request,'owner/report_mark.html',{'marks':marks,'users':users,'subjects':subjects})
+    return render(request,'owner/report_mark.html',{'marks':marks,'users':users,'subject':subject})
 
-def report_mark_download(request):
+def report_mark_download(request,subjectid):
+    subject = Subjects.objects.get(id=subjectid)
+    users = Candidates.objects.filter(SubjectId=subject)
     marks = Marks.objects.all()
-    users = Candidates.objects.all()
-    subjects = Subjects.objects.all()
 
 
 
     template_path = 'owner/pdf_report_mark.html'
-    context = {'marks':marks,'subjects':subjects,'users':users}
+    context = {'marks':marks,'subject':subject,'users':users}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'filename="subject_report.pdf"'
@@ -569,21 +570,21 @@ def report_mark_download(request):
        return HttpResponse('We had some errors <pre>' + html + '</pre>')
     return response
 
-def report_attendance(request):
+def report_attendance(request,subjectid):
+    subject = Subjects.objects.get(id=subjectid)
+    users = Candidates.objects.filter(SubjectId=subject)
     marks = Marks.objects.all()
-    users = Candidates.objects.all()
-    subjects = Subjects.objects.all()
-    return render(request,'owner/report_attendance.html',{'marks':marks,'users':users,'subjects':subjects})
+    return render(request,'owner/report_attendance.html',{'marks':marks,'users':users,'subject':subject})
 
-def report_attendance_download(request):
+def report_attendance_download(request,subjectid):
+    subject = Subjects.objects.get(id=subjectid)
+    users = Candidates.objects.filter(SubjectId=subject)
     marks = Marks.objects.all()
-    users = Candidates.objects.all()
-    subjects = Subjects.objects.all()
 
 
 
     template_path = 'owner/pdf_report_attendance.html'
-    context = {'marks':marks,'subjects':subjects,'users':users}
+    context = {'marks':marks,'subject':subject,'users':users}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'filename="subject_report.pdf"'

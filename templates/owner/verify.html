@@ -44,28 +44,20 @@
                     <th>Name</th>
                     <th>Mobile No</th>
                     <th>PhD Register No</th>
-                    <th>Register No</th>
                     <th>Status</th>
                     <th>View</th>
                 </tr>
             </thead>
             <tbody>
+
                 {% for user in users %}
+
                 <tr>
                     <td>{{ forloop.counter }}</td>
 <!--                    <td><input type="checkbox"/></td>-->
                     <td>{{ user.Name }}</td>
                     <td>{{ user.Mob }}</td>
                     <td>{{ user.Phd_Reg }}</td>
-                         {% if user.Eligibility == null %}
-                            <td>.....</td>
-                        {% elif user.Eligibility == True %}
-                         {% for users in User %}
-                          <td>{{users.RegNumber}}</td>
-                         {% endfor %}
-                        {% else %}
-                            <td>.....</td>
-                        {% endif %}
 
                         {% if user.Eligibility == null %}
                             <td><span class="btn btn-warning btn-sm" style="cursor: default;">Not Verified</span></td>
