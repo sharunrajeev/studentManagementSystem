@@ -317,8 +317,8 @@ def show_subjects(request):
 
 # Edited by Akhila
 def mark_upload(request,subjectid):
-    users = Candidates.objects.all().order_by('RegNumber')
-    subjects = Subjects.objects.all()
+    users = Candidates.objects.filter(SubjectId = subjectid).order_by('RegNumber')
+    subject = Subjects.objects.get(id = subjectid)
     marks = Marks.objects.all()
     if request.method == 'POST':
         pass
@@ -326,10 +326,10 @@ def mark_upload(request,subjectid):
         users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield) | Candidates.objects.filter(
             ApplicationId__Name__icontains=Searchfield)
 
-        return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subjects': subjects})
+        return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks})
 
     else:
-        return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subjects': subjects})
+        return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subject': subject})
 
 
 def individual_mark_upload(request, userid):
