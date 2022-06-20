@@ -620,8 +620,40 @@ def user_edit(request):
 def edit_form(request,userid):
     user_det = Candidates.objects.get(Register_Number=userid)
 
-
     if request.method == 'POST':
-        pass
+        Name = request.POST['Name']
+        Email = request.POST['Email']
+        Mob = request.POST['Mob']
+        Dob = request.POST['Dob']
+        Subject = request.POST['Subject']
+        Gender = request.POST['Gender']
+        Address = request.POST['Address']
+        Phd_Reg = request.POST['Phd_reg']
+        Phd_Joining_Date = request.POST['Phd_Joining_Date']
+        Research_Topic = request.POST['Research_Topic']
+        Research_Guide = request.POST['Research_Guide']
+        Guide_Mail = request.POST['Guide_Mail']
+        Guide_Phone = request.POST['Guide_Phone']
+
+        sub = Subjects.objects.get(SubjectName = Subject)
+
+        user_det.SubjectId = sub
+        user_det.ApplicationId.Name = Name
+        user_det.ApplicationId.Email = Email
+        user_det.ApplicationId.Mob = Mob
+        user_det.ApplicationId.Dob = Dob
+        user_det.ApplicationId.Gender = Gender
+        user_det.ApplicationId.Address = Address
+        user_det.ApplicationId.Phd_Reg = Phd_Reg
+        user_det.ApplicationId.Phd_Joining_Date = Phd_Joining_Date
+        user_det.ApplicationId.Research_Topic = Research_Topic
+        user_det.ApplicationId.Research_Guide = Research_Guide
+        user_det.ApplicationId.Guide_Mail = Guide_Mail
+        user_det.ApplicationId.Guide_Phone = Guide_Phone
+
+        user_det.save()
+
+        return redirect('owner/user_edit')
+
     else:
-        return render(request, 'owner/user_detail.html', {'person_details': user_det})
+        return render(request, 'owner/edit_form.html', {'person_details': user_det})
