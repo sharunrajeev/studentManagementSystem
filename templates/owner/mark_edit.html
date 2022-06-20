@@ -23,7 +23,7 @@
 	<div class="main-content">
 
       <div class="d-flex flex-column flex-grow-1 p-4" style="height: 100vh;">
-            <h1>Marks</h1>
+            <h1>{{User.SubjectId.SubjectName}} - Marks</h1>
             <hr>
 
 
@@ -32,9 +32,6 @@
     <thead>
 
     <tr>
-
-
-        <th>Course Name</th>
         <th>No: of Attendance</th>
         <th>% of Attendance</th>
         <th>Mark for Attendance</th>
@@ -57,7 +54,7 @@
 
               <form method="post" action="mark_update/{{ mark.id }}">
         {% csrf_token %}
-          <td> <input type="text"  class="form-control" value="{{ mark.SubjectId.SubjectName }} {{mark.id}}" readonly> </td>
+
           <td> <input type="number" class="form-control" name="attendance" value="{{ mark.Attendance }}"></td>
           <td> <input type="number" class="form-control" value="{{ mark.AttendancePercentage }}" readonly></td>
           <td> <input type="number" class="form-control" value="{{ mark.AttendanceMark }}" readonly></td>
