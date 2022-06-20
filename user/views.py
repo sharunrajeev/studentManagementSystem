@@ -192,6 +192,8 @@ def attendance(request):
 
     return render(request, 'user/attendance.html',{ 'User':User,'attendance':attendance})
 
+#Coded by Hana
+
 def settings(request):
     if 'username' in request.session:
         User = Candidates.objects.get(RegNumber=request.session['username'])
@@ -199,12 +201,25 @@ def settings(request):
         return render(request, 'user/settings.html',{'User':User})
 
 
-def change_password(request,userId):
-    u = User.objects.get(RegNumber=request.session['username'])
-    u.set_password('new password')
-    u.save()
+def change_password(request):
 
-    return render(request,'user/settings.html')
+    if request.session.has_key('username'):
+
+        if request.method == 'POST':
+
+            Password = request.POST['password']
+
+            user = Candidates.objects.get(RegNumber=request.session['username'])
+            u = User.objects.get(username=user.RegNumber)
+            u.set_password(Password)
+            u.save()
+            print("hiii")
+            return JsonResponse(
+                    {'success': True},
+                    safe=False
+                )
+    else:
+        return render(request, 'settings.html')
 
 
 # Coded By Rohith

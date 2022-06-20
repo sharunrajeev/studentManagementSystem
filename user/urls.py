@@ -34,6 +34,6 @@ urlpatterns = [
     path('attendance', views.attendance, name='attendance'),
     # Settings coded by Hana
     path('settings',views.settings, name='settings'),
-    path('change_password/<userid>',views.change_password,name='change_password')
+    path('change_password',views.change_password,name='change_password')
 
 ]
