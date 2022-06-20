@@ -521,10 +521,10 @@ def report(request,subjectid):
 
 def report_download(request,subjectid):
     subject = Subjects.objects.get(id=subjectid)
-    marks = Marks.objects.filter(SubjectId=subject).order_by('id')
-
+    candidates = Candidates.objects.filter(SubjectId=subject)
+    marks = Marks.objects.all()
     template_path = 'owner/pdf_report.html'
-    context = {'marks':marks,'subject':subject}
+    context = {'marks':marks,'subject':subject,'users':candidates}
     # Create a Django response object, and specify content_type as pdf
     response = HttpResponse(content_type='application/pdf')
     response['Content-Disposition'] = 'filename="subject_report.pdf"'
