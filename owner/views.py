@@ -419,7 +419,7 @@ def mark_update(request, markid):
 
 def mark_delete(request, markid):
     mark = Marks.objects.get(id=markid)
-    userid = mark.StudentId.id
+    userid = mark.StudentId.Register_Number
     mark.delete()
     return redirect(f"/owner/mark_edit/{userid}")
 
