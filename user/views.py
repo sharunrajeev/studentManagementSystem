@@ -135,7 +135,7 @@ def logout(request):
 
 def dashboard(request):
     if 'username' in request.session:
-        User = Candidates.objects.get(UserId=request.session['username'])
+        User = Candidates.objects.get(RegNumber=request.session['username'])
         # Username = User.ApplicationId.Name
         return render(request, 'user/dashboard.html', {'User': User})
     else:
@@ -144,7 +144,7 @@ def dashboard(request):
 
 def payment_form(request):
     if 'username' in request.session:
-        user = Candidates.objects.get(UserId=request.session['username'])
+        user = Candidates.objects.get(RegNumber=request.session['username'])
         if request.method == 'POST':
             if len(request.FILES['File']) != 0:
                 PaymentDetails = request.FILES['File']
@@ -177,7 +177,7 @@ def validate_email(request):
 #coded by Hana
 def marks(request):
     if 'username' in request.session:
-        User = Candidates.objects.get(UserId=request.session['username'])
+        User = Candidates.objects.get(RegNumber=request.session['username'])
         marks = Marks.objects.all()
         return render(request, 'user/marks.html',{ 'User':User,'marks':marks})
     else:
@@ -187,7 +187,7 @@ def marks(request):
 #coded by Akhila
 def attendance(request):
     if 'username' in request.session:
-        User = Candidates.objects.get(UserId=request.session['username'])
+        User = Candidates.objects.get(RegNumber=request.session['username'])
         attendance= Marks.objects.all()
 
     return render(request, 'user/attendance.html',{ 'User':User,'attendance':attendance})

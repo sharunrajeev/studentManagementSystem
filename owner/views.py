@@ -153,7 +153,7 @@ def select(request, userid):
 
 
     password = User.objects.make_random_password()
-    username = reg_model
+    username = reg_num
     name = user.Name
     candidate = User.objects.create_user(
         first_name=name, username=username, password=password, email=email)
