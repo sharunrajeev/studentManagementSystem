@@ -64,7 +64,12 @@
                         <td>
                             {% for mark in marks %}
                                 {% if mark.StudentId == user %}
-                                    <p class="num">{{ mark.SubjectId.SubjectName }}:{{mark.Total}}</p>
+
+                                    <p class="num">Attendance :{{mark.Attendance}}</p>
+                                    <p class="num">Assinment1 :{{mark.Assignment1Mark}}</p>
+                                    <p class="num">Assinment2 :{{mark.Assignment2Mark}}</p>
+                                    <p class="num">Gd Mark    :{{mark.GdMark}}</p>
+                                    <p class="num">Cp Mark    :{{mark.CpMark}}</p>
 
                                 {% endif %}
                             {% endfor %}

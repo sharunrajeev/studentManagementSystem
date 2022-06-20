@@ -316,9 +316,11 @@ def show_subjects(request):
 
 
 # Edited by Akhila
+#new editing devaprasad
 def mark_upload(request,subjectid):
-    users = Candidates.objects.filter(SubjectId = subjectid).order_by('RegNumber')
-    subject = Subjects.objects.get(id = subjectid)
+    subject = Subjects.objects.get(id=subjectid)
+    users = Candidates.objects.filter(SubjectId = subject).order_by('RegNumber')
+
     marks = Marks.objects.all()
     if request.method == 'POST':
         pass
@@ -344,24 +346,25 @@ def individual_mark_upload(request, userid):
         CpMark = int(request.POST['cp'])
 
 
-        attendance_percentage, a_mark, total_assignment, total, sub = mark_calculation(subject, Attendance,
+
+        attendance_percentage, a_mark, total_assignment, total = mark_calculation(subject, Attendance,
                                                                                        Assignment1Mark,
                                                                                        Assignment2Mark, GdMark, CpMark)
 
-        user_mark = Marks.objects.create(StudentId=user, SubjectId=sub, Attendance=Attendance,
+        user_mark = Marks.objects.create(StudentId=user, Attendance=Attendance,
                                          AttendancePercentage=attendance_percentage, AttendanceMark=a_mark,
                                          Assignment1Mark=Assignment1Mark, Assignment2Mark=Assignment2Mark,
                                          TotalAssignmentMark=total_assignment, GdMark=GdMark, CpMark=CpMark,
                                          Total=total)
         user_mark.save()
-        candidate = Candidates.objects.get(id=userid)
-        total_table = Marks.objects.filter(StudentId = candidate).aggregate(Sum('Total'))
+
+        total_table = Marks.objects.filter(StudentId = user).aggregate(Sum('Total'))
         total_marks = total_table.get('Total__sum')
         print(total_marks)
-        candidate.Marks = int(total_marks)
+        user.Marks = int(total_marks)
 
-        candidate.save()
-        return redirect('mark_upload')
+        user.save()
+        return redirect(f'/owner/show_students/{subject.id}')
 
     else:
 
@@ -424,8 +427,8 @@ def mark_delete(request, markid):
 
 
 def mark_calculation(Subject, Attendance, Assignment1Mark, Assignment2Mark, GdMark, CpMark):
-    sub = Subjects.objects.get(SubjectName=Subject)
-    total_attendance = int(sub.TotalHour)
+
+    total_attendance = int(Subject.TotalHour)
 
     attendance_percentage = (Attendance / total_attendance) * 100
     print(attendance_percentage)
@@ -445,7 +448,7 @@ def mark_calculation(Subject, Attendance, Assignment1Mark, Assignment2Mark, GdMa
     total_assignment = Assignment1Mark + Assignment2Mark
     total = a_mark + Assignment1Mark + Assignment2Mark + GdMark + CpMark
 
-    return attendance_percentage, a_mark, total_assignment, total, sub
+    return attendance_percentage, a_mark, total_assignment, total
 
 
 # coded by Hana
