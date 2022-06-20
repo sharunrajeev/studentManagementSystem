@@ -190,9 +190,9 @@ def payment(request):
 
         return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
     else:
-        users = Candidates.objects.all()
+        users = Candidates.objects.all().order_by('Register_Number')
 
-        users = reversed(users)
+
 
         return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
 
@@ -202,7 +202,7 @@ def payment(request):
 
 def user_verify_view(request, userid):
     print(userid)
-    user_det = Candidates.objects.get(id=userid)
+    user_det = Candidates.objects.get(Register_Number=userid)
     if user_det.PaymentDetails:
         pay_val = 1
     else:
