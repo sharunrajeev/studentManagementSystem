@@ -29,7 +29,7 @@
 <div id="wrapper">
 	<div class="main-content">
         <h3>Course Name: {{subject.SubjectName}}</h3>
-        <span class="add_subject-btn"><a href="subjects_edit" class="btn btn-outline-success btn-sm">Add Subject</a></span>
+
         <div class="d-flex justify-content-center align-items-center" style="margin-top: 3rem;">
             <div class="col-md-6">
                 <div class="search">
@@ -61,29 +61,36 @@
                         <td><a href="#">{{ forloop.counter }}</a></td>
                         <td>{{ user.ApplicationId.Name }}</td>
                         <td>{{ user.RegNumber }}</td>
-                        <td>
-                            {% for mark in marks %}
-                                {% if mark.StudentId == user %}
+                        <td>{{ user.Marks }}
+<!--                            {% for mark in marks %}-->
+<!--                                {% if mark.StudentId == user %}-->
 
-                                    <p class="num">Attendance :{{mark.Attendance}}</p>
-                                    <p class="num">Assinment1 :{{mark.Assignment1Mark}}</p>
-                                    <p class="num">Assinment2 :{{mark.Assignment2Mark}}</p>
-                                    <p class="num">Gd Mark    :{{mark.GdMark}}</p>
-                                    <p class="num">Cp Mark    :{{mark.CpMark}}</p>
+<!--                                    <p class="num">Attendance :{{mark.Attendance}}</p>-->
+<!--                                    <p class="num">Assinment1 :{{mark.Assignment1Mark}}</p>-->
+<!--                                    <p class="num">Assinment2 :{{mark.Assignment2Mark}}</p>-->
+<!--                                    <p class="num">Gd Mark    :{{mark.GdMark}}</p>-->
+<!--                                    <p class="num">Cp Mark    :{{mark.CpMark}}</p>-->
 
-                                {% endif %}
-                            {% endfor %}
+<!--                                {% endif %}-->
+<!--                            {% endfor %}-->
                         </td>
                         <td>
                             <a href="/owner/mark_upload/{{ user.Register_Number }}" class="btn btn-outline-success btn-sm">Upload </a>
                         </td>
                         <td>
-                            <a href="/owner/mark_edit/{{ user.id }}" class="btn btn-outline-success btn-sm">Edit</a>
+                            <a href="/owner/mark_edit/{{ user.Register_Number }}" class="btn btn-outline-success btn-sm">Edit</a>
                         </td>
                     </tr>
                 {% endfor %}
                 </tbody>
 </table>
+
+
+
+
+
+
+
         </div>
     </div>
 </div>
