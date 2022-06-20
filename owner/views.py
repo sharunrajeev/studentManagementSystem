@@ -624,4 +624,4 @@ def edit_form(request,userid):
     if request.method == 'POST':
         pass
     else:
-        return render(request, 'owner/user_detail.html', {'person_details': user_det})
+        return render(request, 'owner/edit_form.html', {'person_details': user_det})
