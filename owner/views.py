@@ -334,15 +334,17 @@ def mark_upload(request,subjectid):
 
 def individual_mark_upload(request, userid):
     user = Candidates.objects.get(Register_Number=userid)
+    subject = Subjects.objects.get(id=user.SubjectId.id)
     if request.method == 'POST':
-        Subject = request.POST['subject']
+
         Attendance = int(request.POST['attendance'])
         Assignment1Mark = int(request.POST['assignment1'])
         Assignment2Mark = int(request.POST['assignment2'])
         GdMark = int(request.POST['gd'])
         CpMark = int(request.POST['cp'])
 
-        attendance_percentage, a_mark, total_assignment, total, sub = mark_calculation(Subject, Attendance,
+
+        attendance_percentage, a_mark, total_assignment, total, sub = mark_calculation(subject, Attendance,
                                                                                        Assignment1Mark,
                                                                                        Assignment2Mark, GdMark, CpMark)
 
@@ -362,7 +364,7 @@ def individual_mark_upload(request, userid):
         return redirect('mark_upload')
 
     else:
-        subject = Subjects.objects.get(id = user.SubjectId.id)
+
         return render(request, 'owner/mark_upload_form.html', {'user': user, 'subject': subject})
 
 
