@@ -33,15 +33,15 @@
     {% include 'reusable/sidebar.html' %}
     {% include 'reusable/navbar.html' %}
 
-    <form action="" class="was-validated" method="post" enctype = "multipart/form-data">
-      {% csrf_token %}
+
 <!--      details-->
       <section style=" margin-left: 17rem; ">
   <div class="container " style="margin-top: 4rem;">
 <div class="p-t-15">
-                    <button onclick="history.back()">Go Back</button>
+                   {% include 'reusable/back_button.html' %}
              </div>
-
+ <form action="" class="was-validated" method="post" enctype = "multipart/form-data">
+      {% csrf_token %}
     <div class="row">
       <div class="col-lg-6">
         <div class="card mb-4">
@@ -112,6 +112,30 @@
             </div>
           </div>
         </div>
+        <div class=" d-grid gap-3 col-9 mx-auto ">
+
+       {% if pay_val == 0 %}
+            <td><div class="alert alert-warning w-100 text-center" role="alert">No file</div></td>
+            {% elif pay_val == 1 %}
+            <td><a class="btn btn-outline-info w-100" href="{{ person_details.PaymentDetails.url}}" role="button">View Reciept</a></td>
+
+
+
+        {% if person_details.PaymentStatus == True %}
+        <div class=" alert alert-success text-center"><strong>Verified & Accepted</strong></div>
+        {% elif person_details.PaymentStatus == False %}
+        <div class=" alert alert-danger text-center"><strong> Not Verified(Incomplete)</strong></div>
+        {% else %}
+        <div class="d-grid   d-md-flex justify-content-evenly">
+
+
+        <a href="/owner/verified/{{person_details.Register_Number}}" ><button type="button" class="btn btn-outline-success ">Verify</button></a>
+        <a href="/owner/denial/{{person_details.Register_Number}}" ><button type="button" class="btn btn-outline-danger">Denial</button></a>
+ </div>
+        {% endif %}
+{% endif %}
+
+      </div>
 
       </div>
       <div class="col-lg-6">
@@ -213,42 +237,14 @@
 
       </div>
     </div>
+   </form>
   </div>
 
 <!--details over-->
 
 
-      <div class=" d-grid gap-2 col-4 mx-auto ">
-
-       {% if pay_val == 0 %}
-            <td><a class="btn btn-warning w-100" href="#" role="button">No file</a></td>
-            {% elif pay_val == 1 %}
-            <td><a class="btn btn-outline-info w-100" href="{{ person_details.PaymentDetails.url}}" role="button">View Reciept</a></td>
-
-
-
-        {% if person_details.PaymentStatus == True %}
-        <a href="#" class=" btn btn-success">Verified & Accepted</a>
-        {% elif person_details.PaymentStatus == False %}
-        <a href="#" class=" btn btn-danger"> Not Verified(Incomplete)</a>
-        {% else %}
-        <div class="d-grid   d-md-flex justify-content-evenly">
-
-
-        <a href="/owner/verified/{{person_details.Register_Number}}" ><button type="button" class="btn btn-outline-info ">Verify</button></a>
-        <a href="/owner/denial/{{person_details.Register_Number}}" ><button type="button" class="btn btn-outline-info">Denial</button></a>
- </div>
-        {% endif %}
-{% endif %}
-
-
-
-
-
-
-      </div>
     </section>
-   </form>
+
   </div>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
