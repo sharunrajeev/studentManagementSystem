@@ -24,6 +24,21 @@
 
 <div id="wrapper">
 	<div class="main-content">
+		<div class="p-t-15">
+                    <button onclick="history.back()">Go Back</button>
+             </div>
+
+		{% for user in users %}
+          {% if user.Eligibility == True %}
+           {% if individual.Eligibility == null %}
+		    {% if individual.Email == user.Email %}
+
+		        <td><span class="btn btn-outline-danger btn-sm">Email already exist </span></td>
+		         <a href="/owner/approve/{{user.id}}" class=" btn btn-outline-warning">Go to Existing Profile</a>
+		    {% endif %}
+		  {% endif %}
+		{% endif %}
+		{% endfor %}
 		<div class="ind-header">
 			<figure class="ind-header_pic">
 				<img src="{% static 'assets/person_image.png' %}">

@@ -90,8 +90,12 @@ def approve(request):
 
 def individual_view(request, userid):
     print(userid)
+
     selected_user = Applicants.objects.get(id=userid)
-    return render(request, 'owner/individual.html', {'individual': selected_user})
+    SubjectName = selected_user.Subject
+    subject = Subjects.objects.get(SubjectName=SubjectName)
+    users = Applicants.objects.all()
+    return render(request, 'owner/individual.html', {'individual': selected_user, 'users': users, 'subject': subject })
 
 
 def reject(request, userid):
