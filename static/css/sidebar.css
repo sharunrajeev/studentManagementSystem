@@ -243,7 +243,7 @@
   padding-top: 70px;
 }
 
-@media (min-width: 800px) {
+@media (max-width: 800px) {
   .main-menu {
     transition: none;
     -moz-transition: none;
@@ -328,7 +328,8 @@
   }
   .menu-active .navigation .menu > li > a {
     height: 48px;
-    padding: 10px 30px;
+    /* padding: 10px 30px; */
+    padding-left: 10px;
     transition: color 0.4s ease;
     -moz-transition: color 0.4s ease;
     -o-transition: color 0.4s ease;

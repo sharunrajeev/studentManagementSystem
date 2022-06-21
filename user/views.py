@@ -192,6 +192,53 @@ def attendance(request):
 
     return render(request, 'user/attendance.html',{ 'User':User,'attendance':attendance})
 
+#Coded by Hana
+
+def settings(request):
+    if 'username' in request.session:
+        User = Candidates.objects.get(RegNumber=request.session['username'])
+
+        return render(request, 'user/settings.html',{'User':User})
+
+
+def change_password(request):
+
+    if request.session.has_key('username'):
+
+        if request.method == 'POST':
+
+            Password = request.POST['password']
+
+            user = Candidates.objects.get(RegNumber=request.session['username'])
+            u = User.objects.get(username=user.RegNumber)
+            u.set_password(Password)
+            u.save()
+            return JsonResponse(
+                    {'success': True},
+                    safe=False
+                )
+    else:
+        return render(request, 'settings.html')
+
+def photo_upload(request):
+    if 'username' in request.session:
+        user = Candidates.objects.get(RegNumber=request.session['username'])
+        if request.method == 'POST':
+            if len(request.FILES['File']) != 0:
+                Photo = request.FILES['File']
+                user.Photo = Photo
+                user.save()
+            return redirect('/user/dashboard')
+        else:
+            Uploaded_file = user.Photo
+            print(Uploaded_file)
+            return render(request, 'user/dashboard.html', {'Uploaded_file': Uploaded_file})
+    else:
+        return redirect('/user/login')
+
+    return render(request, 'user/dashboard.html')
+
+
 
 # Coded By Rohith
 # For custom 404 and 500 error page

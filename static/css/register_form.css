@@ -809,6 +809,40 @@ input[type=number] {
    #MEDIA QUERY
    ========================================================================== */
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1192px) {
+  .card-body {
+    padding: 2rem 5rem;
+  }
+}
 
+@media screen and (max-width: 1064px) {
+  .card-body {
+    padding: 2rem 3rem;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .register_main {
+    overflow: hidden;
+  }
+
+  .card-body {
+    padding: 2rem 0;
+  }
+
+  .card-body .main {
+    padding: 0;
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .gender-div {
+    display: flex;
+    margin: 1rem 0;
+  }
+
+  .gender-div div {
+    padding-top: 0 !important;
+    padding-left: 2rem;
+  }
 }

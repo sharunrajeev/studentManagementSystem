@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+    Edit User Details
+{% endblock title %}
+
+{% block styles %}
+<link href="{% static 'css/user_dashboard.css' %}" rel="stylesheet">
+    <link href="{% static 'css/user_sidebar.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+{% endblock %}
+
+{% block body %}
+
+
+<!-- Dashboard Sidebar -->
+{% include 'reusable/user_sidebar.html'%}
+
+<!-- Dashboard Content -->
+<div class="d-flex flex-column flex-grow-1 p-4" style="height: 100vh; margin-left: 15rem;">
+    <h1>Welcome {{ User.ApplicationId.Name }} </h1>
+    <hr>
+
+    <div class="row gutters-sm">
+
+        <div class="col-xs-8">
+            <div class="card xs-3">
+                <div class="card-body">
+                    <div class="row dash-div">
+                        <div class="col-sm-9">
+
+
+<!--form for changing password-->
+
+                            <form method="post" action="change_password">
+
+                                <h4>Change Password</h4>
+                                <label id="error"></label>
+                                <h6 class="mb-0">Password</h6>
+                                <input type="password" value= "" class="input--style-4 input_default" id="password" name="Password">
+
+                                <div>
+                                    <h6 class="mb-0">Confirm Password</h6>
+                                    <input type="password" value= "" class="input--style-4 input_default" id="confirmpassword" name="ConfirmPassword">
+                                </div>
+
+                                <button  id="btn" type="button">Submit</button>
+                            </form>
+
+<!--form for changing photo-->
+
+
+                            <form method="post" action="photo_upload" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                <h4>Upload Photo</h4>
+                                    <input type="file" name="File">
+                                    <button type="submit" class="btn btn-outline-secondary w-10" id="files" >Submit</button>
+                                    <label for="files" class="btn btn-dark">{{ Uploaded_file }}</label>
+                            </form>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+
+    $(document).ready(function(){
+
+        $('#btn').click(() => {
+            var password = $('#password').val()
+            var confirmpassword=$('#confirmpassword').val()
+            var data ={
+                'csrfmiddlewaretoken':'{{csrf_token}}',
+                'password':password,
+            }
+
+           if (password == confirmpassword){
+            $.ajax({
+                url:'change_password',
+                method: 'POST',
+                data:data,
+                dataType: 'json',
+                success:function(data){
+                    if(data.success){
+                        console.log("success")
+                        window.location.replace('dashboard')
+                    }
+                }
+            })
+        }else{
+            $("#error").text("Password not matching!!");
+         }
+
+
+})
+})
+
+
+
+
+</script>
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+

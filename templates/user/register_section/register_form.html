@@ -47,7 +47,7 @@
                     </div>
                 </div>
 
-                <div class="col-2">
+                <div class="col-2 gender-div">
                         <label class="label">Gender</label>
                         <div class="p-t-10">
                             <label class="radio-container m-r-45">Male
@@ -101,26 +101,6 @@
                     </div>
                 </div>
             </div>
-
-                <div class="row row-space">
-                     <div class="col-2">
-                <label for="subject">Subject:</label><br>
-            <select name="subject" class="input--style-4 input_default" id="inputGroupSelect01">
-              <option selected>Choose...</option>
-                {% for subject in subjects %}
-                    <option value="{{subject.SubjectName}}">{{subject.SubjectName}}</option>
-
-                {% endfor %}
-            </select>
-                     </div>
-                     </div>
-
-
-
-
-
-
-
                 <div class="row row-space">
                 <div class="col-2">
                     <div class="input-group">
@@ -162,6 +142,19 @@
                        <input  id="guide_phone" class="input--style-4 input_default" type="tel" name="Guide_Phone" required require>
                     </div>
                 </div>
+
+                                         </div>
+
+                    <div class="row row-space">
+                        <div class="col-2 mb-3">
+                            <label for="subject">Course:</label><br>
+                                <select name="subject" class="input--style-4 input_default" id="inputGroupSelect01">
+                                <option selected>Choose...</option>
+                                {% for subject in subjects %}
+                                <option value="{{subject.SubjectName}}">{{subject.SubjectName}}</option>
+                                {% endfor %}
+                        </select>
+                     </div>
 
                 </div>
                 <div class="buttons_parent">
