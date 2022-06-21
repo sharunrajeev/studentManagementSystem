@@ -628,13 +628,13 @@ def edit_form(request,userid):
         Subject = request.POST['Subject']
         Gender = request.POST['Gender']
         Address = request.POST['Address']
-        Phd_Reg = request.POST['Phd_reg']
+        Phd_Reg = request.POST['Phd_Reg']
         Phd_Joining_Date = request.POST['Phd_Joining_Date']
         Research_Topic = request.POST['Research_Topic']
         Research_Guide = request.POST['Research_Guide']
         Guide_Mail = request.POST['Guide_Mail']
         Guide_Phone = request.POST['Guide_Phone']
-
+        print(Name,Email,Mob,Dob,Subject,Gender,Address,Phd_Reg,Phd_Joining_Date,Research_Topic,Research_Guide,Guide_Phone,Guide_Mail)
         sub = Subjects.objects.get(SubjectName = Subject)
 
         user_det.SubjectId = sub
@@ -652,8 +652,9 @@ def edit_form(request,userid):
         user_det.ApplicationId.Guide_Phone = Guide_Phone
 
         user_det.save()
+        user_det.ApplicationId.save()
 
-        return redirect('owner/user_edit')
+        return redirect('/owner/user_edit')
 
     else:
         subjects = Subjects.objects.all()

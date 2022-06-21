@@ -33,7 +33,7 @@
     {% include 'reusable/sidebar.html' %}
     {% include 'reusable/navbar.html' %}
 
-    <form action="edit_form/{{ person_details.Register_Number}}" class="was-validated" method="post" enctype = "multipart/form-data">
+    <form action="/owner/edit_form/{{ person_details.Register_Number}}" class="was-validated" method="post" enctype = "multipart/form-data">
       {% csrf_token %}
 <!--      details-->
       <section style=" margin-left: 17rem; ">
@@ -75,7 +75,7 @@
               </div>
               <div class="col-sm-9">
 
-                <input id="dob" value="{{ person_details.ApplicationId.Dob }}" class="input--style-4 input_default" type="date" name="Dob">
+                <input id="dob" value="{{ person_details.ApplicationId.Dob|date:"Y-m-d" }}"  class="input--style-4 input_default" type="date" name="Dob" >
               </div>
             </div>
             <hr>
@@ -157,7 +157,7 @@
                 <h6 class="mb-0">Phd Joining Date</h6>
               </div>
               <div class="col-sm-6">
-                <input id="phdjoiningdate" value="{{ person_details.ApplicationId.Phd_Joining_Date }}" class="input--style-4 input_default" type="date" name="Phd_Joining_Date">
+                <input id="phdjoiningdate" value="{{ person_details.ApplicationId.Phd_Joining_Date|date:"Y-m-d" }}" class="input--style-4 input_default" type="date" name="Phd_Joining_Date">
 
               </div>
             </div>
@@ -190,7 +190,7 @@
               </div>
               <div class="col-sm-6">
 
-                <input id="guidemail" value="{{ person_details.ApplicationId.Guide_Mail }}" class="input--style-4 input_default" type="email" name="Guide_mail">
+                <input id="guidemail" value="{{ person_details.ApplicationId.Guide_Mail }}" class="input--style-4 input_default" type="email" name="Guide_Mail">
               </div>
             </div>
             <hr>
