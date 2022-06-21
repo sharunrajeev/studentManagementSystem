@@ -216,7 +216,7 @@ def user_verify_view(request, userid):
 
 def denial(request, userid):
     print(userid)
-    user = Candidates.objects.get(id=userid)
+    user = Candidates.objects.get(Register_Number=userid)
     user.PaymentStatus = False
     user.save()
     email = user.ApplicationId.Email
@@ -236,7 +236,7 @@ def denial(request, userid):
 
 
 def verified(request, userid):
-    user = Candidates.objects.get(id=userid)
+    user = Candidates.objects.get(Register_Number=userid)
     user.PaymentStatus = True
     user.save()
 
