@@ -4,9 +4,45 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    line-height: 1.5;
+    font-family: Raleway, 'sans-serif';
+    margin-bottom: 2rem;
 }
 
 .reg-complt_div img {
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 2rem;
+}
+.reg-complt_div h1 {
+    font-weight: 700;
+    font-size: 54px;
+}
+
+.reg-complt_div p {
+    font-size: 18px;
+}
+
+@media screen and (max-width: 1350px) {
+    .reg-complt_div {
+        width: 90%;
+        text-align: center;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .reg-complt_div img {
+        width: 130px;
+        height: 130px;
+    }
+
+    .reg-complt_div h1 {
+        font-size: 46px;
+    }
+
+    .reg-complt_div p {
+        font-size: 16px;
+    }
+
 }
