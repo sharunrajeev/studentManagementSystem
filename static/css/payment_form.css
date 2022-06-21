@@ -1,5 +1,4 @@
 
-
 body {
 
   background: #e2e8f0;
@@ -67,4 +66,38 @@ h1 {
 .icons {
   color: #95afc0;
   opacity: 0.55;
+}
+
+
+.file-field .btn_upload {
+  background-color: #fff;
+  color: #243e56;
+}
+
+
+.file-field label {
+  background-color: transparent !important;
+  color: black !important;
+  margin-bottom: -2rem;
+}
+
+.payment_wrapper {
+  height: 100vh;
+  margin-left: 15rem;
+}
+@media screen and (max-width: 1087px) {
+  .payment_wrapper {
+    margin-left: 5rem !important;
+  }
+}
+
+@media screen and (max-width: 672px) {
+  .payment_wrapper {
+    margin-left: 0 !important;
+    justify-content: center;
+  }
+
+  #files {
+      margin: 0.4rem 0;
+    }
 }

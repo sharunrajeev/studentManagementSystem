@@ -20,13 +20,13 @@
 <!-- Dashboard Content -->
 
 
-<div class="d-flex flex-column flex-grow-1 p-4" style="height: 100vh; margin-left: 15rem;">
+<div class="d-flex flex-column flex-grow-1 p-4 payment_wrapper" >
     <div class="container mt-5">
         <div class="wrapper">
             <h1>Payment Details</h1>
             <p>Submit the receipt of your payment details here.</p>
             <div class="container">
-                <h1>Upload file</h1>
+                <h1 id="upload_head">Upload file</h1>
                 <div class="upload-container">
                     <div class="border-container">
                         <div class="icons fa-4x">
@@ -41,12 +41,12 @@
                                   enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="file-field">
-                                    <div class="btn btn-dark btn-sm float-left waves-effect waves-light">
+                                    <div class="btn btn_upload btn-dark btn-sm float-left waves-effect waves-light">
 
-                                        <input type="file" name="File">
+                                        <input type="file" id="file_upload" onchange="fileVerify(this)" name="File" accept="image/x-png, image/pdf, image/jpeg">
                                     </div>
-                                    <button type="submit" class="btn btn-outline-secondary w-10" id="files">Submit</button>
-                                    <label for="files" class="btn btn-dark">{{ Uploaded_file }}</label>
+                                    <button type="submit" class="btn btn-primary w-10" id="files" disabled>Submit</button>
+                                    <label for="files" class="btn">Last Submit: {{ Uploaded_file }}</label>
                                 </div>
                             </form>
 
@@ -59,6 +59,57 @@
 
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function fileVerify(input) {
+        let file = input.value;
+        let sbmt_btn = document.getElementById('files');
+        let upload_txt = document.getElementById('upload_head');
+
+
+        if (input.value.length === 0) console.log("Error No File Uploaded")
+        let ext = file.substring(file.lastIndexOf('.') + 1).toLowerCase();
+
+        if (ext == 'png' || ext == 'jpeg' || ext == 'jpg' || ext == 'pdf') {
+            sbmt_btn.disabled = false;
+            upload_txt.removeAttribute('style');
+            upload_txt.innerText = "File selected";
+        }
+        else {
+            upload_txt.setAttribute('style', 'color: #F87474;')
+            upload_txt.innerText = "Invalid File Type!!"
+
+            swal("INVALID FILE TYPE", "File type must be either pdf, png, jpg or jpeg", "warning")
+        }
+
+    }
+
+
+
+//     $(function(){
+//     var fileInput = $('#file_upload');
+//     var maxSize = fileInput.data('max-size');
+//     $('.upload-form').submit(function(e){
+//         if(fileInput.get(0).files.length){
+//             var fileSize = fileInput.get(0).files[0].size; // in bytes
+//             if(fileSize>maxSize){
+//                 alert('file size is more then' + maxSize + ' bytes');
+//                 return false;
+//             }else{
+//                 alert('file size is correct- '+fileSize+' bytes');
+//             }
+//         }else{
+//             alert('choose file, please');
+//             return false;
+//         }
+//
+//     });
+// });
+
+</script>
+
 {% endblock %}
 
 
