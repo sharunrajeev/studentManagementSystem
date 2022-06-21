@@ -33,8 +33,8 @@
            {% if individual.Eligibility == null %}
 		    {% if individual.Email == user.Email %}
 
-		        <td><span class="btn btn-outline-danger btn-sm">Email already exist </span></td>
-		         <a href="/owner/approve/{{user.id}}" class=" btn btn-outline-warning">Go to Existing Profile</a>
+		        <td><span class="text-danger">Email already exist  </span></td>
+		         <a href="/owner/approve/{{user.id}}" class=" btn btn-outline-warning btn-sm">Go to Existing Profile</a>
 		    {% endif %}
 		  {% endif %}
 		{% endif %}
@@ -184,7 +184,7 @@
 								</div>
 								<div class="ind_main-row">
 									<div class="ind_main-col">
-										<span>Subject: </span>
+										<span>Course: </span>
 										<span>{{ individual.Subject }}</span>
 									</div>
                                 </div>

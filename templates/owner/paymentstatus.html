@@ -41,6 +41,7 @@
                         <th>Name</th>
                         <th>PhD Reg No</th>
                         <th>Register Num</th>
+                        <th>Course</th>
                         <th>Email</th>
                         <th>Status</th>
                     </tr>
@@ -53,6 +54,7 @@
                         <td>{{ user.ApplicationId.Name }}</td>
                         <td>{{ user.ApplicationId.Phd_Reg }}</td>
                         <td>{{ user.RegNumber }}</td>
+                        <td>{{ user.ApplicationId.Subject }}</td>
                         <td>{{ user.ApplicationId.Email }}</td>
                         {% if user.PaymentStatus == null %}
                             <td><span class="btn btn-warning btn-sm" style="cursor: default;">Not Verified</span></td>
