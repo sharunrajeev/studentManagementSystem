@@ -1,0 +1,46 @@
+.photo-upload {
+  margin-top: 1rem;
+  color: #fff;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.photo-upload div {
+  /*margin-top: 1rem;*/
+  background-color: #243e56;
+}
+
+.photo-upload label {
+  background-color: transparent !important;
+  color: black !important;
+  margin-bottom: -2rem;
+}
+
+.payment_wrapper {
+  height: 100vh;
+  margin-left: 15rem;
+}
+@media screen and (max-width: 1087px) {
+  .payment_wrapper {
+    margin-left: 5rem !important;
+  }
+}
+
+@media screen and (max-width: 672px) {
+  .payment_wrapper {
+    margin-left: 0 !important;
+    justify-content: center;
+  }
+
+  #files {
+    margin: 0.4rem 0;
+    flex-grow: 0;
+  }
+
+  .file-field {
+    display: flex;
+    flex-direction: column;
+  }
+}

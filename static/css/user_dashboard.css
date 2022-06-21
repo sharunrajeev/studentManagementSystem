@@ -38,8 +38,8 @@ body {
 }
 
 .ind-header_pic img {
-    width: 90%;
-    height: 90%;
+    width: 100%;
+    height: 100%;
 }
 
 .hr2 {
@@ -48,7 +48,7 @@ body {
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1250px) {
     .dash-div {
         flex-direction: column-reverse;
     }
@@ -56,5 +56,32 @@ body {
     .dash-div .ind-header_pic {
         margin-bottom: 3rem;
     }
+
+}
+
+
+.dashboard_wrapper {
+    height: 100vh;
+    margin-left: 15rem;
+}
+
+@media screen and (max-width: 1087px) {
+  .dashboard_wrapper {
+    margin-left: 5rem !important;
+  }
+}
+
+@media screen and (max-width: 672px) {
+  .dashboard_wrapper {
+      margin-top: 4rem;
+    margin-left: 0 !important;
+  }
+
+    .ind-header_pic {
+        width: 200px;
+        height: 300px;
+        margin: 0 auto;
+    }
+
 
 }

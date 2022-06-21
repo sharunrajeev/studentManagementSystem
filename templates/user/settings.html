@@ -5,8 +5,9 @@
 {% endblock title %}
 
 {% block styles %}
-<link href="{% static 'css/user_dashboard.css' %}" rel="stylesheet">
     <link href="{% static 'css/user_sidebar.css' %}" rel="stylesheet">
+    <link href="{% static 'css/register_form.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/settings.css' %}" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 {% endblock %}
@@ -23,41 +24,50 @@
     <hr>
 
     <div class="row gutters-sm">
-
         <div class="col-xs-8">
             <div class="card xs-3">
                 <div class="card-body">
                     <div class="row dash-div">
                         <div class="col-sm-9">
 
-
-<!--form for changing password-->
-
-                            <form method="post" action="change_password">
-
+                            <!--form for changing password-->
+                            <form method="post" class="mb-4" action="change_password">
                                 <h4>Change Password</h4>
                                 <label id="error"></label>
-                                <h6 class="mb-0">Password</h6>
-                                <input type="password" value= "" class="input--style-4 input_default" id="password" name="Password">
 
-                                <div>
-                                    <h6 class="mb-0">Confirm Password</h6>
-                                    <input type="password" value= "" class="input--style-4 input_default" id="confirmpassword" name="ConfirmPassword">
+                                <div class="row row-space">
+                                    <div class="col-2">
+                                        <div class="input-group">
+                                            <h6 class="mb-0">Password</h6>
+                                            <input type="password" value= "" class="input--style-4 input_default" id="password" name="Password">
+                                        </div>
+                                    </div>
+                                    <div class="col-2">
+                                        <div class="input-group">
+                                            <h6 class="mb-0">Confirm Password</h6>
+                                            <input type="password" value= "" class="input--style-4 input_default" id="confirmpassword" name="ConfirmPassword">
+                                        </div>
+                                    </div>
                                 </div>
 
-                                <button  id="btn" type="button">Submit</button>
+                                <button  id="btn" class="btn btn-primary btn-sm" type="button">Submit</button>
                             </form>
 
-<!--form for changing photo-->
+                            <!--form for changing photo-->
 
 
                             <form method="post" action="photo_upload" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <h4>Upload Photo</h4>
-                                    <input type="file" name="File">
-                                    <button type="submit" class="btn btn-outline-secondary w-10" id="files" >Submit</button>
-                                    <label for="files" class="btn btn-dark">{{ Uploaded_file }}</label>
+                                    <div class="photo-upload">
+                                        <div class="btn btn_upload btn-dark btn-sm float-left">
+                                            <input type="file" name="File">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-sm" id="files" >Submit</button>
+                                        <label for="files" class="btn btn-dark">Uploaded File: {{ Uploaded_file }}</label>
+                                    </div>
                             </form>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
@@ -102,10 +112,8 @@
                         </div>
                     </div>
 
-
                 </div>
             </div>
-
 
         </div>
     </div>

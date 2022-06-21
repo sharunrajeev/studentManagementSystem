@@ -37,13 +37,12 @@
                         <!--<input type="file" id="file-upload">-->
                         <section class="section-preview">
 
-                            <form class="md-form my-3" method="post" action="payment_form"
-                                  enctype="multipart/form-data">
+                            <form class="md-form my-3" method="post" action="payment_form" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <div class="file-field">
-                                    <div class="btn btn_upload btn-dark btn-sm float-left waves-effect waves-light">
+                                    <div class="btn btn_upload btn-dark btn-sm float-left">
 
-                                        <input type="file" id="file_upload" onchange="fileVerify(this)" name="File" accept="image/x-png, image/pdf, image/jpeg">
+                                        <input type="file" id="file_upload" onchange="fileVerify(this)" name="File">
                                     </div>
                                     <button type="submit" class="btn btn-primary w-10" id="files" disabled>Submit</button>
                                     <label for="files" class="btn">Last Submit: {{ Uploaded_file }}</label>
