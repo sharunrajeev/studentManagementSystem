@@ -31,22 +31,28 @@
             <table class="table table-bordered">
     <thead>
     <tr>
-                    <th colspan="100%"><h3 class="text-center">PROF N. R. MADHAVA MENON INTERDISCIPLINARY CENTRE FOR
+                    <th colspan="5"><h3 class="text-center">PROF N. R. MADHAVA MENON INTERDISCIPLINARY CENTRE FOR
                         RESEARCH ETHICS AND PROTOCOLS, CUSAT, KOCHI- 022</h3></th>
                 </tr>
                 <tr>
-                    <th colspan="100%"><h5 class="text-center">Research and Publication Ethics Course Work Program, 2020
+                    <th colspan="5"><h5 class="text-center">Research and Publication Ethics Course Work Program, 2020
                         Batch- INTERNAL ASSESSMENT</h5></th>
                 </tr>
 
     <tr>
+        <th colspan="2" class="text-end">Total number of hours</th>
+                    <th class="table-secondary">{{subject.TotalHour}}</th>
+                    <th  class="text-end">Subject</th>
+                    <th  class="table-secondary">{{subject.SubjectName}}</th>
+                </tr>
 
-
+<th>SNo.</th>
         <th>Name of Students</th>
         <th>Phd_Register</th>
         <th>Register number</th>
         <th>Total</th>
     </tr>
+
     </thead>
         <tbody>
 
@@ -56,7 +62,7 @@
 
       <tr class="active">
 
-
+<td>{{forloop.counter}}</td>
           <td>{{ user.ApplicationId.Name }}</td>
           <td>{{ user.ApplicationId.Phd_Reg }}</td>
           <td>{{ user.RegNumber }}</td>
