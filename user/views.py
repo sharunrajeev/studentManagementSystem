@@ -228,11 +228,12 @@ def photo_upload(request):
                 Photo = request.FILES['File']
                 user.Photo = Photo
                 user.save()
-            return redirect('/user/dashboard')
+                return redirect('/user/dashboard')
+            else:
+                return render(request, 'user/dashboard.html', {'User': user,'message':"Please upload your Photo"})
         else:
-            Uploaded_file = user.Photo
-            print(Uploaded_file)
-            return render(request, 'user/dashboard.html', {'Uploaded_file': Uploaded_file})
+
+            return render(request, 'user/dashboard.html', {'User': user})
     else:
         return redirect('/user/login')
 

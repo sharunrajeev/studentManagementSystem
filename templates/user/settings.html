@@ -61,10 +61,11 @@
                                 <h4>Upload Photo</h4>
                                     <div class="photo-upload">
                                         <div class="btn btn_upload btn-dark btn-sm float-left">
-                                            <input type="file" name="File">
+                                            <input  type="file" onchange="picVerify(this)" name="File"  >
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-sm" id="files" >Submit</button>
-                                        <label for="files" class="btn btn-dark">Uploaded File: {{ Uploaded_file }}</label>
+                                        <button type="submit" class="btn btn-primary btn-sm" id="files" disabled >Submit</button>
+                                        <label for="files" class="btn btn-dark">Uploaded File: {{ User.Photo }}</label>
+                                        <label for="files" class="btn btn-warning">{{message}}</label>
                                     </div>
                             </form>
 
@@ -105,6 +106,22 @@
 
 
 
+   function picVerify(input) {
+        let file = input.value;
+        let sbmt_btn = document.getElementById('files');
+        let upload_txt = document.getElementById('upload_head');
+
+
+        if (input.value.length === 0){ console.log("Error No File Uploaded")
+        let ext = file.substring(file.lastIndexOf('.') + 1).toLowerCase();
+        }
+        else{
+            sbmt_btn.disabled = false;
+       }
+
+
+
+    }
 
 </script>
 
