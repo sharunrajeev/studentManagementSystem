@@ -23,6 +23,12 @@
 <div class="d-flex flex-column flex-grow-1 p-4 payment_wrapper" >
     <div class="container mt-5">
         <div class="wrapper">
+
+            {% if message %}
+         <div class="alert alert-success " id="messages" role="alert">
+             {{message}}
+             </div>
+            {% endif %}
             <h1>Payment Details</h1>
             <p>Submit the receipt of your payment details here.</p>
             <div class="container">
@@ -107,6 +113,16 @@
 //     });
 // });
 
+</script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+        // messages timeout for 10 sec
+        setTimeout(function() {
+            $('#messages').fadeOut('slow');
+        }, 1000); // <-- time in milliseconds, 1000 =  1 sec
+    });
 </script>
 
 {% endblock %}

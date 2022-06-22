@@ -145,12 +145,15 @@ def dashboard(request):
 def payment_form(request):
     if 'username' in request.session:
         user = Candidates.objects.get(RegNumber=request.session['username'])
+
         if request.method == 'POST':
             if len(request.FILES['File']) != 0:
                 PaymentDetails = request.FILES['File']
                 user.PaymentDetails = PaymentDetails
                 user.save()
-            return redirect('/user/payment_form')
+                Uploaded_file = user.PaymentDetails
+            # return redirect('/user/payment_form')
+            return render(request, 'user/payment_form.html', {'Uploaded_file': Uploaded_file,'message': "Successfully uploaded Payment Details"} )
         else:
             Uploaded_file = user.PaymentDetails
             return render(request, 'user/payment_form.html', {'Uploaded_file': Uploaded_file})
