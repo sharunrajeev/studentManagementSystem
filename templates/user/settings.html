@@ -33,7 +33,7 @@
                             <!--form for changing password-->
                             <form method="post" class="mb-4" action="change_password">
                                 <h4>Change Password</h4>
-                                <label id="error"></label>
+                                <label class="text-danger mt-3 mb-3"  id="error"></label>
 
                                 <div class="row row-space">
                                     <div class="col-2">
@@ -82,24 +82,27 @@
                 'csrfmiddlewaretoken':'{{csrf_token}}',
                 'password':password,
             }
-
-           if (password == confirmpassword){
-            $.ajax({
-                url:'change_password',
-                method: 'POST',
-                data:data,
-                dataType: 'json',
-                success:function(data){
-                    if(data.success){
-                        console.log("success")
-                        window.location.replace('dashboard')
-                    }
+            console.log(password.length)
+            if( password.length >= 4) {
+                if (password == confirmpassword) {
+                    $.ajax({
+                        url: 'change_password',
+                        method: 'POST',
+                        data: data,
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.success) {
+                                console.log("success")
+                                window.location.replace('dashboard')
+                            }
+                        }
+                    })
+                } else {
+                    $("#error").text("Password not matching!!");
                 }
-            })
-        }else{
-            $("#error").text("Password not matching!!");
-         }
-
+            }else {
+                    $("#error").text("Password contain atleast 4 letters");
+                }
 
 })
 })
