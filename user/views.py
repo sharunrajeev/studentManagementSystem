@@ -200,6 +200,10 @@ def settings(request):
 
         return render(request, 'user/settings.html',{'User':User})
 
+def password_change_alert(request):
+    if request.session.has_key('username'):
+        user = Candidates.objects.get(RegNumber=request.session['username'])
+        return render(request,'user/dashboard.html', {'User': user, 'message': "Password changed successfully"})
 
 def change_password(request):
 
@@ -228,12 +232,13 @@ def photo_upload(request):
                 Photo = request.FILES['File']
                 user.Photo = Photo
                 user.save()
-                return redirect('/user/dashboard')
+               # return redirect('/user/dashboard')
+                return render(request, 'user/dashboard.html', {'User': user, 'message': "Successfully uploaded your photo"})
             else:
                 return render(request, 'user/dashboard.html', {'User': user,'message':"Please upload your Photo"})
         else:
 
-            return render(request, 'user/dashboard.html', {'User': user})
+            return render(request, 'user/dashboard.html', {'User': user,'message':"uploaded"})
     else:
         return redirect('/user/login')
 

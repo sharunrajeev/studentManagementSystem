@@ -38,7 +38,7 @@
                                 <div class="row row-space">
                                     <div class="col-2">
                                         <div class="input-group">
-                                            <h6 class="mb-0">Password</h6>
+                                            <h6 class="mb-0">New Password</h6>
                                             <input type="password" value= "" class="input--style-4 input_default" id="password" name="Password">
                                         </div>
                                     </div>
@@ -93,7 +93,7 @@
                         success: function (data) {
                             if (data.success) {
                                 console.log("success")
-                                window.location.replace('dashboard')
+                                window.location.replace('password_change_alert')
                             }
                         }
                     })

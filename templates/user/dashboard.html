@@ -20,6 +20,14 @@
 <!-- Dashboard Content -->
 <div class="d-flex flex-column flex-grow-1 p-4 dashboard_wrapper">
     <h1>Welcome {{ User.ApplicationId.Name }} </h1>
+
+    {% if message %}
+
+    <div class="alert alert-success " id="messages" role="alert">
+  {{message}}
+     </div>
+
+    {% endif %}
     <hr>
 
     <div class="row gutters-sm">
@@ -139,6 +147,16 @@
         </div>
     </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+        // messages timeout for 10 sec
+        setTimeout(function() {
+            $('#messages').fadeOut('slow');
+        }, 2000); // <-- time in milliseconds, 1000 =  1 sec
+    });
+</script>
+
 
 {% endblock %}
 
