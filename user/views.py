@@ -145,12 +145,15 @@ def dashboard(request):
 def payment_form(request):
     if 'username' in request.session:
         user = Candidates.objects.get(RegNumber=request.session['username'])
+
         if request.method == 'POST':
             if len(request.FILES['File']) != 0:
                 PaymentDetails = request.FILES['File']
                 user.PaymentDetails = PaymentDetails
                 user.save()
-            return redirect('/user/payment_form')
+                Uploaded_file = user.PaymentDetails
+            # return redirect('/user/payment_form')
+            return render(request, 'user/payment_form.html', {'Uploaded_file': Uploaded_file,'message': "Successfully uploaded Payment Details"} )
         else:
             Uploaded_file = user.PaymentDetails
             return render(request, 'user/payment_form.html', {'Uploaded_file': Uploaded_file})
@@ -200,6 +203,10 @@ def settings(request):
 
         return render(request, 'user/settings.html',{'User':User})
 
+def password_change_alert(request):
+    if request.session.has_key('username'):
+        user = Candidates.objects.get(RegNumber=request.session['username'])
+        return render(request,'user/dashboard.html', {'User': user, 'message': "Password changed successfully"})
 
 def change_password(request):
 
@@ -228,11 +235,13 @@ def photo_upload(request):
                 Photo = request.FILES['File']
                 user.Photo = Photo
                 user.save()
-            return redirect('/user/dashboard')
+               # return redirect('/user/dashboard')
+                return render(request, 'user/dashboard.html', {'User': user, 'message': "Successfully uploaded your photo"})
+            else:
+                return render(request, 'user/dashboard.html', {'User': user,'message':"Please upload your Photo"})
         else:
-            Uploaded_file = user.Photo
-            print(Uploaded_file)
-            return render(request, 'user/dashboard.html', {'Uploaded_file': Uploaded_file})
+
+            return render(request, 'user/dashboard.html', {'User': user,'message':"uploaded"})
     else:
         return redirect('/user/login')
 
