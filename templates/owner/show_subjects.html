@@ -25,16 +25,22 @@
         <div class="d-flex justify-content-center align-items-center">
             <div class="col-md-8">
 
-                <form action="show_report" method="POST">
-                    {% csrf_token %}
-                    <div class="input-group">
-                        <input name="name" type="text" placeholder="Search " class="form-control" />
-                        <div class="input-group-append">
-                            <button type="submit" class="btn btn-primary btn-format">Search</button>
+                          <form action="" method="POST">
+
+                      {% csrf_token %}
+
+                        <div class="input-group">
+                            <input name="name" type="text" placeholder="Search " class="form-control" />
+                                <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary btn-format">Search</button>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </div>
+                    </form>
+
+
+
+
+                      </div>
         </div>
 
         <div class="verify_div" style="margin-top: 5rem; ">

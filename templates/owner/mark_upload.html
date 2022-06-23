@@ -17,24 +17,25 @@
 {% include 'reusable/navbar.html' %}
 
 
+
 <div id="wrapper">
 	<div class="main-content">
+        <h3>Course Name: {{subject.SubjectName}}</h3>
          <div class="p-t-15">
                    {% include 'reusable/back_button.html' %}
                 </div>
 
-        <h3>Course Name: {{subject.SubjectName}}</h3>
-
         <div class="d-flex justify-content-center align-items-center" style="margin-top: 3rem;">
             <div class="col-md-6">
-                <form action="mark_upload" method="post">
-                {% csrf_token %}
-                    <div class="search">
-                        <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
-                        <input name="name" type="text" class="form-control" placeholder="Search for Applicants">
-                        <button class="btn btn-primary" type="submit">Search</button>
-                    </div>
-                </form>
+                <div class="search">
+                   <form action="" method="POST">
+                     {% csrf_token %}
+                    <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
+                    <input name="name" type="text" class="form-control" placeholder="Have a question? Ask Now" />
+                    <button class="btn btn-secondary" type="submit">Search</button>
+                   </form>
+                </div>
+
             </div>
         </div>
 

@@ -39,7 +39,7 @@
     <thead>
 
     <tr>
-        <th>No: of Attendance</th>
+        <th>No: of Attendance ({{ User.SubjectId.TotalHour }})</th>
         <th>% of Attendance</th>
         <th>Mark for Attendance</th>
 
@@ -62,7 +62,7 @@
               <form method="post" action="/owner/mark_edit/mark_update/{{ mark.id }}">
         {% csrf_token %}
 
-          <td> <input type="number" class="form-control" name="attendance" value="{{ mark.Attendance }}"></td>
+          <td> <input type="number" min="0" max="{{User.SubjectId.TotalHour}}" class="form-control" name="attendance" value="{{ mark.Attendance }}"></td>
           <td> <input type="number" class="form-control" value="{{ mark.AttendancePercentage }}" readonly></td>
           <td> <input type="number" class="form-control" value="{{ mark.AttendanceMark }}" readonly></td>
           <td> <input type="number" class="form-control" name="assignment1" value="{{ mark.Assignment1Mark }}"></td>
