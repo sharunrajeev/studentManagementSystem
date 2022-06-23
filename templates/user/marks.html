@@ -19,16 +19,13 @@
 
         <!-- Dashboard Content -->
         <div class="d-flex flex-column flex-grow-1 p-4" style="height: 100vh; margin-left: 15rem;">
-            <h1>Marks</h1>
+            <h1>Marks of {{ User.SubjectId.SubjectName }}</h1>
             <hr>
 
             <table class="table table-bordered">
     <thead>
 
     <tr>
-
-
-        <th>Subject Name</th>
         <th>No: of Attendance</th>
         <th>% of Attendance</th>
         <th>Mark for Attendance</th>
@@ -48,7 +45,6 @@
       <tr class="active">
 
           {% if mark.StudentId == User %}
-          <td>{{ mark.SubjectId.SubjectName }}</td>
           <td>{{ mark.Attendance }}</td>
           <td>{{ mark.AttendancePercentage }}</td>
           <td>{{ mark.AttendanceMark }}</td>
