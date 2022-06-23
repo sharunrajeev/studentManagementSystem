@@ -309,6 +309,7 @@ def show_subjects(request):
     subjects = Subjects.objects.all().order_by('id')
     if request.method == 'POST':
         Searchfield = request.POST['name']
+
         subjects = Subjects.objects.filter(SubjectName=Searchfield)
         return render(request, 'owner/show_subjects.html', {'subjects': subjects})
 
@@ -318,19 +319,17 @@ def show_subjects(request):
         return render(request, 'owner/show_subjects.html', {'subjects': subjects})
 
 
-
 # Edited by Akhila
 #new editing devaprasad
-def mark_upload(request,subjectid):
+def show_students(request,subjectid):
     subject = Subjects.objects.get(id=subjectid)
     users = Candidates.objects.filter(SubjectId = subject).order_by('RegNumber')
 
     marks = Marks.objects.all()
     if request.method == 'POST':
-        pass
+
         Searchfield = request.POST['name']
-        users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield) | Candidates.objects.filter(
-            ApplicationId__Name__icontains=Searchfield)
+        users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield)|Candidates.objects.filter(ApplicationId__Name__icontains=Searchfield)
 
         return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks})
 

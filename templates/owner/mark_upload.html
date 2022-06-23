@@ -36,11 +36,11 @@
         <div class="d-flex justify-content-center align-items-center" style="margin-top: 3rem;">
             <div class="col-md-6">
                 <div class="search">
-                   <form action="mark_upload" method="POST">
+                   <form action="" method="POST">
                      {% csrf_token %}
                     <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
                     <input name="name" type="text" class="form-control" placeholder="Have a question? Ask Now" />
-                    <button class="btn btn-secondary">Search</button>
+                    <button class="btn btn-secondary" type="submit">Search</button>
                    </form>
                 </div>
 
