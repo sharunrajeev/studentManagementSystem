@@ -381,7 +381,7 @@ def mark_edit(request, userid):
     else:
         user = Candidates.objects.get(Register_Number=userid)
         marks = Marks.objects.filter(StudentId=user).order_by('id')
-        return render(request, 'owner/mark_edit.html', {'User': user, 'marks': marks})
+        return render(request, 'owner/mark_edit.html', {'User': user, 'marks': marks ,'message': "Mark Details updated successfully"})
 
 
 def mark_update(request, markid):
