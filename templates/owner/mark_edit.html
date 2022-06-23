@@ -24,7 +24,11 @@
           <div class="p-t-15">
                     {% include 'reusable/back_button.html' %}
              </div>
-
+        {% if message %}
+         <div class="alert alert-success " id="messages" role="alert">
+             {{message}}
+             </div>
+        {% endif %}
       <div class="d-flex flex-column flex-grow-1 p-4" style="height: 100vh;">
             <h1>{{User.SubjectId.SubjectName}} - Marks</h1>
             <hr>
@@ -44,7 +48,7 @@
         <th>Total mark for Assignment</th>
         <th>Group Discussions</th>
         <th>Class participations</th>
-        <th style="min-width: 40px !important;">Total</th>
+        <th style="min-width: 40px !important;">TotalMarks</th>
         <th>Update</th>
         <th>Delete</th>
     </tr>
@@ -55,7 +59,7 @@
 
       <tr class="active">
 
-              <form method="post" action="mark_update/{{ mark.id }}">
+              <form method="post" action="/owner/mark_edit/mark_update/{{ mark.id }}">
         {% csrf_token %}
 
           <td> <input type="number" class="form-control" name="attendance" value="{{ mark.Attendance }}"></td>
@@ -68,7 +72,7 @@
           <td><input type="number" class="form-control" name="cp" value="{{ mark.CpMark }}"></td>
                             <td><input type="number" class="form-control"  value="{{ mark.Total }}" readonly></td>
           <td> <button  type="submit" class="btn btn-success btn-sm">Update</button></td>
-                            <td> <a href="mark_delete/{{ mark.id }}" type="button" class="btn btn-danger btn-sm">Delete</a></td>
+                            <td> <a href="/owner/mark_edit/mark_delete/{{ mark.id }}" type="button" class="btn btn-danger btn-sm">Delete</a></td>
           </form>
 
       </tr>
@@ -91,28 +95,28 @@
     </div>
 </div>
 
-
-
-
-
-{% endblock %}
-
-{% block scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script>
-    let html_tag = document.getElementsByTagName('html')
-    let button_tag = document.getElementById("nav--btn")
-
-    button_tag.onclick = function (e) {
-        e.preventDefault()
-        html_tag[0].classList.toggle("menu-active")
-    }
+    $(document).ready(function() {
+        console.log("hai")
+        // messages timeout for 10 sec
+        setTimeout(function() {
+            $('#messages').fadeOut('slow');
+        }, 1000); // <-- time in milliseconds, 1000 =  1 sec
+    });
 </script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
 {% endblock %}
+
+<!--{% block scripts %}-->
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>-->
+<!--<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>-->
+<!--{% endblock %}-->
 
 
 <!--coded by devaprasad-->
