@@ -49,8 +49,8 @@
   height: 50px;
   white-space: nowrap;
   overflow: hidden;
-  color: #434343;
-  background: #ffffff;
+  /*color: #434343;*/
+  /*background: #ffffff;*/
   font-weight: 500;
 }
 .header .logo .ico {
@@ -84,7 +84,7 @@
     color: #304ffe;
   }
   .navigation .menu a:hover i {
-    color: #304ffe;
+    /*color: #304ffe;*/
   }
 }
 .navigation .menu a.active,
@@ -92,7 +92,7 @@
   color: #304ffe;
 }
 .navigation .menu a i {
-  color: #212121;
+  /*color: #212121;*/
   transition: all 0.4s ease;
   -moz-transition: all 0.4s ease;
   -o-transition: all 0.4s ease;
@@ -200,7 +200,7 @@
   width: 260px;
   height: 100%;
   padding-top: 50px;
-  background: #ffffff;
+  /*background: #ffffff;*/
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 1px rgba(0, 0, 0, 0.05);
   -moz-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 1px rgba(0, 0, 0, 0.05);
   -webkit-box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.05), 0 1px 1px rgba(0, 0, 0, 0.05);

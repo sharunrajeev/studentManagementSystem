@@ -20,3 +20,14 @@
         </div>
     </div>
 {% endblock body %}
+{% block scripts %}
+<script>
+    let html_tag = document.getElementsByTagName('html')
+    let button_tag = document.getElementById("nav--btn")
+
+    button_tag.onclick = function (e) {
+        e.preventDefault()
+        html_tag[0].classList.toggle("menu-active")
+    }
+</script>
+{% endblock %}
