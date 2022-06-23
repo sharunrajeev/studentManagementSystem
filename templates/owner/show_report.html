@@ -5,13 +5,9 @@
 
 {% block styles %}
 
-</style>
   <!-- CSS only -->
   <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
   <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
-  <link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
-  <link href="{% static 'css/style-dark.css' %}" rel="stylesheet">
-  <link href="{% static 'css/waves.css' %}" rel="stylesheet">
 
 {% endblock %}
 
@@ -21,63 +17,57 @@
 
 <div id="wrapper">
 	<div class="main-content">
-
-                    <div class="d-flex justify-content-center align-items-center">
-                      <div class="col-md-8">
-
-                          <form action="show_report" method="POST">
-
-                      {% csrf_token %}
-
-                        <div class="input-group">
-                            <input name="name" type="text" placeholder="Search " class="form-control" />
-                                <div class="input-group-append">
-                                <button type="submit" class="btn btn-primary btn-format">Search</button>
-
-                            </div>
-                        </div>
-                    </form>
-
-
-
-
-                      </div>
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="col-md-8">
+                <!-- Search Box -->
+                <form action="show_report" method="post">
+                {% csrf_token %}
+                    <div class="search">
+                        <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
+                        <input name="name" type="text" class="form-control" placeholder="Search">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </form>
+                <!-- -->
+            </div>
         </div>
-      <div class="verify_div" style="margin-top: 5rem; ">
-          <div class="container">
-  <div class="row">
-    <div class="col-12">
-      <table class="table table-borderless table-responsive">
-        <thead>
-          <tr>
-            <th >Sl</th>
-            <th >Subject Name</th>
 
-            <th ></th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for subject in subjects %}
-          <tr>
-            <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ subject.SubjectName }}</td>
+        <div class="verify_div" style="margin-top: 5rem; ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-borderless table-responsive">
+                            <thead>
+                                <tr>
+                                    <th >Sl</th>
+                                    <th>Subject Name</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for subject in subjects %}
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>{{ subject.SubjectName }}</td>
 
-            <td class="text-center">
-              <a href="report/{{ subject.id }}" class="btn btn-outline-primary"><i class="fa fa-eye"></i> View Report</a>
-            </td>
-            <td class="text-center"  >
-              <a href="report_mark/{{ subject.id }}" class="btn btn-outline-secondary"><i class="fa fa-eye"></i> View Mark Report</a>
-            </td>
-            <td class="text-center"  >
-              <a href="report_attendance/{{ subject.id }}" class="btn btn-outline-dark"><i class="fa fa-eye"></i> View Attendance</a>
-            </td>
-          </tr>
-         {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
+                                        <td class="text-center">
+                                            <a href="report/{{ subject.id }}" class="btn btn-outline-primary"><i class="fa fa-eye"></i> View Report</a>
+                                        </td>
+
+                                        <td class="text-center">
+                                            <a href="report_mark/{{ subject.id }}" class="btn btn-outline-secondary"><i class="fa fa-eye"></i> View Mark Report</a>
+                                        </td>
+
+                                        <td class="text-center" >
+                                            <a href="report_attendance/{{ subject.id }}" class="btn btn-outline-dark"><i class="fa fa-eye"></i> View Attendance</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
 <!--          <div class=" d-grid   d-md-flex  justify-content-evenly" style="margin-top: 5rem;">-->
 <!-- <a href="report_mark"><button type="button" class="btn btn-outline-secondary btn-rounded " >  <i class="fa fa-eye"></i> View Mark Report</button>  </a>-->
@@ -85,15 +75,12 @@
 
 <!--</div>-->
 
-</div>
-  </div>
+        </div>
     </div>
+</div>
 {% endblock %}
 
 {% block scripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <script>
-        let
-    </script>
 {% endblock %}
