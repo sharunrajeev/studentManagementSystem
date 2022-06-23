@@ -480,10 +480,10 @@ def subjects_edit(request):
         return render(request, 'owner/subjects.html', {'subjects': subjects})
 
 
-def subject_delete(request, subjectid):
-    Subjects.objects.get(id=subjectid).delete()
-
-    return redirect('subjects_edit')
+# def subject_delete(request, subjectid):
+#     Subjects.objects.get(id=subjectid).delete()
+#
+#     return redirect('subjects_edit')
 
 
 def subject_update(request, subjectid):

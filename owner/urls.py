@@ -44,12 +44,11 @@ urlpatterns = [
     #Subject Adding Coded By Hana
 
     path('subjects_edit',views.subjects_edit,name='subjects_edit'),
-    path('subject_delete/<subjectid>',views.subject_delete,name='subject_delete'),
+    # path('subject_delete/<subjectid>',views.subject_delete,name='subject_delete'),
     path('subject_update/<subjectid>',views.subject_update,name='subject_update'),
 
     #coded by dp
     path('show_subjects',views.show_subjects,name='show_subjects'),
-
     path('user_edit' , views.user_edit , name = 'user_edit'),
     path('edit_form/<userid>' , views.edit_form , name = 'edit_form'),
 ]
