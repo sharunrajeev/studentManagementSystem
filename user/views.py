@@ -80,6 +80,34 @@ def reg_success(request):
 
 # Sharun
 def login(request):
+    if 'username' in request.session:
+        return redirect('/user/dashboard')
+    else:
+        if request.method == 'POST':
+
+            username = request.POST['username']
+            password = request.POST['password']
+
+            user = auth.authenticate(username=username, password=password)
+
+            if user is not None:
+                auth.login(request, user)
+                request.session['username'] = username
+                return JsonResponse(
+                    {'success': True},
+                    safe=False
+                )
+
+            else:
+
+                print("Invalid Credentials")
+                return JsonResponse(
+                    {'success': False},
+                    safe=False
+                )
+
+        else:
+            return render(request, 'user/auth/login.html')
     # if request.method == 'POST':
     #     username = request.POST['Username']
     #     password = request.POST['Password']
@@ -99,31 +127,7 @@ def login(request):
     #     return render(request, 'user/auth/login.html')
 
 
-    if request.method == 'POST':
 
-        username = request.POST['username']
-        password = request.POST['password']
-
-        user = auth.authenticate(username=username, password=password)
-
-        if user is not None:
-            auth.login(request, user)
-            request.session['username'] = username
-            return JsonResponse(
-                {'success': True},
-                safe=False
-            )
-
-        else:
-
-            print("Invalid Credentials")
-            return JsonResponse(
-                {'success': False},
-                safe=False
-            )
-
-    else:
-        return render(request, 'user/auth/login.html')
 
 
 

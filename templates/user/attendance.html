@@ -8,6 +8,7 @@
 
 {% block styles %}
 <link href="{% static 'css/user_sidebar.css' %}" rel="stylesheet">
+<link href="{% static 'css/user_content.css' %}" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 {% endblock %}
@@ -18,7 +19,7 @@
 {% include 'reusable/user_sidebar.html'%}
 
 <!-- Dashboard Content -->
-<div class="d-flex flex-column flex-grow-1 p-4 " style="height: 100vh; margin-left: 15rem;">
+<div class="d-flex flex-column flex-grow-1 p-4 content_wrapper">
     <h1 style="font-size:30px;">Attendance Record of {{ User.SubjectId.SubjectName }}</h1>
     <hr>
 
