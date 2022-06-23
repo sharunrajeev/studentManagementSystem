@@ -1,0 +1,16 @@
+.content_wrapper {
+    height: 100vh;
+    margin-left: 15rem;
+}
+
+@media screen and (max-width: 1087px) {
+  .content_wrapper {
+    margin-left: 5rem !important;
+  }
+}
+
+@media screen and (max-width: 672px) {
+  .content_wrapper {
+    margin-left: 0 !important;
+  }
+}
