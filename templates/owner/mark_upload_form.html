@@ -46,7 +46,7 @@
                 <div class="col-2">
                     <div class="input-group">
                         <label class="label">Attendance ({{subject.TotalHour}})</label>
-                        <input type="text"  class="input--style-4 input_default" id="attendance" name="attendance" required require>
+                        <input type="number" min="0" max="{{subject.TotalHour}}"  class="input--style-4 input_default" id="attendance" name="attendance"   required require>
                     </div>
                 </div>
                 <div class="col-2">

@@ -19,16 +19,13 @@
 
 <!-- Dashboard Content -->
 <div class="d-flex flex-column flex-grow-1 p-4 " style="height: 100vh; margin-left: 15rem;">
-    <h1 style="font-size:30px;">Attendance Record</h1>
+    <h1 style="font-size:30px;">Attendance Record of {{ User.SubjectId.SubjectName }}</h1>
     <hr>
 
             <table class="table table-bordered">
     <thead>
 
     <tr>
-
-
-        <th>Course Name</th>
         <th>No: of Attendance</th>
         <th>Total(Max)</th>
         <th>Attendance (%)</th>
@@ -41,9 +38,8 @@
       <tr class="active">
 
           {% if attend.StudentId == User %}
-          <td>{{ attend.SubjectId.SubjectName }}</td>
           <td>{{ attend.Attendance }}</td>
-          <td>/ 20</td>
+          <td>{{attend.StudentId.SubjectId.TotalHour}}</td>
           <td>{{ attend.AttendancePercentage }}</td>
           {% endif %}
       </tr>
