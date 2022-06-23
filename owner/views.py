@@ -89,13 +89,16 @@ def approve(request):
 
 
 def individual_view(request, userid):
-    print(userid)
-
     selected_user = Applicants.objects.get(id=userid)
     SubjectName = selected_user.Subject
     subject = Subjects.objects.get(SubjectName=SubjectName)
     users = Applicants.objects.all()
-    return render(request, 'owner/individual.html', {'individual': selected_user, 'users': users, 'subject': subject })
+    candidate = ""
+    if selected_user.Eligibility == True:
+        candidate = Candidates.objects.get(UserId = userid)
+    return render(request, 'owner/individual.html', {'individual': selected_user, 'users': users, 'subject': subject, 'candidate' : candidate })
+
+
 
 
 def reject(request, userid):

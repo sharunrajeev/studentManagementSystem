@@ -58,7 +58,11 @@ Admin Dashboard
         {% endfor %}
         <div class="ind-header">
             <figure class="ind-header_pic">
+                {% if candidate.Photo %}
+                <img src="{{candidate.Photo.url}}">
+                {% else %}
                 <img src="{% static 'assets/person_image.png' %}">
+                {% endif %}
             </figure>
             <div>
                 <div class="ind-header_approve">
