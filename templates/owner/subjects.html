@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %} {% endblock %}
+{% block title %}Subjects Edit{% endblock %}
 
 {% block styles %}
     <link href="{% static 'css/register_form.css' %}" rel="stylesheet">
@@ -79,21 +79,34 @@
                     <tr class="active">
                         <form method="post" action="/owner/subject_update/{{ subject.id }}">
                             {% csrf_token %}
-                        <td><a href="#">{{ forloop.counter }}</a></td>
-                        <td> <input value="{{ subject.SubjectName }}" class="input--style-4 input_default" type="text" name="subjectname"></td>
-                            <td> <input value="{{ subject.Year }}"  class="input--style-4 input_default" type="text" name="year"></td>
-                        <td><input value="{{ subject.TotalHour }}" class="input--style-4 input_default" type="number" name="totalhours"></td>
-                        <td>
-                            <button class="btn btn-success btn-sm" role="button">Update</button>
-                        </td>
-                        <td>
-                            <a class="btn btn-danger btn-sm" href="/owner/subject_delete/{{ subject.id }}" role="button">Delete</a>
-                        </td>
+                            <td>
+                                <a href="#">{{ forloop.counter }}</a>
+                            </td>
+
+                            <td>
+                                <input value="{{ subject.SubjectName }}" class="input--style-4 input_default" type="text" name="subjectname">
+                            </td>
+
+                            <td>
+                                <input value="{{ subject.Year }}"  class="input--style-4 input_default" type="text" name="year">
+                            </td>
+
+                            <td>
+                                <input value="{{ subject.TotalHour }}" class="input--style-4 input_default" type="number" name="totalhours">
+                            </td>
+
+                            <td>
+                                <button class="btn btn-success btn-sm" role="button">Update</button>
+                            </td>
+
+                            <td>
+                                <a class="btn btn-danger btn-sm" href="/owner/subject_delete/{{ subject.id }}" role="button">Delete</a>
+                            </td>
                         </form>
                     </tr>
                 {% endfor %}
                 </tbody>
-</table>
+            </table>
         </div>
     </div>
 </div>
