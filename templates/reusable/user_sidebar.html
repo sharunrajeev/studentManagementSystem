@@ -1,40 +1,58 @@
-{% load static %}
 <div class="s-layout__sidebar" style="z-index: 1000;">
+    <!--Sidebar Title Icon (Only shows when sidebar is retracted) -->
     <a class="s-sidebar__trigger" href="#0">
         <i class="fa fa-bars"></i>
     </a>
 
     <nav class="s-sidebar__nav">
-
         <ul>
+            <!-- Sidebar Title -->
             <li class="nav-item">
                 <a href="/" class="nav-link text-white text-center estudent s-sidebar__nav-link">
                   <em><h3>eStudents</h3></em>
                 </a>
             </li>
 
+            <!-- Sidebar Menu -->
             <li class="nav-item">
-                <a href="dashboard" class="nav-link text-white s-sidebar__nav-link" > <i class="fa fa-user" ></i><em>Profile</em></a>
+                <a href="dashboard" class="nav-link text-white s-sidebar__nav-link" >
+                    <i class="fa fa-user" >
+                    </i><em>Profile</em>
+                </a>
             </li>
+
             <li>
                 <a href="payment_form" class="nav-link text-white s-sidebar__nav-link">
-                    <i class="fa fa-credit-card"></i><em>Payment</em>
+                    <i class="fa fa-credit-card"></i>
+                    <em>Payment</em>
                 </a>
             </li>
             <li>
-                <a href="marks" class="nav-link text-white s-sidebar__nav-link"> <i class="fa fa-table"></i><em>Marks</em></a>
-            </li>
-            <li>
-                <a href="attendance" class="nav-link text-white s-sidebar__nav-link"> <i class="fa fa-book"></i><em>Attendance</em></a>
-            </li>
-            <li>
-                <a href="settings" class="nav-link text-white s-sidebar__nav-link"> <i class="fa fa-cog"></i><em>Settings</em></a>
+                <a href="marks" class="nav-link text-white s-sidebar__nav-link">
+                    <i class="fa fa-table"></i>
+                    <em>Marks</em>
+                </a>
             </li>
 
+            <li>
+                <a href="attendance" class="nav-link text-white s-sidebar__nav-link">
+                    <i class="fa fa-book"></i>
+                    <em>Attendance</em>
+                </a>
+            </li>
 
             <li>
-                <a href="logout" class="nav-link text-white s-sidebar__nav-link"> <i
-                        class="fa fa-sign-out"></i><em>Logout</em></a>
+                <a href="settings" class="nav-link text-white s-sidebar__nav-link">
+                    <i class="fa fa-cog"></i>
+                    <em>Settings</em>
+                </a>
+            </li>
+
+            <li>
+                <a href="logout" class="nav-link text-white s-sidebar__nav-link">
+                    <i class="fa fa-sign-out"></i>
+                    <em>Logout</em>
+                </a>
             </li>
         </ul>
     </nav>
