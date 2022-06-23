@@ -59,7 +59,7 @@
 
       <tr class="active">
 
-              <form method="post" action="mark_update/{{ mark.id }}">
+              <form method="post" action="/owner/mark_edit/mark_update/{{ mark.id }}">
         {% csrf_token %}
 
           <td> <input type="number" class="form-control" name="attendance" value="{{ mark.Attendance }}"></td>
@@ -72,7 +72,7 @@
           <td><input type="number" class="form-control" name="cp" value="{{ mark.CpMark }}"></td>
                             <td><input type="number" class="form-control"  value="{{ mark.Total }}" readonly></td>
           <td> <button  type="submit" class="btn btn-success btn-sm">Update</button></td>
-                            <td> <a href="mark_delete/{{ mark.id }}" type="button" class="btn btn-danger btn-sm">Delete</a></td>
+                            <td> <a href="/owner/mark_edit/mark_delete/{{ mark.id }}" type="button" class="btn btn-danger btn-sm">Delete</a></td>
           </form>
 
       </tr>
