@@ -4,17 +4,9 @@
 {% block title %} Approval {% endblock %}
 
 {% block styles %}
-
-</style>
   <!-- CSS only -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
   <link href="{% static 'css/individual.css' %}" rel="stylesheet">
   <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
-  <link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
-  <link href="{% static 'css/style-dark.css' %}" rel="stylesheet">
-  <link href="{% static 'css/navbar.css' %}" rel="stylesheet">
-  <link href="{% static 'css/style.css' %}" rel="stylesheet">
   <link href="{% static 'css/mark_upload.css' %}" rel="stylesheet">
   <link href="{% static 'css/mark_upload-table.css' %}" rel="stylesheet">
 
@@ -25,27 +17,27 @@
 {% include 'reusable/navbar.html' %}
 
 
-
 <div id="wrapper">
 	<div class="main-content">
-        <h3>Course Name: {{subject.SubjectName}}</h3>
          <div class="p-t-15">
                    {% include 'reusable/back_button.html' %}
                 </div>
 
+        <h3>Course Name: {{subject.SubjectName}}</h3>
+
         <div class="d-flex justify-content-center align-items-center" style="margin-top: 3rem;">
             <div class="col-md-6">
-                <div class="search">
-                   <form action="mark_upload" method="POST">
-                     {% csrf_token %}
-                    <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
-                    <input name="name" type="text" class="form-control" placeholder="Have a question? Ask Now" />
-                    <button class="btn btn-secondary">Search</button>
-                   </form>
-                </div>
-
+                <form action="mark_upload" method="post">
+                {% csrf_token %}
+                    <div class="search">
+                        <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
+                        <input name="name" type="text" class="form-control" placeholder="Search for Applicants">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </form>
             </div>
         </div>
+
         <div class="table-parent">
             <table>
                 <thead>
@@ -88,14 +80,7 @@
                     </tr>
                 {% endfor %}
                 </tbody>
-</table>
-
-
-
-
-
-
-
+            </table>
         </div>
     </div>
 </div>

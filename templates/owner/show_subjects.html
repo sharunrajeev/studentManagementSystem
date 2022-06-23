@@ -7,11 +7,10 @@
 
 </style>
   <!-- CSS only -->
-  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
-  <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
-  <link href="{% static 'css/sidebar.css' %}" rel="stylesheet">
-  <link href="{% static 'css/style-dark.css' %}" rel="stylesheet">
-  <link href="{% static 'css/waves.css' %}" rel="stylesheet">
+   <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+   <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
+   <link href="{% static 'css/mark_upload-table.css' %}" rel="stylesheet">
+<!--   <link href="{% static 'css/mark_upload.css' %}" rel="stylesheet">-->
 
 {% endblock %}
 
@@ -22,65 +21,58 @@
 <div id="wrapper">
 	<div class="main-content">
 
-<h3>Choose Course</h3>
-                    <div class="d-flex justify-content-center align-items-center">
-                      <div class="col-md-8">
+        <h3>Choose Course</h3>
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="col-md-8">
 
-                          <form action="show_report" method="POST">
-
-                      {% csrf_token %}
-
-                        <div class="input-group">
-                            <input name="name" type="text" placeholder="Search " class="form-control" />
-                                <div class="input-group-append">
-                                <button type="submit" class="btn btn-primary btn-format">Search</button>
-                            </div>
+                <form action="show_report" method="POST">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <input name="name" type="text" placeholder="Search " class="form-control" />
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary btn-format">Search</button>
                         </div>
-                    </form>
-
-
-
-
-                      </div>
+                    </div>
+                </form>
+            </div>
         </div>
-      <div class="verify_div" style="margin-top: 5rem; ">
-          <div class="container">
-  <div class="row">
-    <div class="col-12">
-      <table class="table table-borderless table-responsive">
-        <thead>
-          <tr>
-            <th >Sl</th>
-            <th >Course Name</th>
 
-            <th ></th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for subject in subjects %}
-          <tr>
-            <th scope="row">{{ forloop.counter }}</th>
-            <td>{{ subject.SubjectName }}</td>
+        <div class="verify_div" style="margin-top: 5rem; ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <table class="table table-borderless table-responsive">
+                            <thead>
+                                <tr>
+                                    <th style="font-size: 1rem;">Sl</th>
+                                    <th style="font-size: 1rem;">Course Name</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for subject in subjects %}
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>{{ subject.SubjectName }}</td>
+                                        <td class="text-center">
+                                            <a href="show_students/{{ subject.id }}" class="btn btn-primary"><i class="fa fa-eye"></i> View Students</a>
 
-            <td class="text-center">
-              <a href="show_students/{{ subject.id }}" class="btn btn-primary"><i class="fa fa-eye"></i> View Students</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
-            </td>
-          </tr>
-         {% endfor %}
-        </tbody>
-      </table>
+            <div class=" d-grid  d-md-flex  justify-content-evenly" style="margin-top: 5rem;">
+
+            </div>
+
+        </div>
     </div>
-  </div>
 </div>
-
-          <div class=" d-grid   d-md-flex  justify-content-evenly" style="margin-top: 5rem;">
-
-</div>
-
-</div>
-  </div>
-    </div>
 {% endblock %}
 
 {% block scripts %}
