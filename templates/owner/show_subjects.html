@@ -21,7 +21,7 @@
 <div id="wrapper">
 	<div class="main-content">
 
-        <h3>Choose Course</h3>
+
         <div class="d-flex justify-content-center align-items-center">
             <div class="col-md-8">
 
@@ -29,12 +29,17 @@
 
                       {% csrf_token %}
 
-                        <div class="input-group">
-                            <input name="name" type="text" placeholder="Search " class="form-control" />
-                                <div class="input-group-append">
-                                <button type="submit" class="btn btn-primary btn-format">Search</button>
-                            </div>
-                        </div>
+<!--                        <div class="input-group">-->
+<!--                            <input name="name" type="text" placeholder="Search " class="form-control" />-->
+<!--                                <div class="input-group-append">-->
+<!--                                <button type="submit" class="btn btn-primary btn-format">Search</button>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                              <div class="search">
+                        <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
+                        <input name="name" type="text" class="form-control" placeholder="Search">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
                     </form>
 
 
