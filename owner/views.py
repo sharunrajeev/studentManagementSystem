@@ -467,7 +467,8 @@ def subjects_edit(request):
 
         subject.save()
 
-        return redirect('subjects_edit')
+        subjects = Subjects.objects.all().order_by('id')
+        return render(request, 'owner/subjects.html', {'subjects': subjects, 'message': f"New Course {Subjectname} added successfully"})
 
     else:
         subjects = Subjects.objects.all().order_by('id')
@@ -490,9 +491,13 @@ def subject_update(request, subjectid):
 
         subject.SubjectName = subjectname
         subject.TotalHour = totalhour
+        subject.Year=year
+
         subject.save()
 
-        return redirect('subjects_edit')
+        subjects = Subjects.objects.all().order_by('id')
+
+        return render(request, 'owner/subjects.html', {'subjects': subjects, 'message': f" Course details updated successfully"})
 
 
 

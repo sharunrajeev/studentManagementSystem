@@ -15,7 +15,18 @@
 
 <div id="wrapper">
     <div class="main-content">
+         {% if message %}
+        <div class="alert alert-success " id="messages" role="alert">
+            {{message}}
+        </div>
+        {% endif %}
+
+
         <div class="table-parent">
+
+             <h1> Add New Course</h1>
+            <br>
+
             <form method="post" action="subjects_edit">
                 {% csrf_token %}
                 <div class="main">
@@ -43,13 +54,15 @@
                         <div class="col-3" style="align-self: center;">
                             <button id="butn" class="btn btn--radius-2 btn-sm btn--blue" type="submit">Submit</button>
                         </div>
-
-
                     </div>
                 </div>
             </form>
+            <br>
 
+            <h1> Edit Course Details</h1>
+            <br>
             <table>
+
                 <thead>
                     <tr>
                         <th>Sl No</th>
@@ -64,17 +77,17 @@
 
                 {% for subject in subjects %}
                     <tr class="active">
-                        <form method="post" action="subject_update/{{ subject.id }}">
+                        <form method="post" action="/owner/subject_update/{{ subject.id }}">
                             {% csrf_token %}
                         <td><a href="#">{{ forloop.counter }}</a></td>
-                        <td> <input value="{{ subject.SubjectName }}" type="text" name="subjectname"></td>
-                            <td> <input value="{{ subject.Year }}" type="text" name="year"></td>
-                        <td><input value="{{ subject.TotalHour }}" type="number" name="totalhours"></td>
+                        <td> <input value="{{ subject.SubjectName }}" class="input--style-4 input_default" type="text" name="subjectname"></td>
+                            <td> <input value="{{ subject.Year }}"  class="input--style-4 input_default" type="text" name="year"></td>
+                        <td><input value="{{ subject.TotalHour }}" class="input--style-4 input_default" type="number" name="totalhours"></td>
                         <td>
                             <button class="btn btn-success btn-sm" role="button">Update</button>
                         </td>
                         <td>
-                            <a class="btn btn-danger btn-sm" href="subject_delete/{{ subject.id }}" role="button">Delete</a>
+                            <a class="btn btn-danger btn-sm" href="/owner/subject_delete/{{ subject.id }}" role="button">Delete</a>
                         </td>
                         </form>
                     </tr>
@@ -84,6 +97,17 @@
         </div>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+        // messages timeout for 10 sec
+        setTimeout(function() {
+            $('#messages').fadeOut('slow');
+        }, 2000); // <-- time in milliseconds, 1000 =  1 sec
+    });
+</script>
+
 {% endblock %}
 
 
