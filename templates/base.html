@@ -35,14 +35,22 @@
     <!-- Sidebar Styles -->
     <link rel="stylesheet" href="{% static 'css/style-dark.css' %}"/>
 
+    <!-- Spinner Styles -->
+    <link rel="stylesheet" href="{% static 'css/spinner.css' %}"/>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="{% static 'css/back_button.css' %}" rel="stylesheet">
 
     {% block styles %} {% endblock %}
 
   </head>
   <body>
+    {% include 'reusable/spinner.html' %}
+    <main id="main-div">
+       {% block body %}  {% endblock %}
+    </main>
 
-    {% block body %}  {% endblock %}
 
     <!-- Bootstrap Scripts -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -52,6 +60,23 @@
       integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous"
       ></script>
+
+    <!-- Script for Implementation of Loader -->
+    <script>
+      const spinner = document.getElementById('loader-div');
+      const content = document.getElementById('main-div');
+
+        document.onreadystatechange = function() {
+          if (document.readyState === "complete") {
+              content.style.display = "block";
+              spinner.style.display = "none";
+          } else {
+              spinner.style.display = "block";
+              content.style.display = "none";
+          }
+        };
+
+    </script>
 
   {% block scripts %} {% endblock %}
 
