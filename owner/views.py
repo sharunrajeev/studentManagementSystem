@@ -1,7 +1,7 @@
 from email import message
 from django.contrib.auth.models import User,auth
 from django.shortcuts import render, redirect
-from .models import Applicants, Candidates, Marks, Subjects , Payments
+from .models import Applicants, Candidates, Marks, Subjects , Payments,UserPayments
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -251,6 +251,7 @@ def user_verify_view(request, userid):
         #     pay_val = 1
         # else:
         #     pay_val = 0
+        user_payments = UserPayments.objects.filter(StudentId = user_det)
         return render(request, 'owner/user_detail.html', {'person_details': user_det})
 
     else:

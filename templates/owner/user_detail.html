@@ -114,9 +114,34 @@
         </div>
         <div class=" d-grid gap-3 col-9 mx-auto ">
 
-       {% if pay_val == 0 %}
+<!--       {% if pay_val == 0 %}-->
+<!--            <td><div class="alert alert-warning w-100 text-center" role="alert">No file</div></td>-->
+<!--            {% elif pay_val == 1 %}-->
+<!--            <td><a class="btn btn-outline-info w-100" href="{{ person_details.PaymentDetails.url}}" role="button">View Reciept</a></td>-->
+
+
+
+<!--        {% if person_details.PaymentStatus == True %}-->
+<!--        <div class=" alert alert-success text-center"><strong>Verified & Accepted</strong></div>-->
+<!--        {% elif person_details.PaymentStatus == False %}-->
+<!--        <div class=" alert alert-danger text-center"><strong> Not Verified(Incomplete)</strong></div>-->
+<!--        {% else %}-->
+<!--        <div class="d-grid   d-md-flex justify-content-evenly">-->
+
+
+<!--        <a href="/owner/verified/{{person_details.Register_Number}}" ><button type="button" class="btn btn-outline-success ">Verify</button></a>-->
+<!--        <a href="/owner/denial/{{person_details.Register_Number}}" ><button type="button" class="btn btn-outline-danger">Denial</button></a>-->
+<!--      -->
+<!-- </div>-->
+<!--            {% endif %}-->
+<!--{% endif %}-->
+
+
+
+<!--          coded by dp-->
+
             <td><div class="alert alert-warning w-100 text-center" role="alert">No file</div></td>
-            {% elif pay_val == 1 %}
+
             <td><a class="btn btn-outline-info w-100" href="{{ person_details.PaymentDetails.url}}" role="button">View Reciept</a></td>
 
 
@@ -131,9 +156,10 @@
 
         <a href="/owner/verified/{{person_details.Register_Number}}" ><button type="button" class="btn btn-outline-success ">Verify</button></a>
         <a href="/owner/denial/{{person_details.Register_Number}}" ><button type="button" class="btn btn-outline-danger">Denial</button></a>
+
  </div>
-        {% endif %}
-{% endif %}
+            {% endif %}
+
 
       </div>
 
