@@ -7,6 +7,7 @@ class Subjects(models.Model):
     TotalHour = models.IntegerField(default=None)
     Year = models.IntegerField(default=None)
 
+
 class Applicants(models.Model):
     Subject = models.CharField(max_length=100, default=None)
     Name = models.CharField(max_length=100, default=None)
@@ -27,16 +28,20 @@ class Applicants(models.Model):
     Eligibility = models.BooleanField(blank=True, null=True, default=None)
 
 
+class Payments(models.Model):
+    PaymentName = models.CharField(max_length=100, default=None)
+    PaymentStatus = models.BooleanField(blank=True, null=True, default=None)
+    PaymentDetails = models.FileField(upload_to='files', blank=True, null=True, default=None)
+
 class Candidates(models.Model):
     ApplicationId = models.ForeignKey(Applicants, on_delete=models.CASCADE, default=False)
     SubjectId = models.ForeignKey(Subjects, on_delete=models.CASCADE, default=False)
+    PaymentId = models.ForeignKey(Payments, on_delete=models.CASCADE, default=False)
     Register_Number = models.AutoField(default=None,primary_key=True)
     RegNumber = models.IntegerField(blank=True, null=True, default=None)
     UserId = models.IntegerField(default=None, blank=True, null=True)
     Photo = models.ImageField(upload_to='pics')
     Achievements = models.TextField()
-    PaymentStatus = models.BooleanField(blank=True, null=True, default=None)
-    PaymentDetails = models.FileField(upload_to='files',blank=True, null=True,default=None)
     Marks = models.IntegerField(blank=True, null=True, default=None)
     Attendance = models.IntegerField(blank=True, null=True, default=None)
 

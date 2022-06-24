@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Subjects Edit{% endblock %}
+
+{% block styles %}
+    <link href="{% static 'css/register_form.css' %}" rel="stylesheet">
+    <link href="{% static 'css/mark_upload-table.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+{% include  'reusable/navbar.html' %}
+{% include  'reusable/sidebar.html' %}
+<!--Coded by Hana-->
+
+<div id="wrapper">
+    <div class="main-content">
+         {% if message %}
+        <div class="alert alert-success " id="messages" role="alert">
+            {{message}}
+        </div>
+        {% endif %}
+
+
+        <div class="table-parent">
+
+             <h3>Add New Payment </h3>
+            <br>
+
+            <form method="post" action="payment_edit">
+                {% csrf_token %}
+                <div class="main">
+                    <div class="row row-space">
+                        <div class="col-2">
+                            <div class="input-group">
+                                <label class="label">Payment Name</label>
+                                <input type="text" class="input--style-4 input_default" id="paymentname" name="paymentname" ></div>
+                        </div>
+
+
+                        <div class="col-2" style="align-self: center;">
+                            <button id="butn" class="btn btn--radius-2 btn-sm btn--blue" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <br>
+
+            <h3> Edit Payment </h3>
+            <br>
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Sl No</th>
+                        <th>Course Name</th>
+                        <th>Edit</th>
+<!--                        <th>Delete</th>-->
+                    </tr>
+                </thead>
+                <tbody>
+
+                {% for payment in payments %}
+                    <tr class="active">
+                        <form method="post" action="/owner/payment_update/{{ payment.id }}">
+                            {% csrf_token %}
+                            <td>
+                                <a href="#">{{ forloop.counter }}</a>
+                            </td>
+
+                            <td>
+                                <input value="{{ payment.PaymentName }}" class="input--style-4 input_default" type="text" name="paymentname">
+                            </td>
+
+
+                            <td>
+                                <button class="btn btn-success btn-sm" role="button">Update</button>
+                            </td>
+
+<!--                            <td>-->
+<!--                                <a class="btn btn-danger btn-sm" href="/owner/subject_delete/{{ subject.id }}" role="button">Delete</a>-->
+<!--                            </td>-->
+                        </form>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+        // messages timeout for 10 sec
+        setTimeout(function() {
+            $('#messages').fadeOut('slow');
+        }, 2000); // <-- time in milliseconds, 1000 =  1 sec
+    });
+</script>
+<script>
+    let html_tag = document.getElementsByTagName('html')
+    let button_tag = document.getElementById("nav--btn")
+
+    button_tag.onclick = function (e) {
+        e.preventDefault()
+        html_tag[0].classList.toggle("menu-active")
+    }
+</script>
+{% endblock %}
+
+
+
+
+
+
