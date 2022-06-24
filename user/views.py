@@ -166,7 +166,7 @@ def payment_form(request):
                 userpayments.save()
                 # Uploaded_file = user.PaymentDetails
             # return redirect('/user/payment_form')
-            return render(request, 'user/payment_form.html', {'message': "Successfully uploaded Payment Details"} )
+            return redirect('/user/payment_form')
         else:
             payments=Payments.objects.all()
             return render(request, 'user/payment_form.html', {'payments':payments})
