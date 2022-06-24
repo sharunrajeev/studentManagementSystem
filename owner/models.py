@@ -30,8 +30,7 @@ class Applicants(models.Model):
 
 class Payments(models.Model):
     PaymentName = models.CharField(max_length=100, default=None)
-    PaymentStatus = models.BooleanField(blank=True, null=True, default=None)
-    PaymentDetails = models.FileField(upload_to='files', blank=True, null=True, default=None)
+
 
 class Candidates(models.Model):
     ApplicationId = models.ForeignKey(Applicants, on_delete=models.CASCADE, default=False)
@@ -47,6 +46,8 @@ class Candidates(models.Model):
 class UserPayments(models.Model):
     StudentId = models.ForeignKey(Candidates, on_delete=models.CASCADE, default=False)
     PaymentId = models.ForeignKey(Payments, on_delete=models.CASCADE, default=False)
+    PaymentStatus = models.BooleanField(blank=True, null=True, default=None)
+    PaymentDetails = models.FileField(upload_to='files', blank=True, null=True, default=None)
 
 class Marks(models.Model):
     StudentId = models.ForeignKey(Candidates, on_delete=models.CASCADE, default=False)
