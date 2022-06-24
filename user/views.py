@@ -2,7 +2,7 @@ from email import message
 from lib2to3.pgen2 import token
 from pyexpat.errors import messages
 from django.shortcuts import redirect, render
-from owner.models import Applicants, Candidates, Marks, Subjects, Payments
+from owner.models import Applicants, Candidates, Marks, Subjects, Payments, UserPayments
 from django.contrib.auth.models import User, auth
 from django.http import JsonResponse
 from django.contrib.auth import views as auth_views
@@ -152,15 +152,26 @@ def payment_form(request):
 
         if request.method == 'POST':
             if len(request.FILES['File']) != 0:
+                payment=request.POST['payment']
                 PaymentDetails = request.FILES['File']
-                user.PaymentDetails = PaymentDetails
-                user.save()
-                Uploaded_file = user.PaymentDetails
+
+                payment_user=Payments.objects.get(PaymentName=payment)
+
+                userpayments=UserPayments()
+                userpayments.StudentId=user
+                userpayments.PaymentId=payment_user
+                userpayments.PaymentId.PaymentDetails=PaymentDetails
+                userpayments.save()
+                payment_user.save()
+
+                # Uploaded_file = user.PaymentDetails
             # return redirect('/user/payment_form')
-            return render(request, 'user/payment_form.html', {'Uploaded_file': Uploaded_file,'message': "Successfully uploaded Payment Details"} )
+            return render(request, 'user/payment_form.html', {'message': "Successfully uploaded Payment Details"} )
         else:
-            Uploaded_file = user.PaymentDetails
-            return render(request, 'user/payment_form.html', {'Uploaded_file': Uploaded_file})
+            # Uploaded_file = user.PaymentDetails
+            payments=Payments.objects.all()
+            return render(request, 'user/payment_form.html',{'payments':payments})
+
     else:
         return redirect('/user/login')
 
