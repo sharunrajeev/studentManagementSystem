@@ -1,7 +1,7 @@
 from email import message
 from django.contrib.auth.models import User,auth
 from django.shortcuts import render, redirect
-from .models import Applicants, Candidates, Marks, Subjects , Payments
+from .models import Applicants, Candidates, Marks, Subjects , Payments,UserPayments
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -205,25 +205,25 @@ def select(request, userid):
         return redirect('/owner/adminlogin')
 
 #new changes in payment, coded by Devaprasd
-
-def show_payment(request):
-    if 'username_admin' in request.session:
-        subjects = Subjects.objects.all().order_by('id')
-        if request.method == 'POST':
-            Searchfield = request.POST['name']
-            subjects = Subjects.objects.filter(SubjectName=Searchfield)
-            return render(request, 'owner/show_report.html', {'subjects': subjects})
-
-        else:
-
-            payments = Payments.objects.all().order_by('id')
-            return render(request, 'owner/show_payment.html', {'payments': payments})
-
-    else:
-        return redirect('/owner/adminlogin')
+#
+# def show_payment(request):
+#     if 'username_admin' in request.session:
+#         subjects = Subjects.objects.all().order_by('id')
+#         if request.method == 'POST':
+#             Searchfield = request.POST['name']
+#             subjects = Subjects.objects.filter(SubjectName=Searchfield)
+#             return render(request, 'owner/show_report.html', {'subjects': subjects})
+#
+#         else:
+#
+#             payments = Payments.objects.all().order_by('id')
+#             return render(request, 'owner/show_payment.html', {'payments': payments})
+#
+#     else:
+#         return redirect('/owner/adminlogin')
 
 # Coded By Hana, Akhila
-def payment(request):
+def payment_subject(request,subjectid):
     if 'username_admin' in request.session:
         if request.method == 'POST':
 
@@ -233,7 +233,7 @@ def payment(request):
 
             return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
         else:
-            users = Candidates.objects.all().order_by('Register_Number')
+            users = Candidates.objects.filter(SubjectId__id =subjectid).order_by('Register_Number')
 
             return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
 
@@ -247,11 +247,12 @@ def payment(request):
 def user_verify_view(request, userid):
     if 'username_admin' in request.session:
         user_det = Candidates.objects.get(Register_Number=userid)
-        if user_det.PaymentDetails:
-            pay_val = 1
-        else:
-            pay_val = 0
-        return render(request, 'owner/user_detail.html', {'person_details': user_det, 'pay_val': pay_val})
+        # if user_det.PaymentDetails:
+        #     pay_val = 1
+        # else:
+        #     pay_val = 0
+        user_payments = UserPayments.objects.filter(StudentId = user_det)
+        return render(request, 'owner/user_detail.html', {'person_details': user_det})
 
     else:
         return redirect('/owner/adminlogin')
@@ -861,3 +862,11 @@ def payment_update(request, paymentid):
     else:
         return redirect('/owner/adminlogin')
 
+
+def payment_show_subjects(request):
+    if 'username_admin' in request.session:
+        subjects = Subjects.objects.all().order_by('id')
+        return render(request, 'owner/show_subjects_payment.html',
+                      { 'subjects': subjects})
+    else:
+        return redirect('/owner/adminlogin')
