@@ -15,6 +15,9 @@
 
 <div id="wrapper">
     <div class="main-content">
+         <div class="p-t-15">
+                    {% include 'reusable/back_button.html' %}
+             </div>
          {% if message %}
         <div class="alert alert-success " id="messages" role="alert">
             {{message}}
