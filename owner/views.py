@@ -204,7 +204,23 @@ def select(request, userid):
     else:
         return redirect('/owner/adminlogin')
 
+#new changes in payment, coded by Devaprasd
 
+def show_payment(request):
+    if 'username_admin' in request.session:
+        subjects = Subjects.objects.all().order_by('id')
+        if request.method == 'POST':
+            Searchfield = request.POST['name']
+            subjects = Subjects.objects.filter(SubjectName=Searchfield)
+            return render(request, 'owner/show_report.html', {'subjects': subjects})
+
+        else:
+
+            payments = Payments.objects.all().order_by('id')
+            return render(request, 'owner/show_payment.html', {'payments': payments})
+
+    else:
+        return redirect('/owner/adminlogin')
 
 # Coded By Hana, Akhila
 def payment(request):
