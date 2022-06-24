@@ -12,7 +12,7 @@ urlpatterns = [
     path('', views.dashboard, name='dashboard'),
     path('approve', views.approve, name='approve'),
     path('approve/<userid>', views.individual_view, name='individual_view'),
-    path('payment',views.payment,name='payment'),
+    path('payment_subject/<subjectid>',views.payment_subject,name='payment_subject'),
     #Done By Akhila
 
     path('payment/<userid>', views.user_verify_view, name='user_verify_view' ),
@@ -55,6 +55,6 @@ urlpatterns = [
     # payment section
     path('payment_edit', views.payment_edit, name='payment_edit'),
     path('payment_update/<paymentid>', views.payment_update, name='payment_update'),
-    path('show_payment', views.show_payment, name='show_payment'),
+    path('payment_show_subjects', views.payment_show_subjects, name='payment_show_subjects'),
 ]
 
