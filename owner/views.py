@@ -44,7 +44,7 @@ def adminlogin(request):
 
         if user is not None:
             auth.login(request, user)
-            request.session['username'] = username
+            request.session['username_admin'] = username
             return JsonResponse(
                 {'success': True},
                 safe=False
@@ -62,12 +62,12 @@ def adminlogin(request):
         return render(request, 'owner/adminlogin.html')
 
 def logout(request):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         request.session.flush()
     return redirect('/owner/adminlogin')
 
 def dashboard(request):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         return render(request, 'owner/dashboard.html')
 
 
@@ -75,7 +75,7 @@ def dashboard(request):
 
 def approve(request):
     # coded by Hana
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         if request.method == 'POST':
 
             search_vector = SearchVector('Name', 'Phd_Reg')
@@ -96,7 +96,7 @@ def approve(request):
 
 
 def individual_view(request, userid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         selected_user = Applicants.objects.get(id=userid)
         SubjectName = selected_user.Subject
         subject = Subjects.objects.get(SubjectName=SubjectName)
@@ -116,7 +116,7 @@ def individual_view(request, userid):
 
 
 def reject(request, userid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         print(userid)
         user = Applicants.objects.get(id=userid)
         user.Eligibility = False
@@ -147,7 +147,7 @@ def reject(request, userid):
 
     # 2nd phase : coded by devaprasad
 def select(request, userid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         user = Applicants.objects.get(id=userid)
         user.Eligibility = True
 
@@ -208,7 +208,7 @@ def select(request, userid):
 
 # Coded By Hana, Akhila
 def payment(request):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         if request.method == 'POST':
 
             Searchfield = request.POST['name']
@@ -229,7 +229,7 @@ def payment(request):
 # responsive page
 
 def user_verify_view(request, userid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         user_det = Candidates.objects.get(Register_Number=userid)
         if user_det.PaymentDetails:
             pay_val = 1
@@ -242,7 +242,7 @@ def user_verify_view(request, userid):
 
 
 def denial(request, userid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         user = Candidates.objects.get(Register_Number=userid)
         user.PaymentStatus = False
         user.save()
@@ -266,7 +266,7 @@ def denial(request, userid):
 
 
 def verified(request, userid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         user = Candidates.objects.get(Register_Number=userid)
         user.PaymentStatus = True
         user.save()
@@ -294,7 +294,7 @@ def verified(request, userid):
 # User management by Sharun
 
 def user_manage(request):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         users = Applicants.objects.all()
         return render(request, 'owner/user_manage.html', {'users': users})
     else:
@@ -303,7 +303,7 @@ def user_manage(request):
 
 
 def search_user(request):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         if request.method == 'GET':
             searched_user = request.GET['search_data']
             requested_user = Applicants.objects.filter(Email=searched_user)
@@ -320,7 +320,7 @@ def search_user(request):
 
 
 def view_user(request, email):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         user = Candidates.objects.filter(Email=email)[:1].get()
         return render(request, 'owner/view_user.html', {'user': user})
     else:
@@ -330,14 +330,14 @@ def view_user(request, email):
 
 def update_user(request, email):
     # TODO: Update user details
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         pass
     #code here
     else:
         return redirect('/owner/adminlogin')
 
 def delete_user(request, userid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         try:
             Candidates.objects.get(ApplicationId=userid).delete()
             Applicants.objects.filter(id=userid).delete()
@@ -361,7 +361,7 @@ def delete_user(request, userid):
 #         return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subjects': subjects})
 # coded by dp
 def show_subjects(request):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         subjects = Subjects.objects.all().order_by('id')
         if request.method == 'POST':
             Searchfield = request.POST['name']
@@ -381,7 +381,7 @@ def show_subjects(request):
 # Edited by Akhila
 #new editing devaprasad
 def show_students(request,subjectid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         subject = Subjects.objects.get(id=subjectid)
         users = Candidates.objects.filter(SubjectId=subject).order_by('RegNumber')
 
@@ -403,7 +403,7 @@ def show_students(request,subjectid):
 
 
 def individual_mark_upload(request, userid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         user = Candidates.objects.get(Register_Number=userid)
         subject = Subjects.objects.get(id=user.SubjectId.id)
         if request.method == 'POST':
@@ -442,7 +442,7 @@ def individual_mark_upload(request, userid):
 
 
 def mark_edit(request, userid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         if request.method == 'POST':
             pass
         else:
@@ -456,7 +456,7 @@ def mark_edit(request, userid):
 
 
 def mark_update(request, markid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         if request.method == 'POST':
             Attendance = int(request.POST['attendance'])
             Assignment1Mark = int(request.POST['assignment1'])
@@ -501,7 +501,7 @@ def mark_update(request, markid):
 
 
 def mark_delete(request, markid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         mark = Marks.objects.get(id=markid)
         userid = mark.StudentId.Register_Number
         mark.delete()
@@ -539,7 +539,7 @@ def mark_calculation(Subject, Attendance, Assignment1Mark, Assignment2Mark, GdMa
 # coded by Hana
 # 2nd phase : coded by devaprasad
 def subjects_edit(request):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         if request.method == 'POST':
             Subjectname = request.POST['subjectname']
             Totalhour = request.POST['totalhours']
@@ -552,9 +552,9 @@ def subjects_edit(request):
             subject.save()
 
             subjects = Subjects.objects.all().order_by('id')
-            return render(request, 'owner/subjects.html',
-                          {'subjects': subjects, 'message': f"New Course {Subjectname} added successfully"})
-
+            # return render(request, 'owner/subjects.html',
+            #               {'subjects': subjects, 'message': f"New Course {Subjectname} added successfully"})
+            return redirect('/owner/subjects_edit')
         else:
             subjects = Subjects.objects.all().order_by('id')
             return render(request, 'owner/subjects.html', {'subjects': subjects})
@@ -570,7 +570,7 @@ def subjects_edit(request):
 
 
 def subject_update(request, subjectid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         if request.method == 'POST':
             subjectname = request.POST['subjectname']
             totalhour = request.POST['totalhours']
@@ -603,7 +603,7 @@ def subject_update(request, subjectid):
 #     return render(request,'owner/show_report.html',{'subjects':subjects})
 
 def show_report(request):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         subjects = Subjects.objects.all().order_by('id')
         if request.method == 'POST':
             Searchfield = request.POST['name']
@@ -620,7 +620,7 @@ def show_report(request):
 
 
 def report(request,subjectid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         subject = Subjects.objects.get(id=subjectid)
         candidates = Candidates.objects.filter(SubjectId=subject)
         marks = Marks.objects.all()
@@ -630,7 +630,7 @@ def report(request,subjectid):
         return redirect('/owner/adminlogin')
 
 def report_download(request,subjectid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         subject = Subjects.objects.get(id=subjectid)
         candidates = Candidates.objects.filter(SubjectId=subject)
         marks = Marks.objects.all()
@@ -655,7 +655,7 @@ def report_download(request,subjectid):
 
 
 def report_mark(request,subjectid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         subject = Subjects.objects.get(id=subjectid)
         users = Candidates.objects.filter(SubjectId=subject)
         marks = Marks.objects.all()
@@ -665,7 +665,7 @@ def report_mark(request,subjectid):
         return redirect('/owner/adminlogin')
 
 def report_mark_download(request,subjectid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         subject = Subjects.objects.get(id=subjectid)
         users = Candidates.objects.filter(SubjectId=subject)
         marks = Marks.objects.all()
@@ -692,7 +692,7 @@ def report_mark_download(request,subjectid):
 
 
 def report_attendance(request,subjectid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         subject = Subjects.objects.get(id=subjectid)
         users = Candidates.objects.filter(SubjectId=subject)
         marks = Marks.objects.all()
@@ -702,7 +702,7 @@ def report_attendance(request,subjectid):
         return redirect('/owner/adminlogin')
 
 def report_attendance_download(request,subjectid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         subject = Subjects.objects.get(id=subjectid)
         users = Candidates.objects.filter(SubjectId=subject)
         marks = Marks.objects.all()
@@ -733,7 +733,7 @@ def report_attendance_download(request,subjectid):
 # User edit Edited by Devaprasad
 
 def user_edit(request):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         if request.method == 'POST':
 
             Searchfield = request.POST['name']
@@ -751,7 +751,7 @@ def user_edit(request):
 
 
 def edit_form(request,userid):
-    if 'username' in request.session:
+    if 'username_admin' in request.session:
         user_det = Candidates.objects.get(Register_Number=userid)
 
         if request.method == 'POST':
