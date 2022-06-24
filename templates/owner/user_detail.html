@@ -141,27 +141,33 @@
 <!--          coded by dp-->
 {% for user in user_payments %}
           {{ user.PaymentId.PaymentName }}
-            <td><div class="alert alert-warning w-100 text-center" role="alert">No file</div></td>
-
-            <td><a class="btn btn-outline-info w-100" href="{{ person_details.PaymentDetails.url}}" role="button">View Reciept</a></td>
-
-
-
-        {% if person_details.PaymentStatus == True %}
+          {% if user.PaymentDetails %}
+            <td><a class="btn btn-outline-info w-100" href="{{ user.PaymentDetails.url}}" role="button">View Reciept</a></td>
+          {% if PaymentStatus %}
+          {% if PaymentStatus == True %}
         <div class=" alert alert-success text-center"><strong>Verified & Accepted</strong></div>
-        {% elif person_details.PaymentStatus == False %}
+          {% elif PaymentStatus == False %}
         <div class=" alert alert-danger text-center"><strong> Not Verified(Incomplete)</strong></div>
+          <a href="/owner/verified/{{person_details.Register_Number}}" ><button type="button" class="btn btn-outline-success ">Verify</button></a>
+        <a href="/owner/denial/{{person_details.Register_Number}}" ><button type="button" class="btn btn-outline-danger">Denial</button></a>
+          {% endif %}
         {% else %}
         <div class="d-grid   d-md-flex justify-content-evenly">
 
 
         <a href="/owner/verified/{{person_details.Register_Number}}" ><button type="button" class="btn btn-outline-success ">Verify</button></a>
         <a href="/owner/denial/{{person_details.Register_Number}}" ><button type="button" class="btn btn-outline-danger">Denial</button></a>
+          {% endif %}
 
+          {% endif %}
  </div>
-            {% endif %}
+
 
 {% endfor %}
+          {% if user_payments %}
+           {% else %}
+           <td><div class="alert alert-warning w-100 text-center" role="alert">No file</div></td>
+          {% endif %}
       </div>
 
       </div>
