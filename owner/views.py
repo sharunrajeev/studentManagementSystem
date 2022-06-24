@@ -863,10 +863,18 @@ def payment_update(request, paymentid):
         return redirect('/owner/adminlogin')
 
 
+def payment_delete(request,paymentid):
+
+    Payment = Payments.objects.get(id=paymentid)
+
+    Payment.delete()
+    return redirect(f"/owner/payment_edit")
+
+
+
 def payment_show_subjects(request):
     if 'username_admin' in request.session:
         subjects = Subjects.objects.all().order_by('id')
-        return render(request, 'owner/show_subjects_payment.html',
-                      { 'subjects': subjects})
+        return render(request, 'owner/show_subjects_payment.html',{ 'subjects': subjects})
     else:
         return redirect('/owner/adminlogin')

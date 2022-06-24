@@ -55,6 +55,7 @@ urlpatterns = [
     # payment section
     path('payment_edit', views.payment_edit, name='payment_edit'),
     path('payment_update/<paymentid>', views.payment_update, name='payment_update'),
+    path('payment_delete/<paymentid>',views.payment_delete,name="payment_delete"),
     path('payment_show_subjects', views.payment_show_subjects, name='payment_show_subjects'),
 ]
 
