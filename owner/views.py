@@ -252,7 +252,7 @@ def user_verify_view(request, userid):
         # else:
         #     pay_val = 0
         user_payments = UserPayments.objects.filter(StudentId = user_det)
-        return render(request, 'owner/user_detail.html', {'person_details': user_det})
+        return render(request, 'owner/user_detail.html', {'person_details': user_det,'user_payments':user_payments})
 
     else:
         return redirect('/owner/adminlogin')

@@ -139,7 +139,8 @@
 
 
 <!--          coded by dp-->
-
+{% for user in user_payments %}
+          {{ user.PaymentId.PaymentName }}
             <td><div class="alert alert-warning w-100 text-center" role="alert">No file</div></td>
 
             <td><a class="btn btn-outline-info w-100" href="{{ person_details.PaymentDetails.url}}" role="button">View Reciept</a></td>
@@ -160,7 +161,7 @@
  </div>
             {% endif %}
 
-
+{% endfor %}
       </div>
 
       </div>
