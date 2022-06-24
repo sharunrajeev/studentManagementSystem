@@ -153,14 +153,23 @@ def payment_form(request):
         if request.method == 'POST':
             if len(request.FILES['File']) != 0:
                 PaymentDetails = request.FILES['File']
-                user.PaymentDetails = PaymentDetails
-                user.save()
-                Uploaded_file = user.PaymentDetails
+                payment=request.POST['payment']
+
+                payment_user=Payments.objects.get(PaymentName=payment)
+                userpayments=UserPayments()
+                userpayments.StudentId=user
+                userpayments.PaymentDetails= PaymentDetails
+
+                userpayments.PaymentId=payment_user
+
+
+                userpayments.save()
+                # Uploaded_file = user.PaymentDetails
             # return redirect('/user/payment_form')
-            return render(request, 'user/payment_form.html', {'Uploaded_file': Uploaded_file,'message': "Successfully uploaded Payment Details"} )
+            return render(request, 'user/payment_form.html', {'message': "Successfully uploaded Payment Details"} )
         else:
-            Uploaded_file = user.PaymentDetails
-            return render(request, 'user/payment_form.html', {'Uploaded_file': Uploaded_file})
+            payments=Payments.objects.all()
+            return render(request, 'user/payment_form.html', {'payments':payments})
     else:
         return redirect('/user/login')
 

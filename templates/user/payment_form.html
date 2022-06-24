@@ -6,7 +6,7 @@
 {% block styles %}
 <link href="{% static 'css/payment_form.css' %}" rel="stylesheet">
 <link href="{% static 'css/user_sidebar.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 {% endblock %}
 
@@ -40,11 +40,26 @@
 <!--                            <i class="fas fa-file-alt" data-fa-transform="shrink-2 up-4"></i>-->
 <!--                            <i class="fas fa-file-pdf" data-fa-transform="shrink-3 down-2 right-6 rotate-45"></i>-->
                         </div>
+
+
+
                         <!--<input type="file" id="file-upload">-->
                         <section class="section-preview">
 
                             <form class="md-form my-3" method="post" action="payment_form" enctype="multipart/form-data">
+
                                 {% csrf_token %}
+
+                                <label for="payment">Payment Mode</label><br>
+                                <select name="payment" class="input--style-4 input_default" id="inputGroupSelect01">
+                                <option selected>Choose...</option>
+                                    {% for payment in payments %}
+                                <option value="{{payment.PaymentName}}">{{payment.PaymentName}}</option>
+                                    {% endfor %}
+                                </select>
+
+                                <br>
+
                                 <div class="file-field">
                                     <div class="btn btn_upload btn-dark btn-sm float-left">
 
