@@ -1,7 +1,7 @@
 from email import message
 from django.contrib.auth.models import User,auth
 from django.shortcuts import render, redirect
-from .models import Applicants, Candidates, Marks, Subjects
+from .models import Applicants, Candidates, Marks, Subjects , Payments
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -204,7 +204,23 @@ def select(request, userid):
     else:
         return redirect('/owner/adminlogin')
 
+#new changes in payment, coded by Devaprasd
 
+def show_payment(request):
+    if 'username_admin' in request.session:
+        subjects = Subjects.objects.all().order_by('id')
+        if request.method == 'POST':
+            Searchfield = request.POST['name']
+            subjects = Subjects.objects.filter(SubjectName=Searchfield)
+            return render(request, 'owner/show_report.html', {'subjects': subjects})
+
+        else:
+
+            payments = Payments.objects.all().order_by('id')
+            return render(request, 'owner/show_payment.html', {'payments': payments})
+
+    else:
+        return redirect('/owner/adminlogin')
 
 # Coded By Hana, Akhila
 def payment(request):
@@ -797,3 +813,51 @@ def edit_form(request,userid):
 
     else:
         return redirect('/owner/adminlogin')
+
+
+
+# Payment section coded by Devaprasad
+
+
+def payment_edit(request):
+    if 'username_admin' in request.session:
+        if request.method == 'POST':
+            Paymentname = request.POST['paymentname']
+
+            Payment = Payments()
+            Payment.PaymentName = Paymentname
+
+            Payment.save()
+
+            # subjects = Subjects.objects.all().order_by('id')
+
+            return redirect('/owner/payment_edit')
+        else:
+            payments = Payments.objects.all().order_by('id')
+            return render(request, 'owner/payment.html', {'payments': payments})
+    else:
+        return redirect('/owner/adminlogin')
+
+
+
+
+def payment_update(request, paymentid):
+    if 'username_admin' in request.session:
+        if request.method == 'POST':
+            Paymentname = request.POST['paymentname']
+
+
+            Payment = Payments.objects.get(id=paymentid)
+
+            Payment.PaymentName = Paymentname
+
+            Payment.save()
+
+            payments = Payments.objects.all().order_by('id')
+
+            return render(request, 'owner/payment.html',
+                          {'payments': payments, 'message': f" payment details updated successfully"})
+
+    else:
+        return redirect('/owner/adminlogin')
+

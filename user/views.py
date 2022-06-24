@@ -2,7 +2,7 @@ from email import message
 from lib2to3.pgen2 import token
 from pyexpat.errors import messages
 from django.shortcuts import redirect, render
-from owner.models import Applicants, Candidates, Marks, Subjects
+from owner.models import Applicants, Candidates, Marks, Subjects, Payments
 from django.contrib.auth.models import User, auth
 from django.http import JsonResponse
 from django.contrib.auth import views as auth_views

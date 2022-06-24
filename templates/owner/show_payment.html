@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Show Report{% endblock %}
+
+{% block styles %}
+
+  <!-- CSS only -->
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+  <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
+
+
+{% endblock %}
+
+{% block body %}
+{% include 'reusable/sidebar.html' %}
+{% include 'reusable/navbar.html' %}
+
+<div id="wrapper">
+	<div class="main-content">
+        <div class="d-flex justify-content-center align-items-center">
+            <div class="col-md-8">
+
+                <!-- Search Box -->
+                <form action="show_report" method="post">
+                {% csrf_token %}
+                    <div class="search">
+                        <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
+                        <input name="name" type="text" class="form-control" placeholder="Search">
+                        <button class="btn btn-primary" type="submit">Search</button>
+                    </div>
+                </form>
+                <!-- -->
+            </div>
+            <div class="col-md-2">
+                <a href="/owner/payment_edit" class="btn btn-outline-success " >Add/Edit Payment Methods</a>
+            </div>
+        </div>
+
+        <div class="verify_div" style="margin-top: 5rem; ">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-12">
+
+
+                        <table class="table table-borderless table-responsive">
+                            <thead>
+                                <tr>
+                                    <th >Sl</th>
+                                    <th>Payment Method</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for payment in payments %}
+                                    <tr>
+                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td>{{ payment.PaymentName }}</td>
+
+                                        <td class="text-center">
+                                            <a href="report/{{ subject.id }}" class="btn btn-outline-primary"><i class="fa fa-eye"></i> View </a>
+                                        </td>
+
+
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+<!--          <div class=" d-grid   d-md-flex  justify-content-evenly" style="margin-top: 5rem;">-->
+<!-- <a href="report_mark"><button type="button" class="btn btn-outline-secondary btn-rounded " >  <i class="fa fa-eye"></i> View Mark Report</button>  </a>-->
+<!-- <a href="report_attendance"><button type="button" class="btn btn-outline-secondary btn-rounded ">  <i class="fa fa-eye"></i> View Attendance Report</button>  </a>-->
+
+<!--</div>-->
+
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script>
+    let html_tag = document.getElementsByTagName('html')
+    let button_tag = document.getElementById("nav--btn")
+
+    button_tag.onclick = function (e) {
+        e.preventDefault()
+        html_tag[0].classList.toggle("menu-active")
+    }
+</script>
+{% endblock %}
