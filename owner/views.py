@@ -67,235 +67,287 @@ def logout(request):
     return redirect('/owner/adminlogin')
 
 def dashboard(request):
-    return render(request, 'owner/dashboard.html')
+    if 'username' in request.session:
+        return render(request, 'owner/dashboard.html')
+
+
 
 
 def approve(request):
     # coded by Hana
+    if 'username' in request.session:
+        if request.method == 'POST':
 
-    if request.method == 'POST':
+            search_vector = SearchVector('Name', 'Phd_Reg')
+            Searchfield = request.POST['name']
 
-        search_vector = SearchVector('Name', 'Phd_Reg')
-        Searchfield = request.POST['name']
+            users = Applicants.objects.annotate(search=search_vector).filter(search=Searchfield)
+            return render(request, 'owner/verify.html', {'users': users, 'message': 'User not found'})
+        else:
+            users = Applicants.objects.all()
 
-        users = Applicants.objects.annotate(search=search_vector).filter(search=Searchfield)
-        return render(request, 'owner/verify.html', {'users': users, 'message': 'User not found'})
+            users = reversed(users)
+
+            return render(request, 'owner/verify.html', {'users': users})
     else:
-        users = Applicants.objects.all()
+        return redirect('/owner/adminlogin')
 
-        users = reversed(users)
 
-        return render(request, 'owner/verify.html', {'users': users})
 
 
 def individual_view(request, userid):
-    selected_user = Applicants.objects.get(id=userid)
-    SubjectName = selected_user.Subject
-    subject = Subjects.objects.get(SubjectName=SubjectName)
-    users = Applicants.objects.all()
-    candidate = ""
-    if selected_user.Eligibility == True:
-        candidate = Candidates.objects.get(UserId = userid)
-    return render(request, 'owner/individual.html', {'individual': selected_user, 'users': users, 'subject': subject, 'candidate' : candidate })
+    if 'username' in request.session:
+        selected_user = Applicants.objects.get(id=userid)
+        SubjectName = selected_user.Subject
+        subject = Subjects.objects.get(SubjectName=SubjectName)
+        users = Applicants.objects.all()
+        candidate = ""
+        if selected_user.Eligibility == True:
+            candidate = Candidates.objects.get(UserId=userid)
+        return render(request, 'owner/individual.html',
+                      {'individual': selected_user, 'users': users, 'subject': subject, 'candidate': candidate})
+
+    else:
+        return redirect('/owner/adminlogin')
+
+
 
 
 
 
 def reject(request, userid):
-    print(userid)
-    user = Applicants.objects.get(id=userid)
-    user.Eligibility = False
-    user.save()
-    name = user.Name
-    email = user.Email
-    message = f"Dear {name}," \
-              f"\nAfter carefully reviewing your application, we regret to inform you that we are not offering you admission currently to the applied course " \
-              f"We’d like to congratulate you on your impressive academic accomplishments and are confident you will continue to pursue excellence in your studies. " \
-              f"Thank you for your time and effort in applying and we wish you the best of luck in your academic future!\n\n" \
-              f"\nRegards\n" \
-              f"CUSAT "
+    if 'username' in request.session:
+        print(userid)
+        user = Applicants.objects.get(id=userid)
+        user.Eligibility = False
+        user.save()
+        name = user.Name
+        email = user.Email
+        message = f"Dear {name}," \
+                  f"\nAfter carefully reviewing your application, we regret to inform you that we are not offering you admission currently to the applied course " \
+                  f"We’d like to congratulate you on your impressive academic accomplishments and are confident you will continue to pursue excellence in your studies. " \
+                  f"Thank you for your time and effort in applying and we wish you the best of luck in your academic future!\n\n" \
+                  f"\nRegards\n" \
+                  f"CUSAT "
 
-    email = EmailMessage(
-        'Regarding the selection process',
-        message,
-        'settings.EMAIL_HOST_USER',
-        [email],
-    )
+        email = EmailMessage(
+            'Regarding the selection process',
+            message,
+            'settings.EMAIL_HOST_USER',
+            [email],
+        )
 
-    email.fail_silently = False
-    email.send()
+        email.fail_silently = False
+        email.send()
 
-    return redirect('approve')
+        return redirect('approve')
+    else:
+        return redirect('/owner/adminlogin')
+
 
     # 2nd phase : coded by devaprasad
 def select(request, userid):
-    user = Applicants.objects.get(id=userid)
-    user.Eligibility = True
+    if 'username' in request.session:
+        user = Applicants.objects.get(id=userid)
+        user.Eligibility = True
 
-    user.save()
+        user.save()
 
-    email = user.Email
-    SubjectName = user.Subject
+        email = user.Email
+        SubjectName = user.Subject
 
-    subject = Subjects.objects.get(SubjectName = SubjectName)
+        subject = Subjects.objects.get(SubjectName=SubjectName)
 
+        user_candidates = Candidates()
+        user_candidates.ApplicationId = user
+        user_candidates.SubjectId = subject
+        user_candidates.UserId = userid
+        user_candidates.save()
 
+        # register number creating
+        year = subject.Year
+        reg_model = year * 1000
+        candidate = Candidates.objects.get(UserId=userid)
+        register_number = candidate.Register_Number
+        reg_num = register_number + reg_model
+        user_candidates.RegNumber = reg_num
 
-    user_candidates = Candidates()
-    user_candidates.ApplicationId = user
-    user_candidates.SubjectId = subject
-    user_candidates.UserId = userid
-    user_candidates.save()
+        user_candidates.save()
 
-    # register number creating
-    year = subject.Year
-    reg_model = year * 1000
-    candidate = Candidates.objects.get(UserId = userid)
-    register_number = candidate.Register_Number
-    reg_num = register_number + reg_model
-    user_candidates.RegNumber = reg_num
+        password = User.objects.make_random_password()
+        username = reg_num
+        name = user.Name
+        candidate = User.objects.create_user(
+            first_name=name, username=username, password=password, email=email)
+        candidate.save()
 
-    user_candidates.save()
+        message = f"Dear {name}, \n" \
+                  f"\nWe are glad to inform you that, your application for 'Research and Publication Ethics Course Work Program'" \
+                  f" by 'PROF. N.R. MADAVA MENON INTERDISCIPLINARY CENTRE FOR RESEARCH ETHICS AND PROTOCOLS,CUSAT' have been selected." \
+                  f"Your Username and Password for Further processes have been provided with this E-mail." \
+                  f"Please complete the registration process and confirm your allotment before the last date.\n" \
+                  f" \nYour username : {reg_num}\n Your password: {password}\n\n" \
+                  f"\nRegards\n" \
+                  f"CUSAT."
 
+        email = EmailMessage(
+            'Greetings! You have selected',
+            message,
+            'settings.EMAIL_HOST_USER',
+            [email],
+        )
 
+        email.fail_silently = False
+        email.send()
 
-    password = User.objects.make_random_password()
-    username = reg_num
-    name = user.Name
-    candidate = User.objects.create_user(
-        first_name=name, username=username, password=password, email=email)
-    candidate.save()
+        return redirect('approve')
+    else:
+        return redirect('/owner/adminlogin')
 
-    message = f"Dear {name}, \n" \
-              f"\nWe are glad to inform you that, your application for 'Research and Publication Ethics Course Work Program'" \
-              f" by 'PROF. N.R. MADAVA MENON INTERDISCIPLINARY CENTRE FOR RESEARCH ETHICS AND PROTOCOLS,CUSAT' have been selected." \
-              f"Your Username and Password for Further processes have been provided with this E-mail." \
-              f"Please complete the registration process and confirm your allotment before the last date.\n"\
-              f" \nYour username : {reg_num}\n Your password: {password}\n\n" \
-              f"\nRegards\n" \
-              f"CUSAT."
-
-    email = EmailMessage(
-        'Greetings! You have selected',
-        message,
-        'settings.EMAIL_HOST_USER',
-        [email],
-    )
-
-    email.fail_silently = False
-    email.send()
-
-    return redirect('approve')
 
 
 # Coded By Hana, Akhila
 def payment(request):
-    if request.method == 'POST':
+    if 'username' in request.session:
+        if request.method == 'POST':
 
-        Searchfield = request.POST['name']
-        users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield)|Candidates.objects.filter(ApplicationId__Name__icontains=Searchfield)
+            Searchfield = request.POST['name']
+            users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield) | Candidates.objects.filter(
+                ApplicationId__Name__icontains=Searchfield)
 
-        return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
+            return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
+        else:
+            users = Candidates.objects.all().order_by('Register_Number')
+
+            return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
+
     else:
-        users = Candidates.objects.all().order_by('Register_Number')
-
-
-
-        return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
+        return redirect('/owner/adminlogin')
 
 
 # payment verification done by akhila
 # responsive page
 
 def user_verify_view(request, userid):
-    print(userid)
-    user_det = Candidates.objects.get(Register_Number=userid)
-    if user_det.PaymentDetails:
-        pay_val = 1
+    if 'username' in request.session:
+        user_det = Candidates.objects.get(Register_Number=userid)
+        if user_det.PaymentDetails:
+            pay_val = 1
+        else:
+            pay_val = 0
+        return render(request, 'owner/user_detail.html', {'person_details': user_det, 'pay_val': pay_val})
+
     else:
-        pay_val = 0
-    return render(request, 'owner/user_detail.html', {'person_details': user_det, 'pay_val': pay_val})
+        return redirect('/owner/adminlogin')
 
 
 def denial(request, userid):
-    print(userid)
-    user = Candidates.objects.get(Register_Number=userid)
-    user.PaymentStatus = False
-    user.save()
-    email = user.ApplicationId.Email
-    message = f" Your profile stands incomplete. As payment proof being not verified"
+    if 'username' in request.session:
+        user = Candidates.objects.get(Register_Number=userid)
+        user.PaymentStatus = False
+        user.save()
+        email = user.ApplicationId.Email
+        message = f" Your profile stands incomplete. As payment proof being not verified"
 
-    email = EmailMessage(
-        'profile incomplete',
-        message,
-        'settings.EMAIL_HOST_USER',
-        [email],
-    )
+        email = EmailMessage(
+            'profile incomplete',
+            message,
+            'settings.EMAIL_HOST_USER',
+            [email],
+        )
 
-    email.fail_silently = False
-    email.send()
+        email.fail_silently = False
+        email.send()
 
-    return redirect('payment')
+        return redirect('payment')
+    else:
+        return redirect('/owner/adminlogin')
+
 
 
 def verified(request, userid):
-    user = Candidates.objects.get(Register_Number=userid)
-    user.PaymentStatus = True
-    user.save()
+    if 'username' in request.session:
+        user = Candidates.objects.get(Register_Number=userid)
+        user.PaymentStatus = True
+        user.save()
 
-    email = user.ApplicationId.Email
+        email = user.ApplicationId.Email
 
-    message = f" Your payment verification has completed"
+        message = f" Your payment verification has completed"
 
-    email = EmailMessage(
-        'your profile verified',
-        message,
-        'settings.EMAIL_HOST_USER',
-        [email],
-    )
+        email = EmailMessage(
+            'your profile verified',
+            message,
+            'settings.EMAIL_HOST_USER',
+            [email],
+        )
 
-    email.fail_silently = False
-    email.send()
+        email.fail_silently = False
+        email.send()
 
-    return redirect('payment')
+        return redirect('payment')
+    else:
+        return redirect('/owner/adminlogin')
+
 
 
 # User management by Sharun
 
 def user_manage(request):
-    users = Applicants.objects.all()
-    return render(request, 'owner/user_manage.html', {'users': users})
+    if 'username' in request.session:
+        users = Applicants.objects.all()
+        return render(request, 'owner/user_manage.html', {'users': users})
+    else:
+        return redirect('/owner/adminlogin')
+
 
 
 def search_user(request):
-    if request.method == 'GET':
-        searched_user = request.GET['search_data']
-        requested_user = Applicants.objects.filter(Email=searched_user)
-        if requested_user:
-            return render(request, 'owner/user_manage.html', {'users': requested_user, 'message': 'User found'})
-        else:
-            users = Applicants.objects.all()
-            return render(request, 'owner/user_manage.html', {'users': users, 'message': 'User not found'})
+    if 'username' in request.session:
+        if request.method == 'GET':
+            searched_user = request.GET['search_data']
+            requested_user = Applicants.objects.filter(Email=searched_user)
+            if requested_user:
+                return render(request, 'owner/user_manage.html', {'users': requested_user, 'message': 'User found'})
+            else:
+                users = Applicants.objects.all()
+                return render(request, 'owner/user_manage.html', {'users': users, 'message': 'User not found'})
+
+    else:
+        return redirect('/owner/adminlogin')
+
+
 
 
 def view_user(request, email):
-    user = Candidates.objects.filter(Email=email)[:1].get()
-    return render(request, 'owner/view_user.html', {'user': user})
+    if 'username' in request.session:
+        user = Candidates.objects.filter(Email=email)[:1].get()
+        return render(request, 'owner/view_user.html', {'user': user})
+    else:
+        return redirect('/owner/adminlogin')
+
 
 
 def update_user(request, email):
     # TODO: Update user details
-    pass
-
+    if 'username' in request.session:
+        pass
+    #code here
+    else:
+        return redirect('/owner/adminlogin')
 
 def delete_user(request, userid):
-    try:
-        Candidates.objects.get(ApplicationId=userid).delete()
-        Applicants.objects.filter(id=userid).delete()
-        messages.success(request, 'User deleted successfully')
-    except:
-        messages.error(request, 'Error occured while deleting user')
-    return redirect('user_manage')
+    if 'username' in request.session:
+        try:
+            Candidates.objects.get(ApplicationId=userid).delete()
+            Applicants.objects.filter(id=userid).delete()
+            messages.success(request, 'User deleted successfully')
+        except:
+            messages.error(request, 'Error occured while deleting user')
+        return redirect('user_manage')
+    else:
+        return redirect('/owner/adminlogin')
+
 
 
 # coded by devaprasad
@@ -309,128 +361,154 @@ def delete_user(request, userid):
 #         return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subjects': subjects})
 # coded by dp
 def show_subjects(request):
-    subjects = Subjects.objects.all().order_by('id')
-    if request.method == 'POST':
-        Searchfield = request.POST['name']
+    if 'username' in request.session:
+        subjects = Subjects.objects.all().order_by('id')
+        if request.method == 'POST':
+            Searchfield = request.POST['name']
 
-        subjects = Subjects.objects.filter(SubjectName=Searchfield)
-        return render(request, 'owner/show_subjects.html', {'subjects': subjects})
+            subjects = Subjects.objects.filter(SubjectName=Searchfield)
+            return render(request, 'owner/show_subjects.html', {'subjects': subjects})
+
+        else:
+
+            subjects = Subjects.objects.all().order_by('id')
+            return render(request, 'owner/show_subjects.html', {'subjects': subjects})
 
     else:
-
-        subjects = Subjects.objects.all().order_by('id')
-        return render(request, 'owner/show_subjects.html', {'subjects': subjects})
+        return redirect('/owner/adminlogin')
 
 
 # Edited by Akhila
 #new editing devaprasad
 def show_students(request,subjectid):
-    subject = Subjects.objects.get(id=subjectid)
-    users = Candidates.objects.filter(SubjectId = subject).order_by('RegNumber')
+    if 'username' in request.session:
+        subject = Subjects.objects.get(id=subjectid)
+        users = Candidates.objects.filter(SubjectId=subject).order_by('RegNumber')
 
-    marks = Marks.objects.all()
-    if request.method == 'POST':
+        marks = Marks.objects.all()
+        if request.method == 'POST':
 
-        Searchfield = request.POST['name']
-        users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield)|Candidates.objects.filter(ApplicationId__Name__icontains=Searchfield)
+            Searchfield = request.POST['name']
+            users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield) | Candidates.objects.filter(
+                ApplicationId__Name__icontains=Searchfield)
 
-        return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks})
+            return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks})
+
+        else:
+            return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subject': subject})
 
     else:
-        return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subject': subject})
+        return redirect('/owner/adminlogin')
+
 
 
 def individual_mark_upload(request, userid):
-    user = Candidates.objects.get(Register_Number=userid)
-    subject = Subjects.objects.get(id=user.SubjectId.id)
-    if request.method == 'POST':
+    if 'username' in request.session:
+        user = Candidates.objects.get(Register_Number=userid)
+        subject = Subjects.objects.get(id=user.SubjectId.id)
+        if request.method == 'POST':
 
-        Attendance = int(request.POST['attendance'])
-        Assignment1Mark = int(request.POST['assignment1'])
-        Assignment2Mark = int(request.POST['assignment2'])
-        GdMark = int(request.POST['gd'])
-        CpMark = int(request.POST['cp'])
+            Attendance = int(request.POST['attendance'])
+            Assignment1Mark = int(request.POST['assignment1'])
+            Assignment2Mark = int(request.POST['assignment2'])
+            GdMark = int(request.POST['gd'])
+            CpMark = int(request.POST['cp'])
 
+            attendance_percentage, a_mark, total_assignment, total = mark_calculation(subject, Attendance,
+                                                                                      Assignment1Mark,
+                                                                                      Assignment2Mark, GdMark, CpMark)
 
+            user_mark = Marks.objects.create(StudentId=user, Attendance=Attendance,
+                                             AttendancePercentage=attendance_percentage, AttendanceMark=a_mark,
+                                             Assignment1Mark=Assignment1Mark, Assignment2Mark=Assignment2Mark,
+                                             TotalAssignmentMark=total_assignment, GdMark=GdMark, CpMark=CpMark,
+                                             Total=total)
+            user_mark.save()
 
-        attendance_percentage, a_mark, total_assignment, total = mark_calculation(subject, Attendance,
-                                                                                       Assignment1Mark,
-                                                                                       Assignment2Mark, GdMark, CpMark)
+            total_table = Marks.objects.filter(StudentId=user).aggregate(Sum('Total'))
+            total_marks = total_table.get('Total__sum')
+            print(total_marks)
+            user.Marks = int(total_marks)
 
-        user_mark = Marks.objects.create(StudentId=user, Attendance=Attendance,
-                                         AttendancePercentage=attendance_percentage, AttendanceMark=a_mark,
-                                         Assignment1Mark=Assignment1Mark, Assignment2Mark=Assignment2Mark,
-                                         TotalAssignmentMark=total_assignment, GdMark=GdMark, CpMark=CpMark,
-                                         Total=total)
-        user_mark.save()
+            user.save()
+            return redirect(f'/owner/show_students/{subject.id}')
 
-        total_table = Marks.objects.filter(StudentId = user).aggregate(Sum('Total'))
-        total_marks = total_table.get('Total__sum')
-        print(total_marks)
-        user.Marks = int(total_marks)
+        else:
 
-        user.save()
-        return redirect(f'/owner/show_students/{subject.id}')
-
+            return render(request, 'owner/mark_upload_form.html', {'user': user, 'subject': subject})
     else:
+        return redirect('/owner/adminlogin')
 
-        return render(request, 'owner/mark_upload_form.html', {'user': user, 'subject': subject})
 
 
 def mark_edit(request, userid):
-    if request.method == 'POST':
-        pass
+    if 'username' in request.session:
+        if request.method == 'POST':
+            pass
+        else:
+            user = Candidates.objects.get(Register_Number=userid)
+            marks = Marks.objects.filter(StudentId=user).order_by('id')
+            return render(request, 'owner/mark_edit.html', {'User': user, 'marks': marks})
     else:
-        user = Candidates.objects.get(Register_Number=userid)
-        marks = Marks.objects.filter(StudentId=user).order_by('id')
-        return render(request, 'owner/mark_edit.html', {'User': user, 'marks': marks })
+        return redirect('/owner/adminlogin')
+
+
 
 
 def mark_update(request, markid):
-    if request.method == 'POST':
-        Attendance = int(request.POST['attendance'])
-        Assignment1Mark = int(request.POST['assignment1'])
-        Assignment2Mark = int(request.POST['assignment2'])
-        GdMark = int(request.POST['gd'])
-        CpMark = int(request.POST['cp'])
+    if 'username' in request.session:
+        if request.method == 'POST':
+            Attendance = int(request.POST['attendance'])
+            Assignment1Mark = int(request.POST['assignment1'])
+            Assignment2Mark = int(request.POST['assignment2'])
+            GdMark = int(request.POST['gd'])
+            CpMark = int(request.POST['cp'])
 
-        mark = Marks.objects.get(id=markid)
-        userid = mark.StudentId.Register_Number
+            mark = Marks.objects.get(id=markid)
+            userid = mark.StudentId.Register_Number
 
-        Subject = mark.StudentId.SubjectId
-        attendance_percentage, a_mark, total_assignment, total = mark_calculation(Subject, Attendance,
-                                                                                       Assignment1Mark,
-                                                                                       Assignment2Mark, GdMark, CpMark)
-        mark.AttendancePercentage = attendance_percentage
-        mark.AttendanceMark = a_mark
-        mark.TotalAssignmentMark = total_assignment
-        mark.Total = total
-        mark.Attendance = Attendance
-        mark.Assignment1Mark = Assignment1Mark
-        mark.Assignment2Mark = Assignment2Mark
-        mark.GdMark = GdMark
-        mark.CpMark = CpMark
+            Subject = mark.StudentId.SubjectId
+            attendance_percentage, a_mark, total_assignment, total = mark_calculation(Subject, Attendance,
+                                                                                      Assignment1Mark,
+                                                                                      Assignment2Mark, GdMark, CpMark)
+            mark.AttendancePercentage = attendance_percentage
+            mark.AttendanceMark = a_mark
+            mark.TotalAssignmentMark = total_assignment
+            mark.Total = total
+            mark.Attendance = Attendance
+            mark.Assignment1Mark = Assignment1Mark
+            mark.Assignment2Mark = Assignment2Mark
+            mark.GdMark = GdMark
+            mark.CpMark = CpMark
 
-        mark.save()
+            mark.save()
 
-        candidate = Candidates.objects.get(Register_Number=userid)
-        total_table = Marks.objects.filter(StudentId = candidate).aggregate(Sum('Total'))
-        total_marks = total_table.get('Total__sum')
-        print(total_marks)
-        candidate.Marks = int(total_marks)
+            candidate = Candidates.objects.get(Register_Number=userid)
+            total_table = Marks.objects.filter(StudentId=candidate).aggregate(Sum('Total'))
+            total_marks = total_table.get('Total__sum')
+            print(total_marks)
+            candidate.Marks = int(total_marks)
 
-        candidate.save()
+            candidate.save()
 
-        user = Candidates.objects.get(Register_Number=userid)
-        marks = Marks.objects.filter(StudentId=user).order_by('id')
-        return render(request,'owner/mark_edit.html',{'User': user, 'marks': marks,'message': "Mark Details updated successfully"})
+            user = Candidates.objects.get(Register_Number=userid)
+            marks = Marks.objects.filter(StudentId=user).order_by('id')
+            return render(request, 'owner/mark_edit.html',
+                          {'User': user, 'marks': marks, 'message': "Mark Details updated successfully"})
+    else:
+        return redirect('/owner/adminlogin')
+
 
 
 def mark_delete(request, markid):
-    mark = Marks.objects.get(id=markid)
-    userid = mark.StudentId.Register_Number
-    mark.delete()
-    return redirect(f"/owner/mark_edit/{userid}")
+    if 'username' in request.session:
+        mark = Marks.objects.get(id=markid)
+        userid = mark.StudentId.Register_Number
+        mark.delete()
+        return redirect(f"/owner/mark_edit/{userid}")
+    else:
+        return redirect('/owner/adminlogin')
+
 
 
 def mark_calculation(Subject, Attendance, Assignment1Mark, Assignment2Mark, GdMark, CpMark):
@@ -461,23 +539,28 @@ def mark_calculation(Subject, Attendance, Assignment1Mark, Assignment2Mark, GdMa
 # coded by Hana
 # 2nd phase : coded by devaprasad
 def subjects_edit(request):
-    if request.method == 'POST':
-        Subjectname = request.POST['subjectname']
-        Totalhour = request.POST['totalhours']
-        Year  = request.POST['year']
-        subject = Subjects()
-        subject.SubjectName = Subjectname
-        subject.TotalHour = Totalhour
-        subject.Year = Year
+    if 'username' in request.session:
+        if request.method == 'POST':
+            Subjectname = request.POST['subjectname']
+            Totalhour = request.POST['totalhours']
+            Year = request.POST['year']
+            subject = Subjects()
+            subject.SubjectName = Subjectname
+            subject.TotalHour = Totalhour
+            subject.Year = Year
 
-        subject.save()
+            subject.save()
 
-        subjects = Subjects.objects.all().order_by('id')
-        return render(request, 'owner/subjects.html', {'subjects': subjects, 'message': f"New Course {Subjectname} added successfully"})
+            subjects = Subjects.objects.all().order_by('id')
+            return render(request, 'owner/subjects.html',
+                          {'subjects': subjects, 'message': f"New Course {Subjectname} added successfully"})
 
+        else:
+            subjects = Subjects.objects.all().order_by('id')
+            return render(request, 'owner/subjects.html', {'subjects': subjects})
     else:
-        subjects = Subjects.objects.all().order_by('id')
-        return render(request, 'owner/subjects.html', {'subjects': subjects})
+        return redirect('/owner/adminlogin')
+
 
 
 # def subject_delete(request, subjectid):
@@ -487,22 +570,27 @@ def subjects_edit(request):
 
 
 def subject_update(request, subjectid):
-    if request.method == 'POST':
-        subjectname = request.POST['subjectname']
-        totalhour = request.POST['totalhours']
-        year = request.POST['year']
+    if 'username' in request.session:
+        if request.method == 'POST':
+            subjectname = request.POST['subjectname']
+            totalhour = request.POST['totalhours']
+            year = request.POST['year']
 
-        subject = Subjects.objects.get(id=subjectid)
+            subject = Subjects.objects.get(id=subjectid)
 
-        subject.SubjectName = subjectname
-        subject.TotalHour = totalhour
-        subject.Year=year
+            subject.SubjectName = subjectname
+            subject.TotalHour = totalhour
+            subject.Year = year
 
-        subject.save()
+            subject.save()
 
-        subjects = Subjects.objects.all().order_by('id')
+            subjects = Subjects.objects.all().order_by('id')
 
-        return render(request, 'owner/subjects.html', {'subjects': subjects, 'message': f" Course details updated successfully"})
+            return render(request, 'owner/subjects.html',
+                          {'subjects': subjects, 'message': f" Course details updated successfully"})
+
+    else:
+        return redirect('/owner/adminlogin')
 
 
 
@@ -515,161 +603,197 @@ def subject_update(request, subjectid):
 #     return render(request,'owner/show_report.html',{'subjects':subjects})
 
 def show_report(request):
-    subjects = Subjects.objects.all().order_by('id')
-    if request.method == 'POST':
-        Searchfield = request.POST['name']
-        subjects = Subjects.objects.filter(SubjectName=Searchfield)
-        return render(request, 'owner/show_report.html', {'subjects': subjects})
+    if 'username' in request.session:
+        subjects = Subjects.objects.all().order_by('id')
+        if request.method == 'POST':
+            Searchfield = request.POST['name']
+            subjects = Subjects.objects.filter(SubjectName=Searchfield)
+            return render(request, 'owner/show_report.html', {'subjects': subjects})
+
+        else:
+
+            subjects = Subjects.objects.all().order_by('id')
+            return render(request, 'owner/show_report.html', {'subjects': subjects})
 
     else:
-
-        subjects = Subjects.objects.all().order_by('id')
-        return render(request, 'owner/show_report.html', {'subjects': subjects})
+        return redirect('/owner/adminlogin')
 
 
 def report(request,subjectid):
-     subject = Subjects.objects.get(id=subjectid)
-     candidates = Candidates.objects.filter(SubjectId =  subject)
-     marks = Marks.objects.all()
-     return render(request, 'owner/report.html' , {'marks':marks,'subject':subject,'users':candidates})
+    if 'username' in request.session:
+        subject = Subjects.objects.get(id=subjectid)
+        candidates = Candidates.objects.filter(SubjectId=subject)
+        marks = Marks.objects.all()
+        return render(request, 'owner/report.html', {'marks': marks, 'subject': subject, 'users': candidates})
+
+    else:
+        return redirect('/owner/adminlogin')
 
 def report_download(request,subjectid):
-    subject = Subjects.objects.get(id=subjectid)
-    candidates = Candidates.objects.filter(SubjectId=subject)
-    marks = Marks.objects.all()
-    template_path = 'owner/pdf_report.html'
-    context = {'marks':marks,'subject':subject,'users':candidates}
-    # Create a Django response object, and specify content_type as pdf
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'filename="subject_report.pdf"'
-    # find the template and render it.
-    template = get_template(template_path)
-    html = template.render(context)
+    if 'username' in request.session:
+        subject = Subjects.objects.get(id=subjectid)
+        candidates = Candidates.objects.filter(SubjectId=subject)
+        marks = Marks.objects.all()
+        template_path = 'owner/pdf_report.html'
+        context = {'marks': marks, 'subject': subject, 'users': candidates}
+        # Create a Django response object, and specify content_type as pdf
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'filename="subject_report.pdf"'
+        # find the template and render it.
+        template = get_template(template_path)
+        html = template.render(context)
 
-    # create a pdf
-    pisa_status = pisa.CreatePDF(
-       html, dest=response)
-    # if error then show some funny view
-    if pisa_status.err:
-       return HttpResponse('We had some errors <pre>' + html + '</pre>')
-    return response
+        # create a pdf
+        pisa_status = pisa.CreatePDF(
+            html, dest=response)
+        # if error then show some funny view
+        if pisa_status.err:
+            return HttpResponse('We had some errors <pre>' + html + '</pre>')
+        return response
+    else:
+        return redirect('/owner/adminlogin')
+
 
 def report_mark(request,subjectid):
-    subject = Subjects.objects.get(id=subjectid)
-    users = Candidates.objects.filter(SubjectId=subject)
-    marks = Marks.objects.all()
-    return render(request,'owner/report_mark.html',{'marks':marks,'users':users,'subject':subject})
+    if 'username' in request.session:
+        subject = Subjects.objects.get(id=subjectid)
+        users = Candidates.objects.filter(SubjectId=subject)
+        marks = Marks.objects.all()
+        return render(request, 'owner/report_mark.html', {'marks': marks, 'users': users, 'subject': subject})
+
+    else:
+        return redirect('/owner/adminlogin')
 
 def report_mark_download(request,subjectid):
-    subject = Subjects.objects.get(id=subjectid)
-    users = Candidates.objects.filter(SubjectId=subject)
-    marks = Marks.objects.all()
+    if 'username' in request.session:
+        subject = Subjects.objects.get(id=subjectid)
+        users = Candidates.objects.filter(SubjectId=subject)
+        marks = Marks.objects.all()
+
+        template_path = 'owner/pdf_report_mark.html'
+        context = {'marks': marks, 'subject': subject, 'users': users}
+        # Create a Django response object, and specify content_type as pdf
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'filename="subject_report.pdf"'
+        # find the template and render it.
+        template = get_template(template_path)
+        html = template.render(context)
+
+        # create a pdf
+        pisa_status = pisa.CreatePDF(
+            html, dest=response)
+        # if error then show some funny view
+        if pisa_status.err:
+            return HttpResponse('We had some errors <pre>' + html + '</pre>')
+        return response
+    else:
+        return redirect('/owner/adminlogin')
 
 
-
-    template_path = 'owner/pdf_report_mark.html'
-    context = {'marks':marks,'subject':subject,'users':users}
-    # Create a Django response object, and specify content_type as pdf
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'filename="subject_report.pdf"'
-    # find the template and render it.
-    template = get_template(template_path)
-    html = template.render(context)
-
-    # create a pdf
-    pisa_status = pisa.CreatePDF(
-       html, dest=response)
-    # if error then show some funny view
-    if pisa_status.err:
-       return HttpResponse('We had some errors <pre>' + html + '</pre>')
-    return response
 
 def report_attendance(request,subjectid):
-    subject = Subjects.objects.get(id=subjectid)
-    users = Candidates.objects.filter(SubjectId=subject)
-    marks = Marks.objects.all()
-    return render(request,'owner/report_attendance.html',{'marks':marks,'users':users,'subject':subject})
+    if 'username' in request.session:
+        subject = Subjects.objects.get(id=subjectid)
+        users = Candidates.objects.filter(SubjectId=subject)
+        marks = Marks.objects.all()
+        return render(request, 'owner/report_attendance.html', {'marks': marks, 'users': users, 'subject': subject})
+
+    else:
+        return redirect('/owner/adminlogin')
 
 def report_attendance_download(request,subjectid):
-    subject = Subjects.objects.get(id=subjectid)
-    users = Candidates.objects.filter(SubjectId=subject)
-    marks = Marks.objects.all()
+    if 'username' in request.session:
+        subject = Subjects.objects.get(id=subjectid)
+        users = Candidates.objects.filter(SubjectId=subject)
+        marks = Marks.objects.all()
+
+        template_path = 'owner/pdf_report_attendance.html'
+        context = {'marks': marks, 'subject': subject, 'users': users}
+        # Create a Django response object, and specify content_type as pdf
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'filename="subject_report.pdf"'
+        # find the template and render it.
+        template = get_template(template_path)
+        html = template.render(context)
+
+        # create a pdf
+        pisa_status = pisa.CreatePDF(
+            html, dest=response)
+        # if error then show some funny view
+        if pisa_status.err:
+            return HttpResponse('We had some errors <pre>' + html + '</pre>')
+        return response
+    else:
+        return redirect('/owner/adminlogin')
 
 
-
-    template_path = 'owner/pdf_report_attendance.html'
-    context = {'marks':marks,'subject':subject,'users':users}
-    # Create a Django response object, and specify content_type as pdf
-    response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'filename="subject_report.pdf"'
-    # find the template and render it.
-    template = get_template(template_path)
-    html = template.render(context)
-
-    # create a pdf
-    pisa_status = pisa.CreatePDF(
-       html, dest=response)
-    # if error then show some funny view
-    if pisa_status.err:
-       return HttpResponse('We had some errors <pre>' + html + '</pre>')
-    return response
 
 
 
 # User edit Edited by Devaprasad
 
 def user_edit(request):
-    if request.method == 'POST':
+    if 'username' in request.session:
+        if request.method == 'POST':
 
-        Searchfield = request.POST['name']
-        users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield)|Candidates.objects.filter(ApplicationId__Name__icontains=Searchfield)
+            Searchfield = request.POST['name']
+            users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield) | Candidates.objects.filter(
+                ApplicationId__Name__icontains=Searchfield)
 
-        return render(request, 'owner/user_edit.html', {'users': users, 'message': 'User not found'})
+            return render(request, 'owner/user_edit.html', {'users': users, 'message': 'User not found'})
+        else:
+            users = Candidates.objects.all().order_by('Register_Number')
+
+            return render(request, 'owner/user_edit.html', {'users': users, 'message': 'User not found'})
+
     else:
-        users = Candidates.objects.all().order_by('Register_Number')
-
-        return render(request, 'owner/user_edit.html', {'users': users, 'message': 'User not found'})
+        return redirect('/owner/adminlogin')
 
 
 def edit_form(request,userid):
-    user_det = Candidates.objects.get(Register_Number=userid)
+    if 'username' in request.session:
+        user_det = Candidates.objects.get(Register_Number=userid)
 
-    if request.method == 'POST':
-        Name = request.POST['Name']
-        Email = request.POST['Email']
-        Mob = request.POST['Mob']
-        Dob = request.POST['Dob']
-        Subject = request.POST['Subject']
-        Gender = request.POST['Gender']
-        Address = request.POST['Address']
-        Phd_Reg = request.POST['Phd_Reg']
-        Phd_Joining_Date = request.POST['Phd_Joining_Date']
-        Research_Topic = request.POST['Research_Topic']
-        Research_Guide = request.POST['Research_Guide']
-        Guide_Mail = request.POST['Guide_Mail']
-        Guide_Phone = request.POST['Guide_Phone']
-        print(Name,Email,Mob,Dob,Subject,Gender,Address,Phd_Reg,Phd_Joining_Date,Research_Topic,Research_Guide,Guide_Phone,Guide_Mail)
-        sub = Subjects.objects.get(SubjectName = Subject)
+        if request.method == 'POST':
+            Name = request.POST['Name']
+            Email = request.POST['Email']
+            Mob = request.POST['Mob']
+            Dob = request.POST['Dob']
+            Subject = request.POST['Subject']
+            Gender = request.POST['Gender']
+            Address = request.POST['Address']
+            Phd_Reg = request.POST['Phd_Reg']
+            Phd_Joining_Date = request.POST['Phd_Joining_Date']
+            Research_Topic = request.POST['Research_Topic']
+            Research_Guide = request.POST['Research_Guide']
+            Guide_Mail = request.POST['Guide_Mail']
+            Guide_Phone = request.POST['Guide_Phone']
+            print(Name, Email, Mob, Dob, Subject, Gender, Address, Phd_Reg, Phd_Joining_Date, Research_Topic,
+                  Research_Guide, Guide_Phone, Guide_Mail)
+            sub = Subjects.objects.get(SubjectName=Subject)
 
-        user_det.SubjectId = sub
-        user_det.ApplicationId.Name = Name
-        user_det.ApplicationId.Email = Email
-        user_det.ApplicationId.Mob = Mob
-        user_det.ApplicationId.Dob = Dob
-        user_det.ApplicationId.Gender = Gender
-        user_det.ApplicationId.Address = Address
-        user_det.ApplicationId.Phd_Reg = Phd_Reg
-        user_det.ApplicationId.Phd_Joining_Date = Phd_Joining_Date
-        user_det.ApplicationId.Research_Topic = Research_Topic
-        user_det.ApplicationId.Research_Guide = Research_Guide
-        user_det.ApplicationId.Guide_Mail = Guide_Mail
-        user_det.ApplicationId.Guide_Phone = Guide_Phone
+            user_det.SubjectId = sub
+            user_det.ApplicationId.Name = Name
+            user_det.ApplicationId.Email = Email
+            user_det.ApplicationId.Mob = Mob
+            user_det.ApplicationId.Dob = Dob
+            user_det.ApplicationId.Gender = Gender
+            user_det.ApplicationId.Address = Address
+            user_det.ApplicationId.Phd_Reg = Phd_Reg
+            user_det.ApplicationId.Phd_Joining_Date = Phd_Joining_Date
+            user_det.ApplicationId.Research_Topic = Research_Topic
+            user_det.ApplicationId.Research_Guide = Research_Guide
+            user_det.ApplicationId.Guide_Mail = Guide_Mail
+            user_det.ApplicationId.Guide_Phone = Guide_Phone
 
-        user_det.save()
-        user_det.ApplicationId.save()
+            user_det.save()
+            user_det.ApplicationId.save()
 
-        return redirect('/owner/user_edit')
+            return redirect('/owner/user_edit')
+
+        else:
+            subjects = Subjects.objects.all()
+            return render(request, 'owner/edit_form.html', {'person_details': user_det, 'subjects': subjects})
 
     else:
-        subjects = Subjects.objects.all()
-        return render(request, 'owner/edit_form.html', {'person_details': user_det, 'subjects':subjects})
+        return redirect('/owner/adminlogin')
