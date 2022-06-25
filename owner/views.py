@@ -286,7 +286,8 @@ def denial(request, userid):
     if 'username_admin' in request.session:
 
         #user = Candidates.objects.get(Register_Number=userid)
-        user = UserPayments.objects.filter(id=userid)[0]
+        user = UserPayments.objects.get(id=userid)
+        candidate_id = user.StudentId.Register_Number
         user.PaymentStatus = False
         user.save()
         email = user.StudentId.ApplicationId.Email
@@ -302,7 +303,7 @@ def denial(request, userid):
         email.fail_silently = False
         email.send()
 
-        return redirect(f'/owner/payment/{userid}')
+        return redirect(f'/owner/payment/{candidate_id}')
     else:
         return redirect('/owner/adminlogin')
 
@@ -310,9 +311,10 @@ def denial(request, userid):
 
 def verified(request, userid):
     if 'username_admin' in request.session:
-        # user_canditate = Candidates.objects.get(Register_Number=userid)
-        # user_id= user_candidate.id
-        user = UserPayments.objects.filter(id=userid)[0]
+        #user_canditate = Candidates.objects.get(Register_Number=userid)
+        #user_id= user_candidate.id
+        user = UserPayments.objects.get(id=userid)
+        candidate_id = user.StudentId.Register_Number
         user.PaymentStatus = True
         user.save()
 
@@ -330,7 +332,7 @@ def verified(request, userid):
         email.fail_silently = False
         email.send()
 
-        return redirect(f'/owner/payment/{userid}')
+        return redirect(f'/owner/payment/{candidate_id}')
     else:
         return redirect('/owner/adminlogin')
 
