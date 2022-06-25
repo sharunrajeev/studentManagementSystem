@@ -290,11 +290,17 @@ def denial(request, userid):
         candidate_id = user.StudentId.Register_Number
         user.PaymentStatus = False
         user.save()
+        name= user.StudentId.ApplicationId.Name
+        subject = user.StudentId.ApplicationId.Subject
+        payment = user.PaymentId.PaymentName
         email = user.StudentId.ApplicationId.Email
-        message = f" Your profile stands incomplete. As the payment proof being not verified"
+        message = f"Dear {name}\n" \
+                  f"\n Your profile stands incomplete for {payment} of the course {subject}." \
+                  f" As the payment proof being not Uploaded the required recipt/ being not verified\n" \
+                  f"\n\n Regards\n CUSAT"
 
         email = EmailMessage(
-            'profile incomplete',
+            'Your Payment incomplete',
             message,
             'settings.EMAIL_HOST_USER',
             [email],
@@ -317,13 +323,16 @@ def verified(request, userid):
         candidate_id = user.StudentId.Register_Number
         user.PaymentStatus = True
         user.save()
-
+        name = user.StudentId.ApplicationId.Name
+        subject = user.StudentId.ApplicationId.Subject
+        payment = user.PaymentId.PaymentName
         email = user.StudentId.ApplicationId.Email
-
-        message = f" Your payment verification has completed"
+        message = f"Dear {name} \n" \
+                  f" \nYour payment verification has completed for {payment} of the course {subject}.\n" \
+                  f"\n\n Regards\n CUSAT"
 
         email = EmailMessage(
-            'your profile verified',
+            'Your payment proof verified',
             message,
             'settings.EMAIL_HOST_USER',
             [email],
