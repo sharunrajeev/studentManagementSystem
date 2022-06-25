@@ -62,9 +62,9 @@
                          {% if user_payment.StudentId == user %}
                            <p> {{ user_payment.PaymentId.PaymentName }}:
                            {% if user_payment.PaymentStatus == True %}
-                            <p class=" bg-success text-white">Verified</p>
+                            <p class="badge rounded-pill bg-success " style="font-size:1rem;">Verified <i class="fa fa-check"></i></p>
                             {% else %}
-                            <p class="text-warning"> Not verified </p>
+                            <p class="badge rounded-pill bg-warning text-dark" style="font-size:1rem;"> Not verified <i class="fa fa-times"></i></p>
                                {% endif %}</p>
 
                          {% endif %}
@@ -81,7 +81,7 @@
 
                         <td><a class="btn btn-outline-success btn-sm" href="/owner/payment/{{ user.Register_Number }}" role="button">Verify</a></td>
 
-                    </tr}}>
+                    </tr>
                 {% endfor %}
                 </tbody>
 </table>

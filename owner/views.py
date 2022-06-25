@@ -35,32 +35,35 @@ def adminlogin(request):
     #
     # else:
     #     return render(request, 'owner/adminlogin.html')
+    if 'username_admin' in request.session:
+        return redirect('/owner/')
+    else:
+        if request.method == 'POST':
 
-    if request.method == 'POST':
+            username = request.POST['username']
+            password = request.POST['password']
 
-        username = request.POST['username']
-        password = request.POST['password']
+            user = auth.authenticate(username=username, password=password, is_staff=True)
 
-        user = auth.authenticate(username=username, password=password, is_staff=True)
+            if user is not None:
+                auth.login(request, user)
+                request.session['username_admin'] = username
+                return JsonResponse(
+                    {'success': True},
+                    safe=False
+                )
 
-        if user is not None:
-            auth.login(request, user)
-            request.session['username_admin'] = username
-            return JsonResponse(
-                {'success': True},
-                safe=False
-            )
+            else:
+
+                print("Invalid Credentials")
+                return JsonResponse(
+                    {'success': False},
+                    safe=False
+                )
 
         else:
+            return render(request, 'owner/adminlogin.html')
 
-            print("Invalid Credentials")
-            return JsonResponse(
-                {'success': False},
-                safe=False
-            )
-
-    else:
-        return render(request, 'owner/adminlogin.html')
 
 def logout(request):
     if 'username_admin' in request.session:
@@ -903,11 +906,14 @@ def payment_update(request, paymentid):
 
 
 def payment_delete(request,paymentid):
+    if 'username_admin' in request.session:
+        Payment = Payments.objects.get(id=paymentid)
 
-    Payment = Payments.objects.get(id=paymentid)
+        Payment.delete()
+        return redirect(f"/owner/payment_edit")
+    else:
+        return redirect('/owner/adminlogin')
 
-    Payment.delete()
-    return redirect(f"/owner/payment_edit")
 
 
 
