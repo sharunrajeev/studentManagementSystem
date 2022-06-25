@@ -68,7 +68,7 @@
                         <form method="post" action="/owner/payment_update/{{ payment.id }}">
                             {% csrf_token %}
                             <td>
-                                <a href="#">{{ forloop.counter }}</a>
+                               {{ forloop.counter }}
                             </td>
 
                             <td>

@@ -75,7 +75,7 @@
                         <form method="post" action="/owner/subject_update/{{ subject.id }}">
                             {% csrf_token %}
                             <td>
-                                <a href="#">{{ forloop.counter }}</a>
+                                {{ forloop.counter }}
                             </td>
 
                             <td>
