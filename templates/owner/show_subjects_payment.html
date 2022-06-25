@@ -66,7 +66,7 @@
                             <tbody>
                                 {% for subject in subjects %}
                                     <tr>
-                                        <th scope="row">{{ forloop.counter }}</th>
+                                        <td >{{ forloop.counter }}</td>
                                         <td>{{ subject.SubjectName }}</td>
                                         <td class="text-center">
                                             <a href="payment_subject/{{ subject.id }}" class="btn btn-primary"><i class="fa fa-eye"></i> View Students</a>
