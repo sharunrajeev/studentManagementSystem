@@ -22,7 +22,7 @@
  {% include 'reusable/back_button.html' %}
         <div class="d-flex justify-content-center align-items-center" style="margin-top: 3rem;">
             <div class="col-md-6">
-                <form action="payment" method="post">
+                <form action="payment_subject" method="post">
                 {% csrf_token %}
                     <div class="search">
                         <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
@@ -56,14 +56,17 @@
                         <td>{{ user.RegNumber }}</td>
                         <td>{{ user.ApplicationId.Subject }}</td>
                         <td>{{ user.ApplicationId.Email }}</td>
-                        {% if user.PaymentStatus == null %}
+
+                         {% if user.PaymentStatus == null %}
                             <td><span class="btn btn-warning btn-sm" style="cursor: default;">Not Verified</span></td>
-                        {% elif user.PaymentStatus == True %}
+                         {% elif user.PaymentStatus == True %}
                             <td><span class="btn btn-success btn-sm" style="cursor: default;">Accepted</span></td>
-                        {% else %}
+                         {% else %}
                             <td><span class="btn btn-danger btn-sm" style="cursor: default;">Rejected</span></td>
-                        {% endif %}
+                         {% endif %}
+
                         <td><a class="btn btn-outline-success btn-sm" href="/owner/payment/{{ user.Register_Number }}" role="button">Verify</a></td>
+
                     </tr>
                 {% endfor %}
                 </tbody>

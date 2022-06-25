@@ -265,11 +265,13 @@ def user_verify_view(request, userid):
 
 def denial(request, userid):
     if 'username_admin' in request.session:
-        user = Candidates.objects.get(Register_Number=userid)
+
+        #user = Candidates.objects.get(Register_Number=userid)
+        user = UserPayments.objects.filter(id=userid)[0]
         user.PaymentStatus = False
         user.save()
-        email = user.ApplicationId.Email
-        message = f" Your profile stands incomplete. As payment proof being not verified"
+        email = user.StudentId.ApplicationId.Email
+        message = f" Your profile stands incomplete. As the payment proof being not verified"
 
         email = EmailMessage(
             'profile incomplete',
@@ -281,7 +283,7 @@ def denial(request, userid):
         email.fail_silently = False
         email.send()
 
-        return redirect('payment')
+        return redirect('payment_show_subjects')
     else:
         return redirect('/owner/adminlogin')
 
@@ -289,11 +291,12 @@ def denial(request, userid):
 
 def verified(request, userid):
     if 'username_admin' in request.session:
-        user = Candidates.objects.get(Register_Number=userid)
+        # user = Candidates.objects.get(Register_Number=userid)
+        user = UserPayments.objects.filter(id=userid)[0]
         user.PaymentStatus = True
         user.save()
 
-        email = user.ApplicationId.Email
+        email = user.StudentId.ApplicationId.Email
 
         message = f" Your payment verification has completed"
 
@@ -307,7 +310,7 @@ def verified(request, userid):
         email.fail_silently = False
         email.send()
 
-        return redirect('payment')
+        return redirect('payment_show_subjects')
     else:
         return redirect('/owner/adminlogin')
 
