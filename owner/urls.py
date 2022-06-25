@@ -15,7 +15,7 @@ urlpatterns = [
     path('payment_subject/<subjectid>',views.payment_subject,name='payment_subject'),
     #Done By Akhila
 
-    path('payment/<userid>', views.user_verify_view, name='user_verify_view' ),
+    path('user_verify_view/<userid>', views.user_verify_view, name='user_verify_view' ),
     path('denial/<userid>', views.denial, name='denial'),
     path('verified/<userid>', views.verified, name='verified'),
     path('reject/<userid>', views.reject, name='reject'),
