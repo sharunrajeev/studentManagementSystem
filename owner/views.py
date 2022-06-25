@@ -425,7 +425,7 @@ def show_subjects(request):
         if request.method == 'POST':
             Searchfield = request.POST['name']
 
-            subjects = Subjects.objects.filter(SubjectName=Searchfield)
+            subjects = Subjects.objects.filter(SubjectName__icontains=Searchfield)
             return render(request, 'owner/show_subjects.html', {'subjects': subjects})
 
         else:
@@ -920,6 +920,15 @@ def payment_delete(request,paymentid):
 def payment_show_subjects(request):
     if 'username_admin' in request.session:
         subjects = Subjects.objects.all().order_by('id')
-        return render(request, 'owner/show_subjects_payment.html',{ 'subjects': subjects})
+        if request.method == 'POST':
+            Searchfield = request.POST['name']
+
+            subjects = Subjects.objects.filter(SubjectName__icontains=Searchfield)
+            return render(request, 'owner/show_subjects_payment.html', {'subjects': subjects})
+
+        else:
+
+            subjects = Subjects.objects.all().order_by('id')
+            return render(request, 'owner/show_subjects_payment.html',{ 'subjects': subjects})
     else:
         return redirect('/owner/adminlogin')
