@@ -5,7 +5,7 @@ from django.db import models
 class Subjects(models.Model):
     SubjectName = models.CharField(max_length=100, default=None)
     TotalHour = models.IntegerField(default=None)
-    Year = models.IntegerField(default=None)
+
 
 
 class Applicants(models.Model):

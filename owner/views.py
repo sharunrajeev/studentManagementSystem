@@ -12,6 +12,7 @@ from django.http import HttpResponse
 from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.db.models import Sum
+from datetime import datetime
 
 # Create your views here.
 
@@ -165,11 +166,15 @@ def select(request, userid):
         user_candidates.save()
 
         # register number creating
-        year = subject.Year
-        reg_model = year * 1000
+        date = datetime.now()
+        month = date.month
+        year = date.year
+        year_model = (year%100)*100000
+        month_model = month*1000
+
         candidate = Candidates.objects.get(UserId=userid)
         register_number = candidate.Register_Number
-        reg_num = register_number + reg_model
+        reg_num = register_number + year_model +month_model
         user_candidates.RegNumber = reg_num
 
         user_candidates.save()
@@ -560,11 +565,11 @@ def subjects_edit(request):
         if request.method == 'POST':
             Subjectname = request.POST['subjectname']
             Totalhour = request.POST['totalhours']
-            Year = request.POST['year']
+
             subject = Subjects()
             subject.SubjectName = Subjectname
             subject.TotalHour = Totalhour
-            subject.Year = Year
+
 
             subject.save()
 
@@ -591,13 +596,13 @@ def subject_update(request, subjectid):
         if request.method == 'POST':
             subjectname = request.POST['subjectname']
             totalhour = request.POST['totalhours']
-            year = request.POST['year']
+
 
             subject = Subjects.objects.get(id=subjectid)
 
             subject.SubjectName = subjectname
             subject.TotalHour = totalhour
-            subject.Year = year
+
 
             subject.save()
 

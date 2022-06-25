@@ -27,7 +27,7 @@
              <h3> Add New Course</h3>
             <br>
 
-            <form method="post" action="subjects_edit">
+            <form method="post" action="/owner/subjects_edit">
                 {% csrf_token %}
                 <div class="main">
                     <div class="row row-space">
@@ -37,12 +37,7 @@
                                 <input type="text" class="input--style-4 input_default" id="subjectname" name="subjectname" ></div>
                         </div>
 
-                        <div class="col-3">
-                            <div class="input-group">
-                                <label class="label">Year</label>
-                                <input type="number" class="input--style-4 input_default" id="totalhours" name="year" >
-                            </div>
-                        </div>
+
 
                         <div class="col-3">
                             <div class="input-group">
@@ -67,7 +62,7 @@
                     <tr>
                         <th>Sl No</th>
                         <th>Course Name</th>
-                         <th>Year</th>
+
                         <th>Total Hours</th>
                         <th>Edit</th>
 <!--                        <th>Delete</th>-->
@@ -87,9 +82,6 @@
                                 <input value="{{ subject.SubjectName }}" class="input--style-4 input_default" type="text" name="subjectname">
                             </td>
 
-                            <td>
-                                <input value="{{ subject.Year }}"  class="input--style-4 input_default" type="text" name="year">
-                            </td>
 
                             <td>
                                 <input value="{{ subject.TotalHour }}" class="input--style-4 input_default" type="number" name="totalhours">
