@@ -51,7 +51,7 @@
                                 {% csrf_token %}
 
                                 <label for="payment">Payment Mode</label><br>
-                                <select name="payment" class="input--style-4 input_default" id="inputGroupSelect01">
+                                <select name="payment" class="input--style-4 input_default" id="inputGroupSelect01" required>
                                 <option selected>Choose...</option>
                                     {% for payment in payments %}
                                 <option value="{{payment.PaymentName}}">{{payment.PaymentName}}</option>
@@ -63,10 +63,13 @@
                                 <div class="file-field">
                                     <div class="btn btn_upload btn-dark btn-sm float-left">
 
-                                        <input type="file" id="file_upload" onchange="fileVerify(this)" name="File">
+                                        <input type="file" id="file_upload" onchange="fileVerify(this)" name="File" required>
                                     </div>
                                     <button type="submit" class="btn btn-primary w-10" id="files" disabled>Submit</button>
-                                    <label for="files" class="btn">Last Submit: {{ Uploaded_file }}</label>
+
+                                    {% for user_detail in user_details %}
+                                    <label for="files" class="btn">Last Submit ({{user_detail.PaymentId.PaymentName}}): {{ user_detail.PaymentDetails }}</label>
+                                    {% endfor%}
                                 </div>
                             </form>
 

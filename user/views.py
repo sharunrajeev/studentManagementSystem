@@ -156,20 +156,45 @@ def payment_form(request):
                 payment=request.POST['payment']
 
                 payment_user=Payments.objects.get(PaymentName=payment)
-                userpayments=UserPayments()
-                userpayments.StudentId=user
-                userpayments.PaymentDetails= PaymentDetails
+                flag = False
+                if UserPayments.objects.all():
+                    users = UserPayments.objects.filter(StudentId=user , PaymentId = payment_user)
+                    for u in users:
+                        id = u.id
+                    us = UserPayments.objects.get(id = id)
+                    if us:
 
-                userpayments.PaymentId=payment_user
+                        us.PaymentDetails = PaymentDetails
+                        us.save()
+                    else:
+                        userpayments = UserPayments()
+                        userpayments.StudentId = user
+                        userpayments.PaymentDetails = PaymentDetails
+
+                        userpayments.PaymentId = payment_user
+                        userpayments.save()
+
+                else:
+                    userpayments=UserPayments()
+                    userpayments.StudentId=user
+                    userpayments.PaymentDetails= PaymentDetails
+
+                    userpayments.PaymentId=payment_user
 
 
-                userpayments.save()
-                # Uploaded_file = user.PaymentDetails
+                    userpayments.save()
+
+            user_payment=UserPayments.objects.filter(StudentId=user)
+            payments = Payments.objects.all()
+
+
             # return redirect('/user/payment_form')
-            return redirect('/user/payment_form')
+
+            return render(request, 'user/payment_form.html', {'user_details':user_payment,'payments':payments})
         else:
             payments=Payments.objects.all()
-            return render(request, 'user/payment_form.html', {'payments':payments})
+            user_payment = UserPayments.objects.filter(StudentId=user)
+            return render(request, 'user/payment_form.html', {'payments':payments,'user_details':user_payment})
     else:
         return redirect('/user/login')
 
