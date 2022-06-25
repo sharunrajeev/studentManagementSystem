@@ -565,11 +565,11 @@ def subjects_edit(request):
         if request.method == 'POST':
             Subjectname = request.POST['subjectname']
             Totalhour = request.POST['totalhours']
-            Year = request.POST['year']
+
             subject = Subjects()
             subject.SubjectName = Subjectname
             subject.TotalHour = Totalhour
-            subject.Year = Year
+
 
             subject.save()
 
@@ -596,13 +596,13 @@ def subject_update(request, subjectid):
         if request.method == 'POST':
             subjectname = request.POST['subjectname']
             totalhour = request.POST['totalhours']
-            year = request.POST['year']
+
 
             subject = Subjects.objects.get(id=subjectid)
 
             subject.SubjectName = subjectname
             subject.TotalHour = totalhour
-            subject.Year = year
+
 
             subject.save()
 
