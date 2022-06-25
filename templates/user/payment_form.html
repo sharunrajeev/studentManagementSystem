@@ -52,12 +52,14 @@
 
                                 <label for="payment"><p class="p-0 m-0">Payment Mode</p></label><br>
                                 <select name="payment" class="input--style-4 input_default btn btn-outline-secondary dropdown-toggle " id="inputGroupSelect01" required>
-                                <option selected>Choose...</option>
+                                <option selected disabled value="">Choose...</option>
                                     {% for payment in payments %}
                                 <option class="dropdown-item" value="{{payment.PaymentName}}">{{payment.PaymentName}}</option>
                                     {% endfor %}
                                 </select>
-
+<!--<div class="invalid-feedback">-->
+<!--      Please select a valid Payment method.-->
+<!--    </div>-->
                                 <br>
 
                                 <div class="file-field py-2">
