@@ -228,7 +228,24 @@ def select(request, userid):
 #         return redirect('/owner/adminlogin')
 
 # Coded By Hana, Akhila
-def payment_subject(request,subjectid):
+# def payment_subject(request,subjectid):
+#     if 'username_admin' in request.session:
+#         if request.method == 'POST':
+#
+#             Searchfield = request.POST['name']
+#             users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield) | Candidates.objects.filter(
+#                 ApplicationId__Name__icontains=Searchfield)
+#
+#             return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
+#         else:
+#             users = Candidates.objects.filter(SubjectId__id =subjectid).order_by('Register_Number')
+#
+#             return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
+#
+#     else:
+#         return redirect('/owner/adminlogin')
+
+def payment_subject(request, subjectid):
     if 'username_admin' in request.session:
         if request.method == 'POST':
 
@@ -238,9 +255,11 @@ def payment_subject(request,subjectid):
 
             return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
         else:
-            users = Candidates.objects.filter(SubjectId__id =subjectid).order_by('Register_Number')
+            users = Candidates.objects.filter(SubjectId__id=subjectid).order_by('Register_Number')
 
-            return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
+            user_payments = UserPayments.objects.all()
+
+            return render(request, 'owner/paymentstatus.html', {'users': users,'user_payments':user_payments, 'message': 'User not found'})
 
     else:
         return redirect('/owner/adminlogin')
@@ -283,7 +302,7 @@ def denial(request, userid):
         email.fail_silently = False
         email.send()
 
-        return redirect('payment_show_subjects')
+        return redirect(f'/owner/payment/{userid}')
     else:
         return redirect('/owner/adminlogin')
 
@@ -291,7 +310,8 @@ def denial(request, userid):
 
 def verified(request, userid):
     if 'username_admin' in request.session:
-        # user = Candidates.objects.get(Register_Number=userid)
+        # user_canditate = Candidates.objects.get(Register_Number=userid)
+        # user_id= user_candidate.id
         user = UserPayments.objects.filter(id=userid)[0]
         user.PaymentStatus = True
         user.save()
@@ -310,7 +330,7 @@ def verified(request, userid):
         email.fail_silently = False
         email.send()
 
-        return redirect('payment_show_subjects')
+        return redirect(f'/owner/payment/{userid}')
     else:
         return redirect('/owner/adminlogin')
 

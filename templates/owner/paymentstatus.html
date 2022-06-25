@@ -56,18 +56,32 @@
                         <td>{{ user.RegNumber }}</td>
                         <td>{{ user.ApplicationId.Subject }}</td>
                         <td>{{ user.ApplicationId.Email }}</td>
+                        <td>
+                         {% for user_payment in user_payments %}
 
-                         {% if user.PaymentStatus == null %}
-                            <td><span class="btn btn-warning btn-sm" style="cursor: default;">Not Verified</span></td>
-                         {% elif user.PaymentStatus == True %}
-                            <td><span class="btn btn-success btn-sm" style="cursor: default;">Accepted</span></td>
-                         {% else %}
-                            <td><span class="btn btn-danger btn-sm" style="cursor: default;">Rejected</span></td>
+                         {% if user_payment.StudentId == user %}
+                           <p> {{ user_payment.PaymentId.PaymentName }}:
+                           {% if user_payment.PaymentStatus == True %}
+                            <p class=" bg-success text-white">Verified</p>
+                            {% else %}
+                            <p class="text-warning"> Not verified </p>
+                               {% endif %}</p>
+
                          {% endif %}
+
+                         {% endfor %}
+                        </td>
+<!--                         {% if user.PaymentStatus == null %}-->
+<!--                            <td><span class="btn btn-warning btn-sm" style="cursor: default;">Not Verified</span></td>-->
+<!--                         {% elif user.PaymentStatus == True %}-->
+<!--                            <td><span class="btn btn-success btn-sm" style="cursor: default;">Accepted</span></td>-->
+<!--                         {% else %}-->
+<!--                            <td><span class="btn btn-danger btn-sm" style="cursor: default;">Rejected</span></td>-->
+<!--                         {% endif %}-->
 
                         <td><a class="btn btn-outline-success btn-sm" href="/owner/payment/{{ user.Register_Number }}" role="button">Verify</a></td>
 
-                    </tr>
+                    </tr}}>
                 {% endfor %}
                 </tbody>
 </table>
