@@ -159,13 +159,24 @@ def payment_form(request):
                 flag = False
                 if UserPayments.objects.all():
                     users = UserPayments.objects.filter(StudentId=user , PaymentId = payment_user)
-                    for u in users:
-                        id = u.id
-                    us = UserPayments.objects.get(id = id)
-                    if us:
+                    if users:
 
-                        us.PaymentDetails = PaymentDetails
-                        us.save()
+                        id = 0
+                        for u in users:
+                            id = u.id
+                        print(id)
+                        us = UserPayments.objects.get(id = id )
+                        if us:
+
+                            us.PaymentDetails = PaymentDetails
+                            us.save()
+                        else:
+                            userpayments = UserPayments()
+                            userpayments.StudentId = user
+                            userpayments.PaymentDetails = PaymentDetails
+
+                            userpayments.PaymentId = payment_user
+                            userpayments.save()
                     else:
                         userpayments = UserPayments()
                         userpayments.StudentId = user
@@ -184,13 +195,9 @@ def payment_form(request):
 
                     userpayments.save()
 
-            user_payment=UserPayments.objects.filter(StudentId=user)
-            payments = Payments.objects.all()
-
-
             # return redirect('/user/payment_form')
 
-            return render(request, 'user/payment_form.html', {'user_details':user_payment,'payments':payments})
+            return redirect('/user/payment_form')
         else:
             payments=Payments.objects.all()
             user_payment = UserPayments.objects.filter(StudentId=user)
