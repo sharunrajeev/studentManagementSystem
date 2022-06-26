@@ -5,23 +5,47 @@
 {% block body %}
     {% include 'reusable/sidebar.html' %}
     {% include 'reusable/navbar.html' %}
-
-    <div class="container nav-padding">
-        <div class="row">
-            <div class="col-md-12 py-3">
-                <h1>Admin Dashboard</h1>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <a href="{% url 'approve' %}" class="btn btn-primary">Approve</a>
-                <a href="{% url 'user_manage' %}" class="btn btn-primary">User Management</a>
+    <div class="wrapper">
+        <div class="main-content">
+            <h1>Welcome to Admin!</h1>
+            <hr>
+            <div class="row g-4">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Total Applicants</h5>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-text">{{ totalApplicants }}</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Total Candidates</h5>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-text">{{ totalCandidates }}</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title">Total Subjects</h5>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-text">{{ totalCourses }}</h1>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 {% endblock body %}
 {% block scripts %}
-<script>
+    <script>
     let html_tag = document.getElementsByTagName('html')
     let button_tag = document.getElementById("nav--btn")
 
@@ -29,5 +53,5 @@
         e.preventDefault()
         html_tag[0].classList.toggle("menu-active")
     }
-</script>
+    </script>
 {% endblock %}

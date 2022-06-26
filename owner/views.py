@@ -72,7 +72,10 @@ def logout(request):
 
 def dashboard(request):
     if 'username_admin' in request.session:
-        return render(request, 'owner/dashboard.html')
+        applicantCount = Applicants.objects.count()
+        candidateCount = Candidates.objects.count()
+        subjectCount = Subjects.objects.count()
+        return render(request, 'owner/dashboard.html', {'totalApplicants': applicantCount, 'totalCandidates': candidateCount, 'totalCourses': subjectCount})
 
 
 
