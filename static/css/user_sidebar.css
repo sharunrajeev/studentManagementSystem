@@ -3,6 +3,7 @@
    box-sizing: border-box;
 }
 
+
 body {
    font-family: sans-serif;
    font-size: 1em;
@@ -106,7 +107,7 @@ a {
    transform: translateY(-50%);
 }
 
-.estudent em{
+.estudent em {
      position: absolute;
    top: 50%;
    left: 4em;
@@ -116,6 +117,7 @@ a {
 .s-sidebar__nav-link:hover {
    background: #4d6276;
 }
+
 
 .s-sidebar__nav-link > i {
    position: absolute;

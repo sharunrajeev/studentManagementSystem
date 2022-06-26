@@ -1,15 +1,30 @@
+{% load static %}
 <div class="s-layout__sidebar" style="z-index: 1000;">
+
     <!--Sidebar Title Icon (Only shows when sidebar is retracted) -->
-    <a class="s-sidebar__trigger" href="#0">
+<!--    <a class="s-sidebar__trigger" href="#0">-->
+<!--        <i class="fa fa-bars"></i>-->
+<!--    </a>-->
+<!-- <img src="{% static 'assets/icrep_logo.jpeg' %}" class="s-sidebar__trigger" alt="" style="border-radius:100%"/>-->
+
+    <nav class="s-sidebar__nav" style="z-index: 500;">
+
+        <a class="s-sidebar__trigger" href="#0">
         <i class="fa fa-bars"></i>
     </a>
+ <img src="{% static 'assets/icrep_logo.jpeg' %}" class="s-sidebar__trigger" alt="" style="border-radius:100%"/>
 
-    <nav class="s-sidebar__nav">
+<!--<div ><img src="{% static 'assets/icrep_logo.jpeg' %}" class="nav-link" alt="" style="border-radius:100%; height: 40px; width: 40px;"/></div>-->
         <ul>
             <!-- Sidebar Title -->
+
+
             <li class="nav-item">
-                <a href="/" class="nav-link text-white text-center estudent s-sidebar__nav-link">
-                  <em><h3>eStudents</h3></em>
+
+                <a href="/" class="nav-link text-white text-center  s-sidebar__nav-link">
+<div ><img src="{% static 'assets/icrep_logo.jpeg' %}" class="" alt="" style= "height: 60px; width: 60px;"/></div>
+<!--                    <div class="estudent"> <em><h3>eStudents</h3></em></div>-->
+
                 </a>
             </li>
 
