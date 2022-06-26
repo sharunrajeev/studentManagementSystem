@@ -1,0 +1,1 @@
+Folder that collects static files from static folder and stores here.
