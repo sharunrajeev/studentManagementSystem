@@ -131,9 +131,13 @@
                         </div>
                         <div class="col-sm-3">
                             <figure class="ind-header_pic">
+
                                 {% if User.Photo %}
-                                <img src="{{ User.Photo.url}}">
-                                {% endif %}
+                               <img src="{{ User.Photo.url}}">
+                               {% else %}
+                               <img src="{% static 'assets/person_image.png' %}">
+                               {% endif %}
+
                             </figure>
 
                         </div>
