@@ -473,9 +473,9 @@ a:hover {
 5. Menu Active
 */
 @media (min-width: 800px) {
-  .menu-active .header .logo {
-    color: #242424;
-  }
+  /*.menu-active .header .logo {*/
+  /*  color: #242424;*/
+  /*}*/
   .menu-active .header .logo:before {
     background: #242424;
   }

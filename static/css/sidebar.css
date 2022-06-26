@@ -60,6 +60,23 @@
   top: 2px;
 }
 
+.img_logo {
+  position: absolute;
+  top: 15%;
+  border-radius: 100%;
+  width: 40px;
+  height: 40px;
+  z-index: 10;
+}
+
+.menu-active .img_logo {
+  position: fixed;
+  top: 4px;
+  border-radius: 0;
+  transform: translateY(5px);
+  left: 20px;
+}
+
 /* Sidebar Menu */
 .navigation .title {
   padding: 12px 20px;
@@ -265,7 +282,7 @@
   }
   .menu-active .header .logo {
     position: fixed;
-    z-index: 988;
+    /*z-index: 988;*/
     width: 75px;
     height: 50px;
     font-size: 0;
@@ -283,7 +300,7 @@
     top: 0;
     width: 75px;
     height: 50px;
-    background: #ffffff;
+    /*background: #ffffff;*/
     z-index: -2;
   }
   .menu-active .header .logo:after {
