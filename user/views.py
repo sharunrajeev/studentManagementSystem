@@ -2,7 +2,7 @@ from email import message
 from lib2to3.pgen2 import token
 from pyexpat.errors import messages
 from django.shortcuts import redirect, render
-from owner.models import Applicants, Candidates, Marks, Subjects
+from owner.models import Applicants, Candidates, Marks, Subjects, Payments,UserPayments
 from django.contrib.auth.models import User, auth
 from django.http import JsonResponse
 from django.contrib.auth import views as auth_views
@@ -153,14 +153,55 @@ def payment_form(request):
         if request.method == 'POST':
             if len(request.FILES['File']) != 0:
                 PaymentDetails = request.FILES['File']
-                user.PaymentDetails = PaymentDetails
-                user.save()
-                Uploaded_file = user.PaymentDetails
+                payment=request.POST['payment']
+
+                payment_user=Payments.objects.get(PaymentName=payment)
+                flag = False
+                if UserPayments.objects.all():
+                    users = UserPayments.objects.filter(StudentId=user , PaymentId = payment_user)
+                    if users:
+
+                        id = 0
+                        for u in users:
+                            id = u.id
+                        print(id)
+                        us = UserPayments.objects.get(id = id )
+                        if us:
+
+                            us.PaymentDetails = PaymentDetails
+                            us.save()
+                        else:
+                            userpayments = UserPayments()
+                            userpayments.StudentId = user
+                            userpayments.PaymentDetails = PaymentDetails
+
+                            userpayments.PaymentId = payment_user
+                            userpayments.save()
+                    else:
+                        userpayments = UserPayments()
+                        userpayments.StudentId = user
+                        userpayments.PaymentDetails = PaymentDetails
+
+                        userpayments.PaymentId = payment_user
+                        userpayments.save()
+
+                else:
+                    userpayments=UserPayments()
+                    userpayments.StudentId=user
+                    userpayments.PaymentDetails= PaymentDetails
+
+                    userpayments.PaymentId=payment_user
+
+
+                    userpayments.save()
+
             # return redirect('/user/payment_form')
-            return render(request, 'user/payment_form.html', {'Uploaded_file': Uploaded_file,'message': "Successfully uploaded Payment Details"} )
+
+            return redirect('/user/payment_form')
         else:
-            Uploaded_file = user.PaymentDetails
-            return render(request, 'user/payment_form.html', {'Uploaded_file': Uploaded_file})
+            payments=Payments.objects.all()
+            user_payment = UserPayments.objects.filter(StudentId=user)
+            return render(request, 'user/payment_form.html', {'payments':payments,'user_details':user_payment})
     else:
         return redirect('/user/login')
 

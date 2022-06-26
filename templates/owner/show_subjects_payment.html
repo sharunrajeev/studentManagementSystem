@@ -20,7 +20,7 @@
 
 <div id="wrapper">
 	<div class="main-content">
-<h2>Mark Upload</h2>
+<h2>Payment Verification</h2>
 
         <div class="d-flex justify-content-center align-items-center">
             <div class="col-md-8">
@@ -46,6 +46,9 @@
 
 
                       </div>
+             <div class="col-md-2">
+                <a href="/owner/payment_edit" class="btn btn-outline-success " >Add/Edit Payment Methods</a>
+            </div>
         </div>
 
         <div class="verify_div" style="margin-top: 5rem; ">
@@ -66,7 +69,7 @@
                                         <td >{{ forloop.counter }}</td>
                                         <td>{{ subject.SubjectName }}</td>
                                         <td class="text-center">
-                                            <a href="show_students/{{ subject.id }}" class="btn btn-primary"><i class="fa fa-eye"></i> View Students</a>
+                                            <a href="payment_subject/{{ subject.id }}" class="btn btn-primary"><i class="fa fa-eye"></i> View Students</a>
 
                                         </td>
                                     </tr>

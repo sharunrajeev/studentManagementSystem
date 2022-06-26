@@ -15,6 +15,9 @@
 
 <div id="wrapper">
     <div class="main-content">
+         <div class="p-t-15">
+                    {% include 'reusable/back_button.html' %}
+             </div>
          {% if message %}
         <div class="alert alert-success " id="messages" role="alert">
             {{message}}
@@ -24,29 +27,21 @@
 
         <div class="table-parent">
 
-             <h3> Add New Course</h3>
+             <h3>Add New Payment </h3>
             <br>
 
-            <form method="post" action="/owner/subjects_edit">
+            <form method="post" action="payment_edit">
                 {% csrf_token %}
                 <div class="main">
                     <div class="row row-space">
-                        <div class="col-3">
+                        <div class="col-2">
                             <div class="input-group">
-                                <label class="label">Course Name</label>
-                                <input type="text" class="input--style-4 input_default" id="subjectname" name="subjectname" ></div>
+                                <label class="label">Payment Name</label>
+                                <input type="text" class="input--style-4 input_default" id="paymentname" name="paymentname" ></div>
                         </div>
 
 
-
-                        <div class="col-3">
-                            <div class="input-group">
-                                <label class="label">Total Hours</label>
-                                <input type="number" class="input--style-4 input_default" id="year" name="totalhours" >
-                            </div>
-                        </div>
-
-                        <div class="col-3" style="align-self: center;">
+                        <div class="col-2" style="align-self: center;">
                             <button id="butn" class="btn btn--radius-2 btn-sm btn--blue" type="submit">Submit</button>
                         </div>
                     </div>
@@ -54,7 +49,7 @@
             </form>
             <br>
 
-            <h3> Edit Course Details</h3>
+            <h3> Edit Payment </h3>
             <br>
             <table>
 
@@ -62,38 +57,32 @@
                     <tr>
                         <th>Sl No</th>
                         <th>Course Name</th>
-
-                        <th>Total Hours</th>
                         <th>Edit</th>
-<!--                        <th>Delete</th>-->
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
 
-                {% for subject in subjects %}
+                {% for payment in payments %}
                     <tr class="active">
-                        <form method="post" action="/owner/subject_update/{{ subject.id }}">
+                        <form method="post" action="/owner/payment_update/{{ payment.id }}">
                             {% csrf_token %}
                             <td>
-                                {{ forloop.counter }}
+                               {{ forloop.counter }}
                             </td>
 
                             <td>
-                                <input value="{{ subject.SubjectName }}" class="input--style-4 input_default" type="text" name="subjectname">
+                                <input value="{{ payment.PaymentName }}" class="input--style-4 input_default" type="text" name="paymentname">
                             </td>
 
-
-                            <td>
-                                <input value="{{ subject.TotalHour }}" class="input--style-4 input_default" type="number" name="totalhours">
-                            </td>
 
                             <td>
                                 <button class="btn btn-success btn-sm" role="button">Update</button>
                             </td>
 
-<!--                            <td>-->
-<!--                                <a class="btn btn-danger btn-sm" href="/owner/subject_delete/{{ subject.id }}" role="button">Delete</a>-->
-<!--                            </td>-->
+                            <td>
+                                <a class="btn btn-danger btn-sm" href="/owner/payment_delete/{{ payment.id }}" role="button">Delete</a>
+                            </td>
                         </form>
                     </tr>
                 {% endfor %}
@@ -122,13 +111,6 @@
     }
 </script>
 {% endblock %}
-
-
-
-
-
-
-
 
 
 
