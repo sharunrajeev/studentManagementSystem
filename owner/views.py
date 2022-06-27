@@ -76,7 +76,8 @@ def dashboard(request):
         candidateCount = Candidates.objects.count()
         subjectCount = Subjects.objects.count()
         return render(request, 'owner/dashboard.html', {'totalApplicants': applicantCount, 'totalCandidates': candidateCount, 'totalCourses': subjectCount})
-
+    else:
+        return render(request, 'owner/adminlogin.html')
 
 
 
