@@ -148,8 +148,8 @@
                     <div class="row row-space">
                         <div class="col-2 mb-3">
                             <label for="subject">Course:</label><br>
-                                <select name="subject" class="input--style-4 input_default" id="inputGroupSelect01">
-                                <option selected>Choose...</option>
+                                <select name="subject" class="input--style-4 input_default" id="inputGroupSelect01" required>
+                                <option selected disabled value="">Choose...</option>
                                 {% for subject in subjects %}
                                 <option value="{{subject.SubjectName}}">{{subject.SubjectName}}</option>
                                 {% endfor %}

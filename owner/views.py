@@ -191,13 +191,14 @@ def select(request, userid):
         candidate = User.objects.create_user(
             first_name=name, username=username, password=password, email=email)
         candidate.save()
-
+        login_link = "https://nrmcentre-sms.herokuapp.com/user/login"
         message = f"Dear {name}, \n" \
                   f"\nWe are glad to inform you that, your application for 'Research and Publication Ethics Course Work Program'" \
                   f" by 'PROF. N.R. MADAVA MENON INTERDISCIPLINARY CENTRE FOR RESEARCH ETHICS AND PROTOCOLS,CUSAT' have been selected." \
                   f"Your Username and Password for Further processes have been provided with this E-mail." \
                   f"Please complete the registration process and confirm your allotment before the last date.\n" \
                   f" \nYour username : {reg_num}\n Your password: {password}\n\n" \
+                  f" \nUse the link for login: {login_link}" \
                   f"\nRegards\n" \
                   f"CUSAT."
 
