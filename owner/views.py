@@ -1,7 +1,7 @@
 from email import message
 from django.contrib.auth.models import User,auth
 from django.shortcuts import render, redirect
-from .models import Applicants, Candidates, Marks, Subjects , Payments,UserPayments
+from .models import Applicants, Candidates, Marks, Subjects , Payments,UserPayments,Batches
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -605,23 +605,25 @@ def mark_calculation(Subject, Attendance, Assignment1Mark, Assignment2Mark, GdMa
 def subjects_edit(request):
     if 'username_admin' in request.session:
         if request.method == 'POST':
-            Subjectname = request.POST['subjectname']
-            Totalhour = request.POST['totalhours']
+            Month = request.POST['month']
+            Year = request.POST['year']
+            CommenceDate = request.POST['commencedate']
 
-            subject = Subjects()
-            subject.SubjectName = Subjectname
-            subject.TotalHour = Totalhour
+            batch = Batches()
+            batch.Month = Month
+            batch.Year = Year
+            batch.CommenceDate = CommenceDate
 
 
-            subject.save()
+            batch.save()
 
-            subjects = Subjects.objects.all().order_by('id')
+            #subjects = Subjects.objects.all().order_by('id')
             # return render(request, 'owner/subjects.html',
             #               {'subjects': subjects, 'message': f"New Course {Subjectname} added successfully"})
             return redirect('/owner/subjects_edit')
         else:
-            subjects = Subjects.objects.all().order_by('id')
-            return render(request, 'owner/subjects.html', {'subjects': subjects})
+            batches = Batches.objects.all().order_by('id')
+            return render(request, 'owner/subjects.html', {'batches': batches})
     else:
         return redirect('/owner/adminlogin')
 

@@ -7,6 +7,7 @@ class Subjects(models.Model):
     TotalHour = models.IntegerField(default=None)
 
 class Batches(models.Model):
+
     Month = models.CharField(max_length=100, default=None)
     Year = models.IntegerField(default=None)
     CommenceDate = models.DateField(default=None)

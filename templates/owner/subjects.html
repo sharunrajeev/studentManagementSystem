@@ -24,25 +24,33 @@
 
         <div class="table-parent">
 
-             <h3> Add New Course</h3>
+             <h3> Add New Batch</h3>
             <br>
 
             <form method="post" action="/owner/subjects_edit">
                 {% csrf_token %}
                 <div class="main">
                     <div class="row row-space">
+
                         <div class="col-3">
                             <div class="input-group">
-                                <label class="label">Course Name</label>
-                                <input type="text" class="input--style-4 input_default" id="subjectname" name="subjectname" required></div>
+                                <label class="label">Month</label>
+                                <input type="text" class="input--style-4 input_default" id="month" name="month" required></div>
                         </div>
 
 
 
                         <div class="col-3">
                             <div class="input-group">
-                                <label class="label">Total Hours</label>
-                                <input type="number" class="input--style-4 input_default" id="year" name="totalhours" required>
+                                <label class="label">Year</label>
+                                <input type="number" class="input--style-4 input_default" id="year" name="year" required>
+                            </div>
+                        </div>
+
+                        <div class="col-3">
+                            <div class="input-group">
+                                <label class="label">Commence Date</label>
+                                <input type="date" class="input--style-4 input_default" id="date" name="commencedate" required>
                             </div>
                         </div>
 
@@ -61,16 +69,16 @@
                 <thead>
                     <tr>
                         <th>Sl No</th>
-                        <th>Course Name</th>
+                        <th>Month</th>
 
-                        <th>Total Hours</th>
-                        <th>Edit</th>
+                        <th>Year</th>
+                        <th>Commence Date</th>
 <!--                        <th>Delete</th>-->
                     </tr>
                 </thead>
                 <tbody>
 
-                {% for subject in subjects %}
+                {% for batch in batches %}
                     <tr class="active">
                         <form method="post" action="/owner/subject_update/{{ subject.id }}">
                             {% csrf_token %}
@@ -79,18 +87,22 @@
                             </td>
 
                             <td>
-                                <input value="{{ subject.SubjectName }}" class="input--style-4 input_default" type="text" name="subjectname">
+                                <input value="{{ batch.Month }}" class="input--style-4 input_default" type="text" name="month">
                             </td>
 
 
                             <td>
-                                <input value="{{ subject.TotalHour }}" class="input--style-4 input_default" type="number" name="totalhours">
+                                <input value="{{ batch.Year }}" class="input--style-4 input_default" type="number" name="year">
                             </td>
 
+
+
+                            <td>
+                                <input value="{{ batch.CommenceDate|date:'Y-m-d' }}" class="input--style-4 input_default" type="date" name="commencedate">
+                            </td>
                             <td>
                                 <button class="btn btn-success btn-sm" role="button">Update</button>
                             </td>
-
 <!--                            <td>-->
 <!--                                <a class="btn btn-danger btn-sm" href="/owner/subject_delete/{{ subject.id }}" role="button">Delete</a>-->
 <!--                            </td>-->
