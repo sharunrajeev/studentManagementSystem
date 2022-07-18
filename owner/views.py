@@ -92,7 +92,8 @@ def approve(request):
             users = Applicants.objects.annotate(search=search_vector).filter(search=Searchfield)
             return render(request, 'owner/verify.html', {'users': users, 'message': 'User not found'})
         else:
-            users = Applicants.objects.all()
+            Latest_Batch = Batches.objects.all().order_by('-id').first()
+            users = Applicants.objects.filter(Batch=Latest_Batch)
 
             users = reversed(users)
 
