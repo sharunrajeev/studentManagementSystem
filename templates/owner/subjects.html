@@ -32,6 +32,8 @@
                 <div class="main">
                     <div class="row row-space">
 
+
+
                         <div class="col-3">
                             <div class="input-group">
                                 <label class="label">Month</label>
@@ -84,6 +86,10 @@
                             {% csrf_token %}
                             <td>
                                 {{ forloop.counter }}
+                            </td>
+
+                              <td>
+                                  <h5>{{ batch.Batch_Name }}</h5>
                             </td>
 
                             <td>

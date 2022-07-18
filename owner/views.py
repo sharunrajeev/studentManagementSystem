@@ -199,7 +199,6 @@ def select(request, userid):
                   f"Your Username and Password for Further processes have been provided with this E-mail." \
                   f"Please complete the registration process and confirm your allotment before the last date.\n" \
                   f" \nYour username : {reg_num}\n Your password: {password}\n\n" \
-                  f" \nUse the link for login: {login_link}" \
                   f"\nRegards\n" \
                   f"CUSAT."
 
@@ -616,6 +615,7 @@ def subjects_edit(request):
 
 
             batch.save()
+            counter_name()
 
             #subjects = Subjects.objects.all().order_by('id')
             # return render(request, 'owner/subjects.html',
@@ -627,7 +627,13 @@ def subjects_edit(request):
     else:
         return redirect('/owner/adminlogin')
 
-
+def counter_name():
+    batches = Batches.objects.all()
+    index = 1
+    for batch in batches:
+        batch.Batch_Name = "Batch "+str(index)
+        index+=1
+        batch.save()
 
 # def subject_delete(request, subjectid):
 #     Subjects.objects.get(id=subjectid).delete()
