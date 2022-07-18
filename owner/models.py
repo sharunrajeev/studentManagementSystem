@@ -13,14 +13,13 @@ class Batches(models.Model):
     CommenceDate = models.DateField(default=None)
 
 class Applicants(models.Model):
-    Subject = models.CharField(max_length=100, default=None)
+    Batch = models.ForeignKey(Batches, on_delete=models.CASCADE, default=False)
     Name = models.CharField(max_length=100, default=None)
-    Age = models.IntegerField(default=None)
     Gender = models.CharField(max_length=12, default=None)
     Address = models.CharField(max_length=100, default=None)
     Mob = models.CharField(max_length=13, default=None)
     Email = models.EmailField(max_length=100, default=None)
-    Department = models.CharField(max_length=100, default=None)
+    Institution = models.CharField(max_length=100, default=None)
     University = models.CharField(max_length=100, default=None)
     Dob = models.DateField(default=None)
     Phd_Reg = models.IntegerField(default=None)
@@ -30,6 +29,7 @@ class Applicants(models.Model):
     Guide_Mail = models.EmailField(max_length=100, default=None)
     Guide_Phone = models.CharField(max_length=13, default=None)
     Eligibility = models.BooleanField(blank=True, null=True, default=None)
+    Cusatian = models.BooleanField(blank=True, null=True, default=None)
 
 
 class Payments(models.Model):
