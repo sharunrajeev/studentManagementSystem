@@ -107,14 +107,13 @@ def approve(request):
 def individual_view(request, userid):
     if 'username_admin' in request.session:
         selected_user = Applicants.objects.get(id=userid)
-        SubjectName = selected_user.Subject
-        subject = Subjects.objects.get(SubjectName=SubjectName)
+
         users = Applicants.objects.all()
         candidate = ""
         if selected_user.Eligibility == True:
             candidate = Candidates.objects.get(UserId=userid)
         return render(request, 'owner/individual.html',
-                      {'individual': selected_user, 'users': users, 'subject': subject, 'candidate': candidate})
+                      {'individual': selected_user, 'users': users, 'candidate': candidate})
 
     else:
         return redirect('/owner/adminlogin')
