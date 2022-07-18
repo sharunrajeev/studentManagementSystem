@@ -18,14 +18,13 @@ def register(request):
 
 
         Name = request.POST['Name']
-        Age = request.POST['Age']
+
         Gender = request.POST['Gender']
         Address = request.POST['Address']
         Mob = request.POST['Mob']
         Email = request.POST['Email']
-        Department = request.POST['Department']
+        Institution = request.POST['Institution']
         University = request.POST['University']
-        SubjectName = request.POST['subject']
         Dob = request.POST['Dob']
         Phd_Reg = request.POST['Phd_Reg']
         Phd_Joining_Date = request.POST['Phd_Joining_Date']
@@ -48,7 +47,7 @@ def register(request):
         user_obj.Address = Address
         user_obj.Mob = Mob
         user_obj.Email = Email
-        user_obj.Subject = SubjectName
+
         user_obj.Institution = Institution
         user_obj.University = University
         user_obj.Dob = Dob
@@ -59,6 +58,7 @@ def register(request):
         user_obj.Guide_Mail = Guide_Mail
         user_obj.Guide_Phone = Guide_Phone
         user_obj.Cusatian  = Cusatian
+        user_obj.Batch = Latest_Batch
 
 
         user_obj.save()
