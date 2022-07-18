@@ -2,7 +2,7 @@ from email import message
 from lib2to3.pgen2 import token
 from pyexpat.errors import messages
 from django.shortcuts import redirect, render
-from owner.models import Applicants, Candidates, Marks, Subjects, Payments,UserPayments
+from owner.models import Applicants, Candidates, Marks, Subjects, Payments,UserPayments,Batches
 from django.contrib.auth.models import User, auth
 from django.http import JsonResponse
 from django.contrib.auth import views as auth_views
@@ -12,6 +12,8 @@ from django.contrib.auth import views as auth_views
 
 #Coded by Hana
 def register(request):
+    Latest_Batch = Batches.objects.all().order_by('-id').first()
+    print(Latest_Batch)
     if request.method == 'POST':
 
 
@@ -70,8 +72,8 @@ def register(request):
 
     else:
 
-        subjects=Subjects.objects.all()
-        return render(request, 'user/register_section/register_form.html',{'subjects':subjects})
+
+        return render(request, 'user/register_section/register_form.html',{'latest_batch':Latest_Batch})
 
 
 def reg_success(request):

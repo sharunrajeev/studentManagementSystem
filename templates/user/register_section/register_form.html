@@ -21,6 +21,8 @@
     </div>
 
     <div class="card-body">
+        {{ latest_batch.Month }} - {{ latest_batch.Year }}
+
         <form action="register" method="post" enctype="multipart/form-data">
 
             {% csrf_token %}
@@ -145,18 +147,18 @@
 
                                          </div>
 
-                    <div class="row row-space">
-                        <div class="col-2 mb-3">
-                            <label for="subject">Course:</label><br>
-                                <select name="subject" class="input--style-4 input_default" id="inputGroupSelect01" required>
-                                <option selected disabled value="">Choose...</option>
-                                {% for subject in subjects %}
-                                <option value="{{subject.SubjectName}}">{{subject.SubjectName}}</option>
-                                {% endfor %}
-                                </select>
-                     </div>
+<!--                    <div class="row row-space">-->
+<!--                        <div class="col-2 mb-3">-->
+<!--                            <label for="subject">Course:</label><br>-->
+<!--                                <select name="subject" class="input&#45;&#45;style-4 input_default" id="inputGroupSelect01" required>-->
+<!--                                <option selected disabled value="">Choose...</option>-->
+<!--                                {% for subject in subjects %}-->
+<!--                                <option value="{{subject.SubjectName}}">{{subject.SubjectName}}</option>-->
+<!--                                {% endfor %}-->
+<!--                                </select>-->
+<!--                     </div>-->
 
-                </div>
+<!--                </div>-->
                 <div class="buttons_parent">
                         <div class="p-t-15">
                             <button class="btn btn--radius-2 btn--blue back_button" type="button">Back</button>

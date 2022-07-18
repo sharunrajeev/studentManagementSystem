@@ -623,6 +623,7 @@ def subjects_edit(request):
             return redirect('/owner/subjects_edit')
         else:
             batches = Batches.objects.all().order_by('id')
+
             return render(request, 'owner/subjects.html', {'batches': batches})
     else:
         return redirect('/owner/adminlogin')
