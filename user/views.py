@@ -33,6 +33,7 @@ def register(request):
         Research_Guide = request.POST['Research_Guide']
         Guide_Mail = request.POST['Guide_Mail']
         Guide_Phone = request.POST['Guide_Phone']
+        Cusatian = request.POST['Cusatian']
 
         # if Applicants.objects.filter(Email=Email).exists():
         #     return JsonResponse(
@@ -43,13 +44,12 @@ def register(request):
 
         user_obj = Applicants()
         user_obj.Name = Name
-        user_obj.Age = Age
         user_obj.Gender = Gender
         user_obj.Address = Address
         user_obj.Mob = Mob
         user_obj.Email = Email
         user_obj.Subject = SubjectName
-        user_obj.Department = Department
+        user_obj.Institution = Institution
         user_obj.University = University
         user_obj.Dob = Dob
         user_obj.Phd_Reg = Phd_Reg
@@ -58,6 +58,7 @@ def register(request):
         user_obj.Research_Guide = Research_Guide
         user_obj.Guide_Mail = Guide_Mail
         user_obj.Guide_Phone = Guide_Phone
+        user_obj.Cusatian  = Cusatian
 
 
         user_obj.save()
