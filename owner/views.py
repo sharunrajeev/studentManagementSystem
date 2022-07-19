@@ -162,13 +162,11 @@ def select(request, userid):
         user.save()
 
         email = user.Email
-        SubjectName = user.Subject
 
-        subject = Subjects.objects.get(SubjectName=SubjectName)
 
         user_candidates = Candidates()
         user_candidates.ApplicationId = user
-        user_candidates.SubjectId = subject
+
         user_candidates.UserId = userid
         user_candidates.save()
 

@@ -38,7 +38,7 @@ class Payments(models.Model):
 
 class Candidates(models.Model):
     ApplicationId = models.ForeignKey(Applicants, on_delete=models.CASCADE, default=False)
-    SubjectId = models.ForeignKey(Subjects, on_delete=models.CASCADE, default=False)
+    # SubjectId = models.ForeignKey(Subjects, on_delete=models.CASCADE, default=False)
     Register_Number = models.AutoField(default=None,primary_key=True)
     RegNumber = models.IntegerField(blank=True, null=True, default=None)
     UserId = models.IntegerField(default=None, blank=True, null=True)
