@@ -421,17 +421,17 @@ def delete_user(request, userid):
 #     else:
 #         return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subjects': subjects})
 # coded by dp
-def show_subjects(request):
+def show_batches(request):
     if 'username_admin' in request.session:
         batches = Batches.objects.all().order_by('id')
         if request.method == 'POST':
             Searchfield = request.POST['name']
 
             batches = Batches.objects.filter(Batch_Name__icontains=Searchfield)
-            return render(request, 'owner/show_subjects.html', {'batches': batches})
+            return render(request, 'owner/show_batches.html', {'batches': batches})
 
         else:
-            return render(request, 'owner/show_subjects.html', {'batches': batches})
+            return render(request, 'owner/show_batches.html', {'batches': batches})
 
     else:
         return redirect('/owner/adminlogin')
@@ -801,7 +801,7 @@ def report_attendance_download(request,subjectid):
 
 # User edit Edited by Devaprasad
 
-def user_edit(request):
+def user_edit(request,batch_id):
     if 'username_admin' in request.session:
         if request.method == 'POST':
 
@@ -811,7 +811,8 @@ def user_edit(request):
 
             return render(request, 'owner/user_edit.html', {'users': users, 'message': 'User not found'})
         else:
-            users = Candidates.objects.all().order_by('Register_Number')
+            batch = Batches.objects.get(id = batch_id)
+            users = Candidates.objects.filter(ApplicationId__Batch = batch)
 
             return render(request, 'owner/user_edit.html', {'users': users, 'message': 'User not found'})
 

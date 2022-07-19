@@ -48,8 +48,8 @@ urlpatterns = [
     path('subject_update/<subjectid>',views.subject_update,name='subject_update'),
 
     #coded by dp
-    path('show_subjects',views.show_subjects,name='show_subjects'),
-    path('user_edit' , views.user_edit , name = 'user_edit'),
+    path('show_batches',views.show_batches,name='show_batches'),
+    path('user_edit/<batch_id>' , views.user_edit , name = 'user_edit'),
     path('edit_form/<userid>' , views.edit_form , name = 'edit_form'),
 
     # payment section
