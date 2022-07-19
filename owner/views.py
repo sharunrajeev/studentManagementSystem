@@ -110,7 +110,7 @@ def individual_view(request, userid):
 
         users = Applicants.objects.all()
         candidate = ""
-        if selected_user.Eligibility == True:
+        if selected_user.Eligibility == True and selected_user.Reject == False:
             candidate = Candidates.objects.get(UserId=userid)
         return render(request, 'owner/individual.html',
                       {'individual': selected_user, 'users': users, 'candidate': candidate})
@@ -399,13 +399,14 @@ def update_user(request, email):
 
 def delete_user(request, userid):
     if 'username_admin' in request.session:
-        try:
-            Candidates.objects.get(ApplicationId=userid).delete()
-            Applicants.objects.filter(id=userid).delete()
-            messages.success(request, 'User deleted successfully')
-        except:
-            messages.error(request, 'Error occured while deleting user')
-        return redirect('user_manage')
+
+        user = Candidates.objects.get(Register_Number=userid)
+        user.ApplicationId.Reject = True
+        batch_id = user.ApplicationId.Batch.id
+        user.ApplicationId.save()
+        user.delete()
+        messages.error(request, 'Error occured while deleting user')
+        return redirect(f'/owner/user_edit/{batch_id}')
     else:
         return redirect('/owner/adminlogin')
 

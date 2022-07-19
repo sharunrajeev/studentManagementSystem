@@ -42,6 +42,7 @@
                         <th>Register Num</th>
                         <th>Dropout</th>
                         <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,6 +61,7 @@
 
                         </td>
                         <td><a href="/owner/edit_form/{{ user.Register_Number }}" class="btn btn-warning btn-sm" style="cursor: default;">Edit</a></td>
+                        <td><a href="/owner/delete_user/{{ user.Register_Number }}" class="btn btn-danger btn-sm" style="cursor: default;">Delete</a></td>
 
                     </tr>
                 {% endfor %}
