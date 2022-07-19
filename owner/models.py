@@ -29,6 +29,7 @@ class Applicants(models.Model):
     Guide_Mail = models.EmailField(max_length=100, default=None)
     Guide_Phone = models.CharField(max_length=13, default=None)
     Eligibility = models.BooleanField(blank=True, null=True, default=None)
+    Reject = models.BooleanField(blank=True, null=True, default=False)
     Cusatian = models.BooleanField(blank=True, null=True, default=None)
 
 
@@ -46,6 +47,7 @@ class Candidates(models.Model):
     Achievements = models.TextField()
     Marks = models.IntegerField(blank=True, null=True, default=None)
     Attendance = models.IntegerField(blank=True, null=True, default=None)
+    Dropout = models.BooleanField(blank=True, null=True, default=False)
 
 class UserPayments(models.Model):
     StudentId = models.ForeignKey(Candidates, on_delete=models.CASCADE, default=False)

@@ -423,17 +423,15 @@ def delete_user(request, userid):
 # coded by dp
 def show_subjects(request):
     if 'username_admin' in request.session:
-        subjects = Subjects.objects.all().order_by('id')
+        batches = Batches.objects.all().order_by('id')
         if request.method == 'POST':
             Searchfield = request.POST['name']
 
-            subjects = Subjects.objects.filter(SubjectName__icontains=Searchfield)
-            return render(request, 'owner/show_subjects.html', {'subjects': subjects})
+            batches = Batches.objects.filter(Batch_Name__icontains=Searchfield)
+            return render(request, 'owner/show_subjects.html', {'batches': batches})
 
         else:
-
-            subjects = Subjects.objects.all().order_by('id')
-            return render(request, 'owner/show_subjects.html', {'subjects': subjects})
+            return render(request, 'owner/show_subjects.html', {'batches': batches})
 
     else:
         return redirect('/owner/adminlogin')

@@ -56,15 +56,19 @@
                             <thead>
                                 <tr>
                                     <th style="font-size: 1rem;">Sl</th>
-                                    <th style="font-size: 1rem;">Course Name</th>
+                                    <th style="font-size: 1rem;">Bathes </th>
+                                    <th style="font-size: 1rem;">Month </th>
+                                    <th style="font-size: 1rem;">Year </th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for subject in subjects %}
+                                {% for batch in batches %}
                                     <tr>
                                         <td >{{ forloop.counter }}</td>
-                                        <td>{{ subject.SubjectName }}</td>
+                                        <td>{{ batch.Batch_Name }}</td>
+                                        <td>{{ batch.Month }}</td>
+                                        <td>{{ batch.Year }}</td>
                                         <td class="text-center">
                                             <a href="show_students/{{ subject.id }}" class="btn btn-primary"><i class="fa fa-eye"></i> View Students</a>
 
