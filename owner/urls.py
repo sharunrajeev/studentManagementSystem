@@ -12,7 +12,7 @@ urlpatterns = [
     path('', views.dashboard, name='dashboard'),
     path('approve', views.approve, name='approve'),
     path('approve/<userid>', views.individual_view, name='individual_view'),
-    path('payment_subject/<subjectid>',views.payment_subject,name='payment_subject'),
+    path('payment_subject',views.payment_subject,name='payment_subject'),
     #Done By Akhila
 
     path('payment/<userid>', views.user_verify_view, name='user_verify_view' ),
@@ -35,7 +35,7 @@ urlpatterns = [
     path('mark_edit/mark_update/<markid>', views.mark_update, name='mark_update'),
     path('mark_edit/mark_delete/<markid>', views.mark_delete, name='mark_update'),
     path('show_report', views.show_report, name='show_report'),
-    path('report/<subjectid>', views.report, name='report'),
+    path('report', views.report, name='report'),
     path('report/report_download/<subjectid>', views.report_download, name='report_download'),
     path('report_mark/<subjectid>', views.report_mark, name='report_mark'),
     path('report_mark_download/<subjectid>', views.report_mark_download, name='report_mark_download'),

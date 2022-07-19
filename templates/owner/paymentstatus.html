@@ -39,10 +39,8 @@
                     <tr>
                         <th>Sl No</th>
                         <th>Name</th>
-                        <th>PhD Reg No</th>
                         <th>Register Num</th>
-                        <th>Course</th>
-                        <th>Email</th>
+                        <th>Cusatian</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -52,10 +50,14 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>{{ user.ApplicationId.Name }}</td>
-                        <td>{{ user.ApplicationId.Phd_Reg }}</td>
                         <td>{{ user.RegNumber }}</td>
-                        <td>{{ user.ApplicationId.Subject }}</td>
-                        <td>{{ user.ApplicationId.Email }}</td>
+                        <td>
+                        {% if user.ApplicationId.Cusatian == True %}
+                        <p class="badge rounded-pill bg-success " style="font-size:1rem;">Yes <i class="fa fa-check"></i></p>
+                        {% else %}
+                        <p class="badge rounded-pill bg-danger " style="font-size:1rem;">No <i class="fa fa-check"></i></p>
+                        {% endif %}
+                        </td>
                         <td>
                          {% for user_payment in user_payments %}
 

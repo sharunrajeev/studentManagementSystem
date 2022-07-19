@@ -68,15 +68,6 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <h6 class="mb-0">Age</h6>
-                                    </div>
-                                    <div class="col-sm-9">
-                                        <h6 class="text-muted mb-0">{{ person_details.ApplicationId.Age }}</h6>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="row">
-                                    <div class="col-sm-3">
                                         <h6 class="mb-0">DOB</h6>
                                     </div>
                                     <div class="col-sm-9">
@@ -157,11 +148,14 @@
                                 <hr>
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <h6 class="mb-0">Course</h6>
+                                        <h6 class="mb-0">Cusatian</h6>
                                     </div>
                                     <div class="col-sm-6">
-                                        <h6 class="text-muted mb-0">{{ person_details.ApplicationId.Subject }}</h6>
-                                    </div>
+                                       {% if person_details.ApplicationId.Cusatian == True %}
+                        <p class="badge rounded-pill bg-success " style="font-size:1rem;">Yes <i class="fa fa-check"></i></p>
+                        {% else %}
+                        <p class="badge rounded-pill bg-danger " style="font-size:1rem;">No <i class="fa fa-check"></i></p>
+                        {% endif %}   </div>
                                 </div>
                                 <hr>
                                 <div class="row">

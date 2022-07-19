@@ -250,8 +250,9 @@ def select(request, userid):
 #     else:
 #         return redirect('/owner/adminlogin')
 
-def payment_subject(request, subjectid):
+def payment_subject(request):
     if 'username_admin' in request.session:
+
         if request.method == 'POST':
 
             Searchfield = request.POST['name']
@@ -260,7 +261,8 @@ def payment_subject(request, subjectid):
 
             return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
         else:
-            users = Candidates.objects.filter(SubjectId__id=subjectid).order_by('Register_Number')
+            Latest_Batch = Batches.objects.all().order_by('-id').first()
+            users = Candidates.objects.filter(ApplicationId__Batch = Latest_Batch).order_by('Register_Number')
 
             user_payments = UserPayments.objects.all()
 
@@ -674,27 +676,25 @@ def subject_update(request, subjectid):
 
 def show_report(request):
     if 'username_admin' in request.session:
-        subjects = Subjects.objects.all().order_by('id')
+
         if request.method == 'POST':
             Searchfield = request.POST['name']
             subjects = Subjects.objects.filter(SubjectName=Searchfield)
             return render(request, 'owner/show_report.html', {'subjects': subjects})
 
         else:
-
-            subjects = Subjects.objects.all().order_by('id')
-            return render(request, 'owner/show_report.html', {'subjects': subjects})
+            return render(request, 'owner/show_report.html', )
 
     else:
         return redirect('/owner/adminlogin')
 
 
-def report(request,subjectid):
+def report(request):
     if 'username_admin' in request.session:
-        subject = Subjects.objects.get(id=subjectid)
-        candidates = Candidates.objects.filter(SubjectId=subject)
+        Latest_Batch = Batches.objects.all().order_by('-id').first()
+        candidates = Candidates.objects.filter(ApplicationId__Batch = Latest_Batch)
         marks = Marks.objects.all()
-        return render(request, 'owner/report.html', {'marks': marks, 'subject': subject, 'users': candidates})
+        return render(request, 'owner/report.html', {'marks': marks, 'users': candidates})
 
     else:
         return redirect('/owner/adminlogin')
