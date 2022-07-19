@@ -439,10 +439,10 @@ def show_batches(request):
 
 # Edited by Akhila
 #new editing devaprasad
-def show_students(request,subjectid):
+def show_students(request):
     if 'username_admin' in request.session:
-        subject = Subjects.objects.get(id=subjectid)
-        users = Candidates.objects.filter(SubjectId=subject).order_by('RegNumber')
+        Latest_Batch = Batches.objects.all().order_by('-id').first()
+        users = Candidates.objects.filter(ApplicationId__Batch=Latest_Batch).order_by('RegNumber')
 
         marks = Marks.objects.all()
         if request.method == 'POST':
@@ -454,7 +454,7 @@ def show_students(request,subjectid):
             return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks})
 
         else:
-            return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks, 'subject': subject})
+            return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks})
 
     else:
         return redirect('/owner/adminlogin')
@@ -464,7 +464,7 @@ def show_students(request,subjectid):
 def individual_mark_upload(request, userid):
     if 'username_admin' in request.session:
         user = Candidates.objects.get(Register_Number=userid)
-        subject = Subjects.objects.get(id=user.SubjectId.id)
+
         if request.method == 'POST':
 
             Attendance = int(request.POST['attendance'])
@@ -473,7 +473,7 @@ def individual_mark_upload(request, userid):
             GdMark = int(request.POST['gd'])
             CpMark = int(request.POST['cp'])
 
-            attendance_percentage, a_mark, total_assignment, total = mark_calculation(subject, Attendance,
+            attendance_percentage, a_mark, total_assignment, total = mark_calculation( Attendance,
                                                                                       Assignment1Mark,
                                                                                       Assignment2Mark, GdMark, CpMark)
 
@@ -490,11 +490,11 @@ def individual_mark_upload(request, userid):
             user.Marks = int(total_marks)
 
             user.save()
-            return redirect(f'/owner/show_students/{subject.id}')
+            return redirect(f'/owner/show_students')
 
         else:
 
-            return render(request, 'owner/mark_upload_form.html', {'user': user, 'subject': subject})
+            return render(request, 'owner/mark_upload_form.html', {'user': user})
     else:
         return redirect('/owner/adminlogin')
 
@@ -526,8 +526,8 @@ def mark_update(request, markid):
             mark = Marks.objects.get(id=markid)
             userid = mark.StudentId.Register_Number
 
-            Subject = mark.StudentId.SubjectId
-            attendance_percentage, a_mark, total_assignment, total = mark_calculation(Subject, Attendance,
+
+            attendance_percentage, a_mark, total_assignment, total = mark_calculation( Attendance,
                                                                                       Assignment1Mark,
                                                                                       Assignment2Mark, GdMark, CpMark)
             mark.AttendancePercentage = attendance_percentage
@@ -570,9 +570,9 @@ def mark_delete(request, markid):
 
 
 
-def mark_calculation(Subject, Attendance, Assignment1Mark, Assignment2Mark, GdMark, CpMark):
+def mark_calculation( Attendance, Assignment1Mark, Assignment2Mark, GdMark, CpMark):
 
-    total_attendance = int(Subject.TotalHour)
+    total_attendance = 20
 
     attendance_percentage = (Attendance / total_attendance) * 100
     print(attendance_percentage)
@@ -829,7 +829,6 @@ def edit_form(request,userid):
             Email = request.POST['Email']
             Mob = request.POST['Mob']
             Dob = request.POST['Dob']
-            Subject = request.POST['Subject']
             Gender = request.POST['Gender']
             Address = request.POST['Address']
             Phd_Reg = request.POST['Phd_Reg']
@@ -838,11 +837,9 @@ def edit_form(request,userid):
             Research_Guide = request.POST['Research_Guide']
             Guide_Mail = request.POST['Guide_Mail']
             Guide_Phone = request.POST['Guide_Phone']
-            print(Name, Email, Mob, Dob, Subject, Gender, Address, Phd_Reg, Phd_Joining_Date, Research_Topic,
-                  Research_Guide, Guide_Phone, Guide_Mail)
-            sub = Subjects.objects.get(SubjectName=Subject)
+            Drop_Out = request.POST['Drop_Out']
 
-            user_det.SubjectId = sub
+
             user_det.ApplicationId.Name = Name
             user_det.ApplicationId.Email = Email
             user_det.ApplicationId.Mob = Mob
@@ -855,15 +852,15 @@ def edit_form(request,userid):
             user_det.ApplicationId.Research_Guide = Research_Guide
             user_det.ApplicationId.Guide_Mail = Guide_Mail
             user_det.ApplicationId.Guide_Phone = Guide_Phone
+            user_det.Dropout = Drop_Out
 
             user_det.save()
             user_det.ApplicationId.save()
 
-            return redirect('/owner/user_edit')
+            return redirect(f'/owner/user_edit/{user_det.ApplicationId.Batch.id}')
 
         else:
-            subjects = Subjects.objects.all()
-            return render(request, 'owner/edit_form.html', {'person_details': user_det, 'subjects': subjects})
+            return render(request, 'owner/edit_form.html', {'person_details': user_det})
 
     else:
         return redirect('/owner/adminlogin')

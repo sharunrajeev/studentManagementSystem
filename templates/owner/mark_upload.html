@@ -20,7 +20,7 @@
 
 <div id="wrapper">
 	<div class="main-content">
-        <h3>Course Name: {{subject.SubjectName}}</h3>
+        <h3></h3>
          <div class="p-t-15">
                    {% include 'reusable/back_button.html' %}
                 </div>
@@ -54,6 +54,7 @@
                 <tbody>
 
                 {% for user in users %}
+                {% if user.Dropout == False %}
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>{{ user.ApplicationId.Name }}</td>
@@ -79,6 +80,7 @@
                         </td>
 
                     </tr>
+                {% endif %}
                 {% endfor %}
                 </tbody>
             </table>
