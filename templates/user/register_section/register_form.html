@@ -8,9 +8,7 @@
 {% block styles %}
     <link href="{% static 'css/register_form.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/progress_indicator.css' %}" rel="stylesheet"/>
-    <link href="{% static 'css/warning_box.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/mark_upload.css' %}" rel="stylesheet"/>
-    <link href="{% static 'css/alert.css' %}" rel="stylesheet"/>
 {% endblock %}
 
 <!-- Body -->
@@ -26,31 +24,34 @@
         <form action="register" method="post" enctype="multipart/form-data">
 
             {% csrf_token %}
-            <div class="main active">
+            <div class="main">
                 <div class="row row-space">
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">Name</label>
-                        <input id="name" class="input--style-4 input_default" type="text" name="Name" required require>
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Name</label>
+                            <input id="name" class="input--style-4 input_default" type="text" name="Name" required require>
+                        </div>
                     </div>
+
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Email</label>
+                            <input id="email" class="input--style-4 input_default" type="email" name="Email" required require>
+                        </div>
+                    </div>
+
+
                 </div>
 
-
-
-
-
-
-
-            </div>
                 <div class="row row-space">
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">Email</label>
-                        <input id="email" class="input--style-4 input_default" type="email" name="Email" required require>
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">DOB</label>
+                            <input id="dob" class="input--style-4 input_default" type="date" name="Dob" onclick="maxDate()" required require>
+                        </div>
                     </div>
-                </div>
 
-                <div class="col-2 gender-div">
+                    <div class="col-2 gender-div">
                         <label class="label">Gender</label>
                         <div class="p-t-10">
                             <label class="radio-container m-r-45">Male
@@ -62,140 +63,131 @@
                                 <span class="checkmark"></span>
                             </label>
                         </div>
+                    </div>
                 </div>
-            </div>
                 <div class="row row-space">
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">DOB</label>
-                        <input id="dob" class="input--style-4 input_default" type="date" name="Dob" required require>
+
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Mobile Number</label>
+                            <input id="mob" class="input--style-4 input_default" type="tel" name="Mob" maxlength="12" required require>
+                        </div>
+                    </div>
+
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Address</label>
+                            <input id="address" class="input--style-4 input_default" type="text" name="Address" required require>
+                        </div>
                     </div>
                 </div>
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">Mobile Number</label>
-                        <input id="mob" class="input--style-4 input_default" type="tel" name="Mob" maxlength="12" required require>
-                    </div>
-                </div>
-            </div>
-                <div class="row row-space">
-                    <div class="input-group">
-                        <label class="label">Address</label>
-                        <input id="address" class="input--style-4 input_default" type="text" name="Address" required require>
-                    </div>
-            </div>
+
                 <div class="p-t-15">
                     <button id="next" class="btn btn--radius-2 btn--blue next_button" type="button">Next</button>
                 </div>
             </div>
 
+            <div class="main active">
+                <div class="row row-space">
+                    <div class="col-2">
+                        <label for="subject">Are you Cusatian:</label><br>
+                        <select name="Cusatian" class="input--style-4 input_default" onclick="universitySelect(this)" id="inputGroupSelect01" required>
+                            <option selected disabled value="">Choose...</option>
+                            <option value="True">Yes</option>
+                            <option value="False">No</option>
+                        </select>
+                    </div>
+
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">University</label>
+                            <input id="university" class="input--style-4 input_default" type="text" name="University" required require>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row row-space">
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">PHD Register Number</label>
+                            <input id="phd_reg" class="input--style-4 input_default" type="number" name="Phd_Reg" value="0">
+                        </div>
+                    </div>
+
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">PHD joining Date</label>
+                            <input id="phd_joining_date" class="input--style-4 input_default" type="date" name="Phd_Joining_Date" required require>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row row-space">
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Institution</label>
+                            <input id="dept" class="input--style-4 input_default" type="text" name="Institution" required require>
+                        </div>
+                    </div>
+
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Research Topic</label>
+                            <input id="research_topic" class="input--style-4 input_default" type="text" name="Research_Topic" required require>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="buttons_parent">
+                    <div class="p-t-15">
+                        <button class="btn btn--radius-2 btn--blue back_button" type="button">Back</button>
+                    </div>
+
+                    <div class="p-t-15">
+                        <button id="next2" class="btn btn--radius-2 btn--blue next_button" type="button">Next</button>
+                    </div>
+                </div>
+            </div>
+
             <div class="main">
                 <div class="row row-space">
-                <div class="col-2">
-
-<!--                       <div class="col-2 mb-3">-->
-                            <label for="subject">Are you Cusatian:</label><br>
-                                <select name="Cusatian" class="input--style-4 input_default" id="inputGroupSelect01" required>
-                                <option selected disabled value="">Choose...</option>
-                                <option value="True">Yes</option>
-                                <option value="False">No</option>
-                                </select>
-<!--                     </div>-->
-
-
-
-                </div>
-                <div class="col-2">
-
-                      <div class="input-group">
-                        <label class="label">University</label>
-                        <input id="university" class="input--style-4 input_default" type="text" name="University" required require>
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Name</label>
+                            <input id="research_guide" class="input--style-4 input_default" type="text" name="Research_Guide" required require>
+                        </div>
                     </div>
 
-
-
-
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">E-Mail</label>
+                            <input id="guide_mail" class="input--style-4 input_default" type="email" name="Guide_Mail" required require>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
                 <div class="row row-space">
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">PHD Register Number</label>
-                        <input id="phd_reg" class="input--style-4 input_default" type="number" name="Phd_Reg" required require>
-                    </div>
-
-                     <div class="input-group">
-                        <label class="label">Institution</label>
-                        <input id="dept" class="input--style-4 input_default" type="text" name="Institution" required require>
-                    </div>
-
-                </div>
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">PHD joining Date</label>
-                        <input id="phd_joining_date" class="input--style-4 input_default" type="date" name="Phd_Joining_Date" required require>
-                    </div>
-                </div>
-            </div>
-                <div class="row row-space">
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">Research Topic</label>
-                        <input id="research_topic" class="input--style-4 input_default" type="text" name="Research_Topic" required require>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">Research Guide</label>
-                        <input id="research_guide" class="input--style-4 input_default" type="text" name="Research_Guide" required require>
-                    </div>
-                </div>
-            </div>
-                <div class="row row-space">
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">Contact of Guide (MAIL-ID)</label>
-                        <input id="guide_mail" class="input--style-4 input_default" type="email" name="Guide_Mail" required require>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="input-group">
-                       <label class="label">Contact of Guide (Mobile Number)</label>
-                       <input  id="guide_phone" class="input--style-4 input_default" type="tel" maxlength="12" name="Guide_Phone" required require>
+                    <div class="col-2">
+                        <div class="input-group">
+                           <label class="label">Phone</label>
+                           <input  id="guide_phone" class="input--style-4 input_default" type="tel" maxlength="12" name="Guide_Phone" required require>
+                        </div>
                     </div>
                 </div>
 
-                                         </div>
-
-<!--                    <div class="row row-space">-->
-<!--                        <div class="col-2 mb-3">-->
-<!--                            <label for="subject">Course:</label><br>-->
-<!--                                <select name="subject" class="input&#45;&#45;style-4 input_default" id="inputGroupSelect01" required>-->
-<!--                                <option selected disabled value="">Choose...</option>-->
-<!--                                {% for subject in subjects %}-->
-<!--                                <option value="{{subject.SubjectName}}">{{subject.SubjectName}}</option>-->
-<!--                                {% endfor %}-->
-<!--                                </select>-->
-<!--                     </div>-->
-
-<!--                </div>-->
                 <div class="buttons_parent">
-                        <div class="p-t-15">
-                            <button class="btn btn--radius-2 btn--blue back_button" type="button">Back</button>
-                        </div>
-                        <div class="p-t-15">
-                            <button id="" class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
-                        </div>
+                    <div class="p-t-15">
+                        <button class="btn btn--radius-2 btn--blue back_button" type="button">Back</button>
+                    </div>
 
+                    <div class="p-t-15">
+                        <button id="" class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
+                    </div>
                 </div>
-
             </div>
-
-
 
         </form>
-                </div>
-
+    </div>
 </div>
 
 
@@ -206,5 +198,44 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!--<script src="{% static 'js/register_form.js' %}"></script>-->
 <script src="{% static 'js/progress_indicator.js' %}"></script>
+
+<script>
+    const maxDate = () => {
+        let inputDate = document.getElementById("dob");
+
+        let dateToday = new Date();
+
+        let day = dateToday.getDay().toString();
+        let month = (dateToday.getMonth() + 1).toString();
+        let year = dateToday.getFullYear();
+
+        if(month.length < 2) {
+            month = '0' + month;
+        }
+
+        if(day.length < 2) {
+            day = '0' + day;
+        }
+
+        console.log(day)
+
+        inputDate.setAttribute('max', [year, month, day].join('-'));
+    }
+
+    const universitySelect = (cusatian) => {
+        let isCusatian = (cusatian.value === "True") ? true : false;
+        let university = document.getElementById("university");
+
+        if(isCusatian) {
+            university.value = "Cochin University of Science and Technology";
+            university.readOnly = true;
+        }
+        else {
+            university.value = null;
+            university.readOnly = false;
+        }
+    }
+
+</script>
 
 {% endblock %}
