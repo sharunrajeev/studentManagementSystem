@@ -36,7 +36,7 @@ def adminlogin(request):
     # else:
     #     return render(request, 'owner/adminlogin.html')
     if 'username_admin' in request.session:
-        return redirect('/owner/')
+        return redirect('/owner/approve')
     else:
         if request.method == 'POST':
 
@@ -70,14 +70,14 @@ def logout(request):
         request.session.flush()
     return redirect('/owner/adminlogin')
 
-def dashboard(request):
-    if 'username_admin' in request.session:
-        applicantCount = Applicants.objects.count()
-        candidateCount = Candidates.objects.count()
-        subjectCount = Subjects.objects.count()
-        return render(request, 'owner/dashboard.html', {'totalApplicants': applicantCount, 'totalCandidates': candidateCount, 'totalCourses': subjectCount})
-    else:
-        return render(request, 'owner/adminlogin.html')
+# def dashboard(request):
+#     if 'username_admin' in request.session:
+#         applicantCount = Applicants.objects.count()
+#         candidateCount = Candidates.objects.count()
+#         subjectCount = Subjects.objects.count()
+#         return render(request, 'owner/dashboard.html', {'totalApplicants': applicantCount, 'totalCandidates': candidateCount, 'totalCourses': subjectCount})
+#     else:
+#         return render(request, 'owner/adminlogin.html')
 
 
 

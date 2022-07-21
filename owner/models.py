@@ -6,11 +6,13 @@ class Subjects(models.Model):
     SubjectName = models.CharField(max_length=100, default=None)
     TotalHour = models.IntegerField(default=None)
 
+
 class Batches(models.Model):
-    Batch_Name = models.CharField(max_length=100, default=None ,null = True )
+    Batch_Name = models.CharField(max_length=100, default=None, null=True)
     Month = models.CharField(max_length=100, default=None)
     Year = models.IntegerField(default=None)
     CommenceDate = models.DateField(default=None)
+
 
 class Applicants(models.Model):
     Batch = models.ForeignKey(Batches, on_delete=models.CASCADE, default=False)
@@ -40,7 +42,7 @@ class Payments(models.Model):
 class Candidates(models.Model):
     ApplicationId = models.ForeignKey(Applicants, on_delete=models.CASCADE, default=False)
     # SubjectId = models.ForeignKey(Subjects, on_delete=models.CASCADE, default=False)
-    Register_Number = models.AutoField(default=None,primary_key=True)
+    Register_Number = models.AutoField(default=None, primary_key=True)
     RegNumber = models.IntegerField(blank=True, null=True, default=None)
     UserId = models.IntegerField(default=None, blank=True, null=True)
     Photo = models.ImageField(upload_to='pics')
@@ -49,11 +51,13 @@ class Candidates(models.Model):
     Attendance = models.IntegerField(blank=True, null=True, default=None)
     Dropout = models.BooleanField(blank=True, null=True, default=False)
 
+
 class UserPayments(models.Model):
     StudentId = models.ForeignKey(Candidates, on_delete=models.CASCADE, default=False)
     PaymentId = models.ForeignKey(Payments, on_delete=models.CASCADE, default=False)
     PaymentStatus = models.BooleanField(blank=True, null=True, default=None)
     PaymentDetails = models.FileField(upload_to='files', blank=True, null=True, default=None)
+
 
 class Marks(models.Model):
     StudentId = models.ForeignKey(Candidates, on_delete=models.CASCADE, default=False)
