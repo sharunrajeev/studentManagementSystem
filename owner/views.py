@@ -1,7 +1,7 @@
 from email import message
-from django.contrib.auth.models import User,auth
+from django.contrib.auth.models import User, auth
 from django.shortcuts import render, redirect
-from .models import Applicants, Candidates, Marks, Subjects , Payments,UserPayments,Batches
+from .models import Applicants, Candidates, Marks, Subjects, Payments, UserPayments, Batches
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -14,11 +14,11 @@ from xhtml2pdf import pisa
 from django.db.models import Sum
 from datetime import datetime
 
+
 # Create your views here.
 
-#Coded by Hana
+# Coded by Hana
 def adminlogin(request):
-
     # if request.method == 'POST':
     #     username = request.POST['Username']
     #     password = request.POST['Password']
@@ -70,15 +70,17 @@ def logout(request):
         request.session.flush()
     return redirect('/owner/adminlogin')
 
+
 def dashboard(request):
     if 'username_admin' in request.session:
         applicantCount = Applicants.objects.count()
         candidateCount = Candidates.objects.count()
         subjectCount = Subjects.objects.count()
-        return render(request, 'owner/dashboard.html', {'totalApplicants': applicantCount, 'totalCandidates': candidateCount, 'totalCourses': subjectCount})
+        return render(request, 'owner/dashboard.html',
+                      {'totalApplicants': applicantCount, 'totalCandidates': candidateCount,
+                       'totalCourses': subjectCount})
     else:
         return render(request, 'owner/adminlogin.html')
-
 
 
 def approve(request):
@@ -102,8 +104,6 @@ def approve(request):
         return redirect('/owner/adminlogin')
 
 
-
-
 def individual_view(request, userid):
     if 'username_admin' in request.session:
         selected_user = Applicants.objects.get(id=userid)
@@ -117,10 +117,6 @@ def individual_view(request, userid):
 
     else:
         return redirect('/owner/adminlogin')
-
-
-
-
 
 
 def reject(request, userid):
@@ -152,8 +148,9 @@ def reject(request, userid):
     else:
         return redirect('/owner/adminlogin')
 
-
     # 2nd phase : coded by devaprasad
+
+
 def select(request, userid):
     if 'username_admin' in request.session:
         user = Applicants.objects.get(id=userid)
@@ -162,7 +159,6 @@ def select(request, userid):
         user.save()
 
         email = user.Email
-
 
         user_candidates = Candidates()
         user_candidates.ApplicationId = user
@@ -174,12 +170,12 @@ def select(request, userid):
         date = datetime.now()
         month = date.month
         year = date.year
-        year_model = (year%100)*100000
-        month_model = month*1000
+        year_model = (year % 100) * 100000
+        month_model = month * 1000
 
         candidate = Candidates.objects.get(UserId=userid)
         register_number = candidate.Register_Number
-        reg_num = register_number + year_model +month_model
+        reg_num = register_number + year_model + month_model
         user_candidates.RegNumber = reg_num
 
         user_candidates.save()
@@ -214,7 +210,8 @@ def select(request, userid):
     else:
         return redirect('/owner/adminlogin')
 
-#new changes in payment, coded by Devaprasd
+
+# new changes in payment, coded by Devaprasd
 #
 # def show_payment(request):
 #     if 'username_admin' in request.session:
@@ -250,8 +247,9 @@ def select(request, userid):
 #     else:
 #         return redirect('/owner/adminlogin')
 
-def payment_subject(request, subjectid):
+def payment_subject(request):
     if 'username_admin' in request.session:
+
         if request.method == 'POST':
 
             Searchfield = request.POST['name']
@@ -260,11 +258,13 @@ def payment_subject(request, subjectid):
 
             return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
         else:
-            users = Candidates.objects.filter(SubjectId__id=subjectid).order_by('Register_Number')
+            Latest_Batch = Batches.objects.all().order_by('-id').first()
+            users = Candidates.objects.filter(ApplicationId__Batch=Latest_Batch).order_by('Register_Number')
 
             user_payments = UserPayments.objects.all()
 
-            return render(request, 'owner/paymentstatus.html', {'users': users,'user_payments':user_payments, 'message': 'User not found'})
+            return render(request, 'owner/paymentstatus.html',
+                          {'users': users, 'user_payments': user_payments, 'message': 'User not found'})
 
     else:
         return redirect('/owner/adminlogin')
@@ -280,8 +280,8 @@ def user_verify_view(request, userid):
         #     pay_val = 1
         # else:
         #     pay_val = 0
-        user_payments = UserPayments.objects.filter(StudentId = user_det)
-        return render(request, 'owner/user_detail.html', {'person_details': user_det,'user_payments':user_payments})
+        user_payments = UserPayments.objects.filter(StudentId=user_det)
+        return render(request, 'owner/user_detail.html', {'person_details': user_det, 'user_payments': user_payments})
 
     else:
         return redirect('/owner/adminlogin')
@@ -290,12 +290,12 @@ def user_verify_view(request, userid):
 def denial(request, userid):
     if 'username_admin' in request.session:
 
-        #user = Candidates.objects.get(Register_Number=userid)
+        # user = Candidates.objects.get(Register_Number=userid)
         user = UserPayments.objects.get(id=userid)
         candidate_id = user.StudentId.Register_Number
         user.PaymentStatus = False
         user.save()
-        name= user.StudentId.ApplicationId.Name
+        name = user.StudentId.ApplicationId.Name
         subject = user.StudentId.ApplicationId.Subject
         payment = user.PaymentId.PaymentName
         email = user.StudentId.ApplicationId.Email
@@ -319,11 +319,10 @@ def denial(request, userid):
         return redirect('/owner/adminlogin')
 
 
-
 def verified(request, userid):
     if 'username_admin' in request.session:
-        #user_canditate = Candidates.objects.get(Register_Number=userid)
-        #user_id= user_candidate.id
+        # user_canditate = Candidates.objects.get(Register_Number=userid)
+        # user_id= user_candidate.id
         user = UserPayments.objects.get(id=userid)
         candidate_id = user.StudentId.Register_Number
         user.PaymentStatus = True
@@ -351,7 +350,6 @@ def verified(request, userid):
         return redirect('/owner/adminlogin')
 
 
-
 # User management by Sharun
 
 def user_manage(request):
@@ -360,7 +358,6 @@ def user_manage(request):
         return render(request, 'owner/user_manage.html', {'users': users})
     else:
         return redirect('/owner/adminlogin')
-
 
 
 def search_user(request):
@@ -378,8 +375,6 @@ def search_user(request):
         return redirect('/owner/adminlogin')
 
 
-
-
 def view_user(request, email):
     if 'username_admin' in request.session:
         user = Candidates.objects.filter(Email=email)[:1].get()
@@ -388,14 +383,14 @@ def view_user(request, email):
         return redirect('/owner/adminlogin')
 
 
-
 def update_user(request, email):
     # TODO: Update user details
     if 'username_admin' in request.session:
         pass
-    #code here
+    # code here
     else:
         return redirect('/owner/adminlogin')
+
 
 def delete_user(request, userid):
     if 'username_admin' in request.session:
@@ -409,7 +404,6 @@ def delete_user(request, userid):
         return redirect(f'/owner/user_edit/{batch_id}')
     else:
         return redirect('/owner/adminlogin')
-
 
 
 # coded by devaprasad
@@ -439,7 +433,7 @@ def show_batches(request):
 
 
 # Edited by Akhila
-#new editing devaprasad
+# new editing devaprasad
 def show_students(request):
     if 'username_admin' in request.session:
         Latest_Batch = Batches.objects.all().order_by('-id').first()
@@ -461,7 +455,6 @@ def show_students(request):
         return redirect('/owner/adminlogin')
 
 
-
 def individual_mark_upload(request, userid):
     if 'username_admin' in request.session:
         user = Candidates.objects.get(Register_Number=userid)
@@ -474,7 +467,7 @@ def individual_mark_upload(request, userid):
             GdMark = int(request.POST['gd'])
             CpMark = int(request.POST['cp'])
 
-            attendance_percentage, a_mark, total_assignment, total = mark_calculation( Attendance,
+            attendance_percentage, a_mark, total_assignment, total = mark_calculation(Attendance,
                                                                                       Assignment1Mark,
                                                                                       Assignment2Mark, GdMark, CpMark)
 
@@ -500,7 +493,6 @@ def individual_mark_upload(request, userid):
         return redirect('/owner/adminlogin')
 
 
-
 def mark_edit(request, userid):
     if 'username_admin' in request.session:
         if request.method == 'POST':
@@ -511,8 +503,6 @@ def mark_edit(request, userid):
             return render(request, 'owner/mark_edit.html', {'User': user, 'marks': marks})
     else:
         return redirect('/owner/adminlogin')
-
-
 
 
 def mark_update(request, markid):
@@ -527,8 +517,7 @@ def mark_update(request, markid):
             mark = Marks.objects.get(id=markid)
             userid = mark.StudentId.Register_Number
 
-
-            attendance_percentage, a_mark, total_assignment, total = mark_calculation( Attendance,
+            attendance_percentage, a_mark, total_assignment, total = mark_calculation(Attendance,
                                                                                       Assignment1Mark,
                                                                                       Assignment2Mark, GdMark, CpMark)
             mark.AttendancePercentage = attendance_percentage
@@ -559,7 +548,6 @@ def mark_update(request, markid):
         return redirect('/owner/adminlogin')
 
 
-
 def mark_delete(request, markid):
     if 'username_admin' in request.session:
         mark = Marks.objects.get(id=markid)
@@ -570,9 +558,7 @@ def mark_delete(request, markid):
         return redirect('/owner/adminlogin')
 
 
-
-def mark_calculation( Attendance, Assignment1Mark, Assignment2Mark, GdMark, CpMark):
-
+def mark_calculation(Attendance, Assignment1Mark, Assignment2Mark, GdMark, CpMark):
     total_attendance = 20
 
     attendance_percentage = (Attendance / total_attendance) * 100
@@ -610,11 +596,10 @@ def subjects_edit(request):
             batch.Year = Year
             batch.CommenceDate = CommenceDate
 
-
             batch.save()
             counter_name()
 
-            #subjects = Subjects.objects.all().order_by('id')
+            # subjects = Subjects.objects.all().order_by('id')
             # return render(request, 'owner/subjects.html',
             #               {'subjects': subjects, 'message': f"New Course {Subjectname} added successfully"})
             return redirect('/owner/subjects_edit')
@@ -625,13 +610,15 @@ def subjects_edit(request):
     else:
         return redirect('/owner/adminlogin')
 
+
 def counter_name():
     batches = Batches.objects.all()
     index = 1
     for batch in batches:
-        batch.Batch_Name = "Batch "+str(index)
-        index+=1
+        batch.Batch_Name = "Batch " + str(index)
+        index += 1
         batch.save()
+
 
 # def subject_delete(request, subjectid):
 #     Subjects.objects.get(id=subjectid).delete()
@@ -645,12 +632,10 @@ def subject_update(request, subjectid):
             subjectname = request.POST['subjectname']
             totalhour = request.POST['totalhours']
 
-
             subject = Subjects.objects.get(id=subjectid)
 
             subject.SubjectName = subjectname
             subject.TotalHour = totalhour
-
 
             subject.save()
 
@@ -663,8 +648,6 @@ def subject_update(request, subjectid):
         return redirect('/owner/adminlogin')
 
 
-
-
 # report generation coded by devaprasad
 
 # def show_report(request):
@@ -674,38 +657,38 @@ def subject_update(request, subjectid):
 
 def show_report(request):
     if 'username_admin' in request.session:
-        subjects = Subjects.objects.all().order_by('id')
+
         if request.method == 'POST':
             Searchfield = request.POST['name']
             subjects = Subjects.objects.filter(SubjectName=Searchfield)
             return render(request, 'owner/show_report.html', {'subjects': subjects})
 
         else:
-
-            subjects = Subjects.objects.all().order_by('id')
-            return render(request, 'owner/show_report.html', {'subjects': subjects})
+            return render(request, 'owner/show_report.html', )
 
     else:
         return redirect('/owner/adminlogin')
 
 
-def report(request,subjectid):
+def report(request):
     if 'username_admin' in request.session:
-        subject = Subjects.objects.get(id=subjectid)
-        candidates = Candidates.objects.filter(SubjectId=subject)
+        Latest_Batch = Batches.objects.all().order_by('-id').first()
+        candidates = Candidates.objects.filter(ApplicationId__Batch=Latest_Batch)
         marks = Marks.objects.all()
-        return render(request, 'owner/report.html', {'marks': marks, 'subject': subject, 'users': candidates})
+        return render(request, 'owner/report.html', {'marks': marks, 'users': candidates})
 
     else:
         return redirect('/owner/adminlogin')
 
-def report_download(request,subjectid):
+
+def report_download(request):
     if 'username_admin' in request.session:
-        subject = Subjects.objects.get(id=subjectid)
-        candidates = Candidates.objects.filter(SubjectId=subject)
+        Latest_Batch = Batches.objects.all().order_by('-id').first()
+        candidates = Candidates.objects.filter(ApplicationId__Batch=Latest_Batch)
+
         marks = Marks.objects.all()
         template_path = 'owner/pdf_report.html'
-        context = {'marks': marks, 'subject': subject, 'users': candidates}
+        context = {'marks': marks, 'users': candidates}
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'filename="subject_report.pdf"'
@@ -724,24 +707,26 @@ def report_download(request,subjectid):
         return redirect('/owner/adminlogin')
 
 
-def report_mark(request,subjectid):
+def report_mark(request):
     if 'username_admin' in request.session:
-        subject = Subjects.objects.get(id=subjectid)
-        users = Candidates.objects.filter(SubjectId=subject)
+        Latest_Batch = Batches.objects.all().order_by('-id').first()
+        users = Candidates.objects.filter(ApplicationId__Batch=Latest_Batch)
         marks = Marks.objects.all()
-        return render(request, 'owner/report_mark.html', {'marks': marks, 'users': users, 'subject': subject})
+        return render(request, 'owner/report_mark.html', {'marks': marks, 'users': users})
 
     else:
         return redirect('/owner/adminlogin')
 
-def report_mark_download(request,subjectid):
+
+def report_mark_download(request):
     if 'username_admin' in request.session:
-        subject = Subjects.objects.get(id=subjectid)
-        users = Candidates.objects.filter(SubjectId=subject)
+
+        Latest_Batch = Batches.objects.all().order_by('-id').first()
+        users = Candidates.objects.filter(ApplicationId__Batch=Latest_Batch)
         marks = Marks.objects.all()
 
         template_path = 'owner/pdf_report_mark.html'
-        context = {'marks': marks, 'subject': subject, 'users': users}
+        context = {'marks': marks, 'users': users}
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'filename="subject_report.pdf"'
@@ -760,25 +745,25 @@ def report_mark_download(request,subjectid):
         return redirect('/owner/adminlogin')
 
 
-
-def report_attendance(request,subjectid):
+def report_attendance(request):
     if 'username_admin' in request.session:
-        subject = Subjects.objects.get(id=subjectid)
-        users = Candidates.objects.filter(SubjectId=subject)
+        Latest_Batch = Batches.objects.all().order_by('-id').first()
+        users = Candidates.objects.filter(ApplicationId__Batch=Latest_Batch)
         marks = Marks.objects.all()
-        return render(request, 'owner/report_attendance.html', {'marks': marks, 'users': users, 'subject': subject})
+        return render(request, 'owner/report_attendance.html', {'marks': marks, 'users': users})
 
     else:
         return redirect('/owner/adminlogin')
 
-def report_attendance_download(request,subjectid):
+
+def report_attendance_download(request):
     if 'username_admin' in request.session:
-        subject = Subjects.objects.get(id=subjectid)
-        users = Candidates.objects.filter(SubjectId=subject)
+        Latest_Batch = Batches.objects.all().order_by('-id').first()
+        users = Candidates.objects.filter(ApplicationId__Batch=Latest_Batch)
         marks = Marks.objects.all()
 
         template_path = 'owner/pdf_report_attendance.html'
-        context = {'marks': marks, 'subject': subject, 'users': users}
+        context = {'marks': marks, 'users': users}
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'filename="subject_report.pdf"'
@@ -795,14 +780,11 @@ def report_attendance_download(request,subjectid):
         return response
     else:
         return redirect('/owner/adminlogin')
-
-
-
 
 
 # User edit Edited by Devaprasad
 
-def user_edit(request,batch_id):
+def user_edit(request, batch_id):
     if 'username_admin' in request.session:
         if request.method == 'POST':
 
@@ -811,8 +793,8 @@ def user_edit(request,batch_id):
 
             return render(request, 'owner/user_edit.html', {'users': users, 'message': 'User not found'})
         else:
-            batch = Batches.objects.get(id = batch_id)
-            users = Candidates.objects.filter(ApplicationId__Batch = batch)
+            batch = Batches.objects.get(id=batch_id)
+            users = Candidates.objects.filter(ApplicationId__Batch=batch)
 
             return render(request, 'owner/user_edit.html', {'users': users, 'message': 'User not found'})
 
@@ -820,7 +802,7 @@ def user_edit(request,batch_id):
         return redirect('/owner/adminlogin')
 
 
-def edit_form(request,userid):
+def edit_form(request, userid):
     if 'username_admin' in request.session:
         user_det = Candidates.objects.get(Register_Number=userid)
 
@@ -838,7 +820,6 @@ def edit_form(request,userid):
             Guide_Mail = request.POST['Guide_Mail']
             Guide_Phone = request.POST['Guide_Phone']
             Drop_Out = request.POST['Drop_Out']
-
 
             user_det.ApplicationId.Name = Name
             user_det.ApplicationId.Email = Email
@@ -866,7 +847,6 @@ def edit_form(request,userid):
         return redirect('/owner/adminlogin')
 
 
-
 # Payment section coded by Devaprasad
 
 
@@ -890,13 +870,10 @@ def payment_edit(request):
         return redirect('/owner/adminlogin')
 
 
-
-
 def payment_update(request, paymentid):
     if 'username_admin' in request.session:
         if request.method == 'POST':
             Paymentname = request.POST['paymentname']
-
 
             Payment = Payments.objects.get(id=paymentid)
 
@@ -913,7 +890,7 @@ def payment_update(request, paymentid):
         return redirect('/owner/adminlogin')
 
 
-def payment_delete(request,paymentid):
+def payment_delete(request, paymentid):
     if 'username_admin' in request.session:
         Payment = Payments.objects.get(id=paymentid)
 
@@ -921,8 +898,6 @@ def payment_delete(request,paymentid):
         return redirect(f"/owner/payment_edit")
     else:
         return redirect('/owner/adminlogin')
-
-
 
 
 def payment_show_subjects(request):
@@ -937,6 +912,6 @@ def payment_show_subjects(request):
         else:
 
             subjects = Subjects.objects.all().order_by('id')
-            return render(request, 'owner/show_subjects_payment.html',{ 'subjects': subjects})
+            return render(request, 'owner/show_subjects_payment.html', {'subjects': subjects})
     else:
         return redirect('/owner/adminlogin')

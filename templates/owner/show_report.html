@@ -38,35 +38,22 @@
             <div class="container">
                 <div class="row">
                     <div class="col-12">
-                        <table class="table table-borderless table-responsive">
-                            <thead>
-                                <tr>
-                                    <th >Sl</th>
-                                    <th>Subject Name</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for subject in subjects %}
-                                    <tr>
-                                        <td >{{ forloop.counter }}</td>
-                                        <td>{{ subject.SubjectName }}</td>
 
-                                        <td class="text-center">
-                                            <a href="report/{{ subject.id }}" class="btn btn-outline-primary"><i class="fa fa-eye"></i> View Report</a>
-                                        </td>
 
-                                        <td class="text-center">
-                                            <a href="report_mark/{{ subject.id }}" class="btn btn-outline-secondary"><i class="fa fa-eye"></i> View Mark Report</a>
-                                        </td>
 
-                                        <td class="text-center" >
-                                            <a href="report_attendance/{{ subject.id }}" class="btn btn-outline-dark"><i class="fa fa-eye"></i> View Attendance</a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+
+                                        <div class="text-center">
+                                            <a href="report" class="btn btn-outline-primary"><i class="fa fa-eye"></i> View Report</a>
+                                        </div>
+
+                                        <div class="text-center">
+                                            <a href="report_mark" class="btn btn-outline-secondary"><i class="fa fa-eye"></i> View Mark Report</a>
+                                        </div>
+
+                                        <div class="text-center" >
+                                            <a href="report_attendance" class="btn btn-outline-dark"><i class="fa fa-eye"></i> View Attendance</a>
+                                        </div>
+
                     </div>
                 </div>
             </div>

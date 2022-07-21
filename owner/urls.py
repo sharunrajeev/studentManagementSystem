@@ -12,7 +12,7 @@ urlpatterns = [
     path('', views.dashboard, name='dashboard'),
     path('approve', views.approve, name='approve'),
     path('approve/<userid>', views.individual_view, name='individual_view'),
-    path('payment_subject/<subjectid>',views.payment_subject,name='payment_subject'),
+    path('payment_subject',views.payment_subject,name='payment_subject'),
     #Done By Akhila
 
     path('payment/<userid>', views.user_verify_view, name='user_verify_view' ),
@@ -35,12 +35,12 @@ urlpatterns = [
     path('mark_edit/mark_update/<markid>', views.mark_update, name='mark_update'),
     path('mark_edit/mark_delete/<markid>', views.mark_delete, name='mark_update'),
     path('show_report', views.show_report, name='show_report'),
-    path('report/<subjectid>', views.report, name='report'),
-    path('report/report_download/<subjectid>', views.report_download, name='report_download'),
-    path('report_mark/<subjectid>', views.report_mark, name='report_mark'),
-    path('report_mark_download/<subjectid>', views.report_mark_download, name='report_mark_download'),
-    path('report_attendance/<subjectid>', views.report_attendance, name='report_attendance'),
-    path('report_attendance_download/<subjectid>', views.report_attendance_download, name='report_attendance_download'),
+    path('report', views.report, name='report'),
+    path('report_download', views.report_download, name='report_download'),
+    path('report_mark', views.report_mark, name='report_mark'),
+    path('report_mark_download', views.report_mark_download, name='report_mark_download'),
+    path('report_attendance', views.report_attendance, name='report_attendance'),
+    path('report_attendance_download', views.report_attendance_download, name='report_attendance_download'),
     #Subject Adding Coded By Hana
 
     path('subjects_edit',views.subjects_edit,name='subjects_edit'),
