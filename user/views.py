@@ -34,6 +34,8 @@ def register(request):
         Guide_Phone = request.POST['Guide_Phone']
         Cusatian = request.POST['Cusatian']
 
+
+
         # if Applicants.objects.filter(Email=Email).exists():
         #     return JsonResponse(
         #         {'success': 'error'},
@@ -59,6 +61,9 @@ def register(request):
         user_obj.Guide_Phone = Guide_Phone
         user_obj.Cusatian  = Cusatian
         user_obj.Batch = Latest_Batch
+        if Cusatian == 'True':
+            Cusat_Id = request.FILES['Cusat_Id']
+            user_obj.Cusat_Id = Cusat_Id
 
 
         user_obj.save()
