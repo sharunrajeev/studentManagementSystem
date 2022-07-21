@@ -14,6 +14,7 @@ from xhtml2pdf import pisa
 from django.db.models import Sum
 from datetime import datetime
 
+
 # Create your views here.
 
 #Coded by Hana
@@ -36,7 +37,7 @@ def adminlogin(request):
     # else:
     #     return render(request, 'owner/adminlogin.html')
     if 'username_admin' in request.session:
-        return redirect('/owner/approve')
+        return redirect('/owner/')
     else:
         if request.method == 'POST':
 
