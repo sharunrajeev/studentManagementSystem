@@ -807,8 +807,7 @@ def user_edit(request,batch_id):
         if request.method == 'POST':
 
             Searchfield = request.POST['name']
-            users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield) | Candidates.objects.filter(
-                ApplicationId__Name__icontains=Searchfield)
+            users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield) | Candidates.objects.filter(ApplicationId__Name__icontains=Searchfield)
 
             return render(request, 'owner/user_edit.html', {'users': users, 'message': 'User not found'})
         else:
