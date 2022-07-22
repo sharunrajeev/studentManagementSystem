@@ -804,6 +804,10 @@ input[type=number] {
   display: block;
 }
 
+#file-div {
+  display: none;
+}
+
 
 /* ==========================================================================
    #MEDIA QUERY
