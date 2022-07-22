@@ -211,7 +211,7 @@ def payment_form(request):
         else:
             payments=Payments.objects.all()
             user_payment = UserPayments.objects.filter(StudentId=user)
-            return render(request, 'user/payment_form.html', {'payments':payments,'user_details':user_payment})
+            return render(request, 'user/payment_form.html', {'payments':payments,'user_details':user_payment,'user':user})
     else:
         return redirect('/user/login')
 
