@@ -808,6 +808,51 @@ input[type=number] {
   display: none;
 }
 
+/*.file-input1 {*/
+/*  display: inline-block;*/
+/*  text-align: left;*/
+/*  background: #fff;*/
+/*  padding: 16px;*/
+/*  width: 450px;*/
+/*  position: relative;*/
+/*  border-radius: 3px;*/
+/*}*/
+
+/*.file-input1 > [type='file'] {*/
+/*  position: absolute;*/
+/*  top: 0;*/
+/*  left: 0;*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*  opacity: 0;*/
+/*  z-index: 10;*/
+/*  cursor: pointer;*/
+/*}*/
+
+/*.file-input1 > .button {*/
+/*  display: inline-block;*/
+/*  cursor: pointer;*/
+/*  background: #eee;*/
+/*  padding: 8px 16px;*/
+/*  border-radius: 2px;*/
+/*  margin-right: 8px;*/
+/*}*/
+
+/*.file-input1:hover > .button {*/
+/*  background: dodgerblue;*/
+/*  color: white;*/
+/*}*/
+
+/*.file-input1 > .label {*/
+/*  color: #333;*/
+/*  white-space: nowrap;*/
+/*  opacity: .3;*/
+/*}*/
+
+/*.file-input1.-chosen > .label {*/
+/*  opacity: 1;*/
+/*}*/
+
 
 /* ==========================================================================
    #MEDIA QUERY

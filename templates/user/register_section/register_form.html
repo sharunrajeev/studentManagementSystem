@@ -14,15 +14,13 @@
 <!-- Body -->
 {% block body %}
     <div class="register_main">
-    <div class="progress_bar">
-            {% include './progress_indicator.html' %}
-    </div>
+        <div class="progress_bar">
+                {% include './progress_indicator.html' %}
+        </div>
 
-    <div class="card-body">
-        {{ latest_batch.Batch_Name }} - {{ latest_batch.Month }} - {{ latest_batch.Year }}
-
-        <form action="register" method="post" enctype="multipart/form-data">
-
+        <div class="card-body">
+            <h2>Student Registration for RPE batch for {{ latest_batch.Batch_Name }} - {{ latest_batch.Month }} - {{ latest_batch.Year }}</h2>
+            <form action="register" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="main active">
                 <div class="row row-space">
@@ -70,7 +68,7 @@
                     <div class="col-2">
                         <div class="input-group">
                             <label class="label">Mobile Number</label>
-                            <input id="mob" class="input--style-4 input_default" type="tel" name="Mob" maxlength="12" required require>
+                            <input type="tel" id="mob" class="input--style-4 input_default"  name="Mob" maxlength="12" required require>
                         </div>
                     </div>
 
@@ -111,7 +109,7 @@
                 <div class="row row-space">
                     <div class="col-2">
                         <div class="input-group">
-                            <label class="label">PHD Register Number</label>
+                            <label class="label">PHD/MPhil Registration ID</label>
                             <input id="phd_reg" class="input--style-4 input_default" type="number" name="Phd_Reg" value="0">
                         </div>
                     </div>
@@ -120,7 +118,7 @@
 
                     <div class="col-2">
                         <div class="input-group">
-                            <label class="label">PHD joining Date</label>
+                            <label class="label">Date of joining PhD/MPhil</label>
                             <input id="phd_joining_date" class="input--style-4 input_default" type="date" name="Phd_Joining_Date" required require>
                         </div>
                     </div>
@@ -146,12 +144,12 @@
                     <div class="col-2">
                         <div class="input-group">
                             <label class="label">Cusat Id Card</label>
-                            <input id="file" class="input--style-4 input_default" type="file" name="Cusat_Id" value="">
+                            <div class="mb-3">
+                                <input id="file" class="input&#45;&#45; form-control form-control-lg style-4 file-input1" type="file" name="Cusat_Id" value="">
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
 
                 <div class="buttons_parent">
                     <div class="p-t-15">
@@ -202,7 +200,7 @@
             </div>
 
         </form>
-    </div>
+        s</div>
 </div>
 
 
