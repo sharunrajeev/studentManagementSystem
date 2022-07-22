@@ -40,7 +40,7 @@ urlpatterns = [
     path('report_mark/<batch_id>', views.report_mark, name='report_mark'),
     path('report_mark_download/<batch_id>', views.report_mark_download, name='report_mark_download'),
     path('report_attendance/<batch_id>', views.report_attendance, name='report_attendance'),
-    path('report_attendance_download', views.report_attendance_download, name='report_attendance_download'),
+    path('report_attendance_download/<batch_id>', views.report_attendance_download, name='report_attendance_download'),
     #Subject Adding Coded By Hana
 
     path('subjects_edit',views.subjects_edit,name='subjects_edit'),
