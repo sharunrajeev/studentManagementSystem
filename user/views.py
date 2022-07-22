@@ -68,6 +68,7 @@ def register(request):
 
         user_obj.save()
 
+
         return redirect('/user/regSuccess')
 
             # return JsonResponse(
@@ -152,6 +153,7 @@ def dashboard(request):
         return render(request, 'user/dashboard.html', {'User': User})
     else:
         return redirect('/user/login')
+
 
 
 def payment_form(request):

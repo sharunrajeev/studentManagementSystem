@@ -697,18 +697,18 @@ def report(request,batch_id):
         batch = Batches.objects.get(id=batch_id)
         candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
         marks = Marks.objects.all()
-        return render(request, 'owner/report.html', {'marks': marks, 'users': candidates})
+        return render(request, 'owner/report.html', {'marks': marks, 'users': candidates, 'batch': batch})
 
     else:
         return redirect('/owner/adminlogin')
 
-def report_download(request,subjectid):
+def report_download(request,batch_id):
     if 'username_admin' in request.session:
-        subject = Subjects.objects.get(id=subjectid)
-        candidates = Candidates.objects.filter(SubjectId=subject)
+        batch = Batches.objects.get(id=batch_id)
+        candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
         marks = Marks.objects.all()
         template_path = 'owner/pdf_report.html'
-        context = {'marks': marks, 'subject': subject, 'users': candidates}
+        context = {'marks': marks, 'users': candidates}
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'filename="subject_report.pdf"'
@@ -732,7 +732,7 @@ def report_mark(request,batch_id):
         batch = Batches.objects.get(id=batch_id)
         candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
         marks = Marks.objects.all()
-        return render(request, 'owner/report_mark.html', {'marks': marks, 'users': candidates})
+        return render(request, 'owner/report_mark.html', {'marks': marks, 'users': candidates, 'batch': batch})
 
     else:
         return redirect('/owner/adminlogin')
@@ -769,19 +769,19 @@ def report_attendance(request,batch_id):
         batch = Batches.objects.get(id=batch_id)
         candidates = Candidates.objects.filter(ApplicationId__Batch=batch)
         marks = Marks.objects.all()
-        return render(request, 'owner/report_attendance.html', {'marks': marks, 'users': candidates})
+        return render(request, 'owner/report_attendance.html', {'marks': marks, 'users': candidates, 'batch': batch})
 
     else:
         return redirect('/owner/adminlogin')
 
-def report_attendance_download(request,subjectid):
+def report_attendance_download(request,batch_id):
     if 'username_admin' in request.session:
-        subject = Subjects.objects.get(id=subjectid)
-        users = Candidates.objects.filter(SubjectId=subject)
+        batch = Batches.objects.get(id=batch_id)
+        candidates = Candidates.objects.filter(ApplicationId__Batch=batch)
         marks = Marks.objects.all()
 
         template_path = 'owner/pdf_report_attendance.html'
-        context = {'marks': marks, 'subject': subject, 'users': users}
+        context = {'marks': marks, 'users': candidates}
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'filename="subject_report.pdf"'
@@ -877,9 +877,13 @@ def payment_edit(request):
     if 'username_admin' in request.session:
         if request.method == 'POST':
             Paymentname = request.POST['paymentname']
+            FreeForCusat =request.POST['Cusatian']
 
             Payment = Payments()
             Payment.PaymentName = Paymentname
+            Payment.FreeForCusat = FreeForCusat
+
+
 
             Payment.save()
 
@@ -899,16 +903,22 @@ def payment_update(request, paymentid):
     if 'username_admin' in request.session:
         if request.method == 'POST':
             Paymentname = request.POST['paymentname']
+            FreeForCusat = request.POST['Cusatian']
 
 
             Payment = Payments.objects.get(id=paymentid)
 
             Payment.PaymentName = Paymentname
+            Payment.FreeForCusat = FreeForCusat
 
             Payment.save()
 
-            payments = Payments.objects.all().order_by('id')
 
+
+            return redirect('owner/payment_edit')
+        else:
+
+            payments = Payments.objects.all().order_by('id')
             return render(request, 'owner/payment.html',
                           {'payments': payments, 'message': f" payment details updated successfully"})
 
