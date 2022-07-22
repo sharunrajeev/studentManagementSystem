@@ -1,7 +1,7 @@
-.navbar-menu img{
-    width: 70%;
-    padding-left: 15px;
-}
+/*.navbar-menu img{*/
+/*    width: 70%;*/
+/*    padding-left: 15px;*/
+/*}*/
 
 .fixed-navbar {
   position: fixed;
@@ -9,7 +9,7 @@
   left: 260px;
   z-index: 20;
   right: 0px;
-  padding: 0px 20px 0px 70px;
+  /*padding: 0px 20px 0px 70px;*/
   /*background: #ffffff;*/
   color: #434343;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.14);
@@ -284,11 +284,18 @@
 
 .navbar-child {
   display: flex;
+  width: 1200px;
+  margin: 0 auto;
+  justify-content: center;
   align-items: center;
   gap: 20px;
 }
 
-.navbar-child h2 {
+.navbar-child div {
+  text-align: center;
+}
+.navbar-child h4,
+.navbar-child p {
   margin-bottom: 0;
 }
 .navbar-child img {

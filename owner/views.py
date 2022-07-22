@@ -684,16 +684,18 @@ def show_report(request):
             return render(request, 'owner/show_report.html', {'subjects': subjects})
 
         else:
-            return render(request, 'owner/show_report.html', )
+            batches = Batches.objects.all()
+            return render(request, 'owner/show_report.html', {'batches': batches})
 
     else:
         return redirect('/owner/adminlogin')
 
 
-def report(request):
+def report(request,batch_id):
     if 'username_admin' in request.session:
-        Latest_Batch = Batches.objects.all().order_by('-id').first()
-        candidates = Candidates.objects.filter(ApplicationId__Batch = Latest_Batch)
+        # Latest_Batch = Batches.objects.all().order_by('-id').first()
+        batch = Batches.objects.get(id=batch_id)
+        candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
         marks = Marks.objects.all()
         return render(request, 'owner/report.html', {'marks': marks, 'users': candidates})
 
@@ -725,24 +727,24 @@ def report_download(request,subjectid):
         return redirect('/owner/adminlogin')
 
 
-def report_mark(request,subjectid):
+def report_mark(request,batch_id):
     if 'username_admin' in request.session:
-        subject = Subjects.objects.get(id=subjectid)
-        users = Candidates.objects.filter(SubjectId=subject)
+        batch = Batches.objects.get(id=batch_id)
+        candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
         marks = Marks.objects.all()
-        return render(request, 'owner/report_mark.html', {'marks': marks, 'users': users, 'subject': subject})
+        return render(request, 'owner/report_mark.html', {'marks': marks, 'users': candidates})
 
     else:
         return redirect('/owner/adminlogin')
 
-def report_mark_download(request,subjectid):
+def report_mark_download(request,batch_id):
     if 'username_admin' in request.session:
-        subject = Subjects.objects.get(id=subjectid)
-        users = Candidates.objects.filter(SubjectId=subject)
+        batch = Batches.objects.get(id=batch_id)
+        candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
         marks = Marks.objects.all()
 
         template_path = 'owner/pdf_report_mark.html'
-        context = {'marks': marks, 'subject': subject, 'users': users}
+        context = {'marks': marks, 'users': candidates}
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'filename="subject_report.pdf"'
@@ -762,12 +764,12 @@ def report_mark_download(request,subjectid):
 
 
 
-def report_attendance(request,subjectid):
+def report_attendance(request,batch_id):
     if 'username_admin' in request.session:
-        subject = Subjects.objects.get(id=subjectid)
-        users = Candidates.objects.filter(SubjectId=subject)
+        batch = Batches.objects.get(id=batch_id)
+        candidates = Candidates.objects.filter(ApplicationId__Batch=batch)
         marks = Marks.objects.all()
-        return render(request, 'owner/report_attendance.html', {'marks': marks, 'users': users, 'subject': subject})
+        return render(request, 'owner/report_attendance.html', {'marks': marks, 'users': candidates})
 
     else:
         return redirect('/owner/adminlogin')
@@ -875,9 +877,13 @@ def payment_edit(request):
     if 'username_admin' in request.session:
         if request.method == 'POST':
             Paymentname = request.POST['paymentname']
+            FreeForCusat =request.POST['Cusatian']
 
             Payment = Payments()
             Payment.PaymentName = Paymentname
+            Payment.FreeForCusat = FreeForCusat
+
+
 
             Payment.save()
 
@@ -897,11 +903,13 @@ def payment_update(request, paymentid):
     if 'username_admin' in request.session:
         if request.method == 'POST':
             Paymentname = request.POST['paymentname']
+            FreeForCusat = request.POST['Cusatian']
 
 
             Payment = Payments.objects.get(id=paymentid)
 
             Payment.PaymentName = Paymentname
+            Payment.FreeForCusat = FreeForCusat
 
             Payment.save()
 

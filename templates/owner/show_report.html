@@ -5,9 +5,9 @@
 
 {% block styles %}
 
-  <!-- CSS only -->
-  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
-  <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
+<!-- CSS only -->
+<link href="{% static 'css/mark_upload-table.css' %}" rel="stylesheet">
+<link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
 
 
 {% endblock %}
@@ -17,13 +17,13 @@
 {% include 'reusable/navbar.html' %}
 
 <div id="wrapper">
-	<div class="main-content">
+    <div class="main-content">
         <h2>Final Report</h2>
         <div class="d-flex justify-content-center align-items-center">
             <div class="col-md-8">
                 <!-- Search Box -->
                 <form action="show_report" method="post">
-                {% csrf_token %}
+                    {% csrf_token %}
                     <div class="search">
                         <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
                         <input name="name" type="text" class="form-control" placeholder="Search">
@@ -35,34 +35,58 @@
         </div>
 
         <div class="verify_div" style="margin-top: 5rem; ">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
+            <div class="table-parent">
 
 
+                        <table >
+                            <thead>
+                            <tr>
+
+                                <th class="text-center">Batches</th>
+                                <th class="text-center">Report</th>
+                                <th class="text-center">Mark</th>
+                                <th class="text-center">Attendance</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for batch in batches %}
+                            <tr>
+
+                                <td class="text-center">{{ batch.Batch_Name }}</td>
+                                <td class="text-center"> <a href="report/{{batch.id}}" class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i> View Report</a></td>
+                                <td class="text-center"><a href="report_mark/{{batch.id}}" class="btn btn-outline-secondary btn-sm"><i class="fa fa-eye"></i> View Mark Report</a></td>
+                                <td class="text-center">
+                                    <a href="report_attendance/{{batch.id}}" class="btn btn-outline-dark btn-sm"><i class="fa fa-eye"></i> View Attendance</a>
+
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
 
 
-                                        <div class="text-center">
-                                            <a href="report" class="btn btn-outline-primary"><i class="fa fa-eye"></i> View Report</a>
-                                        </div>
+<!--                        <div class="text-center">-->
+<!--                            <a href="report" class="btn btn-outline-primary"><i class="fa fa-eye"></i> View Report</a>-->
+<!--                        </div>-->
 
-                                        <div class="text-center">
-                                            <a href="report_mark" class="btn btn-outline-secondary"><i class="fa fa-eye"></i> View Mark Report</a>
-                                        </div>
+<!--                        <div class="text-center">-->
+<!--                            <a href="report_mark" class="btn btn-outline-secondary"><i class="fa fa-eye"></i> View Mark-->
+<!--                                Report</a>-->
+<!--                        </div>-->
 
-                                        <div class="text-center" >
-                                            <a href="report_attendance" class="btn btn-outline-dark"><i class="fa fa-eye"></i> View Attendance</a>
-                                        </div>
+<!--                        <div class="text-center">-->
+<!--                            <a href="report_attendance" class="btn btn-outline-dark"><i class="fa fa-eye"></i> View-->
+<!--                                Attendance</a>-->
+<!--                        </div>-->
 
-                    </div>
-                </div>
+
             </div>
 
-<!--          <div class=" d-grid   d-md-flex  justify-content-evenly" style="margin-top: 5rem;">-->
-<!-- <a href="report_mark"><button type="button" class="btn btn-outline-secondary btn-rounded " >  <i class="fa fa-eye"></i> View Mark Report</button>  </a>-->
-<!-- <a href="report_attendance"><button type="button" class="btn btn-outline-secondary btn-rounded ">  <i class="fa fa-eye"></i> View Attendance Report</button>  </a>-->
+            <!--          <div class=" d-grid   d-md-flex  justify-content-evenly" style="margin-top: 5rem;">-->
+            <!-- <a href="report_mark"><button type="button" class="btn btn-outline-secondary btn-rounded " >  <i class="fa fa-eye"></i> View Mark Report</button>  </a>-->
+            <!-- <a href="report_attendance"><button type="button" class="btn btn-outline-secondary btn-rounded ">  <i class="fa fa-eye"></i> View Attendance Report</button>  </a>-->
 
-<!--</div>-->
+            <!--</div>-->
 
         </div>
     </div>
@@ -70,8 +94,8 @@
 {% endblock %}
 
 {% block scripts %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 <script>
     let html_tag = document.getElementsByTagName('html')
     let button_tag = document.getElementById("nav--btn")

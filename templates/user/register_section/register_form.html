@@ -24,7 +24,7 @@
         <form action="register" method="post" enctype="multipart/form-data">
 
             {% csrf_token %}
-            <div class="main active">
+            <div class="main">
                 <div class="row row-space">
                     <div class="col-2">
                         <div class="input-group">
@@ -87,15 +87,17 @@
                 </div>
             </div>
 
-            <div class="main">
+            <div class="main active">
                 <div class="row row-space">
                     <div class="col-2">
-                        <label for="subject">Are you Cusatian:</label><br>
-                        <select name="Cusatian" class="input--style-4 input_default" onclick="universitySelect(this)" id="inputGroupSelect01" required>
-                            <option selected disabled value="">Choose...</option>
-                            <option value="True">Yes</option>
-                            <option value="False">No</option>
-                        </select>
+                        <div class="input-group">
+                            <label class="mb-1" for="subject">Are you Cusatian:</label>
+                            <select name="Cusatian" class="input--style-4 input_default" onclick="universitySelect(this)" id="inputGroupSelect01" required>
+                                <option selected disabled value="">Choose...</option>
+                                <option value="True">Yes</option>
+                                <option value="False">No</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="col-2">
@@ -124,15 +126,6 @@
                     </div>
                 </div>
 
-                 <div class="col-2">
-                        <div class="input-group">
-                            <label class="label">Cusat Id Card</label>
-                            <input id="file" class="input--style-4 input_default" type="file" name="Cusat_Id" value="">
-                        </div>
-                    </div>
-
-
-
                 <div class="row row-space">
                     <div class="col-2">
                         <div class="input-group">
@@ -149,6 +142,17 @@
                     </div>
                 </div>
 
+                <div id="file-div" class="row row-space">
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Cusat Id Card</label>
+                            <input id="file" class="input--style-4 input_default" type="file" name="Cusat_Id" value="">
+                        </div>
+                    </div>
+                </div>
+
+
+
                 <div class="buttons_parent">
                     <div class="p-t-15">
                         <button class="btn btn--radius-2 btn--blue back_button" type="button">Back</button>
@@ -164,14 +168,14 @@
                 <div class="row row-space">
                     <div class="col-2">
                         <div class="input-group">
-                            <label class="label">Name</label>
+                            <label class="label">Guide's Name</label>
                             <input id="research_guide" class="input--style-4 input_default" type="text" name="Research_Guide" required require>
                         </div>
                     </div>
 
                     <div class="col-2">
                         <div class="input-group">
-                            <label class="label">E-Mail</label>
+                            <label class="label">Guide's E-Mail</label>
                             <input id="guide_mail" class="input--style-4 input_default" type="email" name="Guide_Mail" required require>
                         </div>
                     </div>
@@ -180,7 +184,7 @@
                 <div class="row row-space">
                     <div class="col-2">
                         <div class="input-group">
-                           <label class="label">Phone</label>
+                           <label class="label">Guide's Phone</label>
                            <input  id="guide_phone" class="input--style-4 input_default" type="tel" maxlength="12" name="Guide_Phone" required require>
                         </div>
                     </div>
@@ -236,14 +240,17 @@
     const universitySelect = (cusatian) => {
         let isCusatian = (cusatian.value === "True") ? true : false;
         let university = document.getElementById("university");
+        let file = document.getElementById("file-div");
 
         if(isCusatian) {
             university.value = "Cochin University of Science and Technology";
             university.readOnly = true;
+            file.style.display =  "block";
         }
         else {
             university.value = null;
             university.readOnly = false;
+            file.style.display =  "none";
         }
     }
 
