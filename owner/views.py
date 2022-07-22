@@ -428,6 +428,7 @@ def delete_user(request, userid):
 def show_batches(request):
     if 'username_admin' in request.session:
         batches = Batches.objects.all().order_by('id')
+        batches = reversed(batches)
         if request.method == 'POST':
             Searchfield = request.POST['name']
 
@@ -685,6 +686,7 @@ def show_report(request):
 
         else:
             batches = Batches.objects.all()
+            batches = reversed(batches)
             return render(request, 'owner/show_report.html', {'batches': batches})
 
     else:
@@ -915,7 +917,7 @@ def payment_update(request, paymentid):
 
 
 
-            return redirect('owner/payment_edit')
+            return redirect(f'/owner/payment_update/{Payment.id}')
         else:
 
             payments = Payments.objects.all().order_by('id')
