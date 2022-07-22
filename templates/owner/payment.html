@@ -34,14 +34,13 @@
                 {% csrf_token %}
                 <div class="main">
                     <div class="row row-space">
-                        <div class="col-2">
+                        <div class="col">
                             <div class="input-group">
                                 <label class="label">Payment Name</label>
                                 <input type="text" class="input--style-4 input_default" id="paymentname" name="paymentname" required></div>
                         </div>
 
-
-                        <label for="payment"><p class="p-0 m-0">Fees for Cusat Students</p></label><br>
+<div class="col"> <label for="payment"><p class="label">Fees Required for Cusat students</p></label><br>
                                 <select name="Cusatian" class="input--style-4 input_default btn btn-outline-secondary dropdown-toggle " id="inputGroupSelect01" required>
                                 <option selected disabled value="">choose...</option>
 
@@ -49,10 +48,11 @@
 
                                 <option class="dropdown-item" value="False">No</option>
 
-                                </select>
+                                </select></div>
 
-                        <div class="col-2" style="align-self: center;">
-                            <button id="butn" class="btn btn--radius-2 btn-sm btn--blue" type="submit">Submit</button>
+
+                        <div class="col" style="align-self: center;">
+                            <button id="butn" class="btn btn--radius-2 btn-sm btn--blue m-3" type="submit">Submit</button>
                         </div>
                     </div>
                 </div>
@@ -67,7 +67,7 @@
                     <tr>
                         <th>Sl No</th>
                         <th>Course Name</th>
-                        <th>Cusat Student</th>
+                        <th>Fees Required for Cusat students</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -90,8 +90,13 @@
 
 
 
+
                                 <select name="Cusatian" class="input--style-4 input_default btn btn-outline-secondary dropdown-toggle " id="inputGroupSelect01" required>
-                                <option selected disabled value="">{{ payment.FreeForCusat }}</option>
+                                {% if payment.FreeForCusat == True %}
+                                    <option selected disabled value="">Yes</option>
+                                    {% else %}
+                                    <option selected disabled value="">No</option>
+                                    {% endif %}
 
                                 <option class="dropdown-item" value="True">Yes</option>
 
