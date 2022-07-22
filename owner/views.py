@@ -913,8 +913,12 @@ def payment_update(request, paymentid):
 
             Payment.save()
 
-            payments = Payments.objects.all().order_by('id')
 
+
+            return redirect('owner/payment_edit')
+        else:
+
+            payments = Payments.objects.all().order_by('id')
             return render(request, 'owner/payment.html',
                           {'payments': payments, 'message': f" payment details updated successfully"})
 
