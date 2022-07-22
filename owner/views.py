@@ -684,16 +684,18 @@ def show_report(request):
             return render(request, 'owner/show_report.html', {'subjects': subjects})
 
         else:
-            return render(request, 'owner/show_report.html', )
+            batches = Batches.objects.all()
+            return render(request, 'owner/show_report.html', {'batches': batches})
 
     else:
         return redirect('/owner/adminlogin')
 
 
-def report(request):
+def report(request,batch_id):
     if 'username_admin' in request.session:
-        Latest_Batch = Batches.objects.all().order_by('-id').first()
-        candidates = Candidates.objects.filter(ApplicationId__Batch = Latest_Batch)
+        # Latest_Batch = Batches.objects.all().order_by('-id').first()
+        batch = Batches.objects.get(id=batch_id)
+        candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
         marks = Marks.objects.all()
         return render(request, 'owner/report.html', {'marks': marks, 'users': candidates})
 
