@@ -875,9 +875,13 @@ def payment_edit(request):
     if 'username_admin' in request.session:
         if request.method == 'POST':
             Paymentname = request.POST['paymentname']
+            FreeForCusat =request.POST['Cusatian']
 
             Payment = Payments()
             Payment.PaymentName = Paymentname
+            Payment.FreeForCusat = FreeForCusat
+
+
 
             Payment.save()
 
@@ -897,11 +901,13 @@ def payment_update(request, paymentid):
     if 'username_admin' in request.session:
         if request.method == 'POST':
             Paymentname = request.POST['paymentname']
+            FreeForCusat = request.POST['Cusatian']
 
 
             Payment = Payments.objects.get(id=paymentid)
 
             Payment.PaymentName = Paymentname
+            Payment.FreeForCusat = FreeForCusat
 
             Payment.save()
 
