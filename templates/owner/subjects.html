@@ -6,6 +6,8 @@
 {% block styles %}
     <link href="{% static 'css/register_form.css' %}" rel="stylesheet">
     <link href="{% static 'css/mark_upload-table.css' %}" rel="stylesheet">
+    <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
+    <link href="{% static 'css/mark_upload.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block body %}
@@ -24,7 +26,7 @@
 
         <div class="table-parent">
 
-             <h3> Add New Batch</h3>
+             <h3>Add New Batch</h3>
             <br>
 
             <form method="post" action="/owner/subjects_edit">
@@ -37,7 +39,22 @@
                         <div class="col-3">
                             <div class="input-group">
                                 <label class="label">Month</label>
-                                <input type="text" class="input--style-4 input_default" id="month" name="month" required></div>
+                                <select name="month" class="input--style-4 input_default" id="month">
+                                    <option selected disabled value="">Choose...</option>
+                                    <option value="Jan">January</option>
+                                    <option value="Feb">February</option>
+                                    <option value="Mar">March</option>
+                                    <option value="Apr">April</option>
+                                    <option value="May">May</option>
+                                    <option value="Jun">June</option>
+                                    <option value="Jan">January</option>
+                                    <option value="Jan">January</option>
+                                    <option value="Jan">January</option>
+                                    <option value="Jan">January</option>
+                                    <option value="Jan">January</option>
+                                    <option value="Jan">January</option>
+                                </select>
+                            </div>
                         </div>
 
 

@@ -38,6 +38,7 @@ class Applicants(models.Model):
 
 class Payments(models.Model):
     PaymentName = models.CharField(max_length=100, default=None)
+    FreeForCusat = models.BooleanField(blank=True, null=True, default=None)
 
 
 class Candidates(models.Model):
