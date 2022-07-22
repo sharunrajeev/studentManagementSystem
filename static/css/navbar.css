@@ -3,10 +3,6 @@
     padding-left: 15px;
 }
 
-.pull-left {
-  float: left;
-}
-
 .fixed-navbar {
   position: fixed;
   top: 0px;
@@ -22,7 +18,7 @@
 }
 
 .fixed-navbar {
-  height: 50px;
+  height: 70px;
 }
 .fixed-navbar .ico-item {
   display: inline-block;
@@ -284,6 +280,20 @@
   position: absolute !important;
   top: -5px;
   right: -100px;
+}
+
+.navbar-child {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar-child h2 {
+  margin-bottom: 0;
+}
+.navbar-child img {
+  height: 70px;
+  width: 80px;
 }
 
 
