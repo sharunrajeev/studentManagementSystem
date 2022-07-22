@@ -19,68 +19,53 @@
 
 <div id="wrapper">
 	<div class="main-content">
-<h2>Select Batch</h2>
+        <div class="main-container">
+            <h2 class="main-head">Select Batch</h2>
 
-        <div class="d-flex justify-content-center align-items-center">
-            <div class="col-md-8">
-
-                          <form action="" method="POST">
-
-                      {% csrf_token %}
-
-<!--                        <div class="input-group">-->
-<!--                            <input name="name" type="text" placeholder="Search " class="form-control" />-->
-<!--                                <div class="input-group-append">-->
-<!--                                <button type="submit" class="btn btn-primary btn-format">Search</button>-->
-<!--                            </div>-->
-<!--                        </div>-->
-                              <div class="search">
-                        <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
-                        <input name="name" type="text" class="form-control" placeholder="Search">
-                        <button class="btn btn-primary" type="submit">Search</button>
-                    </div>
+            <!--Search Box -->
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="col-md-8">
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        <div class="search">
+                            <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
+                            <input name="name" type="text" class="form-control" placeholder="Search">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
                     </form>
-
-
-
-
-                      </div>
-        </div>
-
-        <div class="verify_div" style="margin-top: 5rem; ">
-            <div class="table-parent">
-                <div class="col-12">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Sl</th>
-                                <th>Bathes</th>
-                                <th>Month</th>
-                                <th>Year</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for batch in batches %}
-                                <tr>
-                                    <td >{{ forloop.counter }}</td>
-                                    <td>{{ batch.Batch_Name }}</td>
-                                    <td>{{ batch.Month }}</td>
-                                    <td>{{ batch.Year }}</td>
-                                    <td class="text-center">
-                                        <a href="user_edit/{{ batch.id }}" class="btn btn-primary"><i class="fa fa-eye"></i> View Students</a>
-
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
                 </div>
             </div>
+            <!--Search Box End-->
 
-            <div class=" d-grid  d-md-flex  justify-content-evenly" style="margin-top: 5rem;">
-
+            <div class="verify_div" style="margin-top: 3rem; ">
+                <div class="table-parent">
+                    <div class="col-12">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Sl</th>
+                                    <th>Bathes</th>
+                                    <th>Month</th>
+                                    <th>Year</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for batch in batches %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ batch.Batch_Name }}</td>
+                                        <td>{{ batch.Month }}</td>
+                                        <td>{{ batch.Year }}</td>
+                                        <td class="text-center">
+                                            <a href="user_edit/{{ batch.id }}" class="btn btn-primary"><i class="fa fa-eye"></i> View Students</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-
         </div>
     </div>
 </div>

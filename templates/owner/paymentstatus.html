@@ -5,9 +5,8 @@
 
 {% block styles %}
 
-<!--    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">-->
     <link href="{% static 'css/mark_upload-table.css' %}" rel="stylesheet">
-  <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
+    <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
 
 {% endblock %}
 
@@ -18,24 +17,25 @@
 
 <div id="wrapper">
 	<div class="main-content">
- {% include 'reusable/back_button.html' %}
+        {% include 'reusable/back_button.html' %}
+         <a href="/owner/payment_edit" class="btn btn-outline-success btn-sm bt-pos">Add payment</a>
 
- <a href="/owner/payment_edit" class="btn btn-outline-success btn-sm">Add payment</a>
-        <div class="d-flex justify-content-center align-items-center" style="margin-top: 3rem;">
-            <div class="col-md-6">
-                <form action="payment_subject" method="post">
-                {% csrf_token %}
-                    <div class="search">
-                        <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
-                        <input name="name" type="text" class="form-control" placeholder="Search for Applicants">
-                        <button class="btn btn-primary" type="submit">Search</button>
-                    </div>
-                </form>
+        <div class="main-container">
+            <h2 class="main-head">Payment Verification</h2>
+
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="col-md-8">
+                    <form action="payment_subject" method="post">
+                        {% csrf_token %}
+                        <div class="search">
+                            <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
+                            <input name="name" type="text" class="form-control" placeholder="Search for Applicants">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-
-
-
 
         <div class="table-parent">
             <table>
@@ -50,98 +50,43 @@
                 </thead>
                 <tbody>
 
-                {% for user in users %}
-                    <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td>{{ user.ApplicationId.Name }}</td>
-                        <td>{{ user.RegNumber }}</td>
-                        <td>
-                        {% if user.ApplicationId.Cusatian == True %}
-                        <p class="badge rounded-pill bg-success " style="font-size:1rem;">Yes <i class="fa fa-check"></i></p>
-                        {% else %}
-                        <p class="badge rounded-pill bg-danger " style="font-size:1rem;">No <i class="fa fa-check"></i></p>
-                        {% endif %}
-                        </td>
-                        <td>
-                         {% for user_payment in user_payments %}
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ user.ApplicationId.Name }}</td>
+                            <td>{{ user.RegNumber }}</td>
+                            <td>
+                                {% if user.ApplicationId.Cusatian == True %}
+                                    <p class="badge rounded-pill bg-success " style="font-size:1rem;">Yes <i class="fa fa-check"></i></p>
+                                {% else %}
+                                    <p class="badge rounded-pill bg-danger " style="font-size:1rem;">No <i class="fa fa-check"></i></p>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% for user_payment in user_payments %}
 
-                         {% if user_payment.StudentId == user %}
-                           <p> {{ user_payment.PaymentId.PaymentName }}:
-                           {% if user_payment.PaymentStatus == True %}
-                            <p class="badge rounded-pill bg-success " style="font-size:1rem;">Verified <i class="fa fa-check"></i></p>
-                            {% else %}
-                            <p class="badge rounded-pill bg-warning text-dark" style="font-size:1rem;"> Not verified <i class="fa fa-times"></i></p>
-                               {% endif %}</p>
+                                    {% if user_payment.StudentId == user %}
+                                        <p>{{ user_payment.PaymentId.PaymentName }}:
+                                            {% if user_payment.PaymentStatus == True %}
+                                                <p class="badge rounded-pill bg-success " style="font-size:1rem;">Verified <i class="fa fa-check"></i></p>
+                                            {% else %}
+                                                <p class="badge rounded-pill bg-warning text-dark" style="font-size:1rem;"> Not verified <i class="fa fa-times"></i></p>
+                                            {% endif %}
+                                        </p>
+                                    {% endif %}
+                                {% endfor %}
+                            </td>
 
-                         {% endif %}
-
-                         {% endfor %}
-                        </td>
-<!--                         {% if user.PaymentStatus == null %}-->
-<!--                            <td><span class="btn btn-warning btn-sm" style="cursor: default;">Not Verified</span></td>-->
-<!--                         {% elif user.PaymentStatus == True %}-->
-<!--                            <td><span class="btn btn-success btn-sm" style="cursor: default;">Accepted</span></td>-->
-<!--                         {% else %}-->
-<!--                            <td><span class="btn btn-danger btn-sm" style="cursor: default;">Rejected</span></td>-->
-<!--                         {% endif %}-->
-
-                        <td><a class="btn btn-outline-success btn-sm" href="/owner/payment/{{ user.Register_Number }}" role="button">Verify</a></td>
-
-                    </tr>
-                {% endfor %}
+                            <td><a class="btn btn-outline-success btn-sm" href="/owner/payment/{{ user.Register_Number }}" role="button">Verify</a></td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
-</table>
+            </table>
         </div>
     </div>
 </div>
+
 {% endblock %}
-
-
-<table class="table table-bordered">
-    <thead>
-
-    <tr>
-        <th>Name</th>
-        <th>Phd_Reg</th>
-        <th>Register No</th>
-        <th>Phone Number</th>
-        <th>Email</th>
-        <th>Status</th>
-
-
-    </tr>
-    </thead>
-    <tbody>
-
-        {% for user in users %}
-
-      <tr class="active">
-
-
-          <td>{{ user.ApplicationId.Name }}</td>
-          <td>{{ user.ApplicationId.Phd_Reg }}</td>
-          <td>{{ user.RegNumber }}</td>
-          <td>{{ user.ApplicationId.Mob }}</td>
-          <td> {{ user.ApplicationId.Email }}</td>
-
-          {% if user.PaymentStatus == null %}
-            <td><a class="btn btn-warning w-100" href="payment/{{ user.id }}" role="button">Verify</a></td>
-            {% elif user.PaymentStatus == True %}
-            <td><a class="btn btn-success w-100" href="payment/{{ user.id }}" role="button">Accepted</a></td>
-            {% else %}
-            <td><a class="btn btn-danger w-100" href="payment/{{ user.id }}" role="button">Rejected</a></td>
-          {% endif %}
-
-      </tr>
-
-      {% endfor %}
-    </tbody>
-
-  </table>
-
-
-  </div>
-</div>
 
 {% block scripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
