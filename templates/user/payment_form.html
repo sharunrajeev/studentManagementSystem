@@ -54,6 +54,7 @@
                                 <select name="payment" class="input--style-4 input_default btn btn-outline-secondary dropdown-toggle " id="inputGroupSelect01" required>
                                 <option selected disabled value="">Choose...</option>
                                     {% for payment in payments %}
+<!--                                    {% if payment.FreeForCusat -->
                                 <option class="dropdown-item" value="{{payment.PaymentName}}">{{payment.PaymentName}}</option>
                                     {% endfor %}
                                 </select>
