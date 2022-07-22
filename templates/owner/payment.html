@@ -42,12 +42,12 @@
 
 
                         <label for="payment"><p class="p-0 m-0">Fees for Cusat Students</p></label><br>
-                                <select name="payment" class="input--style-4 input_default btn btn-outline-secondary dropdown-toggle " id="inputGroupSelect01" required>
+                                <select name="Cusatian" class="input--style-4 input_default btn btn-outline-secondary dropdown-toggle " id="inputGroupSelect01" required>
                                 <option selected disabled value="">choose...</option>
 
-                                <option class="dropdown-item" value="Yes">Yes</option>
+                                <option class="dropdown-item" value="True">Yes</option>
 
-                                <option class="dropdown-item" value="No">No</option>
+                                <option class="dropdown-item" value="False">No</option>
 
                                 </select>
 
@@ -67,6 +67,7 @@
                     <tr>
                         <th>Sl No</th>
                         <th>Course Name</th>
+                        <th>Cusat Student</th>
                         <th>Edit</th>
                         <th>Delete</th>
                     </tr>
@@ -83,6 +84,20 @@
 
                             <td>
                                 <input value="{{ payment.PaymentName }}" class="input--style-4 input_default" type="text" name="paymentname">
+                            </td>
+
+                            <td>
+
+
+
+                                <select name="Cusatian" class="input--style-4 input_default btn btn-outline-secondary dropdown-toggle " id="inputGroupSelect01" required>
+                                <option selected disabled value="">{{ payment.FreeForCusat }}</option>
+
+                                <option class="dropdown-item" value="True">Yes</option>
+
+                                <option class="dropdown-item" value="False">No</option>
+
+                                </select>
                             </td>
 
 
