@@ -917,7 +917,7 @@ def payment_update(request, paymentid):
 
 
 
-            return redirect('owner/payment_edit')
+            return redirect(f'/owner/payment_update/{Payment.id}')
         else:
 
             payments = Payments.objects.all().order_by('id')
