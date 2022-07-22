@@ -6,7 +6,7 @@
 {% block styles %}
 
 <!-- CSS only -->
-<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+<link href="{% static 'css/mark_upload-table.css' %}" rel="stylesheet">
 <link href="{% static 'css/owner_approval_list.css' %}" rel="stylesheet">
 
 
@@ -35,30 +35,28 @@
         </div>
 
         <div class="verify_div" style="margin-top: 5rem; ">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
+            <div class="table-parent">
 
-                        <table class="table table-borderless table-responsive">
+
+                        <table >
                             <thead>
                             <tr>
 
-                                <th style="font-size: 1rem;">Batches</th>
-                                <th style="font-size: 1rem;">Report</th>
-                                <th style="font-size: 1rem;">Attenda</th>
-                                <th></th>
+                                <th class="text-center">Batches</th>
+                                <th class="text-center">Report</th>
+                                <th class="text-center">Mark</th>
+                                <th class="text-center">Attendance</th>
                             </tr>
                             </thead>
                             <tbody>
                             {% for batch in batches %}
                             <tr>
 
-                                <td>{{ batch.Batch_Name }}</td>
-                                <td> <a href="report/{{batch.id}}" class="btn btn-outline-primary"><i class="fa fa-eye"></i> View Report</a></td>
-                                <td>{{ batch.Year }}</td>
+                                <td class="text-center">{{ batch.Batch_Name }}</td>
+                                <td class="text-center"> <a href="report/{{batch.id}}" class="btn btn-outline-primary btn-sm"><i class="fa fa-eye"></i> View Report</a></td>
+                                <td class="text-center"><a href="report_mark/{{batch.id}}" class="btn btn-outline-secondary btn-sm"><i class="fa fa-eye"></i> View Mark Report</a></td>
                                 <td class="text-center">
-                                    <a href="user_edit/{{ batch.id }}" class="btn btn-primary"><i class="fa fa-eye"></i>
-                                        View Students</a>
+                                    <a href="report_attendance/{{batch.id}}" class="btn btn-outline-dark btn-sm"><i class="fa fa-eye"></i> View Attendance</a>
 
                                 </td>
                             </tr>
@@ -81,8 +79,7 @@
 <!--                                Attendance</a>-->
 <!--                        </div>-->
 
-                    </div>
-                </div>
+
             </div>
 
             <!--          <div class=" d-grid   d-md-flex  justify-content-evenly" style="margin-top: 5rem;">-->
