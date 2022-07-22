@@ -209,9 +209,11 @@ Student Details
                                         <span>Cusatian: </span>
                                         {% if individual.Cusatian == True %}
                             <p class="badge rounded-pill bg-success " style="font-size:1rem;">Yes <i class="fa fa-check"></i></p>
+                                          <a class="btn btn-outline-info w-100" href="{{ individual.Cusat_Id.url}}" role="button">View
+                                CusatId</a>
                             {% else %}
                             <p class="badge rounded-pill bg-warning text-dark" style="font-size:1rem;"> No <i class="fa fa-times"></i></p>
-                               {% endif %}</p>
+                               {% endif %}
                                     </div>
                                 </div>
                                 <!-- /.row -->
