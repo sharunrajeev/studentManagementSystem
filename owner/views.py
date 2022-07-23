@@ -699,17 +699,19 @@ def show_report(request):
 
 
 def report(request,batch_id):
+    global total_attendance
     if 'username_admin' in request.session:
         # Latest_Batch = Batches.objects.all().order_by('-id').first()
         batch = Batches.objects.get(id=batch_id)
         candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
         marks = Marks.objects.all()
-        return render(request, 'owner/report.html', {'marks': marks, 'users': candidates, 'batch': batch})
+        return render(request, 'owner/report.html', {'marks': marks, 'users': candidates, 'batch': batch, 'total_attendance':total_attendance})
 
     else:
         return redirect('/owner/adminlogin')
 
 def report_download(request,batch_id):
+    global total_attendance
     if 'username_admin' in request.session:
         batch = Batches.objects.get(id=batch_id)
         candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
@@ -735,23 +737,25 @@ def report_download(request,batch_id):
 
 
 def report_mark(request,batch_id):
+    global total_attendance
     if 'username_admin' in request.session:
         batch = Batches.objects.get(id=batch_id)
         candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
         marks = Marks.objects.all()
-        return render(request, 'owner/report_mark.html', {'marks': marks, 'users': candidates, 'batch': batch})
+        return render(request, 'owner/report_mark.html', {'marks': marks, 'users': candidates, 'batch': batch, 'total_attendance':total_attendance})
 
     else:
         return redirect('/owner/adminlogin')
 
 def report_mark_download(request,batch_id):
+    global total_attendance
     if 'username_admin' in request.session:
         batch = Batches.objects.get(id=batch_id)
         candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
         marks = Marks.objects.all()
 
         template_path = 'owner/pdf_report_mark.html'
-        context = {'marks': marks, 'users': candidates}
+        context = {'marks': marks, 'users': candidates, 'total_attendance':total_attendance}
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'filename="subject_report.pdf"'
@@ -772,23 +776,25 @@ def report_mark_download(request,batch_id):
 
 
 def report_attendance(request,batch_id):
+    global total_attendance
     if 'username_admin' in request.session:
         batch = Batches.objects.get(id=batch_id)
         candidates = Candidates.objects.filter(ApplicationId__Batch=batch)
         marks = Marks.objects.all()
-        return render(request, 'owner/report_attendance.html', {'marks': marks, 'users': candidates, 'batch': batch})
+        return render(request, 'owner/report_attendance.html', {'marks': marks, 'users': candidates, 'batch': batch, 'total_attendance':total_attendance})
 
     else:
         return redirect('/owner/adminlogin')
 
 def report_attendance_download(request,batch_id):
+    global total_attendance
     if 'username_admin' in request.session:
         batch = Batches.objects.get(id=batch_id)
         candidates = Candidates.objects.filter(ApplicationId__Batch=batch)
         marks = Marks.objects.all()
 
         template_path = 'owner/pdf_report_attendance.html'
-        context = {'marks': marks, 'users': candidates}
+        context = {'marks': marks, 'users': candidates, 'total_attendance':total_attendance}
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'filename="subject_report.pdf"'
