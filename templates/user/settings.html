@@ -69,6 +69,31 @@
                                     </div>
                             </form>
 
+                            <form method="post" class="mb-4" action="change_phdregno">
+
+                                {% csrf_token %}
+
+                                <label class="text-danger mt-3 mb-3"  id="error"></label>
+
+                                <h4> Change Phd/MPhil Registeration ID</h4><br>
+
+                                <div class="row row-space">
+                                    <div class="col-2">
+                                        <div class="input-group">
+                                            <h6 class="mb-0"> New Phd/MPhil Registeration ID</h6>
+                                            <input type="number" value= "{{ User.ApplicationId.Phd_Reg }}" class="input--style-4 input_default" id="phdregno" name="phdregno" required>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <button  id="btn" class="btn btn-primary btn-sm" type="submit">Submit</button>
+                            </form>
+
+
+
+
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
@@ -106,6 +131,7 @@
 
 })
 })
+
 
 
 

@@ -256,6 +256,7 @@ def settings(request):
     if 'username' in request.session:
         User = Candidates.objects.get(RegNumber=request.session['username'])
 
+
         return render(request, 'user/settings.html',{'User':User})
 
 def password_change_alert(request):
@@ -301,6 +302,28 @@ def photo_upload(request):
         return redirect('/user/login')
 
     return render(request, 'user/dashboard.html')
+
+def change_phdregno(request):
+
+
+    if request.session.has_key('username'):
+
+        if request.method == 'POST':
+
+            Phdregno = request.POST['phdregno']
+
+            user = Candidates.objects.get(RegNumber=request.session['username'])
+            user.ApplicationId.Phd_Reg = Phdregno
+
+            user.ApplicationId.save()
+            user.save()
+
+            return redirect ('/user/settings')
+        # else:
+        #     return render(request, 'settings.html')
+
+    else:
+        return redirect('/user/login')
 
 
 
