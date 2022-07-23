@@ -9,7 +9,7 @@ from django.contrib.auth import views as auth_views
 
 
 # Create your views here.
-
+total_attendance = 20
 #Coded by Hana
 def register(request):
     Latest_Batch = Batches.objects.all().order_by('-id').first()
@@ -235,21 +235,26 @@ def validate_email(request):
 
 #coded by Hana
 def marks(request):
+    global total_attendance
+
     if 'username' in request.session:
         User = Candidates.objects.get(RegNumber=request.session['username'])
         marks = Marks.objects.all()
-        return render(request, 'user/marks.html',{ 'User':User,'marks':marks})
+        return render(request, 'user/marks.html',{ 'User':User,'marks':marks,'total_attendance':total_attendance})
     else:
         return redirect('/user/login')
 
 
 #coded by Akhila
+
+
 def attendance(request):
+    global total_attendance
     if 'username' in request.session:
         User = Candidates.objects.get(RegNumber=request.session['username'])
         attendance= Marks.objects.all()
 
-    return render(request, 'user/attendance.html',{ 'User':User,'attendance':attendance})
+    return render(request, 'user/attendance.html',{ 'User':User,'total_attendance':total_attendance,'attendance':attendance})
 
 #Coded by Hana
 

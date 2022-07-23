@@ -17,6 +17,7 @@ from datetime import datetime
 
 # Create your views here.
 
+total_attendance = 20
 #Coded by Hana
 def adminlogin(request):
 
@@ -467,6 +468,9 @@ def show_students(request):
 
 
 def individual_mark_upload(request, userid):
+    global total_attendance
+
+
     if 'username_admin' in request.session:
         user = Candidates.objects.get(Register_Number=userid)
 
@@ -499,20 +503,21 @@ def individual_mark_upload(request, userid):
 
         else:
 
-            return render(request, 'owner/mark_upload_form.html', {'user': user})
+            return render(request, 'owner/mark_upload_form.html', {'user': user,'total_attendance':total_attendance})
     else:
         return redirect('/owner/adminlogin')
 
 
 
 def mark_edit(request, userid):
+    global total_attendance
     if 'username_admin' in request.session:
         if request.method == 'POST':
             pass
         else:
             user = Candidates.objects.get(Register_Number=userid)
             marks = Marks.objects.filter(StudentId=user).order_by('id')
-            return render(request, 'owner/mark_edit.html', {'User': user, 'marks': marks})
+            return render(request, 'owner/mark_edit.html', {'User': user, 'marks': marks,'total_attendance':total_attendance})
     else:
         return redirect('/owner/adminlogin')
 
@@ -577,7 +582,7 @@ def mark_delete(request, markid):
 
 def mark_calculation( Attendance, Assignment1Mark, Assignment2Mark, GdMark, CpMark):
 
-    total_attendance = 20
+    global total_attendance
 
     attendance_percentage = (Attendance / total_attendance) * 100
     print(attendance_percentage)
