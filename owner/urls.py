@@ -43,9 +43,9 @@ urlpatterns = [
     path('report_attendance_download/<batch_id>', views.report_attendance_download, name='report_attendance_download'),
     #Subject Adding Coded By Hana
 
-    path('subjects_edit',views.subjects_edit,name='subjects_edit'),
+    path('batches_edit',views.batches_edit,name='batches_edit'),
     # path('subject_delete/<subjectid>',views.subject_delete,name='subject_delete'),
-    path('subject_update/<subjectid>',views.subject_update,name='subject_update'),
+    path('batch_update/<batchid>',views.batch_update,name='batch_update'),
 
     #coded by dp
     path('show_batches',views.show_batches,name='show_batches'),

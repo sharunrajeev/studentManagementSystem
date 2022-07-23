@@ -602,7 +602,7 @@ def mark_calculation( Attendance, Assignment1Mark, Assignment2Mark, GdMark, CpMa
 
 # coded by Hana
 # 2nd phase : coded by devaprasad
-def subjects_edit(request):
+def batches_edit(request):
     if 'username_admin' in request.session:
         if request.method == 'POST':
             Month = request.POST['month']
@@ -621,11 +621,11 @@ def subjects_edit(request):
             #subjects = Subjects.objects.all().order_by('id')
             # return render(request, 'owner/subjects.html',
             #               {'subjects': subjects, 'message': f"New Course {Subjectname} added successfully"})
-            return redirect('/owner/subjects_edit')
+            return redirect('/owner/batches_edit')
         else:
             batches = Batches.objects.all().order_by('id')
 
-            return render(request, 'owner/subjects.html', {'batches': batches})
+            return render(request, 'owner/batches.html', {'batches': batches})
     else:
         return redirect('/owner/adminlogin')
 
@@ -643,25 +643,25 @@ def counter_name():
 #     return redirect('subjects_edit')
 
 
-def subject_update(request, subjectid):
+def batch_update(request, batchid):
     if 'username_admin' in request.session:
         if request.method == 'POST':
-            subjectname = request.POST['subjectname']
-            totalhour = request.POST['totalhours']
+            Month = request.POST['month']
+            Year = request.POST['year']
+            CommenceDate = request.POST['commencedate']
+
+            batch = Batches.objects.get(id=batchid)
+            batch.Month = Month
+            batch.Year = Year
+            batch.CommenceDate = CommenceDate
 
 
-            subject = Subjects.objects.get(id=subjectid)
+            batch.save()
 
-            subject.SubjectName = subjectname
-            subject.TotalHour = totalhour
+            batches = Batches.objects.all().order_by('id')
 
-
-            subject.save()
-
-            subjects = Subjects.objects.all().order_by('id')
-
-            return render(request, 'owner/subjects.html',
-                          {'subjects': subjects, 'message': f" Course details updated successfully"})
+            return render(request, 'owner/batches.html',
+                          {'batches': batches, 'message': f" Batch details updated successfully"})
 
     else:
         return redirect('/owner/adminlogin')

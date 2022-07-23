@@ -84,7 +84,8 @@ def register(request):
 
 
 def reg_success(request):
-    return render(request, 'user/register_section/reg_complete.html')
+    Latest_Batch = Batches.objects.all().order_by('-id').first()
+    return render(request, 'user/register_section/reg_complete.html',{'latest_batch':Latest_Batch})
 
 
 # Sharun

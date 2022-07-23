@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Subjects Edit{% endblock %}
+{% block title %}Batches Edit{% endblock %}
 
 {% block styles %}
     <link href="{% static 'css/register_form.css' %}" rel="stylesheet">
@@ -29,14 +29,14 @@
              <h3>Add New Batch</h3>
             <br>
 
-            <form method="post" action="/owner/subjects_edit">
+            <form method="post" action="/owner/batches_edit">
                 {% csrf_token %}
                 <div class="main">
                     <div class="row row-space">
                         <div class="col-3">
                             <div class="input-group">
                                 <label class="label">Month</label>
-                                <select name="month" class="input--style-4 input_default" id="month">
+                                <select name="month" class="input--style-4 input_default" id="month" required>
                                     <option selected disabled value="">Choose...</option>
                                     <option value="Jan">January</option>
                                     <option value="Feb">February</option>
@@ -78,7 +78,7 @@
             </form>
             <br>
 
-            <h3> Edit Course Details</h3>
+            <h3> Edit Batch Details</h3>
             <br>
             <table>
 
@@ -97,7 +97,7 @@
 
                 {% for batch in batches %}
                     <tr class="active">
-                        <form method="post" action="/owner/subject_update/{{ subject.id }}">
+                        <form method="post" action="/owner/batch_update/{{ batch.id }}">
                             {% csrf_token %}
                             <td>
                                 {{ forloop.counter }}
@@ -108,21 +108,21 @@
                             </td>
 
                             <td>
-                                <input value="{{ batch.Month }}" class="input--style-4 input_default" type="text" name="month">
+                                <input value="{{ batch.Month }}" class="input--style-4 input_default" type="text" name="month" required>
                             </td>
 
 
                             <td>
-                                <input value="{{ batch.Year }}" class="input--style-4 input_default" type="number" name="year">
+                                <input value="{{ batch.Year }}" class="input--style-4 input_default" type="number" name="year" required>
                             </td>
 
 
 
                             <td>
-                                <input value="{{ batch.CommenceDate|date:'Y-m-d' }}" class="input--style-4 input_default" type="date" name="commencedate">
+                                <input value="{{ batch.CommenceDate|date:'Y-m-d' }}" class="input--style-4 input_default" type="date" name="commencedate" required>
                             </td>
                             <td>
-                                <button class="btn btn-success btn-sm" role="button">Update</button>
+                                <button type="submit" class="btn btn-success btn-sm" role="button">Update</button>
                             </td>
 <!--                            <td>-->
 <!--                                <a class="btn btn-danger btn-sm" href="/owner/subject_delete/{{ subject.id }}" role="button">Delete</a>-->
