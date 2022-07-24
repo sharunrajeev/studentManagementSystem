@@ -17,6 +17,7 @@ from datetime import datetime
 
 # Create your views here.
 
+total_attendance = 20
 #Coded by Hana
 def adminlogin(request):
 
@@ -432,7 +433,7 @@ def show_batches(request):
         if request.method == 'POST':
             Searchfield = request.POST['name']
 
-            batches = Batches.objects.filter(Batch_Name__icontains=Searchfield)
+            batches = Batches.objects.filter(Batch_Name__icontains=Searchfield) | Batches.objects.filter(Month__icontains=Searchfield) | Batches.objects.filter(Year__icontains=Searchfield)
             return render(request, 'owner/show_batches.html', {'batches': batches})
 
         else:
@@ -454,7 +455,7 @@ def show_students(request):
 
             Searchfield = request.POST['name']
             users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield) | Candidates.objects.filter(
-                ApplicationId__Name__icontains=Searchfield)
+                ApplicationId__Name__icontains=Searchfield) | Candidates.objects.filter(Register_Number__contains=Searchfield)
 
             return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks})
 
@@ -467,6 +468,9 @@ def show_students(request):
 
 
 def individual_mark_upload(request, userid):
+    global total_attendance
+
+
     if 'username_admin' in request.session:
         user = Candidates.objects.get(Register_Number=userid)
 
@@ -499,20 +503,21 @@ def individual_mark_upload(request, userid):
 
         else:
 
-            return render(request, 'owner/mark_upload_form.html', {'user': user})
+            return render(request, 'owner/mark_upload_form.html', {'user': user,'total_attendance':total_attendance})
     else:
         return redirect('/owner/adminlogin')
 
 
 
 def mark_edit(request, userid):
+    global total_attendance
     if 'username_admin' in request.session:
         if request.method == 'POST':
             pass
         else:
             user = Candidates.objects.get(Register_Number=userid)
             marks = Marks.objects.filter(StudentId=user).order_by('id')
-            return render(request, 'owner/mark_edit.html', {'User': user, 'marks': marks})
+            return render(request, 'owner/mark_edit.html', {'User': user, 'marks': marks,'total_attendance':total_attendance})
     else:
         return redirect('/owner/adminlogin')
 
@@ -577,7 +582,7 @@ def mark_delete(request, markid):
 
 def mark_calculation( Attendance, Assignment1Mark, Assignment2Mark, GdMark, CpMark):
 
-    total_attendance = 20
+    global total_attendance
 
     attendance_percentage = (Attendance / total_attendance) * 100
     print(attendance_percentage)
@@ -602,7 +607,7 @@ def mark_calculation( Attendance, Assignment1Mark, Assignment2Mark, GdMark, CpMa
 
 # coded by Hana
 # 2nd phase : coded by devaprasad
-def subjects_edit(request):
+def batches_edit(request):
     if 'username_admin' in request.session:
         if request.method == 'POST':
             Month = request.POST['month']
@@ -621,11 +626,11 @@ def subjects_edit(request):
             #subjects = Subjects.objects.all().order_by('id')
             # return render(request, 'owner/subjects.html',
             #               {'subjects': subjects, 'message': f"New Course {Subjectname} added successfully"})
-            return redirect('/owner/subjects_edit')
+            return redirect('/owner/batches_edit')
         else:
             batches = Batches.objects.all().order_by('id')
 
-            return render(request, 'owner/subjects.html', {'batches': batches})
+            return render(request, 'owner/batches.html', {'batches': batches})
     else:
         return redirect('/owner/adminlogin')
 
@@ -643,25 +648,25 @@ def counter_name():
 #     return redirect('subjects_edit')
 
 
-def subject_update(request, subjectid):
+def batch_update(request, batchid):
     if 'username_admin' in request.session:
         if request.method == 'POST':
-            subjectname = request.POST['subjectname']
-            totalhour = request.POST['totalhours']
+            Month = request.POST['month']
+            Year = request.POST['year']
+            CommenceDate = request.POST['commencedate']
+
+            batch = Batches.objects.get(id=batchid)
+            batch.Month = Month
+            batch.Year = Year
+            batch.CommenceDate = CommenceDate
 
 
-            subject = Subjects.objects.get(id=subjectid)
+            batch.save()
 
-            subject.SubjectName = subjectname
-            subject.TotalHour = totalhour
+            batches = Batches.objects.all().order_by('id')
 
-
-            subject.save()
-
-            subjects = Subjects.objects.all().order_by('id')
-
-            return render(request, 'owner/subjects.html',
-                          {'subjects': subjects, 'message': f" Course details updated successfully"})
+            return render(request, 'owner/batches.html',
+                          {'batches': batches, 'message': f" Batch details updated successfully"})
 
     else:
         return redirect('/owner/adminlogin')
@@ -681,8 +686,9 @@ def show_report(request):
 
         if request.method == 'POST':
             Searchfield = request.POST['name']
-            subjects = Subjects.objects.filter(SubjectName=Searchfield)
-            return render(request, 'owner/show_report.html', {'subjects': subjects})
+            batches = Batches.objects.filter(Batch_Name__icontains=Searchfield) | Batches.objects.filter(
+                Month__icontains=Searchfield) | Batches.objects.filter(Year__icontains=Searchfield)
+            return render(request, 'owner/show_report.html', {'batches': batches})
 
         else:
             batches = Batches.objects.all()
@@ -694,17 +700,19 @@ def show_report(request):
 
 
 def report(request,batch_id):
+    global total_attendance
     if 'username_admin' in request.session:
         # Latest_Batch = Batches.objects.all().order_by('-id').first()
         batch = Batches.objects.get(id=batch_id)
         candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
         marks = Marks.objects.all()
-        return render(request, 'owner/report.html', {'marks': marks, 'users': candidates, 'batch': batch})
+        return render(request, 'owner/report.html', {'marks': marks, 'users': candidates, 'batch': batch, 'total_attendance':total_attendance})
 
     else:
         return redirect('/owner/adminlogin')
 
 def report_download(request,batch_id):
+    global total_attendance
     if 'username_admin' in request.session:
         batch = Batches.objects.get(id=batch_id)
         candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
@@ -730,23 +738,25 @@ def report_download(request,batch_id):
 
 
 def report_mark(request,batch_id):
+    global total_attendance
     if 'username_admin' in request.session:
         batch = Batches.objects.get(id=batch_id)
         candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
         marks = Marks.objects.all()
-        return render(request, 'owner/report_mark.html', {'marks': marks, 'users': candidates, 'batch': batch})
+        return render(request, 'owner/report_mark.html', {'marks': marks, 'users': candidates, 'batch': batch, 'total_attendance':total_attendance})
 
     else:
         return redirect('/owner/adminlogin')
 
 def report_mark_download(request,batch_id):
+    global total_attendance
     if 'username_admin' in request.session:
         batch = Batches.objects.get(id=batch_id)
         candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
         marks = Marks.objects.all()
 
         template_path = 'owner/pdf_report_mark.html'
-        context = {'marks': marks, 'users': candidates}
+        context = {'marks': marks, 'users': candidates, 'total_attendance':total_attendance}
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'filename="subject_report.pdf"'
@@ -767,23 +777,25 @@ def report_mark_download(request,batch_id):
 
 
 def report_attendance(request,batch_id):
+    global total_attendance
     if 'username_admin' in request.session:
         batch = Batches.objects.get(id=batch_id)
         candidates = Candidates.objects.filter(ApplicationId__Batch=batch)
         marks = Marks.objects.all()
-        return render(request, 'owner/report_attendance.html', {'marks': marks, 'users': candidates, 'batch': batch})
+        return render(request, 'owner/report_attendance.html', {'marks': marks, 'users': candidates, 'batch': batch, 'total_attendance':total_attendance})
 
     else:
         return redirect('/owner/adminlogin')
 
 def report_attendance_download(request,batch_id):
+    global total_attendance
     if 'username_admin' in request.session:
         batch = Batches.objects.get(id=batch_id)
         candidates = Candidates.objects.filter(ApplicationId__Batch=batch)
         marks = Marks.objects.all()
 
         template_path = 'owner/pdf_report_attendance.html'
-        context = {'marks': marks, 'users': candidates}
+        context = {'marks': marks, 'users': candidates, 'total_attendance':total_attendance}
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'filename="subject_report.pdf"'

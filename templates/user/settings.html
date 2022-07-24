@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block title %}
-    Edit User Details
+Edit User Details
 {% endblock title %}
 
 {% block styles %}
-    <link href="{% static 'css/user_sidebar.css' %}" rel="stylesheet">
-    <link href="{% static 'css/register_form.css' %}" rel="stylesheet"/>
+<link href="{% static 'css/user_sidebar.css' %}" rel="stylesheet">
+<link href="{% static 'css/register_form.css' %}" rel="stylesheet"/>
 <link href="{% static 'css/settings.css' %}" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
@@ -33,24 +33,29 @@
                             <!--form for changing password-->
                             <form method="post" class="mb-4" action="change_password">
                                 <h4>Change Password</h4>
-                                <label class="text-danger mt-3 mb-3"  id="error"></label>
+                                <label class="text-danger mt-3 mb-3" id="error"></label>
 
                                 <div class="row row-space">
-                                    <div class="col-2">
+                                    <div class="col-5">
                                         <div class="input-group">
                                             <h6 class="mb-0">New Password</h6>
-                                            <input type="password" value= "" class="input--style-4 input_default" id="password" name="Password">
+                                            <input type="password" value="" class="input--style-4 input_default"
+                                                   id="password" name="Password">
                                         </div>
                                     </div>
-                                    <div class="col-2">
+                                    <div class="col-5">
                                         <div class="input-group">
                                             <h6 class="mb-0">Confirm Password</h6>
-                                            <input type="password" value= "" class="input--style-4 input_default" id="confirmpassword" name="ConfirmPassword">
+                                            <input type="password" value="" class="input--style-4 input_default"
+                                                   id="confirmpassword" name="ConfirmPassword">
                                         </div>
+                                    </div>
+                                    <div class="col align-self-center">
+                                        <button id="btn" class="btn btn-primary btn-sm" type="button">Submit</button>
                                     </div>
                                 </div>
 
-                                <button  id="btn" class="btn btn-primary btn-sm" type="button">Submit</button>
+
                             </form>
 
                             <!--form for changing photo-->
@@ -59,74 +64,110 @@
                             <form method="post" action="photo_upload" enctype="multipart/form-data">
                                 {% csrf_token %}
                                 <h4>Upload Photo</h4>
-                                    <div class="photo-upload">
-                                        <div class="btn btn_upload btn-dark btn-sm float-left">
-                                            <input  type="file" onchange="picVerify(this)" name="File"  >
-                                        </div>
-                                        <button type="submit" class="btn btn-primary btn-sm" id="files" disabled >Submit</button>
-                                        <label for="files" class="btn btn-dark">Uploaded File: {{ User.Photo }}</label>
-                                        <label for="files">{{message}}</label>
-                                    </div>
+
+                                                                <div class="m-2 mt-3 photo-upload row">
+                                <div class="btn btn_upload btn-dark btn-sm float-left col-5">
+                                    <input type="file" onchange="picVerify(this)" name="File">
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-sm col-sm-2" id="files" disabled>Submit
+                                </button>
+                                                                      </div>
+                                <div class="uploaded-file m-3">
+                                    <label for="files" class="alert alert-dark">Uploaded File: {{ User.Photo }}</label>
+                                    <label for="files">{{message}}</label>
+                                </div>
+
+
                             </form>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                            <form method="post" class="mb-4" action="change_phdregno">
 
-<script>
+                                {% csrf_token %}
 
-    $(document).ready(function(){
+                                <label class="text-danger mt-3 mb-3" id="error"></label>
 
-        $('#btn').click(() => {
-            var password = $('#password').val()
-            var confirmpassword=$('#confirmpassword').val()
-            var data ={
-                'csrfmiddlewaretoken':'{{csrf_token}}',
-                'password':password,
-            }
-            console.log(password.length)
-            if( password.length >= 4) {
-                if (password == confirmpassword) {
-                    $.ajax({
-                        url: 'change_password',
-                        method: 'POST',
-                        data: data,
-                        dataType: 'json',
-                        success: function (data) {
-                            if (data.success) {
-                                console.log("success")
-                                window.location.replace('password_change_alert')
-                            }
-                        }
-                    })
-                } else {
-                    $("#error").text("Password not matching!!");
-                }
-            }else {
-                    $("#error").text("Password contain atleast 4 letters");
-                }
+                                <h4> Change Phd/MPhil Registeration ID</h4><br>
 
-})
-})
+                                <div class="row row-space ">
+                                    <h6 class="mb-0"> New Phd/MPhil Registeration ID</h6>
+                                    <div class="col-2">
+                                        <div class="input-group">
+
+                                            <input type="number" value="{{ User.ApplicationId.Phd_Reg }}"
+                                                   class="input--style-4 input_default" id="phdregno" name="phdregno"
+                                                   required>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-2 ">
+                                        <button id="btn" class="btn btn-primary btn-sm " type="submit">Submit</button>
+                                    </div>
 
 
-
-   function picVerify(input) {
-        let file = input.value;
-        let sbmt_btn = document.getElementById('files');
-        let upload_txt = document.getElementById('upload_head');
+                                </div>
 
 
-        if (input.value.length === 0){ console.log("Error No File Uploaded")
-        let ext = file.substring(file.lastIndexOf('.') + 1).toLowerCase();
-        }
-        else{
-            sbmt_btn.disabled = false;
-       }
+                            </form>
 
 
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+                                    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+                                    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
-    }
+                            <script>
 
-</script>
+                                $(document).ready(function () {
+
+                                    $('#btn').click(() => {
+                                        var password = $('#password').val()
+                                        var confirmpassword = $('#confirmpassword').val()
+                                        var data = {
+                                            'csrfmiddlewaretoken': '{{csrf_token}}',
+                                            'password': password,
+                                        }
+                                        console.log(password.length)
+                                        if (password.length >= 4) {
+                                            if (password == confirmpassword) {
+                                                $.ajax({
+                                                    url: 'change_password',
+                                                    method: 'POST',
+                                                    data: data,
+                                                    dataType: 'json',
+                                                    success: function (data) {
+                                                        if (data.success) {
+                                                            console.log("success")
+                                                            window.location.replace('password_change_alert')
+                                                        }
+                                                    }
+                                                })
+                                            } else {
+                                                $("#error").text("Password not matching!!");
+                                            }
+                                        } else {
+                                            $("#error").text("Password contain atleast 4 letters");
+                                        }
+
+                                    })
+                                })
+
+
+                                function picVerify(input) {
+                                    let file = input.value;
+                                    let sbmt_btn = document.getElementById('files');
+                                    let upload_txt = document.getElementById('upload_head');
+
+
+                                    if (input.value.length === 0) {
+                                        console.log("Error No File Uploaded")
+                                        let ext = file.substring(file.lastIndexOf('.') + 1).toLowerCase();
+                                    } else {
+                                        sbmt_btn.disabled = false;
+                                    }
+
+
+                                }
+
+                            </script>
 
 
                         </div>

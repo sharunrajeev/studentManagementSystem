@@ -9,7 +9,7 @@ from django.contrib.auth import views as auth_views
 
 
 # Create your views here.
-
+total_attendance = 20
 #Coded by Hana
 def register(request):
     Latest_Batch = Batches.objects.all().order_by('-id').first()
@@ -84,7 +84,8 @@ def register(request):
 
 
 def reg_success(request):
-    return render(request, 'user/register_section/reg_complete.html')
+    Latest_Batch = Batches.objects.all().order_by('-id').first()
+    return render(request, 'user/register_section/reg_complete.html',{'latest_batch':Latest_Batch})
 
 
 # Sharun
@@ -234,27 +235,33 @@ def validate_email(request):
 
 #coded by Hana
 def marks(request):
+    global total_attendance
+
     if 'username' in request.session:
         User = Candidates.objects.get(RegNumber=request.session['username'])
         marks = Marks.objects.all()
-        return render(request, 'user/marks.html',{ 'User':User,'marks':marks})
+        return render(request, 'user/marks.html',{ 'User':User,'marks':marks,'total_attendance':total_attendance})
     else:
         return redirect('/user/login')
 
 
 #coded by Akhila
+
+
 def attendance(request):
+    global total_attendance
     if 'username' in request.session:
         User = Candidates.objects.get(RegNumber=request.session['username'])
         attendance= Marks.objects.all()
 
-    return render(request, 'user/attendance.html',{ 'User':User,'attendance':attendance})
+    return render(request, 'user/attendance.html',{ 'User':User,'total_attendance':total_attendance,'attendance':attendance})
 
 #Coded by Hana
 
 def settings(request):
     if 'username' in request.session:
         User = Candidates.objects.get(RegNumber=request.session['username'])
+
 
         return render(request, 'user/settings.html',{'User':User})
 
@@ -301,6 +308,28 @@ def photo_upload(request):
         return redirect('/user/login')
 
     return render(request, 'user/dashboard.html')
+
+def change_phdregno(request):
+
+
+    if request.session.has_key('username'):
+
+        if request.method == 'POST':
+
+            Phdregno = request.POST['phdregno']
+
+            user = Candidates.objects.get(RegNumber=request.session['username'])
+            user.ApplicationId.Phd_Reg = Phdregno
+
+            user.ApplicationId.save()
+            user.save()
+
+            return redirect ('/user/settings')
+        # else:
+        #     return render(request, 'settings.html')
+
+    else:
+        return redirect('/user/login')
 
 
 

@@ -139,10 +139,14 @@
             <p class="badge rounded-pill bg-danger text-dark" style="font-size:1rem;"> Yes <i class="fa fa-times"></i></p>
                        {% endif %}
             <select name="Drop_Out" class="input--style-4 input_default" id="inputGroupSelect01">
-              <option selected>Choose</option>
-
-                    <option value="True">Yes</option>
+              {% if person_details.dropout == True %}
+              <option selected value="True" >Yes</option>
+              {% else %}
+              <option selected value="False">No</option>
+              {% endif %}
+               <option value="True">Yes</option>
                <option value="False">No</option>
+
 
 
             </select>
@@ -154,7 +158,7 @@
 
             <div class="row">
               <div class="col-sm-6">
-                <h6 class="mb-0">Phd Register Number</h6>
+                <h6 class="mb-0">Phd/MPhil Registeration Id</h6>
               </div>
               <div class="col-sm-6">
 
@@ -164,7 +168,7 @@
             <hr>
             <div class="row">
               <div class="col-sm-6">
-                <h6 class="mb-0">Phd Joining Date</h6>
+                <h6 class="mb-0">Date of joining Phd/MPhil</h6>
               </div>
               <div class="col-sm-6">
                 <input id="phdjoiningdate" value="{{ person_details.ApplicationId.Phd_Joining_Date|date:'Y-m-d' }}" class="input--style-4 input_default" type="date" name="Phd_Joining_Date">

@@ -40,7 +40,7 @@
 
           {% if attend.StudentId == User %}
           <td>{{ attend.Attendance }}</td>
-          <td>{{attend.StudentId.SubjectId.TotalHour}}</td>
+          <td>{{ total_attendance }}</td>
           <td>{{ attend.AttendancePercentage }}</td>
           {% endif %}
       </tr>
