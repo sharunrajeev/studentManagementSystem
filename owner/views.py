@@ -433,7 +433,7 @@ def show_batches(request):
         if request.method == 'POST':
             Searchfield = request.POST['name']
 
-            batches = Batches.objects.filter(Batch_Name__icontains=Searchfield)
+            batches = Batches.objects.filter(Batch_Name__icontains=Searchfield) | Batches.objects.filter(Month__icontains=Searchfield) | Batches.objects.filter(Year__icontains=Searchfield)
             return render(request, 'owner/show_batches.html', {'batches': batches})
 
         else:
@@ -455,7 +455,7 @@ def show_students(request):
 
             Searchfield = request.POST['name']
             users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield) | Candidates.objects.filter(
-                ApplicationId__Name__icontains=Searchfield)
+                ApplicationId__Name__icontains=Searchfield) | Candidates.objects.filter(Register_Number__contains=Searchfield)
 
             return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks})
 
@@ -686,8 +686,9 @@ def show_report(request):
 
         if request.method == 'POST':
             Searchfield = request.POST['name']
-            subjects = Subjects.objects.filter(SubjectName=Searchfield)
-            return render(request, 'owner/show_report.html', {'subjects': subjects})
+            batches = Batches.objects.filter(Batch_Name__icontains=Searchfield) | Batches.objects.filter(
+                Month__icontains=Searchfield) | Batches.objects.filter(Year__icontains=Searchfield)
+            return render(request, 'owner/show_report.html', {'batches': batches})
 
         else:
             batches = Batches.objects.all()
