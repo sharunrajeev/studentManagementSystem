@@ -109,7 +109,7 @@
                 <div class="row row-space">
                     <div class="col-2">
                         <div class="input-group">
-                            <label class="label">PHD/MPhil Registration ID</label>
+                            <label class="label">PHD/MPhil Registration ID (optional)</label>
                             <input id="phd_reg" class="input--style-4 input_default" type="number" name="Phd_Reg" value="0">
                         </div>
                     </div>
@@ -218,7 +218,7 @@
 
         let dateToday = new Date();
 
-        let day = dateToday.getDay().toString();
+        let day = dateToday.getDate().toString();
         let month = (dateToday.getMonth() + 1).toString();
         let year = dateToday.getFullYear();
 
