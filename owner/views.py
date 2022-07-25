@@ -629,6 +629,7 @@ def batches_edit(request):
             return redirect('/owner/batches_edit')
         else:
             batches = Batches.objects.all().order_by('id')
+            batches = reversed(batches)
 
             return render(request, 'owner/batches.html', {'batches': batches})
     else:
