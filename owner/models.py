@@ -28,8 +28,17 @@ class Applicants(models.Model):
     Phd_Joining_Date = models.DateField(default=None)
     Research_Topic = models.CharField(max_length=100, default=None)
     Research_Guide = models.CharField(max_length=100, default=None)
-    Guide_Mail = models.EmailField(max_length=100, default=None)
-    Guide_Phone = models.CharField(max_length=13, default=None)
+    Guide_Mail = models.EmailField(max_length=100, default=None,null=True)
+    Guide_Phone = models.CharField(max_length=13, default=None,null=True)
+    Guide_Dpt =  models.CharField(max_length=100, default=None)
+
+    Co_Guide = models.BooleanField(blank=True, null=True, default=None)
+
+    Co_Guide_Name = models.CharField(max_length=100, default=None,null=True)
+    Co_Guide_Mail = models.EmailField(max_length=100, default=None, null=True)
+    Co_Guide_Phone = models.CharField(max_length=13, default=None, null=True)
+    Co_Guide_Dpt = models.CharField(max_length=100, default=None, null=True)
+
     Eligibility = models.BooleanField(blank=True, null=True, default=None)
     Reject = models.BooleanField(blank=True, null=True, default=False)
     Cusatian = models.BooleanField(blank=True, null=True, default=None)
