@@ -38,7 +38,7 @@ def adminlogin(request):
     # else:
     #     return render(request, 'owner/adminlogin.html')
     if 'username_admin' in request.session:
-        return redirect('/owner/')
+        return redirect('/owner/approve')
     else:
         if request.method == 'POST':
 
