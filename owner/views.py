@@ -333,11 +333,11 @@ def verified(request, userid):
         user.PaymentStatus = True
         user.save()
         name = user.StudentId.ApplicationId.Name
-        subject = user.StudentId.ApplicationId.Subject
+        # subject = user.StudentId.ApplicationId.Subject
         payment = user.PaymentId.PaymentName
         email = user.StudentId.ApplicationId.Email
         message = f"Dear {name} \n" \
-                  f" \nYour payment verification has completed for {payment} of the course {subject}.\n" \
+                  f" \nYour payment verification has completed for {payment} of the course.\n" \
                   f"\n\n Regards\n CUSAT"
 
         email = EmailMessage(
