@@ -32,6 +32,8 @@ def register(request):
         Research_Guide = request.POST['Research_Guide']
         Guide_Mail = request.POST['Guide_Mail']
         Guide_Phone = request.POST['Guide_Phone']
+        Guide_Dpt = request.POST['Guide_Dpt']
+        Co_Guide = request.POST['Co_Guide']
         Cusatian = request.POST['Cusatian']
 
 
@@ -57,13 +59,30 @@ def register(request):
         user_obj.Phd_Joining_Date = Phd_Joining_Date
         user_obj.Research_Topic = Research_Topic
         user_obj.Research_Guide = Research_Guide
+        user_obj.Guide_Dpt = Guide_Dpt
         user_obj.Guide_Mail = Guide_Mail
         user_obj.Guide_Phone = Guide_Phone
         user_obj.Cusatian  = Cusatian
+        user_obj.Co_Guide = Co_Guide
+
         user_obj.Batch = Latest_Batch
         if Cusatian == 'True':
             Cusat_Id = request.FILES['Cusat_Id']
             user_obj.Cusat_Id = Cusat_Id
+
+        if Co_Guide == 'True':
+            Co_Guide_Name = request.POST['Co_Guide_Name']
+            Co_Guide_Mail = request.POST['Co_Guide_Mail']
+            Co_Guide_Phone = request.POST['Co_Guide_Phone']
+            Co_Guide_Dpt = request.POST['Co_Guide_Dpt']
+
+            user_obj.Co_Guide_Name = Co_Guide_Name
+            user_obj.Co_Guide_Mail = Co_Guide_Mail
+            user_obj.Co_Guide_Phone = Co_Guide_Phone
+            user_obj.Co_Guide_Dpt = Co_Guide_Dpt
+
+
+
 
 
         user_obj.save()
