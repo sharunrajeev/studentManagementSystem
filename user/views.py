@@ -69,7 +69,7 @@ def register(request):
         if Cusatian == 'True':
             Cusat_Id = request.FILES['Cusat_Id']
             user_obj.Cusat_Id = Cusat_Id
-
+        print(Co_Guide)
         if Co_Guide == 'True':
             Co_Guide_Name = request.POST['Co_Guide_Name']
             Co_Guide_Mail = request.POST['Co_Guide_Mail']
