@@ -163,7 +163,11 @@ Student Details
                                 <div class="ind_main-row">
                                     <div class="ind_main-col">
                                         <span>PhD/MPhil Registeration Id: </span>
+                                         {% if individual.Phd_Reg == 0 %}
+                                        <span>NA</span>
+                                        {% else %}
                                         <span>{{ individual.Phd_Reg }}</span>
+                                        {% endif %}
                                     </div>
 
                                     <div class="ind_main-col">
@@ -174,10 +178,10 @@ Student Details
                                 </div>
 
                                 <div class="ind_main-row">
-                                    <div class="ind_main-col">
-                                        <span>Research Guide: </span>
-                                        <span>{{ individual.Research_Guide }}</span>
-                                    </div>
+<!--                                    <div class="ind_main-col">-->
+<!--                                        <span>Research Guide: </span>-->
+<!--                                        <span>{{ individual.Research_Guide }}</span>-->
+<!--                                    </div>-->
 
                                     <div class="ind_main-col">
                                         <span>Research Topic: </span>
@@ -187,15 +191,15 @@ Student Details
                                 </div>
 
                                 <div class="ind_main-row">
-                                    <div class="ind_main-col">
-                                        <span>Contact of Guide (Email): </span>
-                                        <span>{{ individual.Guide_Mail }}</span>
-                                    </div>
+<!--                                    <div class="ind_main-col">-->
+<!--                                        <span>Contact of Guide (Email): </span>-->
+<!--                                        <span>{{ individual.Guide_Mail }}</span>-->
+<!--                                    </div>-->
 
-                                    <div class="ind_main-col">
-                                        <span>Contact of Guide (Phone): </span>
-                                        <span>{{ individual.Guide_Phone }}</span>
-                                    </div>
+<!--                                    <div class="ind_main-col">-->
+<!--                                        <span>Contact of Guide (Phone): </span>-->
+<!--                                        <span>{{ individual.Guide_Phone }}</span>-->
+<!--                                    </div>-->
 
 
 
@@ -222,7 +226,82 @@ Student Details
                         </div>
                         <!-- /.box-content card -->
                     </div>
+
+                    <div class="col-xs-12">
+                        <div class="box-content card">
+                            <h4 class="box-title"><i class="fa fa-user ico"></i>Guide's Information</h4>
+                            <div class="card-content">
+                                <div class="ind_main-row">
+                                    <div class="ind_main-col">
+                                        <span>Research Guide: </span>
+                                        <span>{{ individual.Research_Guide }}</span>
+                                    </div>
+                                    {% if individual.Co_Guide == True %}
+                                     <div class="ind_main-col">
+                                        <span>Research Co_Guide: </span>
+                                        <span>{{ individual.Co_Guide_Name }}</span>
+                                    </div>
+                                    {% endif %}
+
+
+                                </div>
+
+                                <div class="ind_main-row">
+                                    <div class="ind_main-col">
+                                        <span>Contact of Guide (Email): </span>
+                                        <span></span>
+                                        {% if individual.Guide_Mail == 'NA@gmail.com' %}
+                                         <span>NA</span>
+                                         {%else%}
+                                        <span>{{ individual.Guide_Mail }}</span>
+                                         {% endif %}
+                                    </div>
+                                     {% if individual.Co_Guide == True %}
+                                     <div class="ind_main-col">
+                                        <span>Contact of Co_Guide (Email): </span>
+                                         {% if individual.Co_Guide_Mail == 'NA@gmail.com' %}
+                                         <span>NA</span>
+                                         {%else%}
+                                        <span>{{ individual.Co_Guide_Mail }}</span>
+                                         {% endif %}
+                                    </div>
+                                    {% endif %}
+
+
+                                </div>
+
+                                <div class="ind_main-row">
+                                    <div class="ind_main-col">
+                                        <span>Contact of Guide (Phone): </span>
+                                        {% if individual.Guide_Phone == '0' %}
+                                        <span>NA</span>
+                                        {%else%}
+                                        <span>{{ individual.Guide_Phone }}</span>
+                                        {% endif %}
+                                    </div>
+
+                                     {% if individual.Co_Guide == True %}
+                                   <div class="ind_main-col">
+                                        <span>Contact of Co_Guide (Phone): </span>
+                                         {% if individual.Guide_Phone == 0 %}
+                                        <span>NA</span>
+                                        {%else%}
+                                        <span>{{ individual.Co_Guide_Phone }}</span>
+                                        {% endif %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+
+
+
+                            </div>
+                            <!-- /.card-content -->
+                        </div>
+                        <!-- /.box-content card -->
+                    </div>
                 </div>
+
+
             </div>
         </div>
     </div>
