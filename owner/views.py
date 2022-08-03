@@ -1,7 +1,7 @@
 from email import message
-from django.contrib.auth.models import User,auth
+from django.contrib.auth.models import User, auth
 from django.shortcuts import render, redirect
-from .models import Applicants, Candidates, Marks, Subjects , Payments,UserPayments,Batches
+from .models import Applicants, Candidates, Marks, Subjects, Payments, UserPayments, Batches
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
@@ -14,13 +14,13 @@ from xhtml2pdf import pisa
 from django.db.models import Sum
 from datetime import datetime
 
-
 # Create your views here.
 
 total_attendance = 20
-#Coded by Hana
-def adminlogin(request):
 
+
+# Coded by Hana
+def adminlogin(request):
     # if request.method == 'POST':
     #     username = request.POST['Username']
     #     password = request.POST['Password']
@@ -72,6 +72,7 @@ def logout(request):
         request.session.flush()
     return redirect('/owner/adminlogin')
 
+
 # def dashboard(request):
 #     if 'username_admin' in request.session:
 #         applicantCount = Applicants.objects.count()
@@ -80,7 +81,6 @@ def logout(request):
 #         return render(request, 'owner/dashboard.html', {'totalApplicants': applicantCount, 'totalCandidates': candidateCount, 'totalCourses': subjectCount})
 #     else:
 #         return render(request, 'owner/adminlogin.html')
-
 
 
 def approve(request):
@@ -99,11 +99,11 @@ def approve(request):
 
             users = reversed(users)
 
-            return render(request, 'owner/verify.html', {'users': users})
+            users_unselected = Applicants.objects.filter(Batch = Latest_Batch).filter(Eligibility = '').order_by('Name')
+
+            return render(request, 'owner/verify.html', {'users': users,'unselected':users_unselected})
     else:
         return redirect('/owner/adminlogin')
-
-
 
 
 def individual_view(request, userid):
@@ -119,10 +119,6 @@ def individual_view(request, userid):
 
     else:
         return redirect('/owner/adminlogin')
-
-
-
-
 
 
 def reject(request, userid):
@@ -154,8 +150,9 @@ def reject(request, userid):
     else:
         return redirect('/owner/adminlogin')
 
-
     # 2nd phase : coded by devaprasad
+
+
 def select(request, userid):
     if 'username_admin' in request.session:
         user = Applicants.objects.get(id=userid)
@@ -164,7 +161,6 @@ def select(request, userid):
         user.save()
 
         email = user.Email
-
 
         user_candidates = Candidates()
         user_candidates.ApplicationId = user
@@ -176,12 +172,12 @@ def select(request, userid):
         date = datetime.now()
         month = date.month
         year = date.year
-        year_model = (year%100)*100000
-        month_model = month*1000
+        year_model = (year % 100) * 100000
+        month_model = month * 1000
 
         candidate = Candidates.objects.get(UserId=userid)
         register_number = candidate.Register_Number
-        reg_num = register_number + year_model +month_model
+        reg_num = register_number + year_model + month_model
         user_candidates.RegNumber = reg_num
 
         user_candidates.save()
@@ -216,7 +212,8 @@ def select(request, userid):
     else:
         return redirect('/owner/adminlogin')
 
-#new changes in payment, coded by Devaprasd
+
+# new changes in payment, coded by Devaprasd
 #
 # def show_payment(request):
 #     if 'username_admin' in request.session:
@@ -264,11 +261,12 @@ def payment_subject(request):
             return render(request, 'owner/paymentstatus.html', {'users': users, 'message': 'User not found'})
         else:
             Latest_Batch = Batches.objects.all().order_by('-id').first()
-            users = Candidates.objects.filter(ApplicationId__Batch = Latest_Batch).order_by('Register_Number')
+            users = Candidates.objects.filter(ApplicationId__Batch=Latest_Batch).order_by('Register_Number')
 
             user_payments = UserPayments.objects.all()
 
-            return render(request, 'owner/paymentstatus.html', {'users': users,'user_payments':user_payments, 'message': 'User not found'})
+            return render(request, 'owner/paymentstatus.html',
+                          {'users': users, 'user_payments': user_payments, 'message': 'User not found'})
 
     else:
         return redirect('/owner/adminlogin')
@@ -284,8 +282,8 @@ def user_verify_view(request, userid):
         #     pay_val = 1
         # else:
         #     pay_val = 0
-        user_payments = UserPayments.objects.filter(StudentId = user_det)
-        return render(request, 'owner/user_detail.html', {'person_details': user_det,'user_payments':user_payments})
+        user_payments = UserPayments.objects.filter(StudentId=user_det)
+        return render(request, 'owner/user_detail.html', {'person_details': user_det, 'user_payments': user_payments})
 
     else:
         return redirect('/owner/adminlogin')
@@ -294,12 +292,12 @@ def user_verify_view(request, userid):
 def denial(request, userid):
     if 'username_admin' in request.session:
 
-        #user = Candidates.objects.get(Register_Number=userid)
+        # user = Candidates.objects.get(Register_Number=userid)
         user = UserPayments.objects.get(id=userid)
         candidate_id = user.StudentId.Register_Number
         user.PaymentStatus = False
         user.save()
-        name= user.StudentId.ApplicationId.Name
+        name = user.StudentId.ApplicationId.Name
         subject = user.StudentId.ApplicationId.Subject
         payment = user.PaymentId.PaymentName
         email = user.StudentId.ApplicationId.Email
@@ -323,11 +321,10 @@ def denial(request, userid):
         return redirect('/owner/adminlogin')
 
 
-
 def verified(request, userid):
     if 'username_admin' in request.session:
-        #user_canditate = Candidates.objects.get(Register_Number=userid)
-        #user_id= user_candidate.id
+        # user_canditate = Candidates.objects.get(Register_Number=userid)
+        # user_id= user_candidate.id
         user = UserPayments.objects.get(id=userid)
         candidate_id = user.StudentId.Register_Number
         user.PaymentStatus = True
@@ -355,7 +352,6 @@ def verified(request, userid):
         return redirect('/owner/adminlogin')
 
 
-
 # User management by Sharun
 
 def user_manage(request):
@@ -364,7 +360,6 @@ def user_manage(request):
         return render(request, 'owner/user_manage.html', {'users': users})
     else:
         return redirect('/owner/adminlogin')
-
 
 
 def search_user(request):
@@ -382,8 +377,6 @@ def search_user(request):
         return redirect('/owner/adminlogin')
 
 
-
-
 def view_user(request, email):
     if 'username_admin' in request.session:
         user = Candidates.objects.filter(Email=email)[:1].get()
@@ -392,14 +385,14 @@ def view_user(request, email):
         return redirect('/owner/adminlogin')
 
 
-
 def update_user(request, email):
     # TODO: Update user details
     if 'username_admin' in request.session:
         pass
-    #code here
+    # code here
     else:
         return redirect('/owner/adminlogin')
+
 
 def delete_user(request, userid):
     if 'username_admin' in request.session:
@@ -413,7 +406,6 @@ def delete_user(request, userid):
         return redirect(f'/owner/user_edit/{batch_id}')
     else:
         return redirect('/owner/adminlogin')
-
 
 
 # coded by devaprasad
@@ -433,7 +425,8 @@ def show_batches(request):
         if request.method == 'POST':
             Searchfield = request.POST['name']
 
-            batches = Batches.objects.filter(Batch_Name__icontains=Searchfield) | Batches.objects.filter(Month__icontains=Searchfield) | Batches.objects.filter(Year__icontains=Searchfield)
+            batches = Batches.objects.filter(Batch_Name__icontains=Searchfield) | Batches.objects.filter(
+                Month__icontains=Searchfield) | Batches.objects.filter(Year__icontains=Searchfield)
             return render(request, 'owner/show_batches.html', {'batches': batches})
 
         else:
@@ -444,7 +437,7 @@ def show_batches(request):
 
 
 # Edited by Akhila
-#new editing devaprasad
+# new editing devaprasad
 def show_students(request):
     if 'username_admin' in request.session:
         Latest_Batch = Batches.objects.all().order_by('-id').first()
@@ -455,7 +448,8 @@ def show_students(request):
 
             Searchfield = request.POST['name']
             users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield) | Candidates.objects.filter(
-                ApplicationId__Name__icontains=Searchfield) | Candidates.objects.filter(Register_Number__contains=Searchfield)
+                ApplicationId__Name__icontains=Searchfield) | Candidates.objects.filter(
+                Register_Number__contains=Searchfield)
 
             return render(request, 'owner/mark_upload.html', {'users': users, 'marks': marks})
 
@@ -466,10 +460,8 @@ def show_students(request):
         return redirect('/owner/adminlogin')
 
 
-
 def individual_mark_upload(request, userid):
     global total_attendance
-
 
     if 'username_admin' in request.session:
         user = Candidates.objects.get(Register_Number=userid)
@@ -482,7 +474,7 @@ def individual_mark_upload(request, userid):
             GdMark = int(request.POST['gd'])
             CpMark = int(request.POST['cp'])
 
-            attendance_percentage, a_mark, total_assignment, total = mark_calculation( Attendance,
+            attendance_percentage, a_mark, total_assignment, total = mark_calculation(Attendance,
                                                                                       Assignment1Mark,
                                                                                       Assignment2Mark, GdMark, CpMark)
 
@@ -503,10 +495,9 @@ def individual_mark_upload(request, userid):
 
         else:
 
-            return render(request, 'owner/mark_upload_form.html', {'user': user,'total_attendance':total_attendance})
+            return render(request, 'owner/mark_upload_form.html', {'user': user, 'total_attendance': total_attendance})
     else:
         return redirect('/owner/adminlogin')
-
 
 
 def mark_edit(request, userid):
@@ -517,11 +508,10 @@ def mark_edit(request, userid):
         else:
             user = Candidates.objects.get(Register_Number=userid)
             marks = Marks.objects.filter(StudentId=user).order_by('id')
-            return render(request, 'owner/mark_edit.html', {'User': user, 'marks': marks,'total_attendance':total_attendance})
+            return render(request, 'owner/mark_edit.html',
+                          {'User': user, 'marks': marks, 'total_attendance': total_attendance})
     else:
         return redirect('/owner/adminlogin')
-
-
 
 
 def mark_update(request, markid):
@@ -536,8 +526,7 @@ def mark_update(request, markid):
             mark = Marks.objects.get(id=markid)
             userid = mark.StudentId.Register_Number
 
-
-            attendance_percentage, a_mark, total_assignment, total = mark_calculation( Attendance,
+            attendance_percentage, a_mark, total_assignment, total = mark_calculation(Attendance,
                                                                                       Assignment1Mark,
                                                                                       Assignment2Mark, GdMark, CpMark)
             mark.AttendancePercentage = attendance_percentage
@@ -568,7 +557,6 @@ def mark_update(request, markid):
         return redirect('/owner/adminlogin')
 
 
-
 def mark_delete(request, markid):
     if 'username_admin' in request.session:
         mark = Marks.objects.get(id=markid)
@@ -579,9 +567,7 @@ def mark_delete(request, markid):
         return redirect('/owner/adminlogin')
 
 
-
-def mark_calculation( Attendance, Assignment1Mark, Assignment2Mark, GdMark, CpMark):
-
+def mark_calculation(Attendance, Assignment1Mark, Assignment2Mark, GdMark, CpMark):
     global total_attendance
 
     attendance_percentage = (Attendance / total_attendance) * 100
@@ -619,11 +605,10 @@ def batches_edit(request):
             batch.Year = Year
             batch.CommenceDate = CommenceDate
 
-
             batch.save()
             counter_name()
 
-            #subjects = Subjects.objects.all().order_by('id')
+            # subjects = Subjects.objects.all().order_by('id')
             # return render(request, 'owner/subjects.html',
             #               {'subjects': subjects, 'message': f"New Course {Subjectname} added successfully"})
             return redirect('/owner/batches_edit')
@@ -635,13 +620,15 @@ def batches_edit(request):
     else:
         return redirect('/owner/adminlogin')
 
+
 def counter_name():
     batches = Batches.objects.all()
     index = 1
     for batch in batches:
-        batch.Batch_Name = "Batch "+str(index)
-        index+=1
+        batch.Batch_Name = "Batch " + str(index)
+        index += 1
         batch.save()
+
 
 # def subject_delete(request, subjectid):
 #     Subjects.objects.get(id=subjectid).delete()
@@ -661,7 +648,6 @@ def batch_update(request, batchid):
             batch.Year = Year
             batch.CommenceDate = CommenceDate
 
-
             batch.save()
 
             batches = Batches.objects.all().order_by('id')
@@ -671,8 +657,6 @@ def batch_update(request, batchid):
 
     else:
         return redirect('/owner/adminlogin')
-
-
 
 
 # report generation coded by devaprasad
@@ -700,23 +684,25 @@ def show_report(request):
         return redirect('/owner/adminlogin')
 
 
-def report(request,batch_id):
+def report(request, batch_id):
     global total_attendance
     if 'username_admin' in request.session:
         # Latest_Batch = Batches.objects.all().order_by('-id').first()
         batch = Batches.objects.get(id=batch_id)
-        candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
+        candidates = Candidates.objects.filter(ApplicationId__Batch=batch)
         marks = Marks.objects.all()
-        return render(request, 'owner/report.html', {'marks': marks, 'users': candidates, 'batch': batch, 'total_attendance':total_attendance})
+        return render(request, 'owner/report.html',
+                      {'marks': marks, 'users': candidates, 'batch': batch, 'total_attendance': total_attendance})
 
     else:
         return redirect('/owner/adminlogin')
 
-def report_download(request,batch_id):
+
+def report_download(request, batch_id):
     global total_attendance
     if 'username_admin' in request.session:
         batch = Batches.objects.get(id=batch_id)
-        candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
+        candidates = Candidates.objects.filter(ApplicationId__Batch=batch)
         marks = Marks.objects.all()
         template_path = 'owner/pdf_report.html'
         context = {'marks': marks, 'users': candidates}
@@ -738,26 +724,28 @@ def report_download(request,batch_id):
         return redirect('/owner/adminlogin')
 
 
-def report_mark(request,batch_id):
+def report_mark(request, batch_id):
     global total_attendance
     if 'username_admin' in request.session:
         batch = Batches.objects.get(id=batch_id)
-        candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
+        candidates = Candidates.objects.filter(ApplicationId__Batch=batch)
         marks = Marks.objects.all()
-        return render(request, 'owner/report_mark.html', {'marks': marks, 'users': candidates, 'batch': batch, 'total_attendance':total_attendance})
+        return render(request, 'owner/report_mark.html',
+                      {'marks': marks, 'users': candidates, 'batch': batch, 'total_attendance': total_attendance})
 
     else:
         return redirect('/owner/adminlogin')
 
-def report_mark_download(request,batch_id):
+
+def report_mark_download(request, batch_id):
     global total_attendance
     if 'username_admin' in request.session:
         batch = Batches.objects.get(id=batch_id)
-        candidates = Candidates.objects.filter(ApplicationId__Batch = batch)
+        candidates = Candidates.objects.filter(ApplicationId__Batch=batch)
         marks = Marks.objects.all()
 
         template_path = 'owner/pdf_report_mark.html'
-        context = {'marks': marks, 'users': candidates, 'total_attendance':total_attendance}
+        context = {'marks': marks, 'users': candidates, 'total_attendance': total_attendance}
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'filename="subject_report.pdf"'
@@ -776,19 +764,20 @@ def report_mark_download(request,batch_id):
         return redirect('/owner/adminlogin')
 
 
-
-def report_attendance(request,batch_id):
+def report_attendance(request, batch_id):
     global total_attendance
     if 'username_admin' in request.session:
         batch = Batches.objects.get(id=batch_id)
         candidates = Candidates.objects.filter(ApplicationId__Batch=batch)
         marks = Marks.objects.all()
-        return render(request, 'owner/report_attendance.html', {'marks': marks, 'users': candidates, 'batch': batch, 'total_attendance':total_attendance})
+        return render(request, 'owner/report_attendance.html',
+                      {'marks': marks, 'users': candidates, 'batch': batch, 'total_attendance': total_attendance})
 
     else:
         return redirect('/owner/adminlogin')
 
-def report_attendance_download(request,batch_id):
+
+def report_attendance_download(request, batch_id):
     global total_attendance
     if 'username_admin' in request.session:
         batch = Batches.objects.get(id=batch_id)
@@ -796,7 +785,7 @@ def report_attendance_download(request,batch_id):
         marks = Marks.objects.all()
 
         template_path = 'owner/pdf_report_attendance.html'
-        context = {'marks': marks, 'users': candidates, 'total_attendance':total_attendance}
+        context = {'marks': marks, 'users': candidates, 'total_attendance': total_attendance}
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'filename="subject_report.pdf"'
@@ -815,22 +804,20 @@ def report_attendance_download(request,batch_id):
         return redirect('/owner/adminlogin')
 
 
-
-
-
 # User edit Edited by Devaprasad
 
-def user_edit(request,batch_id):
+def user_edit(request, batch_id):
     if 'username_admin' in request.session:
         if request.method == 'POST':
 
             Searchfield = request.POST['name']
-            users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield) | Candidates.objects.filter(ApplicationId__Name__icontains=Searchfield)
+            users = Candidates.objects.filter(ApplicationId__Phd_Reg__contains=Searchfield) | Candidates.objects.filter(
+                ApplicationId__Name__icontains=Searchfield)
 
             return render(request, 'owner/user_edit.html', {'users': users, 'message': 'User not found'})
         else:
-            batch = Batches.objects.get(id = batch_id)
-            users = Candidates.objects.filter(ApplicationId__Batch = batch)
+            batch = Batches.objects.get(id=batch_id)
+            users = Candidates.objects.filter(ApplicationId__Batch=batch)
 
             return render(request, 'owner/user_edit.html', {'users': users, 'message': 'User not found'})
 
@@ -838,7 +825,7 @@ def user_edit(request,batch_id):
         return redirect('/owner/adminlogin')
 
 
-def edit_form(request,userid):
+def edit_form(request, userid):
     if 'username_admin' in request.session:
         user_det = Candidates.objects.get(Register_Number=userid)
 
@@ -856,7 +843,6 @@ def edit_form(request,userid):
             Guide_Mail = request.POST['Guide_Mail']
             Guide_Phone = request.POST['Guide_Phone']
             Drop_Out = request.POST['Drop_Out']
-
 
             user_det.ApplicationId.Name = Name
             user_det.ApplicationId.Email = Email
@@ -884,7 +870,6 @@ def edit_form(request,userid):
         return redirect('/owner/adminlogin')
 
 
-
 # Payment section coded by Devaprasad
 
 
@@ -892,13 +877,11 @@ def payment_edit(request):
     if 'username_admin' in request.session:
         if request.method == 'POST':
             Paymentname = request.POST['paymentname']
-            FreeForCusat =request.POST['Cusatian']
+            FreeForCusat = request.POST['Cusatian']
 
             Payment = Payments()
             Payment.PaymentName = Paymentname
             Payment.FreeForCusat = FreeForCusat
-
-
 
             Payment.save()
 
@@ -912,14 +895,11 @@ def payment_edit(request):
         return redirect('/owner/adminlogin')
 
 
-
-
 def payment_update(request, paymentid):
     if 'username_admin' in request.session:
         if request.method == 'POST':
             Paymentname = request.POST['paymentname']
             FreeForCusat = request.POST['Cusatian']
-
 
             Payment = Payments.objects.get(id=paymentid)
 
@@ -927,8 +907,6 @@ def payment_update(request, paymentid):
             Payment.FreeForCusat = FreeForCusat
 
             Payment.save()
-
-
 
             return redirect(f'/owner/payment_update/{Payment.id}')
         else:
@@ -941,7 +919,7 @@ def payment_update(request, paymentid):
         return redirect('/owner/adminlogin')
 
 
-def payment_delete(request,paymentid):
+def payment_delete(request, paymentid):
     if 'username_admin' in request.session:
         Payment = Payments.objects.get(id=paymentid)
 
@@ -949,8 +927,6 @@ def payment_delete(request,paymentid):
         return redirect(f"/owner/payment_edit")
     else:
         return redirect('/owner/adminlogin')
-
-
 
 
 def payment_show_subjects(request):
@@ -965,6 +941,6 @@ def payment_show_subjects(request):
         else:
 
             subjects = Subjects.objects.all().order_by('id')
-            return render(request, 'owner/show_subjects_payment.html',{ 'subjects': subjects})
+            return render(request, 'owner/show_subjects_payment.html', {'subjects': subjects})
     else:
         return redirect('/owner/adminlogin')
