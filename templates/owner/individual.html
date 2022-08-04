@@ -160,6 +160,23 @@ Student Details
 
                                 </div>
 
+                                 <div class="ind_main-row">
+                                    <div class="ind_main-col">
+                                        <span>Short Name: </span>
+                                        <form action="short_name" method="POST">
+                                            {% csrf_token %}
+                                             <input type="text" id="lname" name="short_name" required require>
+                                            <button class="btn btn-outline-primary btn-rounded mx-4" type="submit" role="button">Submit</button>
+                                        </form>
+                                    </div>
+
+                                    <div class="ind_main-col">
+                                        <span>Research Topic: </span>
+                                        <span>{{ individual.Research_Topic }}</span>
+                                    </div>
+
+                                </div>
+
                                 <div class="ind_main-row">
                                     <div class="ind_main-col">
                                         <span>PhD/MPhil Registeration Id: </span>
@@ -177,18 +194,7 @@ Student Details
 
                                 </div>
 
-                                <div class="ind_main-row">
-<!--                                    <div class="ind_main-col">-->
-<!--                                        <span>Research Guide: </span>-->
-<!--                                        <span>{{ individual.Research_Guide }}</span>-->
-<!--                                    </div>-->
 
-                                    <div class="ind_main-col">
-                                        <span>Research Topic: </span>
-                                        <span>{{ individual.Research_Topic }}</span>
-                                    </div>
-
-                                </div>
 
                                 <div class="ind_main-row">
 <!--                                    <div class="ind_main-col">-->

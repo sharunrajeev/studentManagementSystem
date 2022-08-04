@@ -43,6 +43,7 @@ class Applicants(models.Model):
     Reject = models.BooleanField(blank=True, null=True, default=False)
     Cusatian = models.BooleanField(blank=True, null=True, default=None)
     Cusat_Id = models.FileField(upload_to='files', blank=True, null=True, default=None)
+    Short_Name =  models.CharField(max_length=100, default=None,null=True)
 
 
 class Payments(models.Model):

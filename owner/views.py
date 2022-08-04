@@ -152,6 +152,13 @@ def reject(request, userid):
 
     # 2nd phase : coded by devaprasad
 
+def short_name(request,userid):
+    if 'username_admin' in request.session:
+        if request.method == 'POST':
+            short_name = request.POST['short_name']
+            user = Applicants.objects.get(Register_Number=userid)
+    else:
+        return redirect('/owner/adminlogin')
 
 def select(request, userid):
     if 'username_admin' in request.session:

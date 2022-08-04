@@ -298,12 +298,12 @@
 
     const universitySelect = (cusatian) => {
         let isCusatian = (cusatian.value === "True") ? true : false;
-        let university = document.getElementById("university");
+        let university1 = document.getElementById("university1");
         let file = document.getElementById("file-div");
 
         if(isCusatian) {
-            university.value = "Cochin University of Science and Technology";
-            university.readOnly = true;
+            university1.value = "Cochin University of Science and Technology";
+            university1.readOnly = true;
             file.style.display =  "block";
         }
         else {
