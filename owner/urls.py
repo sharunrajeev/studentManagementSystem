@@ -20,7 +20,7 @@ urlpatterns = [
     path('verified/<userid>', views.verified, name='verified'),
     path('reject/<userid>', views.reject, name='reject'),
     path('select/<userid>', views.select, name='select'),
-    path('short_name', views.short_name, name='short_name'),
+    path('short_name/<userid>', views.short_name, name='short_name'),
     
     # User management path
     path('user_manage', views.user_manage, name='user_manage'),

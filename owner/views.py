@@ -156,7 +156,10 @@ def short_name(request,userid):
     if 'username_admin' in request.session:
         if request.method == 'POST':
             short_name = request.POST['short_name']
-            user = Applicants.objects.get(Register_Number=userid)
+            user = Applicants.objects.get(id=userid)
+            user.Short_Name = short_name
+            user.save()
+            return redirect(f'/owner/approve/{userid}')
     else:
         return redirect('/owner/adminlogin')
 

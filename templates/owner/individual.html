@@ -163,9 +163,9 @@ Student Details
                                  <div class="ind_main-row">
                                     <div class="ind_main-col">
                                         <span>Short Name: </span>
-                                        <form action="short_name" method="POST">
+                                        <form action="/owner/short_name/{{ individual.id }}" method="POST">
                                             {% csrf_token %}
-                                             <input type="text" id="lname" name="short_name" required require>
+                                             <input type="text" id="lname" value="{{ individual.Short_Name }}" name="short_name" required require>
                                             <button class="btn btn-outline-primary btn-rounded mx-4" type="submit" role="button">Submit</button>
                                         </form>
                                     </div>
