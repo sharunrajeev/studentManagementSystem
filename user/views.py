@@ -169,8 +169,11 @@ def logout(request):
 def dashboard(request):
     if 'username' in request.session:
         User = Candidates.objects.get(RegNumber=request.session['username'])
-        # Username = User.ApplicationId.Name
-        return render(request, 'user/dashboard.html', {'User': User})
+        if User.Dropout == True:
+            return render(request, 'user/invalid.html')
+        else:
+            print(User.Dropout)
+            return render(request, 'user/dashboard.html', {'User': User})
     else:
         return redirect('/user/login')
 
