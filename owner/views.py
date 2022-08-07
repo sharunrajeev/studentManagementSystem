@@ -532,7 +532,7 @@ def mark_update(request, markid):
             Assignment2Mark = int(request.POST['assignment2'])
             GdMark = int(request.POST['gd'])
             CpMark = int(request.POST['cp'])
-
+            ExternalMark = int(request.POST['ex_mark'])
             mark = Marks.objects.get(id=markid)
             userid = mark.StudentId.Register_Number
 
@@ -548,6 +548,7 @@ def mark_update(request, markid):
             mark.Assignment2Mark = Assignment2Mark
             mark.GdMark = GdMark
             mark.CpMark = CpMark
+            mark.ExternalMark = ExternalMark
 
             mark.save()
 

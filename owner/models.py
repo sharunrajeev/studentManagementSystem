@@ -82,3 +82,4 @@ class Marks(models.Model):
     GdMark = models.IntegerField(default=None)
     CpMark = models.IntegerField(default=None)
     Total = models.IntegerField(default=None, blank=True, null=True)
+    ExternalMark = models.IntegerField(default=0, blank=True, null=True)
