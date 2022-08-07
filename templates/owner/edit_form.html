@@ -158,6 +158,30 @@
 
             <div class="row">
               <div class="col-sm-6">
+                <h6 class="mb-0">Batch</h6>
+              </div>
+              <div class="col-sm-6">
+
+               <select name="Batch_S" class="input--style-4 input_default" id="inputGroupSelect02">
+
+              <option selected value="True" >{{person_details.ApplicationId.Batch.Batch_Name}}</option>
+
+                 {% for batch in batches %}
+               <option value="{{batch.id}}">{{batch.Batch_Name}}</option>
+                 {% endfor %}
+
+
+
+
+            </select>
+              </div>
+            </div>
+
+
+            <hr>
+
+            <div class="row">
+              <div class="col-sm-6">
                 <h6 class="mb-0">Phd/MPhil Registeration Id</h6>
               </div>
               <div class="col-sm-6">

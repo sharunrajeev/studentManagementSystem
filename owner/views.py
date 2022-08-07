@@ -854,7 +854,9 @@ def edit_form(request, userid):
             Guide_Mail = request.POST['Guide_Mail']
             Guide_Phone = request.POST['Guide_Phone']
             Drop_Out = request.POST['Drop_Out']
+            Batch =  request.POST['Batch_S']
 
+            batch = Batches.objects.get(id = Batch)
             user_det.ApplicationId.Name = Name
             user_det.ApplicationId.Email = Email
             user_det.ApplicationId.Mob = Mob
@@ -868,6 +870,8 @@ def edit_form(request, userid):
             user_det.ApplicationId.Guide_Mail = Guide_Mail
             user_det.ApplicationId.Guide_Phone = Guide_Phone
             user_det.Dropout = Drop_Out
+            user_det.ApplicationId.Batch = batch
+
 
             user_det.save()
             user_det.ApplicationId.save()
@@ -875,7 +879,8 @@ def edit_form(request, userid):
             return redirect(f'/owner/user_edit/{user_det.ApplicationId.Batch.id}')
 
         else:
-            return render(request, 'owner/edit_form.html', {'person_details': user_det})
+            batches = Batches.objects.all()
+            return render(request, 'owner/edit_form.html', {'person_details': user_det,'batches':batches})
 
     else:
         return redirect('/owner/adminlogin')
