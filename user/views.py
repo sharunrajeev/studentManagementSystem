@@ -172,8 +172,9 @@ def dashboard(request):
         if User.Dropout == True:
             return render(request, 'user/invalid.html')
         else:
-            print(User.Dropout)
-            return render(request, 'user/dashboard.html', {'User': User})
+            mark = Marks.objects.get(StudentId = User)
+            attendance = mark.AttendancePercentage
+            return render(request, 'user/dashboard.html', {'User': User,'Attendance':attendance})
     else:
         return redirect('/user/login')
 
