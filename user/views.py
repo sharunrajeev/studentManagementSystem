@@ -182,27 +182,34 @@ def dashboard(request):
 def payment_form(request):
     if 'username' in request.session:
         user = Candidates.objects.get(RegNumber=request.session['username'])
+        if user.Dropout != True:
+            if request.method == 'POST':
+                if len(request.FILES['File']) != 0:
+                    PaymentDetails = request.FILES['File']
+                    payment=request.POST['payment']
 
-        if request.method == 'POST':
-            if len(request.FILES['File']) != 0:
-                PaymentDetails = request.FILES['File']
-                payment=request.POST['payment']
+                    payment_user=Payments.objects.get(PaymentName=payment)
+                    flag = False
+                    if UserPayments.objects.all():
+                        users = UserPayments.objects.filter(StudentId=user , PaymentId = payment_user)
+                        if users:
 
-                payment_user=Payments.objects.get(PaymentName=payment)
-                flag = False
-                if UserPayments.objects.all():
-                    users = UserPayments.objects.filter(StudentId=user , PaymentId = payment_user)
-                    if users:
+                            id = 0
+                            for u in users:
+                                id = u.id
+                            print(id)
+                            us = UserPayments.objects.get(id = id )
+                            if us:
 
-                        id = 0
-                        for u in users:
-                            id = u.id
-                        print(id)
-                        us = UserPayments.objects.get(id = id )
-                        if us:
+                                us.PaymentDetails = PaymentDetails
+                                us.save()
+                            else:
+                                userpayments = UserPayments()
+                                userpayments.StudentId = user
+                                userpayments.PaymentDetails = PaymentDetails
 
-                            us.PaymentDetails = PaymentDetails
-                            us.save()
+                                userpayments.PaymentId = payment_user
+                                userpayments.save()
                         else:
                             userpayments = UserPayments()
                             userpayments.StudentId = user
@@ -210,31 +217,26 @@ def payment_form(request):
 
                             userpayments.PaymentId = payment_user
                             userpayments.save()
-                    else:
-                        userpayments = UserPayments()
-                        userpayments.StudentId = user
-                        userpayments.PaymentDetails = PaymentDetails
 
-                        userpayments.PaymentId = payment_user
+                    else:
+                        userpayments=UserPayments()
+                        userpayments.StudentId=user
+                        userpayments.PaymentDetails= PaymentDetails
+
+                        userpayments.PaymentId=payment_user
+
+
                         userpayments.save()
 
-                else:
-                    userpayments=UserPayments()
-                    userpayments.StudentId=user
-                    userpayments.PaymentDetails= PaymentDetails
+                # return redirect('/user/payment_form')
 
-                    userpayments.PaymentId=payment_user
-
-
-                    userpayments.save()
-
-            # return redirect('/user/payment_form')
-
-            return redirect('/user/payment_form')
+                return redirect('/user/payment_form')
+            else:
+                payments=Payments.objects.all()
+                user_payment = UserPayments.objects.filter(StudentId=user)
+                return render(request, 'user/payment_form.html', {'payments':payments,'user_details':user_payment,'user':user})
         else:
-            payments=Payments.objects.all()
-            user_payment = UserPayments.objects.filter(StudentId=user)
-            return render(request, 'user/payment_form.html', {'payments':payments,'user_details':user_payment,'user':user})
+             return render(request, 'user/invalid.html')
     else:
         return redirect('/user/login')
 
@@ -261,8 +263,11 @@ def marks(request):
 
     if 'username' in request.session:
         User = Candidates.objects.get(RegNumber=request.session['username'])
-        marks = Marks.objects.all()
-        return render(request, 'user/marks.html',{ 'User':User,'marks':marks,'total_attendance':total_attendance})
+        if User.Dropout == True:
+            return render(request, 'user/invalid.html')
+        else:
+            marks = Marks.objects.all()
+            return render(request, 'user/marks.html',{ 'User':User,'marks':marks,'total_attendance':total_attendance})
     else:
         return redirect('/user/login')
 
@@ -272,25 +277,33 @@ def marks(request):
 
 def attendance(request):
     global total_attendance
+    
     if 'username' in request.session:
         User = Candidates.objects.get(RegNumber=request.session['username'])
-        attendance= Marks.objects.all()
+        if User.Dropout == True:
+            return render(request, 'user/invalid.html')
+        else:
+            attendance= Marks.objects.all()
 
-    return render(request, 'user/attendance.html',{ 'User':User,'total_attendance':total_attendance,'attendance':attendance})
+            return render(request, 'user/attendance.html',{ 'User':User,'total_attendance':total_attendance,'attendance':attendance})
 
 #Coded by Hana
 
 def settings(request):
     if 'username' in request.session:
         User = Candidates.objects.get(RegNumber=request.session['username'])
-
-
-        return render(request, 'user/settings.html',{'User':User})
+        if User.Dropout == True:
+            return render(request, 'user/invalid.html')
+        else:
+            return render(request, 'user/settings.html',{'User':User})
 
 def password_change_alert(request):
     if request.session.has_key('username'):
         user = Candidates.objects.get(RegNumber=request.session['username'])
-        return render(request,'user/dashboard.html', {'User': user, 'message': "Password changed successfully"})
+        if user.Dropout == True:
+            return render(request, 'user/invalid.html')
+        else:
+            return render(request,'user/dashboard.html', {'User': user, 'message': "Password changed successfully"})
 
 def change_password(request):
 
@@ -301,54 +314,64 @@ def change_password(request):
             Password = request.POST['password']
 
             user = Candidates.objects.get(RegNumber=request.session['username'])
-            u = User.objects.get(username=user.RegNumber)
-            u.set_password(Password)
-            u.save()
-            return JsonResponse(
-                    {'success': True},
-                    safe=False
-                )
-    else:
-        return render(request, 'settings.html')
+            if user.Dropout == True:
+                return render(request, 'user/invalid.html')
+            else:
+            
+                u = User.objects.get(username=user.RegNumber)
+                u.set_password(Password)
+                u.save()
+                return JsonResponse(
+                        {'success': True},
+                        safe=False
+                    )
+        else:   
+            return render(request, 'settings.html')
 
 def photo_upload(request):
     if 'username' in request.session:
         user = Candidates.objects.get(RegNumber=request.session['username'])
-        if request.method == 'POST':
-            if len(request.FILES['File']) != 0:
-                Photo = request.FILES['File']
-                user.Photo = Photo
-                user.save()
-               # return redirect('/user/dashboard')
-                return render(request, 'user/dashboard.html', {'User': user, 'message': "Successfully uploaded your photo"})
-            else:
-                return render(request, 'user/dashboard.html', {'User': user,'message':"Please upload your Photo"})
+        if user.Dropout == True:
+            return render(request, 'user/invalid.html')
         else:
+            if request.method == 'POST':
+                if len(request.FILES['File']) != 0:
+                    Photo = request.FILES['File']
+                    user.Photo = Photo
+                    user.save()
+                   # return redirect('/user/dashboard')
+                    return render(request, 'user/dashboard.html', {'User': user, 'message': "Successfully uploaded your photo"})
+                else:
+                    return render(request, 'user/dashboard.html', {'User': user,'message':"Please upload your Photo"})
+            else:
 
-            return render(request, 'user/dashboard.html', {'User': user,'message':"uploaded"})
+                return render(request, 'user/dashboard.html', {'User': user,'message':"uploaded"})
     else:
         return redirect('/user/login')
 
     return render(request, 'user/dashboard.html')
 
 def change_phdregno(request):
-
-
+    
     if request.session.has_key('username'):
+        user = Candidates.objects.get(RegNumber=request.session['username'])
+        if user.Dropout == True:
+            return render(request, 'user/invalid.html')
+        else:
 
-        if request.method == 'POST':
-
-            Phdregno = request.POST['phdregno']
-
-            user = Candidates.objects.get(RegNumber=request.session['username'])
-            user.ApplicationId.Phd_Reg = Phdregno
-
-            user.ApplicationId.save()
-            user.save()
-
-            return redirect ('/user/settings')
-        # else:
-        #     return render(request, 'settings.html')
+            if request.method == 'POST':
+            
+                Phdregno = request.POST['phdregno']
+    
+                
+                user.ApplicationId.Phd_Reg = Phdregno
+    
+                user.ApplicationId.save()
+                user.save()
+    
+                return redirect ('/user/settings')
+            # else:
+            #     return render(request, 'settings.html')
 
     else:
         return redirect('/user/login')
