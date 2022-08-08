@@ -28,10 +28,16 @@
      </div>
 
     {% endif %}
-    {% if Attendance < 75 %}
+
+     {% for attend in Attendance %}
+    {% if attend.StudentId == User %}
+    {% if attend.AttendancePercentage < 75 %}
      <div class="alert alert-danger " id="attendance" role="alert">
-Your attendance  has dropped below 75% and is currently {{Attendance}}%</div>
+Your attendance  has dropped below 75% and is currently {{ attend.AttendancePercentage }}%
+     </div>
     {% endif %}
+    {% endif %}
+    {% endfor %}
     <hr>
 
     <div class="row gutters-sm">
