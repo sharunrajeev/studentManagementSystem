@@ -13,6 +13,7 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.db.models import Sum
 from datetime import datetime
+from html2excel import ExcelParser
 
 # Create your views here.
 
@@ -734,6 +735,37 @@ def report_download(request, batch_id):
     else:
         return redirect('/owner/adminlogin')
 
+def report_excel(request, batch_id):
+    global total_attendance
+    if 'username_admin' in request.session:
+        batch = Batches.objects.get(id=batch_id)
+        candidates = Candidates.objects.filter(ApplicationId__Batch=batch)
+        marks = Marks.objects.all()
+        template_path = 'owner/pdf_report.html'
+        context = {'marks': marks, 'users': candidates}
+        # Create a Django response object, and specify content_type as pdf
+        response = HttpResponse(content_type='application/pdf')
+        response['Content-Disposition'] = 'filename="subject_report.pdf"'
+        # find the template and render it.
+        template = get_template(template_path)
+        html = template.render(context)
+
+        # create a pdf
+        # pisa_status = pisa.CreatePDF(
+        #     html, dest=response)
+        # # if error then show some funny view
+        # if pisa_status.err:
+        #     return HttpResponse('We had some errors <pre>' + html + '</pre>')
+        # return response
+
+
+        # input_file = '/tmp/text_file.html'
+        output_file = '/owner/report.xlsx'
+
+        parser = ExcelParser(html)
+        parser.to_excel(output_file)
+    else:
+        return redirect('/owner/adminlogin')
 
 def report_mark(request, batch_id):
     global total_attendance

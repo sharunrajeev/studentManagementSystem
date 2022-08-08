@@ -23,8 +23,8 @@
 <div id="wrapper">
     <div class="main-content">
         <div class="p-t-15">
-                    {% include 'reusable/back_button.html' %}
-             </div>
+            {% include 'reusable/back_button.html' %}
+        </div>
 
         <div class="table-responsive">
             <h1>{{subject.SubjectName}}</h1>
@@ -42,7 +42,7 @@
                         Batch- INTERNAL ASSESSMENT</h5></th>
                 </tr>
                 <tr>
-                <th colspan="2" class="text-end">Total number of hours</th>
+                    <th colspan="2" class="text-end">Total number of hours</th>
                     <th class="table-secondary">{{total_attendance}}</th>
                     <th colspan="4" class="text-end">Subject</th>
                     <th colspan="5" class="table-secondary">RPE</th>
@@ -101,7 +101,7 @@
 
 
             <a href="/owner/report_download/{{batch.id}}" class="btn btn-outline-success btn-sm ">Download Report</a>
-
+            <a href="/owner/report_excel/{{batch.id}}" class="btn btn-outline-success btn-sm ">Download Report as Excel</a>
         </div>
 
     </div>

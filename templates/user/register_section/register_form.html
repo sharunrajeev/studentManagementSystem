@@ -18,11 +18,11 @@
                 {% include './progress_indicator.html' %}
         </div>
 
-        <div class="card-body">
+        <div class="card-body ">
             <h2>Student Registration for RPE batch for {{ latest_batch.Batch_Name }} - {{ latest_batch.Month }} - {{ latest_batch.Year }}</h2>
             <form action="register" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="main">
+            <div class="main active">
                 <div class="row row-space">
                     <div class="col-2">
                         <div class="input-group">
@@ -162,7 +162,7 @@
                 </div>
             </div>
 
-            <div class="main  active">
+            <div class="main  ">
                 <div class="row row-space">
                     <div class="col-2">
                         <div class="input-group">
