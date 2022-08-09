@@ -72,6 +72,8 @@ class UserPayments(models.Model):
 
 
 class Marks(models.Model):
+    StudentName = models.CharField(max_length=100, default=None)
+    StudentReg = models.IntegerField(blank=True, null=True, default=None)
     StudentId = models.ForeignKey(Candidates, on_delete=models.CASCADE, default=False)
     Attendance = models.IntegerField(default=None)
     AttendancePercentage = models.IntegerField(default=None, blank=True, null=True)
@@ -83,3 +85,4 @@ class Marks(models.Model):
     CpMark = models.IntegerField(default=None)
     Total = models.IntegerField(default=None, blank=True, null=True)
     ExternalMark = models.IntegerField(default=0, blank=True, null=True)
+

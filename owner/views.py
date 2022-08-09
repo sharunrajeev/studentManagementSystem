@@ -13,7 +13,7 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.db.models import Sum
 from datetime import datetime
-from html2excel import ExcelParser
+# from html2excel import ExcelParser
 
 # Create your views here.
 
