@@ -13,7 +13,7 @@ from django.template.loader import get_template
 from xhtml2pdf import pisa
 from django.db.models import Sum
 from datetime import datetime
-# from html2excel import ExcelParser
+import xlwt
 
 # Create your views here.
 
@@ -740,32 +740,37 @@ def report_download(request, batch_id):
 def report_excel(request, batch_id):
     global total_attendance
     if 'username_admin' in request.session:
-        batch = Batches.objects.get(id=batch_id)
-        candidates = Candidates.objects.filter(ApplicationId__Batch=batch)
-        marks = Marks.objects.all()
-        template_path = 'owner/pdf_report.html'
-        context = {'marks': marks, 'users': candidates}
-        # Create a Django response object, and specify content_type as pdf
-        response = HttpResponse(content_type='application/pdf')
-        response['Content-Disposition'] = 'filename="subject_report.pdf"'
-        # find the template and render it.
-        template = get_template(template_path)
-        html = template.render(context)
+        response = HttpResponse(content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="users.xls"'
 
-        # create a pdf
-        # pisa_status = pisa.CreatePDF(
-        #     html, dest=response)
-        # # if error then show some funny view
-        # if pisa_status.err:
-        #     return HttpResponse('We had some errors <pre>' + html + '</pre>')
-        # return response
+        wb = xlwt.Workbook(encoding='utf-8')
+        ws = wb.add_sheet('Users')
+
+        # Sheet header, first row
+        row_num = 0
+
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
+
+        columns = ['Username', 'First name', 'Last name', 'Email address', ]
+
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], font_style)
+
+        # Sheet body, remaining rows
+        font_style = xlwt.XFStyle()
+
+        mark = Marks.objects.all().values_list('StudentName','Attendance','AttendancePercentage','Assignment1Mark')
+
+        for row in mark:
+            row_num += 1
+            for col_num in range(len(row)):
+
+                ws.write(row_num, col_num, row[col_num], font_style)
 
 
-        # input_file = '/tmp/text_file.html'
-        output_file = '/owner/report.xlsx'
-
-        parser = ExcelParser(html)
-        parser.to_excel(output_file)
+        wb.save(response)
+        return response
     else:
         return redirect('/owner/adminlogin')
 

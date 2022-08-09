@@ -72,7 +72,7 @@ class UserPayments(models.Model):
 
 
 class Marks(models.Model):
-    StudentName = models.CharField(max_length=100, default=None)
+    StudentName = models.CharField(max_length=100, default=None, null=True)
     StudentReg = models.IntegerField(blank=True, null=True, default=None)
     StudentId = models.ForeignKey(Candidates, on_delete=models.CASCADE, default=False)
     Attendance = models.IntegerField(default=None)
