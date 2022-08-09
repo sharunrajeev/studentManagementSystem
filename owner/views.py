@@ -484,6 +484,8 @@ def individual_mark_upload(request, userid):
             Assignment2Mark = int(request.POST['assignment2'])
             GdMark = int(request.POST['gd'])
             CpMark = int(request.POST['cp'])
+            Name = user.ApplicationId.Name
+            Register_Number = user.RegNumber
 
             attendance_percentage, a_mark, total_assignment, total = mark_calculation(Attendance,
                                                                                       Assignment1Mark,
@@ -493,7 +495,7 @@ def individual_mark_upload(request, userid):
                                              AttendancePercentage=attendance_percentage, AttendanceMark=a_mark,
                                              Assignment1Mark=Assignment1Mark, Assignment2Mark=Assignment2Mark,
                                              TotalAssignmentMark=total_assignment, GdMark=GdMark, CpMark=CpMark,
-                                             Total=total)
+                                             Total=total,StudentName=Name,StudentReg=Register_Number)
             user_mark.save()
 
             total_table = Marks.objects.filter(StudentId=user).aggregate(Sum('Total'))
