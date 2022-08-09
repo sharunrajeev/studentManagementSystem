@@ -44,6 +44,8 @@ urlpatterns = [
     path('report_attendance_download/<batch_id>', views.report_attendance_download, name='report_attendance_download'),
 
     path('report_excel/<batch_id>', views.report_excel, name='report_excel'),
+    path('report_attendance_excel/<batch_id>', views.report_attendance_excel, name='report_attendance_excel'),
+    path('report_mark_excel/<batch_id>', views.report_mark_excel, name='report_mark_excel'),
     # Subject Adding Coded By Hana
 
     path('batches_edit', views.batches_edit, name='batches_edit'),

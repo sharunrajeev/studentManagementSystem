@@ -741,7 +741,7 @@ def report_excel(request, batch_id):
     global total_attendance
     if 'username_admin' in request.session:
         response = HttpResponse(content_type='application/ms-excel')
-        response['Content-Disposition'] = 'attachment; filename="users.xls"'
+        response['Content-Disposition'] = 'attachment; filename="Final_report.xls"'
 
         wb = xlwt.Workbook(encoding='utf-8')
         ws = wb.add_sheet('Users')
@@ -752,15 +752,93 @@ def report_excel(request, batch_id):
         font_style = xlwt.XFStyle()
         font_style.font.bold = True
 
-        columns = ['Username', 'First name', 'Last name', 'Email address', ]
+        columns = ['Name of Students', 'Register Number', 'Attendance', '% of Attendance', 'Mark for Attendance(5)', 'Assignment 1', 'Assignment 2', 'Total mark for Assignment(20)', 'Group Discussions(20)', 'Class participations(5)', 'Total Internal Marks out of 50', 'Total External Marks']
 
         for col_num in range(len(columns)):
             ws.write(row_num, col_num, columns[col_num], font_style)
 
         # Sheet body, remaining rows
         font_style = xlwt.XFStyle()
+        batch = Batches.objects.get(id=batch_id)
+        mark = Marks.objects.filter(StudentId__ApplicationId__Batch=batch).values_list('StudentName','StudentReg','Attendance','AttendancePercentage','AttendanceMark','Assignment1Mark','Assignment2Mark','TotalAssignmentMark','GdMark','CpMark','Total','ExternalMark')
 
-        mark = Marks.objects.all().values_list('StudentName','Attendance','AttendancePercentage','Assignment1Mark')
+        for row in mark:
+            row_num += 1
+            for col_num in range(len(row)):
+
+                ws.write(row_num, col_num, row[col_num], font_style)
+
+
+        wb.save(response)
+        return response
+    else:
+        return redirect('/owner/adminlogin')
+
+def report_attendance_excel(request, batch_id):
+    global total_attendance
+    if 'username_admin' in request.session:
+        response = HttpResponse(content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="attendance_report.xls"'
+
+        wb = xlwt.Workbook(encoding='utf-8')
+        ws = wb.add_sheet('Users')
+
+        # Sheet header, first row
+        row_num = 0
+
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
+
+        columns = ['Name of Students', 'Register number', 'Total Attendance']
+
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], font_style)
+
+        # Sheet body, remaining rows
+        font_style = xlwt.XFStyle()
+        batch = Batches.objects.get(id=batch_id)
+        mark = Marks.objects.filter(StudentId__ApplicationId__Batch=batch).values_list('StudentName', 'StudentReg',
+                                                                                       'Attendance',
+                                                                                       )
+
+        for row in mark:
+            row_num += 1
+            for col_num in range(len(row)):
+
+                ws.write(row_num, col_num, row[col_num], font_style)
+
+
+        wb.save(response)
+        return response
+    else:
+        return redirect('/owner/adminlogin')
+
+def report_mark_excel(request, batch_id):
+    global total_attendance
+    if 'username_admin' in request.session:
+        response = HttpResponse(content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="mark_report.xls"'
+
+        wb = xlwt.Workbook(encoding='utf-8')
+        ws = wb.add_sheet('Users')
+
+        # Sheet header, first row
+        row_num = 0
+
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
+
+        columns = ['Name of Students', 'Register number', 'Total Internal Marks', 'Total External Marks']
+
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], font_style)
+
+        # Sheet body, remaining rows
+        font_style = xlwt.XFStyle()
+        batch = Batches.objects.get(id=batch_id)
+        mark = Marks.objects.filter(StudentId__ApplicationId__Batch=batch).values_list('StudentName', 'StudentReg',
+                                                                                       'Total',
+                                                                                       'ExternalMark')
 
         for row in mark:
             row_num += 1
