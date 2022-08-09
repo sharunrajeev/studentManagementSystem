@@ -49,7 +49,7 @@
 
 <th>SNo.</th>
         <th>Name of Students</th>
-        <th>Phd_Register</th>
+        <th>PHD/MPhil Register ID</th>
         <th>Register number</th>
         <th>Total Attendance {{subject.SubjectName}}</th>
     </tr>
@@ -79,7 +79,8 @@
   </table>
 
 
-        <a href="/owner/report_attendance_download/{{batch.id}}" class="btn btn-outline-success btn-sm ">Download Report</a>
+        <a href="/owner/report_attendance_download/{{batch.id}}" class="btn btn-outline-success btn-sm ">Download Report as PDF</a>
+        <a href="/owner/report_attendance_excel/{{batch.id}}" class="btn btn-outline-success btn-sm ">Download Report as Excel</a>
 
     </div>
 </div>
