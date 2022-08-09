@@ -719,7 +719,7 @@ def report_download(request, batch_id):
         candidates = Candidates.objects.filter(ApplicationId__Batch=batch)
         marks = Marks.objects.all()
         template_path = 'owner/pdf_report.html'
-        context = {'marks': marks, 'users': candidates}
+        context = {'marks': marks, 'users': candidates, 'total_attendance': total_attendance}
         # Create a Django response object, and specify content_type as pdf
         response = HttpResponse(content_type='application/pdf')
         response['Content-Disposition'] = 'filename="subject_report.pdf"'
