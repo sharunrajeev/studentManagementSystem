@@ -12,94 +12,98 @@ from django.contrib.auth import views as auth_views
 total_attendance = 20
 #Coded by Hana
 def register(request):
-    Latest_Batch = Batches.objects.all().order_by('-id').first()
-    print(Latest_Batch)
-    if request.method == 'POST':
+    if Batches.objects.count() > 0 :
+        Latest_Batch = Batches.objects.all().order_by('-id').first()
+        print(Latest_Batch)
+        if request.method == 'POST':
 
 
-        Name = request.POST['Name']
+            Name = request.POST['Name']
 
-        Gender = request.POST['Gender']
-        Address = request.POST['Address']
-        Mob = request.POST['Mob']
-        Email = request.POST['Email']
-        Institution = request.POST['Institution']
-        University = request.POST['University']
-        Dob = request.POST['Dob']
-        Phd_Reg = request.POST['Phd_Reg']
-        Phd_Joining_Date = request.POST['Phd_Joining_Date']
-        Research_Topic = request.POST['Research_Topic']
-        Research_Guide = request.POST['Research_Guide']
-        Guide_Mail = request.POST['Guide_Mail']
-        Guide_Phone = request.POST['Guide_Phone']
-        Guide_Dpt = request.POST['Guide_Dpt']
-        Co_Guide = request.POST['Co_Guide']
-        Cusatian = request.POST['Cusatian']
-
-
-
-        # if Applicants.objects.filter(Email=Email).exists():
-        #     return JsonResponse(
-        #         {'success': 'error'},
-        #         safe=False
-        #     )
-        # else:
-
-        user_obj = Applicants()
-        user_obj.Name = Name
-        user_obj.Gender = Gender
-        user_obj.Address = Address
-        user_obj.Mob = Mob
-        user_obj.Email = Email
-
-        user_obj.Institution = Institution
-        user_obj.University = University
-        user_obj.Dob = Dob
-        user_obj.Phd_Reg = Phd_Reg
-        user_obj.Phd_Joining_Date = Phd_Joining_Date
-        user_obj.Research_Topic = Research_Topic
-        user_obj.Research_Guide = Research_Guide
-        user_obj.Guide_Dpt = Guide_Dpt
-        user_obj.Guide_Mail = Guide_Mail
-        user_obj.Guide_Phone = Guide_Phone
-        user_obj.Cusatian  = Cusatian
-        user_obj.Co_Guide = Co_Guide
-
-        user_obj.Batch = Latest_Batch
-        if Cusatian == 'True':
-            Cusat_Id = request.FILES['Cusat_Id']
-            user_obj.Cusat_Id = Cusat_Id
-        print(Co_Guide)
-        if Co_Guide == 'True':
-            Co_Guide_Name = request.POST['Co_Guide_Name']
-            Co_Guide_Mail = request.POST['Co_Guide_Mail']
-            Co_Guide_Phone = request.POST['Co_Guide_Phone']
-            Co_Guide_Dpt = request.POST['Co_Guide_Dpt']
-
-            user_obj.Co_Guide_Name = Co_Guide_Name
-            user_obj.Co_Guide_Mail = Co_Guide_Mail
-            user_obj.Co_Guide_Phone = Co_Guide_Phone
-            user_obj.Co_Guide_Dpt = Co_Guide_Dpt
+            Gender = request.POST['Gender']
+            Address = request.POST['Address']
+            Mob = request.POST['Mob']
+            Email = request.POST['Email']
+            Institution = request.POST['Institution']
+            University = request.POST['University']
+            Dob = request.POST['Dob']
+            Phd_Reg = request.POST['Phd_Reg']
+            Phd_Joining_Date = request.POST['Phd_Joining_Date']
+            Research_Topic = request.POST['Research_Topic']
+            Research_Guide = request.POST['Research_Guide']
+            Guide_Mail = request.POST['Guide_Mail']
+            Guide_Phone = request.POST['Guide_Phone']
+            Guide_Dpt = request.POST['Guide_Dpt']
+            Co_Guide = request.POST['Co_Guide']
+            Cusatian = request.POST['Cusatian']
 
 
 
+            # if Applicants.objects.filter(Email=Email).exists():
+            #     return JsonResponse(
+            #         {'success': 'error'},
+            #         safe=False
+            #     )
+            # else:
+
+            user_obj = Applicants()
+            user_obj.Name = Name
+            user_obj.Gender = Gender
+            user_obj.Address = Address
+            user_obj.Mob = Mob
+            user_obj.Email = Email
+
+            user_obj.Institution = Institution
+            user_obj.University = University
+            user_obj.Dob = Dob
+            user_obj.Phd_Reg = Phd_Reg
+            user_obj.Phd_Joining_Date = Phd_Joining_Date
+            user_obj.Research_Topic = Research_Topic
+            user_obj.Research_Guide = Research_Guide
+            user_obj.Guide_Dpt = Guide_Dpt
+            user_obj.Guide_Mail = Guide_Mail
+            user_obj.Guide_Phone = Guide_Phone
+            user_obj.Cusatian  = Cusatian
+            user_obj.Co_Guide = Co_Guide
+
+            user_obj.Batch = Latest_Batch
+            if Cusatian == 'True':
+                Cusat_Id = request.FILES['Cusat_Id']
+                user_obj.Cusat_Id = Cusat_Id
+            print(Co_Guide)
+            if Co_Guide == 'True':
+                Co_Guide_Name = request.POST['Co_Guide_Name']
+                Co_Guide_Mail = request.POST['Co_Guide_Mail']
+                Co_Guide_Phone = request.POST['Co_Guide_Phone']
+                Co_Guide_Dpt = request.POST['Co_Guide_Dpt']
+
+                user_obj.Co_Guide_Name = Co_Guide_Name
+                user_obj.Co_Guide_Mail = Co_Guide_Mail
+                user_obj.Co_Guide_Phone = Co_Guide_Phone
+                user_obj.Co_Guide_Dpt = Co_Guide_Dpt
 
 
-        user_obj.save()
 
 
-        return redirect('/user/regSuccess')
 
-            # return JsonResponse(
-            #
-            #     {'success': 'pass'},
-            #     safe=False
-            # )
+            user_obj.save()
+
+
+            return redirect('/user/regSuccess')
+
+                # return JsonResponse(
+                #
+                #     {'success': 'pass'},
+                #     safe=False
+                # )
+
+        else:
+
+
+            return render(request, 'user/register_section/register_form.html',{'latest_batch':Latest_Batch})
 
     else:
-
-
-        return render(request, 'user/register_section/register_form.html',{'latest_batch':Latest_Batch})
+        return render(request, 'user/register_section/register_warning.html')
 
 
 def reg_success(request):
