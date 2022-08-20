@@ -618,6 +618,7 @@ def batches_edit(request):
             batch.Month = Month
             batch.Year = Year
             batch.CommenceDate = CommenceDate
+            batch.Active = True
 
             batch.save()
             counter_name()
@@ -656,11 +657,13 @@ def batch_update(request, batchid):
             Month = request.POST['month']
             Year = request.POST['year']
             CommenceDate = request.POST['commencedate']
+            Active = request.POST['active']
 
             batch = Batches.objects.get(id=batchid)
             batch.Month = Month
             batch.Year = Year
             batch.CommenceDate = CommenceDate
+            batch.Active = Active
 
             batch.save()
 

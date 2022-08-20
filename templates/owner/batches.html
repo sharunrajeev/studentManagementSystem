@@ -90,6 +90,7 @@
 
                         <th>Year</th>
                         <th>Commencement Date</th>
+                        <th>Active</th>
 <!--                        <th>Delete</th>-->
                     </tr>
                 </thead>
@@ -122,8 +123,25 @@
                                 <input value="{{ batch.CommenceDate|date:'Y-m-d' }}" class="input--style-4 input_default" type="date" name="commencedate" required>
                             </td>
                             <td>
+
+
+
+                                <select name="active" class="input--style-4 input_default" required>
+
+                                    {% if batch.Active == True %}
+                                <option selected disabled value="{{batch.Active}}">Active</option>
+                                {% else %}
+                                <option selected disabled value="{{batch.Active}}">Closed</option>
+                                {% endif %}
+                                    <option value="True">Active</option>
+                                    <option value="False">Close</option>
+                                </select>
+                            </td>
+                            <td>
                                 <button type="submit" class="btn btn-success btn-sm" role="button">Update</button>
                             </td>
+
+
 <!--                            <td>-->
 <!--                                <a class="btn btn-danger btn-sm" href="/owner/subject_delete/{{ subject.id }}" role="button">Delete</a>-->
 <!--                            </td>-->
