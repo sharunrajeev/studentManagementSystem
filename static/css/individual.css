@@ -334,9 +334,26 @@ body {
 .ind_main-col {
   width: 46%;
   display: flex;
+  align-items: center;
 }
 
 .ind_main-col  span:first-child {
   width: 130px;
 }
+
+#lname {
+  width: 90px;
+}
+
+.shortname-form {
+  display: flex;
+  gap: 10px;
+}
+
+.shortname-input,
+.shortname-input:focus {
+  border: none;
+  outline: none;
+}
+
 

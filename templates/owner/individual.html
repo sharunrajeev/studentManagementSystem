@@ -163,10 +163,12 @@ Student Details
                                  <div class="ind_main-row">
                                     <div class="ind_main-col">
                                         <span>Short Name: </span>
-                                        <form action="/owner/short_name/{{ individual.id }}" method="POST">
+                                        <form action="/owner/short_name/{{ individual.id }}" class="shortname-form" method="POST">
                                             {% csrf_token %}
-                                             <input type="text" id="lname" value="{{ individual.Short_Name }}" name="short_name" required require>
-                                            <button class="btn btn-outline-primary btn-rounded mx-4" type="submit" role="button">Submit</button>
+                                            <input type="text" id="lname" class="shortname-input" value="{{ individual.Short_Name }}" name="short_name" required require readonly>
+                                            <button class="btn btn-outline-primary btn-rect" id="name-update" role="button">Update</button>
+                                            <button class="btn btn-outline-primary btn-rect d-none" type="submit" role="button">Submit</button>
+
                                         </form>
                                     </div>
 
@@ -320,9 +322,25 @@ Student Details
     let html_tag = document.getElementsByTagName('html')
     let button_tag = document.getElementById("nav--btn")
 
+    let update_btn = document.getElementById("name-update")
+
+    update_btn.onclick = function(e) {
+        e.preventDefault()
+        let name_form = document.getElementsByClassName("shortname-form")[0]
+
+        name_form.children[1].classList.remove("shortname-input")
+        name_form.children[1].readOnly = false
+        update_btn.style.display = "none"
+        name_form.children[3].classList.remove("d-none")
+
+
+    }
+
     button_tag.onclick = function (e) {
         e.preventDefault()
         html_tag[0].classList.toggle("menu-active")
     }
+
+
 </script>
 {% endblock %}
