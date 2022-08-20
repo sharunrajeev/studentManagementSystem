@@ -9,7 +9,6 @@ urlpatterns = [
     path('adminlogin', views.adminlogin, name='adminlogin'),
     path('logout', views.logout, name='logout'),
     # Home page
-    # path('', views.dashboard, name='dashboard'),
     path('approve', views.approve, name='approve'),
     path('approve/<userid>', views.individual_view, name='individual_view'),
     path('payment_subject', views.payment_subject, name='payment_subject'),
