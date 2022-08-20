@@ -164,7 +164,7 @@
 
                <select name="Batch_S" class="input--style-4 input_default" id="inputGroupSelect02">
 
-              <option selected value="True" >{{person_details.ApplicationId.Batch.Batch_Name}}</option>
+              <option selected value="{{person_details.ApplicationId.Batch.id}}" >{{person_details.ApplicationId.Batch.Batch_Name}}</option>
 
                  {% for batch in batches %}
                <option value="{{batch.id}}">{{batch.Batch_Name}}</option>
