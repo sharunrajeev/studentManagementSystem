@@ -331,14 +331,15 @@ body {
   margin-bottom: 12px;
 }
 
+.ind_main-col  span:first-child {
+  width: 130px;
+}
+
+
 .ind_main-col {
   width: 46%;
   display: flex;
   align-items: center;
-}
-
-.ind_main-col  span:first-child {
-  width: 130px;
 }
 
 #lname {
@@ -355,5 +356,3 @@ body {
   border: none;
   outline: none;
 }
-
-
