@@ -20,7 +20,7 @@
 
         <div class="card-body ">
             <h2>Student Registration for RPE batch for {{ latest_batch.Batch_Name }} - {{ latest_batch.Month }} - {{ latest_batch.Year }}</h2>
-            <form action="register" method="post" enctype="multipart/form-data">
+            <form action="register" id="reg-form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="main active">
                 <div class="row row-space">
@@ -110,7 +110,7 @@
                     <div class="col-2">
                         <div class="input-group">
                             <label class="label">PHD/MPhil Registration ID (optional)</label>
-                            <input id="phd_reg" class="input--style-4 input_default" type="number" name="Phd_Reg" value="0">
+                            <input id="phd_reg" class="input--style-4 input_default" type="number" name="Phd_Reg">
                         </div>
                     </div>
 
@@ -174,7 +174,7 @@
                     <div class="col-2">
                         <div class="input-group">
                             <label class="label">Guide's E-Mail(Optional)</label>
-                            <input id="guide_mail" class="input--style-4 input_default" value="NA@gmail.com" type="email" name="Guide_Mail">
+                            <input id="guide_mail" class="input--style-4 input_default" type="email" name="Guide_Mail">
                         </div>
                     </div>
                 </div>
@@ -183,7 +183,7 @@
                     <div class="col-2">
                         <div class="input-group">
                             <label class="label">Guide's Phone(Optional)</label>
-                            <input id="guide_phone" class="input--style-4 input_default" value="0" type="text" name="Guide_Phone">
+                            <input id="guide_phone" class="input--style-4 input_default" type="text" name="Guide_Phone">
                         </div>
                     </div>
 
@@ -314,7 +314,7 @@
     }
 
 
-        const coGuideSelect = (guide) => {
+    const coGuideSelect = (guide) => {
         let hasCoGuide = (guide.value === "True") ? true : false;
         let coGuideFields = document.getElementsByClassName("guide-fields");
 
@@ -327,6 +327,16 @@
             coGuideFields[1].style.display =  "none";
         }
     }
+
+    document.getElementById("reg-form").addEventListener('submit', function(e) {
+        e.preventDefault()
+        document.getElementById("phd_reg").value = "0"
+        document.getElementById("guide_mail").value = "NA@gmail.com"
+        document.getElementById("guide_phone").value = "0"
+        this.submit()
+    })
+
+
 
 </script>
 
