@@ -12,6 +12,21 @@ class Batches(models.Model):
     Month = models.CharField(max_length=100, default=None)
     Year = models.IntegerField(default=None)
     CommenceDate = models.DateField(default=None)
+    Active = models.BooleanField()
+
+    def save(self, *args, **kwargs):
+        if self.Active:
+            try:
+                temp = Batches.objects.get(Active=True)
+                if self != temp:
+                    temp.Active = False
+                    temp.save()
+            except Batches.DoesNotExist:
+                pass
+        super(Batches, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.Batch_Name
 
 
 class Applicants(models.Model):
