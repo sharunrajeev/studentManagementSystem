@@ -66,7 +66,7 @@ Student Details
                     {% elif user.Eligibility == False %}
                     <span style="color: red;">Rejected</span>
                     {% else %}
-                    <span style="color: yellow;">Not Verified</span>
+                    <span style="color: #0c2155;">Not Verified</span>
                     {% endif %}
 
 
@@ -98,10 +98,7 @@ Student Details
                                         <span>{{ individual.Name }}</span>
                                     </div>
 
-                                    <div class="ind_main-col">
-                                        <span>Age: </span>
-                                        <span>{{ individual.Age }}</span>
-                                    </div>
+
 
                                 </div>
 
@@ -152,8 +149,8 @@ Student Details
 
                                 <div class="ind_main-row">
                                     <div class="ind_main-col">
-                                        <span>Department: </span>
-                                        <span>{{ individual.Department }}</span>
+                                        <span>Institution : </span>
+                                        <span>{{ individual.Institution }}</span>
                                     </div>
 
                                     <div class="ind_main-col">
@@ -163,23 +160,16 @@ Student Details
 
                                 </div>
 
-                                <div class="ind_main-row">
+                                 <div class="ind_main-row">
                                     <div class="ind_main-col">
-                                        <span>PhD Register No: </span>
-                                        <span>{{ individual.Phd_Reg }}</span>
-                                    </div>
+                                        <span>Short Name: </span>
+                                        <form action="/owner/short_name/{{ individual.id }}" class="shortname-form" method="POST">
+                                            {% csrf_token %}
+                                            <input type="text" id="lname" class="shortname-input" value="{{ individual.Short_Name }}" name="short_name" required require readonly>
+                                            <button class="btn btn-outline-primary btn-rect" id="name-update" role="button">Update</button>
+                                            <button class="btn btn-outline-primary btn-rect d-none" type="submit" role="button">Submit</button>
 
-                                    <div class="ind_main-col">
-                                        <span>PhD Joining Date: </span>
-                                        <span>{{ individual.Phd_Joining_Date }}</span>
-                                    </div>
-
-                                </div>
-
-                                <div class="ind_main-row">
-                                    <div class="ind_main-col">
-                                        <span>Research Guide: </span>
-                                        <span>{{ individual.Research_Guide }}</span>
+                                        </form>
                                     </div>
 
                                     <div class="ind_main-col">
@@ -191,20 +181,51 @@ Student Details
 
                                 <div class="ind_main-row">
                                     <div class="ind_main-col">
-                                        <span>Contact of Guide (Email): </span>
-                                        <span>{{ individual.Guide_Mail }}</span>
+                                        <span>PhD/MPhil Registeration Id: </span>
+                                         {% if individual.Phd_Reg == 0 %}
+                                        <span>NA</span>
+                                        {% else %}
+                                        <span>{{ individual.Phd_Reg }}</span>
+                                        {% endif %}
                                     </div>
 
                                     <div class="ind_main-col">
-                                        <span>Contact of Guide (Phone): </span>
-                                        <span>{{ individual.Guide_Phone }}</span>
+                                        <span>Date of joining PhD/MPhil: </span>
+                                        <span>{{ individual.Phd_Joining_Date }}</span>
                                     </div>
+
+                                </div>
+
+
+
+                                <div class="ind_main-row">
+<!--                                    <div class="ind_main-col">-->
+<!--                                        <span>Contact of Guide (Email): </span>-->
+<!--                                        <span>{{ individual.Guide_Mail }}</span>-->
+<!--                                    </div>-->
+
+<!--                                    <div class="ind_main-col">-->
+<!--                                        <span>Contact of Guide (Phone): </span>-->
+<!--                                        <span>{{ individual.Guide_Phone }}</span>-->
+<!--                                    </div>-->
+
+
 
                                 </div>
                                 <div class="ind_main-row">
                                     <div class="ind_main-col">
-                                        <span>Course: </span>
-                                        <span>{{ individual.Subject }}</span>
+                                        <span>Batch : </span>
+                                        <span>{{ individual.Batch.Batch_Name }}</span>
+                                    </div>
+                                      <div class="ind_main-col">
+                                        <span>Cusatian: </span>
+                                        {% if individual.Cusatian == True %}
+                            <p class="badge rounded-pill bg-success space" style="font-size:1rem;">Yes <i class="fa fa-check"></i></p>
+                                          <a class="btn btn-outline-primary btn-rounded mx-4"  href="{{ individual.Cusat_Id.url}}" role="button">View
+                                Cusat ID</a>
+                            {% else %}
+                            <p class="badge rounded-pill bg-warning text-dark" style="font-size:1rem;"> No <i class="fa fa-times"></i></p>
+                               {% endif %}
                                     </div>
                                 </div>
                                 <!-- /.row -->
@@ -213,7 +234,82 @@ Student Details
                         </div>
                         <!-- /.box-content card -->
                     </div>
+
+                    <div class="col-xs-12">
+                        <div class="box-content card">
+                            <h4 class="box-title"><i class="fa fa-user ico"></i>Guide's Information</h4>
+                            <div class="card-content">
+                                <div class="ind_main-row">
+                                    <div class="ind_main-col">
+                                        <span>Research Guide: </span>
+                                        <span>{{ individual.Research_Guide }}</span>
+                                    </div>
+                                    {% if individual.Co_Guide == True %}
+                                     <div class="ind_main-col">
+                                        <span>Research Co_Guide: </span>
+                                        <span>{{ individual.Co_Guide_Name }}</span>
+                                    </div>
+                                    {% endif %}
+
+
+                                </div>
+
+                                <div class="ind_main-row">
+                                    <div class="ind_main-col">
+                                        <span>Contact of Guide (Email): </span>
+                                        <span></span>
+                                        {% if individual.Guide_Mail == 'NA@gmail.com' %}
+                                         <span>NA</span>
+                                         {%else%}
+                                        <span>{{ individual.Guide_Mail }}</span>
+                                         {% endif %}
+                                    </div>
+                                     {% if individual.Co_Guide == True %}
+                                     <div class="ind_main-col">
+                                        <span>Contact of Co_Guide (Email): </span>
+                                         {% if individual.Co_Guide_Mail == 'NA@gmail.com' %}
+                                         <span>NA</span>
+                                         {%else%}
+                                        <span>{{ individual.Co_Guide_Mail }}</span>
+                                         {% endif %}
+                                    </div>
+                                    {% endif %}
+
+
+                                </div>
+
+                                <div class="ind_main-row">
+                                    <div class="ind_main-col">
+                                        <span>Contact of Guide (Phone): </span>
+                                        {% if individual.Guide_Phone == '0' %}
+                                        <span>NA</span>
+                                        {%else%}
+                                        <span>{{ individual.Guide_Phone }}</span>
+                                        {% endif %}
+                                    </div>
+
+                                     {% if individual.Co_Guide == True %}
+                                   <div class="ind_main-col">
+                                        <span>Contact of Co_Guide (Phone): </span>
+                                         {% if individual.Guide_Phone == 0 %}
+                                        <span>NA</span>
+                                        {%else%}
+                                        <span>{{ individual.Co_Guide_Phone }}</span>
+                                        {% endif %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+
+
+
+                            </div>
+                            <!-- /.card-content -->
+                        </div>
+                        <!-- /.box-content card -->
+                    </div>
                 </div>
+
+
             </div>
         </div>
     </div>
@@ -226,9 +322,25 @@ Student Details
     let html_tag = document.getElementsByTagName('html')
     let button_tag = document.getElementById("nav--btn")
 
+    let update_btn = document.getElementById("name-update")
+
+    update_btn.onclick = function(e) {
+        e.preventDefault()
+        let name_form = document.getElementsByClassName("shortname-form")[0]
+
+        name_form.children[1].classList.remove("shortname-input")
+        name_form.children[1].readOnly = false
+        update_btn.style.display = "none"
+        name_form.children[3].classList.remove("d-none")
+
+
+    }
+
     button_tag.onclick = function (e) {
         e.preventDefault()
         html_tag[0].classList.toggle("menu-active")
     }
+
+
 </script>
 {% endblock %}

@@ -28,6 +28,16 @@
      </div>
 
     {% endif %}
+
+     {% for attend in Attendance %}
+    {% if attend.StudentId == User %}
+    {% if attend.AttendancePercentage < 75 %}
+     <div class="alert alert-danger " id="attendance" role="alert">
+Your attendance  has dropped below 75% and is currently {{ attend.AttendancePercentage }}%
+     </div>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
     <hr>
 
     <div class="row gutters-sm">
@@ -78,7 +88,7 @@
                                     <h6 class="mb-0">Department</h6>
                                 </div>
                                 <div class="col-sm-9 text-normal">
-                                    {{ User.ApplicationId.Department }}
+                                    {{ User.ApplicationId.Institution }}
                                 </div>
                             </div>
                             <hr class="hr2">
@@ -93,7 +103,7 @@
                             <hr class="hr2">
                             <div class="row">
                                 <div class="col-sm-3">
-                                    <h6 class="mb-0">PhD Registration Number</h6>
+                                    <h6 class="mb-0">Phd/MPhil Registration Id</h6>
                                 </div>
                                 <div class="col-sm-9 text-normal">
                                     {{ User.ApplicationId.Phd_Reg }}
@@ -159,7 +169,10 @@
         // messages timeout for 10 sec
         setTimeout(function() {
             $('#messages').fadeOut('slow');
-        }, 2000); // <-- time in milliseconds, 1000 =  1 sec
+        }, 2000);
+        setTimeout(function() {
+            $('#attendance').fadeOut('slow');
+        },20000);// <-- time in milliseconds, 1000 =  1 sec
     });
 </script>
 

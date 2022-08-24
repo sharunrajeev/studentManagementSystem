@@ -39,7 +39,7 @@
     <thead>
 
     <tr>
-        <th>No: of Attendance ({{ User.SubjectId.TotalHour }})</th>
+        <th>No: of Attendance ({{ total_attendance }})</th>
         <th>% of Attendance</th>
         <th>Mark for Attendance</th>
 
@@ -49,6 +49,7 @@
         <th>Group Discussions</th>
         <th>Class participations</th>
         <th style="min-width: 40px !important;">TotalMarks</th>
+        <th>External Mark</th>
         <th>Update</th>
         <th>Delete</th>
     </tr>
@@ -70,7 +71,13 @@
           <td> <input type="number" class="form-control" value="{{ mark.TotalAssignmentMark }}" readonly></td>
           <td> <input type="number" class="form-control" name="gd" value="{{ mark.GdMark }}"></td>
           <td><input type="number" class="form-control" name="cp" value="{{ mark.CpMark }}"></td>
-                            <td><input type="number" class="form-control"  value="{{ mark.Total }}" readonly></td>
+                  {% if mark.Total > 50 %}}
+                   <td><input type="number" class="form-control text-danger"  value="{{ mark.Total }}" readonly></td>
+                  {% else %}
+                  <td><input type="number" class="form-control text-primary"  value="{{ mark.Total }}" readonly></td>
+                  {% endif %}
+
+                   <td><input type="number" name="ex_mark" class="form-control"  value="{{ mark.ExternalMark }}" ></td>
           <td> <button  type="submit" class="btn btn-success btn-sm">Update</button></td>
                             <td> <a href="/owner/mark_edit/mark_delete/{{ mark.id }}" type="button" class="btn btn-danger btn-sm">Delete</a></td>
           </form>

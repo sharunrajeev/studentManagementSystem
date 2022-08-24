@@ -11,66 +11,103 @@
 {% endblock %}
 
 {% block body %}
-{% include 'reusable/sidebar.html' %}
-{% include 'reusable/navbar.html' %}
+    {% include 'reusable/sidebar.html' %}
+    {% include 'reusable/navbar.html' %}
 
 <div id="wrapper">
 	<div class="main-content">
-        <h2>Student Verification</h2>
-        <div class="d-flex justify-content-center align-items-center" style="margin-top: 3rem;">
-            <div class="col-md-6">
-                <form action="approve" method="post">
-                {% csrf_token %}
-                    <div class="search">
-                        <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
-                        <input name="name" type="text" class="form-control" placeholder="Search for Applicants">
-                        <button class="btn btn-primary" type="submit">Search</button>
-                    </div>
-                </form>
+        <div class="main-container">
+            <h2 class="main-head">Student Verification</h2>
+
+            <!--Search Box-->
+            <div class="d-flex justify-content-center align-items-center">
+                <div class="col-md-8">
+                    <form action="approve" method="post">
+                    {% csrf_token %}
+                        <div class="search">
+                            <img class="fa-search" src="{% static 'assets/search.svg' %}" alt=""/>
+                            <input name="name" type="text" class="form-control" placeholder="Search for Applicants">
+                            <button class="btn btn-primary" type="submit">Search</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--Search Box End-->
+
+            <div class="table-parent">
+                <h5>Unselected Students :</h5>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>Name</th>
+                            <th>Mobile No</th>
+                            <th>PhD Register No</th>
+                            <th>Status</th>
+                            <th>View</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for user in unselected %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ user.Name }}</td>
+                                <td>{{ user.Mob }}</td>
+                                <td>{{ user.Phd_Reg }}</td>
+
+                                    {% if user.Eligibility == null %}
+                                        <td><span class="btn btn-warning btn-sm" style="cursor: default;">Not Verified</span></td>
+                                    {% elif user.Eligibility == True %}
+                                        <td><span class="btn btn-success btn-sm" style="cursor: default;">Selected</span></td>
+                                    {% else %}
+                                        <td><span class="btn btn-danger btn-sm" style="cursor: default;">Rejected</span></td>
+                                    {% endif %}
+
+                                <td><a class="btn btn-outline-success btn-sm" href="approve/{{ user.id }}">View</a></td>
+                            </tr>
+                        {% endfor %}
+
+                    </tbody>
+                </table>
+                    <br>
+                <h5>Selected Students:</h5>
+                 <table>
+                    <thead>
+                        <tr>
+                            <th>Sl No</th>
+                            <th>Name</th>
+                            <th>Mobile No</th>
+                            <th>PhD Register No</th>
+                            <th>Status</th>
+                            <th>View</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                    {% if user.Eligibility != null %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ user.Name }}</td>
+                                <td>{{ user.Mob }}</td>
+                                <td>{{ user.Phd_Reg }}</td>
+
+                                    {% if user.Eligibility == True %}
+                                        <td><span class="btn btn-success btn-sm" style="cursor: default;">Selected</span></td>
+                                    {% elif user.Eligibility == False  %}
+                                        <td><span class="btn btn-danger btn-sm" style="cursor: default;">Rejected</span></td>
+                                    {% endif %}
+
+                                <td><a class="btn btn-outline-success btn-sm" href="approve/{{ user.id }}">View</a></td>
+                            </tr>
+                    {% endif %}
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
         </div>
-
-        <div class="table-parent">
-            <table>
-            <thead>
-                <tr>
-                    <th>Sl No</th>
-<!--                    <th>Select</th>-->
-                    <th>Name</th>
-                    <th>Mobile No</th>
-                    <th>PhD Register No</th>
-                    <th>Status</th>
-                    <th>View</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                {% for user in users %}
-
-                <tr>
-                    <td>{{ forloop.counter }}</td>
-<!--                    <td><input type="checkbox"/></td>-->
-                    <td>{{ user.Name }}</td>
-                    <td>{{ user.Mob }}</td>
-                    <td>{{ user.Phd_Reg }}</td>
-
-                        {% if user.Eligibility == null %}
-                            <td><span class="btn btn-warning btn-sm" style="cursor: default;">Not Verified</span></td>
-                        {% elif user.Eligibility == True %}
-                            <td><span class="btn btn-success btn-sm" style="cursor: default;">Selected</span></td>
-                        {% else %}
-                            <td><span class="btn btn-danger btn-sm" style="cursor: default;">Rejected</span></td>
-                        {% endif %}
-
-                    <td><a class="btn btn-outline-success btn-sm" href="approve/{{ user.id }}">View</a></td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        </div>
-
     </div>
 </div>
+
 {% endblock %}
 
 {% block scripts %}

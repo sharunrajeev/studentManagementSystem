@@ -41,14 +41,14 @@
 
     <tr>
         <th colspan="2" class="text-end">Total number of hours</th>
-                    <th class="table-secondary">{{subject.TotalHour}}</th>
+                    <th class="table-secondary">{{total_attendance}}</th>
                     <th  class="text-end">Subject</th>
-                    <th  class="table-secondary">{{subject.SubjectName}}</th>
+                    <th  class="table-secondary">RPE</th>
                 </tr>
 
 <th>SNo.</th>
         <th>Name of Students</th>
-        <th>Phd_Register</th>
+        <th>PHD/MPhil Register ID</th>
         <th>Register number</th>
         <th>Total</th>
     </tr>
@@ -79,7 +79,8 @@
   </table>
 
 
- <a href="/owner/report_mark_download/{{ subject.id }}" class="btn btn-outline-success btn-sm ">Download Report</a>
+ <a href="/owner/report_mark_download/{{batch.id}}" class="btn btn-outline-success btn-sm ">Download Report as PDF</a>
+           <a href="/owner/report_mark_excel/{{batch.id}}" class="btn btn-outline-success btn-sm ">Download Report as Excel</a>
 
         </div>
    </div>

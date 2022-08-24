@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Applicants,Candidates,Marks,Subjects,Payments,UserPayments
+from .models import Applicants,Candidates,Marks,Subjects,Payments,UserPayments,Batches
 # Register your models here.
 
 admin.site.register(Applicants)
@@ -8,5 +8,6 @@ admin.site.register(Marks)
 admin.site.register(Subjects)
 admin.site.register(Payments)
 admin.site.register(UserPayments)
+admin.site.register(Batches)
 
 

@@ -7,16 +7,22 @@
   align-items: center;
 }
 
-.photo-upload div {
+.photo-upload input {
   /*margin-top: 1rem;*/
   background-color: #243e56;
 }
 
-.photo-upload label {
-  background-color: transparent !important;
-  color: black !important;
-  margin-bottom: -2rem;
-}
+/*.uploaded-file {*/
+/*  margin-top: 1rem;*/
+/*  !*color: #fff;*!*/
+/*  display: flex;*/
+/*  gap: 10px;*/
+/*  flex-wrap: wrap;*/
+/*  align-items: center;*/
+/*  background-color: transparent !important;*/
+/*  !*color: black !important;*!*/
+/*  margin-bottom: -2rem;*/
+/*}*/
 
 .payment_wrapper {
   height: 100vh;

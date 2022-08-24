@@ -129,17 +129,26 @@
             <hr id="hr-tag2">
             <div class="row">
               <div class="col-sm-6">
-                <h6 class="mb-0">Course Name</h6>
+                <h6 class="mb-0">Drop Out</h6>
               </div>
-              <div class="row row-space">
+              <div class="col-sm-6">
                      <div class="col-2">
+                       {% if person_details.Dropout == False %}
+            <p class="badge rounded-pill bg-success text-dark" style="font-size:1rem;"> No <i class="fa fa-times"></i></p>
+                       {% else %}
+            <p class="badge rounded-pill bg-danger text-dark" style="font-size:1rem;"> Yes <i class="fa fa-times"></i></p>
+                       {% endif %}
+            <select name="Drop_Out" class="input--style-4 input_default" id="inputGroupSelect01">
+              {% if person_details.dropout == True %}
+              <option selected value="True" >Yes</option>
+              {% else %}
+              <option selected value="False">No</option>
+              {% endif %}
+               <option value="True">Yes</option>
+               <option value="False">No</option>
 
-            <select name="Subject" class="input--style-4 input_default" id="inputGroupSelect01">
-              <option selected>{{ person_details.SubjectId.SubjectName }}</option>
-                {% for subject in subjects %}
-                    <option value="{{subject.SubjectName}}">{{subject.SubjectName}}</option>
 
-                {% endfor %}
+
             </select>
                      </div>
                      </div>
@@ -149,7 +158,31 @@
 
             <div class="row">
               <div class="col-sm-6">
-                <h6 class="mb-0">Phd Register Number</h6>
+                <h6 class="mb-0">Batch</h6>
+              </div>
+              <div class="col-sm-6">
+
+               <select name="Batch_S" class="input--style-4 input_default" id="inputGroupSelect02">
+
+              <option selected value="{{person_details.ApplicationId.Batch.id}}" >{{person_details.ApplicationId.Batch.Batch_Name}}</option>
+
+                 {% for batch in batches %}
+               <option value="{{batch.id}}">{{batch.Batch_Name}}</option>
+                 {% endfor %}
+
+
+
+
+            </select>
+              </div>
+            </div>
+
+
+            <hr>
+
+            <div class="row">
+              <div class="col-sm-6">
+                <h6 class="mb-0">Phd/MPhil Registeration Id</h6>
               </div>
               <div class="col-sm-6">
 
@@ -159,7 +192,7 @@
             <hr>
             <div class="row">
               <div class="col-sm-6">
-                <h6 class="mb-0">Phd Joining Date</h6>
+                <h6 class="mb-0">Date of joining Phd/MPhil</h6>
               </div>
               <div class="col-sm-6">
                 <input id="phdjoiningdate" value="{{ person_details.ApplicationId.Phd_Joining_Date|date:'Y-m-d' }}" class="input--style-4 input_default" type="date" name="Phd_Joining_Date">

@@ -2,80 +2,117 @@ from email import message
 from lib2to3.pgen2 import token
 from pyexpat.errors import messages
 from django.shortcuts import redirect, render
-from owner.models import Applicants, Candidates, Marks, Subjects, Payments,UserPayments
+from owner.models import Applicants, Candidates, Marks, Subjects, Payments,UserPayments,Batches
 from django.contrib.auth.models import User, auth
 from django.http import JsonResponse
 from django.contrib.auth import views as auth_views
 
 
 # Create your views here.
-
+total_attendance = 20
 #Coded by Hana
 def register(request):
-    if request.method == 'POST':
+    if Batches.objects.count() > 0 :
+        Latest_Batch = Batches.objects.all().order_by('-id').first()
+        print(Latest_Batch)
+        if Latest_Batch.Active == False:
+            return render(request, 'user/register_section/register_closed.html')
+        else:
+            
+            if request.method == 'POST':
 
 
-        Name = request.POST['Name']
-        Age = request.POST['Age']
-        Gender = request.POST['Gender']
-        Address = request.POST['Address']
-        Mob = request.POST['Mob']
-        Email = request.POST['Email']
-        Department = request.POST['Department']
-        University = request.POST['University']
-        SubjectName = request.POST['subject']
-        Dob = request.POST['Dob']
-        Phd_Reg = request.POST['Phd_Reg']
-        Phd_Joining_Date = request.POST['Phd_Joining_Date']
-        Research_Topic = request.POST['Research_Topic']
-        Research_Guide = request.POST['Research_Guide']
-        Guide_Mail = request.POST['Guide_Mail']
-        Guide_Phone = request.POST['Guide_Phone']
+                Name = request.POST['Name']
 
-        # if Applicants.objects.filter(Email=Email).exists():
-        #     return JsonResponse(
-        #         {'success': 'error'},
-        #         safe=False
-        #     )
-        # else:
-
-        user_obj = Applicants()
-        user_obj.Name = Name
-        user_obj.Age = Age
-        user_obj.Gender = Gender
-        user_obj.Address = Address
-        user_obj.Mob = Mob
-        user_obj.Email = Email
-        user_obj.Subject = SubjectName
-        user_obj.Department = Department
-        user_obj.University = University
-        user_obj.Dob = Dob
-        user_obj.Phd_Reg = Phd_Reg
-        user_obj.Phd_Joining_Date = Phd_Joining_Date
-        user_obj.Research_Topic = Research_Topic
-        user_obj.Research_Guide = Research_Guide
-        user_obj.Guide_Mail = Guide_Mail
-        user_obj.Guide_Phone = Guide_Phone
+                Gender = request.POST['Gender']
+                Address = request.POST['Address']
+                Mob = request.POST['Mob']
+                Email = request.POST['Email']
+                Institution = request.POST['Institution']
+                University = request.POST['University']
+                Dob = request.POST['Dob']
+                Phd_Reg = request.POST['Phd_Reg']
+                Phd_Joining_Date = request.POST['Phd_Joining_Date']
+                Research_Topic = request.POST['Research_Topic']
+                Research_Guide = request.POST['Research_Guide']
+                Guide_Mail = request.POST['Guide_Mail']
+                Guide_Phone = request.POST['Guide_Phone']
+                Guide_Dpt = request.POST['Guide_Dpt']
+                Co_Guide = request.POST['Co_Guide']
+                Cusatian = request.POST['Cusatian']
 
 
-        user_obj.save()
 
-        return redirect('/user/regSuccess')
+                # if Applicants.objects.filter(Email=Email).exists():
+                #     return JsonResponse(
+                #         {'success': 'error'},
+                #         safe=False
+                #     )
+                # else:
 
-            # return JsonResponse(
-            #
-            #     {'success': 'pass'},
-            #     safe=False
-            # )
+                user_obj = Applicants()
+                user_obj.Name = Name
+                user_obj.Gender = Gender
+                user_obj.Address = Address
+                user_obj.Mob = Mob
+                user_obj.Email = Email
+
+                user_obj.Institution = Institution
+                user_obj.University = University
+                user_obj.Dob = Dob
+                user_obj.Phd_Reg = Phd_Reg
+                user_obj.Phd_Joining_Date = Phd_Joining_Date
+                user_obj.Research_Topic = Research_Topic
+                user_obj.Research_Guide = Research_Guide
+                user_obj.Guide_Dpt = Guide_Dpt
+                user_obj.Guide_Mail = Guide_Mail
+                user_obj.Guide_Phone = Guide_Phone
+                user_obj.Cusatian  = Cusatian
+                user_obj.Co_Guide = Co_Guide
+
+                user_obj.Batch = Latest_Batch
+                if Cusatian == 'True':
+                    Cusat_Id = request.FILES['Cusat_Id']
+                    user_obj.Cusat_Id = Cusat_Id
+                print(Co_Guide)
+                if Co_Guide == 'True':
+                    Co_Guide_Name = request.POST['Co_Guide_Name']
+                    Co_Guide_Mail = request.POST['Co_Guide_Mail']
+                    Co_Guide_Phone = request.POST['Co_Guide_Phone']
+                    Co_Guide_Dpt = request.POST['Co_Guide_Dpt']
+
+                    user_obj.Co_Guide_Name = Co_Guide_Name
+                    user_obj.Co_Guide_Mail = Co_Guide_Mail
+                    user_obj.Co_Guide_Phone = Co_Guide_Phone
+                    user_obj.Co_Guide_Dpt = Co_Guide_Dpt
+
+
+
+
+
+                user_obj.save()
+
+
+                return redirect('/user/regSuccess')
+
+                    # return JsonResponse(
+                    #
+                    #     {'success': 'pass'},
+                    #     safe=False
+                    # )
+
+            else:
+
+
+                return render(request, 'user/register_section/register_form.html',{'latest_batch':Latest_Batch})
 
     else:
-
-        subjects=Subjects.objects.all()
-        return render(request, 'user/register_section/register_form.html',{'subjects':subjects})
+        return render(request, 'user/register_section/register_warning.html')
 
 
 def reg_success(request):
-    return render(request, 'user/register_section/reg_complete.html')
+    Latest_Batch = Batches.objects.all().order_by('-id').first()
+    return render(request, 'user/register_section/reg_complete.html',{'latest_batch':Latest_Batch})
 
 
 # Sharun
@@ -140,36 +177,47 @@ def logout(request):
 def dashboard(request):
     if 'username' in request.session:
         User = Candidates.objects.get(RegNumber=request.session['username'])
-        # Username = User.ApplicationId.Name
-        return render(request, 'user/dashboard.html', {'User': User})
+        if User.Dropout == True:
+            return render(request, 'user/invalid.html')
+        else:
+            attendance = Marks.objects.all()
+            return render(request, 'user/dashboard.html', {'User': User, 'Attendance' : attendance})
     else:
         return redirect('/user/login')
+
 
 
 def payment_form(request):
     if 'username' in request.session:
         user = Candidates.objects.get(RegNumber=request.session['username'])
+        if user.Dropout != True:
+            if request.method == 'POST':
+                if len(request.FILES['File']) != 0:
+                    PaymentDetails = request.FILES['File']
+                    payment=request.POST['payment']
 
-        if request.method == 'POST':
-            if len(request.FILES['File']) != 0:
-                PaymentDetails = request.FILES['File']
-                payment=request.POST['payment']
+                    payment_user=Payments.objects.get(PaymentName=payment)
+                    flag = False
+                    if UserPayments.objects.all():
+                        users = UserPayments.objects.filter(StudentId=user , PaymentId = payment_user)
+                        if users:
 
-                payment_user=Payments.objects.get(PaymentName=payment)
-                flag = False
-                if UserPayments.objects.all():
-                    users = UserPayments.objects.filter(StudentId=user , PaymentId = payment_user)
-                    if users:
+                            id = 0
+                            for u in users:
+                                id = u.id
+                            print(id)
+                            us = UserPayments.objects.get(id = id )
+                            if us:
 
-                        id = 0
-                        for u in users:
-                            id = u.id
-                        print(id)
-                        us = UserPayments.objects.get(id = id )
-                        if us:
+                                us.PaymentDetails = PaymentDetails
+                                us.save()
+                            else:
+                                userpayments = UserPayments()
+                                userpayments.StudentId = user
+                                userpayments.PaymentDetails = PaymentDetails
 
-                            us.PaymentDetails = PaymentDetails
-                            us.save()
+                                userpayments.PaymentId = payment_user
+                                userpayments.save()
                         else:
                             userpayments = UserPayments()
                             userpayments.StudentId = user
@@ -177,31 +225,26 @@ def payment_form(request):
 
                             userpayments.PaymentId = payment_user
                             userpayments.save()
-                    else:
-                        userpayments = UserPayments()
-                        userpayments.StudentId = user
-                        userpayments.PaymentDetails = PaymentDetails
 
-                        userpayments.PaymentId = payment_user
+                    else:
+                        userpayments=UserPayments()
+                        userpayments.StudentId=user
+                        userpayments.PaymentDetails= PaymentDetails
+
+                        userpayments.PaymentId=payment_user
+
+
                         userpayments.save()
 
-                else:
-                    userpayments=UserPayments()
-                    userpayments.StudentId=user
-                    userpayments.PaymentDetails= PaymentDetails
+                # return redirect('/user/payment_form')
 
-                    userpayments.PaymentId=payment_user
-
-
-                    userpayments.save()
-
-            # return redirect('/user/payment_form')
-
-            return redirect('/user/payment_form')
+                return redirect('/user/payment_form')
+            else:
+                payments=Payments.objects.all()
+                user_payment = UserPayments.objects.filter(StudentId=user)
+                return render(request, 'user/payment_form.html', {'payments':payments,'user_details':user_payment,'user':user})
         else:
-            payments=Payments.objects.all()
-            user_payment = UserPayments.objects.filter(StudentId=user)
-            return render(request, 'user/payment_form.html', {'payments':payments,'user_details':user_payment})
+             return render(request, 'user/invalid.html')
     else:
         return redirect('/user/login')
 
@@ -224,34 +267,51 @@ def validate_email(request):
 
 #coded by Hana
 def marks(request):
+    global total_attendance
+
     if 'username' in request.session:
         User = Candidates.objects.get(RegNumber=request.session['username'])
-        marks = Marks.objects.all()
-        return render(request, 'user/marks.html',{ 'User':User,'marks':marks})
+        if User.Dropout == True:
+            return render(request, 'user/invalid.html')
+        else:
+            marks = Marks.objects.all()
+            return render(request, 'user/marks.html',{ 'User':User,'marks':marks,'total_attendance':total_attendance})
     else:
         return redirect('/user/login')
 
 
 #coded by Akhila
+
+
 def attendance(request):
+    global total_attendance
+    
     if 'username' in request.session:
         User = Candidates.objects.get(RegNumber=request.session['username'])
-        attendance= Marks.objects.all()
+        if User.Dropout == True:
+            return render(request, 'user/invalid.html')
+        else:
+            attendance= Marks.objects.all()
 
-    return render(request, 'user/attendance.html',{ 'User':User,'attendance':attendance})
+            return render(request, 'user/attendance.html',{ 'User':User,'total_attendance':total_attendance,'attendance':attendance})
 
 #Coded by Hana
 
 def settings(request):
     if 'username' in request.session:
         User = Candidates.objects.get(RegNumber=request.session['username'])
-
-        return render(request, 'user/settings.html',{'User':User})
+        if User.Dropout == True:
+            return render(request, 'user/invalid.html')
+        else:
+            return render(request, 'user/settings.html',{'User':User})
 
 def password_change_alert(request):
     if request.session.has_key('username'):
         user = Candidates.objects.get(RegNumber=request.session['username'])
-        return render(request,'user/dashboard.html', {'User': user, 'message': "Password changed successfully"})
+        if user.Dropout == True:
+            return render(request, 'user/invalid.html')
+        else:
+            return render(request,'user/dashboard.html', {'User': user, 'message': "Password changed successfully"})
 
 def change_password(request):
 
@@ -262,35 +322,67 @@ def change_password(request):
             Password = request.POST['password']
 
             user = Candidates.objects.get(RegNumber=request.session['username'])
-            u = User.objects.get(username=user.RegNumber)
-            u.set_password(Password)
-            u.save()
-            return JsonResponse(
-                    {'success': True},
-                    safe=False
-                )
-    else:
-        return render(request, 'settings.html')
+            if user.Dropout == True:
+                return render(request, 'user/invalid.html')
+            else:
+            
+                u = User.objects.get(username=user.RegNumber)
+                u.set_password(Password)
+                u.save()
+                return JsonResponse(
+                        {'success': True},
+                        safe=False
+                    )
+        else:   
+            return render(request, 'settings.html')
 
 def photo_upload(request):
     if 'username' in request.session:
         user = Candidates.objects.get(RegNumber=request.session['username'])
-        if request.method == 'POST':
-            if len(request.FILES['File']) != 0:
-                Photo = request.FILES['File']
-                user.Photo = Photo
-                user.save()
-               # return redirect('/user/dashboard')
-                return render(request, 'user/dashboard.html', {'User': user, 'message': "Successfully uploaded your photo"})
-            else:
-                return render(request, 'user/dashboard.html', {'User': user,'message':"Please upload your Photo"})
+        if user.Dropout == True:
+            return render(request, 'user/invalid.html')
         else:
+            if request.method == 'POST':
+                if len(request.FILES['File']) != 0:
+                    Photo = request.FILES['File']
+                    user.Photo = Photo
+                    user.save()
+                   # return redirect('/user/dashboard')
+                    return render(request, 'user/dashboard.html', {'User': user, 'message': "Successfully uploaded your photo"})
+                else:
+                    return render(request, 'user/dashboard.html', {'User': user,'message':"Please upload your Photo"})
+            else:
 
-            return render(request, 'user/dashboard.html', {'User': user,'message':"uploaded"})
+                return render(request, 'user/dashboard.html', {'User': user,'message':"uploaded"})
     else:
         return redirect('/user/login')
 
     return render(request, 'user/dashboard.html')
+
+def change_phdregno(request):
+    
+    if request.session.has_key('username'):
+        user = Candidates.objects.get(RegNumber=request.session['username'])
+        if user.Dropout == True:
+            return render(request, 'user/invalid.html')
+        else:
+
+            if request.method == 'POST':
+            
+                Phdregno = request.POST['phdregno']
+    
+                
+                user.ApplicationId.Phd_Reg = Phdregno
+    
+                user.ApplicationId.save()
+                user.save()
+    
+                return redirect ('/user/settings')
+            # else:
+            #     return render(request, 'settings.html')
+
+    else:
+        return redirect('/user/login')
 
 
 

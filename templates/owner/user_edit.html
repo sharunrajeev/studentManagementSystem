@@ -19,7 +19,10 @@
 
 <div id="wrapper">
 	<div class="main-content">
- <h2>Edit Details</h2>
+        <div class="p-t-15">
+                    {% include 'reusable/back_button.html' %}
+             </div>
+           <h2 class="main-head"> Edit Details</h2>
         <div class="d-flex justify-content-center align-items-center" style="margin-top: 3rem;">
             <div class="col-md-6">
                 <form action="" method="post">
@@ -39,9 +42,10 @@
                     <tr>
                         <th>Sl No</th>
                         <th>Name</th>
-                        <th>PhD Reg No</th>
                         <th>Register Num</th>
+                        <th>Dropout</th>
                         <th>Edit</th>
+                        <th>Delete</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,9 +54,17 @@
                     <tr>
                         <td>{{ forloop.counter }}</td>
                         <td>{{ user.ApplicationId.Name }}</td>
-                        <td>{{ user.ApplicationId.Phd_Reg }}</td>
                         <td>{{ user.RegNumber }}</td>
-                        <td><a href="edit_form/{{ user.Register_Number }}" class="btn btn-warning btn-sm" style="cursor: default;">Edit</a></td>
+                        <td>
+                            {% if user.Dropout == False %}
+            <p class="badge rounded-pill bg-success text-dark" style="font-size:1rem;"> No <i class="fa fa-times"></i></p>
+                       {% else %}
+            <p class="badge rounded-pill bg-danger text-dark" style="font-size:1rem;"> Yes <i class="fa fa-times"></i></p>
+                       {% endif %}
+
+                        </td>
+                        <td><a href="/owner/edit_form/{{ user.Register_Number }}" class="btn btn-warning btn-sm" style="cursor: default;">Edit</a></td>
+                        <td><a href="/owner/delete_user/{{ user.Register_Number }}" class="btn btn-danger btn-sm" style="cursor: default;">Delete</a></td>
 
                     </tr>
                 {% endfor %}

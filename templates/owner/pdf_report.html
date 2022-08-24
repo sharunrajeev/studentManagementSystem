@@ -44,16 +44,16 @@ table {
 
     <thead>
       <tr>
-        <th colspan="12"><h1>PROF N. R. MADHAVA MENON INTERDISCIPLINARY CENTRE FOR RESEARCH ETHICS AND PROTOCOLS, CUSAT, KOCHI- 022</h1></th>
+        <th colspan="13"><h1>PROF N. R. MADHAVA MENON INTERDISCIPLINARY CENTRE FOR RESEARCH ETHICS AND PROTOCOLS, CUSAT, KOCHI- 022</h1></th>
       </tr>
          <tr>
-        <th colspan="12"><h2>Research and Publication Ethics Course Work Program, 2020 Batch- INTERNAL ASSESSMENT</h2></th>
+        <th colspan="13"><h2>Research and Publication Ethics Course Work Program, 2020 Batch- INTERNAL ASSESSMENT</h2></th>
       </tr>
          <tr>
         <th colspan="2" style="text-align: right">Total number of hours</th>
-        <th colspan="1" style="text-align: left; background-color: #D3D3D3;">{{subject.TotalHour}}</th>
+        <th colspan="1" style="text-align: left; background-color: #D3D3D3;">{{total_attendance}}</th>
          <th colspan="4" style="text-align: right">Subject</th>
-           <th colspan="5" style="text-align: left; background-color: #D3D3D3;">{{subject.SubjectName}}</th>
+           <th colspan="6" style="text-align: left; background-color: #D3D3D3;">RPE</th>
       </tr>
     </thead>
 
@@ -63,8 +63,8 @@ table {
 
         <th  rowspan="2" style="width: 25px">SNo.</th>
         <th  rowspan="2" style="width: 100px">Name of Students</th>
-        <th rowspan="2" style="width: 50px">Reg_No</th>
-                   <th rowspan="2" style="width: 60px">No: of Attendance</th>
+        <th rowspan="2" style="width: 50px">Register Number</th>
+                   <th rowspan="2" style="width: 60px">Attendance</th>
                 <th rowspan="2" style="width: 60px">% of Attendance</th>
                  <th rowspan="2" style="width: 60px">Mark for Attendance(5)</th>
 
@@ -74,6 +74,7 @@ table {
                    <th rowspan="2">Group Discussions(20)</th>
                     <th rowspan="2">Class participations(5)</th>
                    <th rowspan="2">Total Internal Marks out of 50</th>
+          <th rowspan="2">Total External Marks</th>
 
       </tr>
       <tr>
@@ -100,6 +101,7 @@ table {
                    <td> {{ mark.GdMark }}</td>
                     <td> {{ mark.CpMark }}</td>
                    <td> {{ mark.Total }}</td>
+                <td>{{mark.ExternalMark}}</td>
 
 
                 </tr>

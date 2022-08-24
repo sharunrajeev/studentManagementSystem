@@ -13,33 +13,22 @@
 </head>
 <body>
     <div class="register_main">
-        <div class="progress_bar">
-            {% include './progress_indicator.html' %}
-        </div>
+
     <div class="reg-complt_div">
-        <img src="{% static 'assets/reg_success.png' %}" alt=""/>
+        <img src="{% static 'assets/warning-icon-png-2771.png' %}" alt=""/>
         <h1>
-            REGISTRATION SUCCESS!
+            You have been denied access to your Account
         </h1>
-        <p>
-            Your registration is complete and is under verification. Once it is verified you will receive your login credentials through email.
-        </p>
         <br>
-         <h3>
-            The course will commence from {{ latest_batch.CommenceDate }}
-        </h3>
-    </div>
-
+    <p>Please contact administrator for more information.</p>
 
 
     </div>
 
-    <script>
-        let progress_bar = document.querySelectorAll('.progress-bar li')
 
-        for(let i=1; i<progress_bar.length; i++) {
-            progress_bar[i].classList.add("active");
-        }
-    </script>
+
+    </div>
+
+
 </body>
 </html>

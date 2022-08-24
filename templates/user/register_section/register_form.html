@@ -8,46 +8,48 @@
 {% block styles %}
     <link href="{% static 'css/register_form.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/progress_indicator.css' %}" rel="stylesheet"/>
-    <link href="{% static 'css/warning_box.css' %}" rel="stylesheet"/>
     <link href="{% static 'css/mark_upload.css' %}" rel="stylesheet"/>
-    <link href="{% static 'css/alert.css' %}" rel="stylesheet"/>
 {% endblock %}
 
 <!-- Body -->
 {% block body %}
     <div class="register_main">
-    <div class="progress_bar">
-            {% include './progress_indicator.html' %}
-    </div>
+        <div class="progress_bar">
+                {% include './progress_indicator.html' %}
+        </div>
 
-    <div class="card-body">
-        <form action="register" method="post" enctype="multipart/form-data">
-
+        <div class="card-body ">
+            <h2>Student Registration for RPE batch for {{ latest_batch.Batch_Name }} - {{ latest_batch.Month }} - {{ latest_batch.Year }}</h2>
+            <form action="register" id="reg-form" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="main active">
                 <div class="row row-space">
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">Name</label>
-                        <input id="name" class="input--style-4 input_default" type="text" name="Name" required require>
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Name</label>
+                            <input id="name" class="input--style-4 input_default" type="text" name="Name" required require>
+                        </div>
                     </div>
-                </div>
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">Age</label>
-                        <input id="age" class="input--style-4 input_default" type="tel" maxlength="2" name="Age" required require>
+
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Email</label>
+                            <input id="email" class="input--style-4 input_default" type="email" name="Email" required require>
+                        </div>
                     </div>
-                </div>
-            </div>
-                <div class="row row-space">
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">Email</label>
-                        <input id="email" class="input--style-4 input_default" type="email" name="Email" required require>
-                    </div>
+
+
                 </div>
 
-                <div class="col-2 gender-div">
+                <div class="row row-space">
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">DOB</label>
+                            <input id="dob" class="input--style-4 input_default" type="date" name="Dob" onclick="maxDate()" required require>
+                        </div>
+                    </div>
+
+                    <div class="col-2 gender-div">
                         <label class="label">Gender</label>
                         <div class="p-t-10">
                             <label class="radio-container m-r-45">Male
@@ -59,28 +61,25 @@
                                 <span class="checkmark"></span>
                             </label>
                         </div>
+                    </div>
                 </div>
-            </div>
                 <div class="row row-space">
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">DOB</label>
-                        <input id="dob" class="input--style-4 input_default" type="date" name="Dob" required require>
+
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Mobile Number</label>
+                            <input type="tel" id="mob" class="input--style-4 input_default"  name="Mob" maxlength="12" required require>
+                        </div>
+                    </div>
+
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Address</label>
+                            <input id="address" class="input--style-4 input_default" type="text" name="Address" required require>
+                        </div>
                     </div>
                 </div>
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">Mobile Number</label>
-                        <input id="mob" class="input--style-4 input_default" type="tel" name="Mob" maxlength="12" required require>
-                    </div>
-                </div>
-            </div>
-                <div class="row row-space">
-                    <div class="input-group">
-                        <label class="label">Address</label>
-                        <input id="address" class="input--style-4 input_default" type="text" name="Address" required require>
-                    </div>
-            </div>
+
                 <div class="p-t-15">
                     <button id="next" class="btn btn--radius-2 btn--blue next_button" type="button">Next</button>
                 </div>
@@ -88,92 +87,181 @@
 
             <div class="main">
                 <div class="row row-space">
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">Department</label>
-                        <input id="dept" class="input--style-4 input_default" type="text" name="Department" required require>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">University</label>
-                        <input id="university" class="input--style-4 input_default" type="text" name="University" required require>
-                    </div>
-                </div>
-            </div>
-                <div class="row row-space">
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">PHD Register Number</label>
-                        <input id="phd_reg" class="input--style-4 input_default" type="number" name="Phd_Reg" required require>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">PHD joining Date</label>
-                        <input id="phd_joining_date" class="input--style-4 input_default" type="date" name="Phd_Joining_Date" required require>
-                    </div>
-                </div>
-            </div>
-                <div class="row row-space">
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">Research Topic</label>
-                        <input id="research_topic" class="input--style-4 input_default" type="text" name="Research_Topic" required require>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">Research Guide</label>
-                        <input id="research_guide" class="input--style-4 input_default" type="text" name="Research_Guide" required require>
-                    </div>
-                </div>
-            </div>
-                <div class="row row-space">
-                <div class="col-2">
-                    <div class="input-group">
-                        <label class="label">Contact of Guide (MAIL-ID)</label>
-                        <input id="guide_mail" class="input--style-4 input_default" type="email" name="Guide_Mail" required require>
-                    </div>
-                </div>
-                <div class="col-2">
-                    <div class="input-group">
-                       <label class="label">Contact of Guide (Mobile Number)</label>
-                       <input  id="guide_phone" class="input--style-4 input_default" type="tel" maxlength="12" name="Guide_Phone" required require>
-                    </div>
-                </div>
-
-                                         </div>
-
-                    <div class="row row-space">
-                        <div class="col-2 mb-3">
-                            <label for="subject">Course:</label><br>
-                                <select name="subject" class="input--style-4 input_default" id="inputGroupSelect01" required>
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="mb-1" for="subject">Are you Cusatian:</label>
+                            <select name="Cusatian" id="" class="input--style-4 input_default" onclick="universitySelect(this)" id="inputGroupSelect01" required>
                                 <option selected disabled value="">Choose...</option>
-                                {% for subject in subjects %}
-                                <option value="{{subject.SubjectName}}">{{subject.SubjectName}}</option>
-                                {% endfor %}
-                                </select>
-                     </div>
+                                <option value="True">Yes</option>
+                                <option value="False">No</option>
+                            </select>
+                        </div>
+                    </div>
 
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">University</label>
+                            <input id="university1" class="input--style-4 input_default" type="text" name="University" required require>
+                        </div>
+                    </div>
                 </div>
+
+                <div class="row row-space">
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">PHD/MPhil Registration ID (optional)</label>
+                            <input id="phd_reg" class="input--style-4 input_default" type="number" name="Phd_Reg">
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Date of joining PhD/MPhil</label>
+                            <input id="phd_joining_date" class="input--style-4 input_default" type="date" name="Phd_Joining_Date" required require>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row row-space">
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Institution</label>
+                            <input id="dept" class="input--style-4 input_default" type="text" name="Institution" required require>
+                        </div>
+                    </div>
+
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Research Topic</label>
+                            <input id="research_topic" class="input--style-4 input_default" type="text" name="Research_Topic" required require>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="file-div" class="row row-space">
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Cusat Id Card</label>
+                            <div class="mb-3">
+                                <input id="file" class="input&#45;&#45; form-control form-control-lg style-4 file-input1" type="file" name="Cusat_Id" value="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="buttons_parent">
-                        <div class="p-t-15">
-                            <button class="btn btn--radius-2 btn--blue back_button" type="button">Back</button>
-                        </div>
-                        <div class="p-t-15">
-                            <button id="" class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
-                        </div>
+                    <div class="p-t-15">
+                        <button class="btn btn--radius-2 btn--blue back_button" type="button">Back</button>
+                    </div>
 
+                    <div class="p-t-15">
+                        <button id="next2" class="btn btn--radius-2 btn--blue next_button" type="button">Next</button>
+                    </div>
                 </div>
-
             </div>
 
+            <div class="main  ">
+                <div class="row row-space">
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Guide's Name</label>
+                            <input id="research_guide" class="input--style-4 input_default" type="text" name="Research_Guide" required require>
+                        </div>
+                    </div>
 
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Guide's E-Mail(Optional)</label>
+                            <input id="guide_mail" class="input--style-4 input_default" type="email" name="Guide_Mail">
+                        </div>
+                    </div>
+                </div>
+
+                      <div class="row row-space">
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Guide's Phone(Optional)</label>
+                            <input id="guide_phone" class="input--style-4 input_default" type="text" name="Guide_Phone">
+                        </div>
+                    </div>
+
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Guide's Department</label>
+                            <input id="guide_dept" class="input--style-4 input_default" type="text" name="Guide_Dpt" required require>
+                        </div>
+                    </div>
+                </div>
+
+
+                     <div class="col-2">
+                        <div class="input-group">
+                            <label class="mb-1" for="subject2">Co-Guide:</label>
+                            <select name="Co_Guide" class="input--style-4 input_default" onclick="coGuideSelect(this)" id="inputGroupSelect02" required>
+                                <option selected disabled value="">Choose...</option>
+                                <option value="True">Yes</option>
+                                <option value="False">No</option>
+                            </select>
+                        </div>
+                    </div>
+
+                <div class="row row-space guide-fields">
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Co-Guide's Name</label>
+                            <input id="coguide" class="input--style-4 input_default" type="text" name="Co_Guide_Name" >
+                        </div>
+                    </div>
+
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Co-Guide's E-Mail</label>
+                            <input id="coguide_mail" class="input--style-4 input_default" type="email" name="Co_Guide_Mail" >
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row row-space guide-fields">
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Co-Guide's Phone</label>
+                            <input id="coguide_phone" class="input--style-4 input_default" type="text" name="Co_Guide_Phone" >
+                        </div>
+                    </div>
+
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label class="label">Co-Guide's Department</label>
+                            <input id="coguide_dept" class="input--style-4 input_default" type="text" name="Co_Guide_Dpt" >
+                        </div>
+                    </div>
+                </div>
+
+
+<!--                <div class="row row-space">-->
+<!--                    <div class="col-2">-->
+<!--                        <div class="input-group">-->
+<!--                           <label class="label">Guide's Phone</label>-->
+<!--                           <input  id="guide_phone" class="input&#45;&#45;style-4 input_default" type="tel" maxlength="12" name="Guide_Phone" required require>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+                <div class="buttons_parent">
+                    <div class="p-t-15">
+                        <button class="btn btn--radius-2 btn--blue back_button" type="button">Back</button>
+                    </div>
+
+                    <div class="p-t-15">
+                        <button id="" class="btn btn--radius-2 btn--blue" type="submit">Submit</button>
+                    </div>
+                </div>
+            </div>
 
         </form>
-                </div>
-
+        </div>
 </div>
 
 
@@ -184,5 +272,72 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <!--<script src="{% static 'js/register_form.js' %}"></script>-->
 <script src="{% static 'js/progress_indicator.js' %}"></script>
+
+<script>
+    const maxDate = () => {
+        let inputDate = document.getElementById("dob");
+
+        let dateToday = new Date();
+
+        let day = dateToday.getDate().toString();
+        let month = (dateToday.getMonth() + 1).toString();
+        let year = dateToday.getFullYear();
+
+        if(month.length < 2) {
+            month = '0' + month;
+        }
+
+        if(day.length < 2) {
+            day = '0' + day;
+        }
+
+        console.log(day)
+
+        inputDate.setAttribute('max', [year, month, day].join('-'));
+    }
+
+    const universitySelect = (cusatian) => {
+        let isCusatian = (cusatian.value === "True") ? true : false;
+        let university1 = document.getElementById("university1");
+        let file = document.getElementById("file-div");
+
+        if(isCusatian) {
+            university1.value = "Cochin University of Science and Technology";
+            university1.readOnly = true;
+            file.style.display =  "block";
+        }
+        else {
+            university1.value = null;
+            university1.readOnly = false;
+            file.style.display =  "none";
+        }
+    }
+
+
+    const coGuideSelect = (guide) => {
+        let hasCoGuide = (guide.value === "True") ? true : false;
+        let coGuideFields = document.getElementsByClassName("guide-fields");
+
+        if(hasCoGuide) {
+            coGuideFields[0].style.display =  "";
+            coGuideFields[1].style.display =  "";
+        }
+        else {
+            coGuideFields[0].style.display =  "none";
+            coGuideFields[1].style.display =  "none";
+        }
+    }
+
+    document.getElementById("reg-form").addEventListener('submit', function(e) {
+        e.preventDefault()
+        document.getElementById("phd_reg").value = "0"
+        document.getElementById("guide_mail").value = "NA@gmail.com"
+        document.getElementById("guide_phone").value = "0"
+        this.submit()
+    })
+
+
+
+</script>
 
 {% endblock %}
